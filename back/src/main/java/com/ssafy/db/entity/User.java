@@ -3,23 +3,20 @@ package com.ssafy.db.entity;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import lombok.*;
+import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
-
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Date;
-import java.util.LinkedList;
 import java.util.List;
 
 /**
  * 유저 모델 정의.
  */
-@Entity
 @Data
-public class User extends BaseEntity{
+@Entity
+public class User {
     @Id
     @Column(name = "user_id", length= 20,  nullable = false)
     String userId;
@@ -31,12 +28,12 @@ public class User extends BaseEntity{
     String userName;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, timezone = "Asia/Seoul")
-    @Temporal(TemporalType.DATE)
+//  @Temporal(TemporalType.DATE)//자바8에서 지원하는 LocalDate, LocalDateTime을 사용할때는 생략 가능
     @Column(name = "birthday")
     LocalDate birthday;
 
     @Email
-    @Column(length = 100, nullable = false)
+    @Column(name = "user_email",length = 100, nullable = false)
     String userEmail;
 
     @Column(columnDefinition = "TIMESTAMP")
@@ -45,7 +42,6 @@ public class User extends BaseEntity{
     LocalDateTime joinDate;
 
     @JsonManagedReference
-    @OneToMany(mappedBy = "user") //참조를 당하는 쪽에서 읽기만 가능!
-    @Builder.Default
-    List<Like> likeList = new LinkedList<>();
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER) //참조를 당하는 쪽에서 읽기만 가능!
+    List<LikeList> likeList ;
 }

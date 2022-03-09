@@ -32,11 +32,11 @@ public class ShareBoard {
 
     @JsonIgnore
     @OneToMany(mappedBy = "shareboard", fetch = FetchType.EAGER)
-    private List<Comment> replies;
+    List<Comment> replies;
 
-    // 식단 일지 번호
-//    @OneToOne
-//    @JoinColumn(name = "diary_no")
-//    @OnDelete(action = OnDeleteAction.CASCADE)
-//    FoodDiary diaryNo;
+    //식단 일지 번호
+    @OneToOne
+    @JoinColumn(name = "diary_no")
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    FoodDiary diaryNo;
 }
