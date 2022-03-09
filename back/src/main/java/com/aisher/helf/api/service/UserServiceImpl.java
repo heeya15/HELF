@@ -1,5 +1,6 @@
 package com.aisher.helf.api.service;
 
+import com.aisher.helf.api.request.UserUpdatePutReq;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -9,6 +10,7 @@ import com.aisher.helf.db.entity.User;
 import com.aisher.helf.db.repository.UserRepository;
 import com.aisher.helf.db.repository.UserRepositorySupport;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 /**
@@ -43,7 +45,21 @@ public class UserServiceImpl implements UserService {
 		User user = userRepositorySupport.findUserByUserId(userId).get();
 		return user;
 	}
+	@Transactional
+	@Override
+	public void updateUser(UserUpdatePutReq updateUserDto) {
+		System.out.println("수정 들어옴?");
+		User user = userRepositorySupport.findUserByUserId(updateUserDto.getUser_id()).get();
+		// 보안을 위해서 유저 패스워드 암호화 하여 디비에 저장.
+		String password = passwordEncoder.encode(updateUserDto.getUser_password());
+		user.updateUser(updateUserDto.getUser_name(),password);
+	}
 
+	@Override
+	public boolean deleteByUserId(User user) {
+		userRepository.delete(user);
+		return true;
+	}
 	@Override
 	public boolean checkUserId(String userid) {
 		return false;
@@ -52,11 +68,6 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public int checkUserEmail(String userEmail) {
 		return 0;
-	}
-
-	@Override
-	public boolean deleteByUserId(User user) {
-		return false;
 	}
 
 	@Override

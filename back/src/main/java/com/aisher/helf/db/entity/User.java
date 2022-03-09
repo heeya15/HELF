@@ -45,4 +45,9 @@ public class User {
     @JsonManagedReference
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER) //참조를 당하는 쪽에서 읽기만 가능!
     List<LikeList> likeList ;
+
+    public void updateUser(String user_name, String user_password) {
+        this.userName = user_name;
+        this.userPassword =user_password;
+    }
 }
