@@ -1,6 +1,7 @@
 package com.aisher.helf.api.service;
 
 import com.aisher.helf.api.request.UserRegisterPostReq;
+import com.aisher.helf.api.request.UserUpdatePutReq;
 import com.aisher.helf.db.entity.User;
 
 import java.util.List;
@@ -11,6 +12,7 @@ import java.util.List;
 public interface UserService {
 	User registerUser(UserRegisterPostReq userRegisterInfo);
 	User getUserByUserId(String userId);
+	void updateUser(UserUpdatePutReq updateUserDto);
 	boolean checkUserId(String userid);
 	int checkUserEmail(String userEmail);
 	boolean deleteByUserId(User user);

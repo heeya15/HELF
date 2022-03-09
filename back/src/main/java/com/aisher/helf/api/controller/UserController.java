@@ -1,14 +1,14 @@
 package com.aisher.helf.api.controller;
 
+import com.aisher.helf.api.request.UserUpdatePutReq;
 import com.aisher.helf.api.response.UserGetRes;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.aisher.helf.api.request.UserRegisterPostReq;
 import com.aisher.helf.api.service.UserService;
@@ -23,6 +23,8 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import springfox.documentation.annotations.ApiIgnore;
 
+import java.util.NoSuchElementException;
+
 /**
  * 유저 관련 API 요청 처리를 위한 컨트롤러 정의.
  */
@@ -30,7 +32,10 @@ import springfox.documentation.annotations.ApiIgnore;
 @RestController
 @RequestMapping("/api/user")
 public class UserController {
-	
+	public static final Logger logger = LoggerFactory.getLogger(UserController.class);
+	private static final String SUCCESS = "success";
+	private static final String FAIL = "fail";
+
 	@Autowired
 	UserService userService;
 
@@ -69,5 +74,40 @@ public class UserController {
 		User user = userService.getUserByUserId(userId);
 		
 		return ResponseEntity.status(200).body(UserGetRes.of(user));
+	}
+	// 회원 정보 수정 (이름, 비밀번호 수정)
+	@ApiOperation(value = "회원 정보 수정", notes = "회원 정보 수정")
+	@PutMapping("/update")
+	public ResponseEntity<String> updateUser(@RequestBody UserUpdatePutReq updateUserDto) throws Exception {
+		User user;
+		try {
+			user = userService.getUserByUserId(updateUserDto.getUser_id());
+		}catch(NoSuchElementException E) {
+			System.out.println("회원 수정 실패");
+			return  ResponseEntity.status(500).body("해당 회원 정보가 없어서 회원 수정 실패");
+		}
+		userService.updateUser(updateUserDto);
+		System.out.println("회원 정보 수정 성공");
+		return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+	}
+
+	// 회원탈퇴.
+	@ApiOperation(value = "회원 탈퇴", notes = "회원 탈퇴")
+	@ApiResponses({ @ApiResponse(code = 200, message = "성공"),
+			        @ApiResponse(code = 401, message = "인증 실패"),
+			        @ApiResponse(code = 404, message = "사용자 없음"),
+			        @ApiResponse(code = 500, message = "해당 회원 없음")})
+	@DeleteMapping("/remove/{user_id}")
+	public ResponseEntity<String> deleteUser(@PathVariable("user_id") String id) throws Exception {
+		boolean result;
+		try {
+			User user = userService.getUserByUserId(id);
+			result = userService.deleteByUserId(user);
+		}catch(NoSuchElementException E) {
+			logger.debug("회원 탈퇴 실패");
+			return  ResponseEntity.status(500).body("해당 회원 없어서 회원 탈퇴 실패");
+		}
+		logger.debug("회원 탈퇴 성공");
+		return ResponseEntity.status(200).body("회원 탈퇴 성공");
 	}
 }
