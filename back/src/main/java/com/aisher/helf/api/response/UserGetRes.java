@@ -1,6 +1,5 @@
 package com.aisher.helf.api.response;
 
-import com.aisher.helf.common.model.response.BaseResponseBody;
 import com.aisher.helf.db.entity.User;
 
 import io.swagger.annotations.ApiModel;
@@ -14,12 +13,12 @@ import lombok.Setter;
 @Getter
 @Setter
 @ApiModel("UserResponse")
-public class UserRes{
+public class UserGetRes {
 	@ApiModelProperty(name="User ID")
 	String userId;
 	
-	public static UserRes of(User user) {
-		UserRes res = new UserRes();
+	public static UserGetRes of(User user) {
+		UserGetRes res = new UserGetRes();
 		res.setUserId(user.getUserId());
 		return res;
 	}

@@ -26,7 +26,7 @@ public class UserServiceImpl implements UserService {
 	PasswordEncoder passwordEncoder;
 	
 	@Override
-	public User createUser(UserRegisterPostReq userRegisterInfo) {
+	public User registerUser(UserRegisterPostReq userRegisterInfo) {
 		User user = new User();
 		user.setUserId(userRegisterInfo.getUser_id());
 		// 보안을 위해서 유저 패스워드 암호화 하여 디비에 저장.
