@@ -15,13 +15,13 @@ import javax.validation.constraints.Email;
 @ApiModel("UserFindPasswordPostRequest")
 public class UserFindPasswordPostReq {
 
-	@ApiModelProperty(name="유저 ID", example="polyjjang")
+	@ApiModelProperty(name="유저 ID", example="ssafy1")
 	private String user_id;
 
-	@ApiModelProperty(name="유저 Name", example="hanpoly")
+	@ApiModelProperty(name="유저 Name", example="kimssafy")
 	private String user_name;
 
-	@ApiModelProperty(name="유저 Email", example="gmldi1357@gmail.com")
+	@ApiModelProperty(name="유저 Email", example="ssafy1@ssafy.com")
 	@Email(message = "이메일 형식이 아닙니다.")
 	private String user_email;
 }

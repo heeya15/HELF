@@ -1,28 +1,18 @@
 package com.aisher.helf.common.auth;
 
 import java.io.IOException;
-import java.time.LocalDateTime;
-import java.util.Base64;
-import java.util.Objects;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
-import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.filter.OncePerRequestFilter;
 
 import com.aisher.helf.api.service.UserService;
 import com.aisher.helf.common.util.JwtTokenUtil;
@@ -85,7 +75,7 @@ public class JwtAuthenticationFilter extends BasicAuthenticationFilter {
             		User user = userService.getUserByUserId(userId);
                 if(user != null) {
                         // 식별된 정상 유저인 경우, 요청 context 내에서 참조 가능한 인증 정보(jwtAuthentication) 생성.
-                		SsafyUserDetails userDetails = new SsafyUserDetails(user);
+                		UserDetails userDetails = new UserDetails(user);
                 		UsernamePasswordAuthenticationToken jwtAuthentication = new UsernamePasswordAuthenticationToken(userId,
                 				null, userDetails.getAuthorities());
                 		jwtAuthentication.setDetails(userDetails);
