@@ -1,7 +1,5 @@
 package com.aisher.helf.api.request;
 
-import java.time.LocalDateTime;
-
 import com.aisher.helf.db.entity.Comment;
 import com.aisher.helf.db.entity.ShareBoard;
 import com.aisher.helf.db.entity.User;
@@ -11,13 +9,12 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import springfox.documentation.annotations.ApiIgnore;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class CommentRegisterPostReq {
+public class CommentRegisterReq {
 
 	@ApiModelProperty(name = "댓글 내용", example="insert comment content.....")
 	private String comment;

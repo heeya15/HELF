@@ -10,7 +10,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor /** Cannot construct instance of~ error를 해결해주었다.  파라미터가 없는 생성자 만들어줌* */ 
-public class UserUpdatePutReq {
+public class UserUpdateReq {
 	@ApiModelProperty(name = "유저 id")
 	private String user_id;
 

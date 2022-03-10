@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
  */
 
 @ApiModel("ShareBoardFindAllGetRes")
-public interface ShareBoardFindAllGetRes {
+public interface ShareBoardFindAllRes {
 	int getBoard_no();
 	int getHit();
 	LocalDateTime getCreated_at();
