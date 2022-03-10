@@ -1,21 +1,17 @@
 package com.aisher.helf.api.controller;
 
 
+import com.aisher.helf.api.request.ShareBoardLikeReq;
 import com.aisher.helf.api.response.ShareBoardFindAllGetRes;
 import com.aisher.helf.api.response.ShareBoardFindGetRes;
 import com.aisher.helf.api.service.ShareBoardService;
+import com.aisher.helf.common.model.response.BaseResponseBody;
 import com.aisher.helf.db.entity.ShareBoard;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -53,5 +49,15 @@ public class ShareBoardController {
     public ResponseEntity<List<ShareBoardFindGetRes>> findShareBoardInfo(@PathVariable Long board_no) {
         List<ShareBoardFindGetRes> shareboardInfo = shareboardService.findByShareBoardId(board_no);
         return new ResponseEntity<List<ShareBoardFindGetRes>>(shareboardInfo, HttpStatus.OK);
+    }
+
+    @PostMapping("/like")
+    @ApiOperation(value="공유 게시판 좋아요", notes="공유 게시글을 좋아요한다.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "성공", response = BaseResponseBody.class),
+    })
+    public ResponseEntity<? extends BaseResponseBody> shareBoardLike(@RequestBody @ApiParam(required = true) ShareBoardLikeReq req) {
+        shareboardService.setLikeList(req.getUserId(), req.getBoardNo());
+        return ResponseEntity.status(200).body(BaseResponseBody.of(200, "SUCCESS"));
     }
 }
