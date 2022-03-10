@@ -1,17 +1,18 @@
 package com.aisher.helf.api.service;
 
+import com.aisher.helf.api.request.UserFindPasswordPostReq;
+import com.aisher.helf.api.request.UserRegisterPostReq;
 import com.aisher.helf.api.request.UserUpdatePutReq;
+import com.aisher.helf.db.entity.User;
+import com.aisher.helf.db.repository.UserRepository;
+import com.aisher.helf.db.repository.UserRepositorySupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.aisher.helf.api.request.UserRegisterPostReq;
-import com.aisher.helf.db.entity.User;
-import com.aisher.helf.db.repository.UserRepository;
-import com.aisher.helf.db.repository.UserRepositorySupport;
-
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 /**
  *	유저 관련 비즈니스 로직 처리를 위한 서비스 구현 정의.
@@ -68,6 +69,21 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public int checkUserEmail(String userEmail) {
 		return 0;
+	}
+
+	@Override
+	public User getUser(UserFindPasswordPostReq userFindPasswordPostReq) {
+		String userId = userFindPasswordPostReq.getUser_id();
+		String userName = userFindPasswordPostReq.getUser_name();
+		String userEmail = userFindPasswordPostReq.getUser_email();
+
+		Optional<User> user = userRepository.findByUserIdAndUserNameAndUserEmail(userId, userName, userEmail);
+
+		if(user.isPresent()) {
+			return userRepository.findByUserIdAndUserNameAndUserEmail(userId, userName, userEmail).get();
+		} else {
+			return null;
+		}
 	}
 
 	@Override
