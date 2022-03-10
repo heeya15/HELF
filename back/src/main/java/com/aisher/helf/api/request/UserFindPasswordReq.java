@@ -13,7 +13,7 @@ import javax.validation.constraints.Email;
 @Getter
 @Setter
 @ApiModel("UserFindPasswordPostRequest")
-public class UserFindPasswordPostReq {
+public class UserFindPasswordReq {
 
 	@ApiModelProperty(name="유저 ID", example="ssafy1")
 	private String user_id;

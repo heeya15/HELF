@@ -1,6 +1,6 @@
 package com.aisher.helf.api.controller;
 
-import com.aisher.helf.api.request.UserFindPasswordPostReq;
+import com.aisher.helf.api.request.UserFindPasswordReq;
 import com.aisher.helf.api.service.EmailService;
 import com.aisher.helf.api.service.UserService;
 import com.aisher.helf.db.entity.User;
@@ -39,7 +39,7 @@ public class EmailController {
             @ApiResponse(code = 401, message = "인증 실패"),
             @ApiResponse(code = 404, message = "사용자 없음"),
             @ApiResponse(code = 500, message = "서버 오류")})
-    public ResponseEntity<String> sendMail(@RequestBody @ApiParam(value="회원 정보", required = true) UserFindPasswordPostReq userFindPasswordPostReq) throws MessagingException {
+    public ResponseEntity<String> sendMail(@RequestBody @ApiParam(value="회원 정보", required = true) UserFindPasswordReq userFindPasswordPostReq) throws MessagingException {
         User user = userService.getUser(userFindPasswordPostReq);
         if(user != null) {
             emailService.sendMail(user);    // 이메일 전송

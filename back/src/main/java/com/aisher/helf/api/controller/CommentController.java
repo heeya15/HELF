@@ -3,15 +3,13 @@ package com.aisher.helf.api.controller;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-import com.aisher.helf.api.request.CommentRegisterPostReq;
+import com.aisher.helf.api.request.CommentRegisterReq;
 import com.aisher.helf.api.request.CommentUpdateReq;
 import com.aisher.helf.api.response.CommentFindAllRes;
 import com.aisher.helf.api.service.CommentService;
 import com.aisher.helf.common.auth.UserDetails;
 import com.aisher.helf.common.model.response.BaseResponseBody;
 import com.aisher.helf.db.entity.Comment;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -51,7 +49,7 @@ public class CommentController {
 					@ApiResponse(code = 401, message = "인증 실패"),
 					@ApiResponse(code = 404, message = "댓글 없음"), 
 					@ApiResponse(code = 500, message = "서버 오류")})
-	public ResponseEntity CommentRegister(@RequestBody CommentRegisterPostReq commentReq, @ApiIgnore Authentication authentication)
+	public ResponseEntity CommentRegister(@RequestBody CommentRegisterReq commentReq, @ApiIgnore Authentication authentication)
 	{
 		UserDetails userDetails = (UserDetails) authentication.getDetails();
 		String user_id = userDetails.getUsername();

@@ -1,7 +1,7 @@
 package com.aisher.helf.api.service;
 
 import java.util.List;
-import com.aisher.helf.api.request.CommentRegisterPostReq;
+import com.aisher.helf.api.request.CommentRegisterReq;
 import com.aisher.helf.api.request.CommentUpdateReq;
 import com.aisher.helf.api.response.CommentFindAllRes;
 import com.aisher.helf.db.entity.Comment;
@@ -11,7 +11,7 @@ import com.aisher.helf.db.entity.Comment;
  */
 public interface CommentService {
 	/** 댓글을 생성하는 registerComment 입니다. */
-	public Comment registerComment(CommentRegisterPostReq commentReq);
+	public Comment registerComment(CommentRegisterReq commentReq);
 	
 	/** 댓글 정보를 댓글 번호로 가져오는 findByCommentNo 입니다. */
 	public Comment findByCommentNo(int comment_no);

@@ -1,6 +1,6 @@
 package com.aisher.helf.api.service;
 
-import com.aisher.helf.api.request.CommentRegisterPostReq;
+import com.aisher.helf.api.request.CommentRegisterReq;
 import com.aisher.helf.api.request.CommentUpdateReq;
 import com.aisher.helf.api.response.CommentFindAllRes;
 import com.aisher.helf.db.entity.Comment;
@@ -23,7 +23,7 @@ public class CommentServiceImpl implements CommentService {
 	/** 댓글을 생성하는 registerComment 입니다. */
 	@Override
 	@Transactional
-	public Comment registerComment(CommentRegisterPostReq commentReq) {
+	public Comment registerComment(CommentRegisterReq commentReq) {
 		Comment comment = commentRepository.save(commentReq.toEntity()); // 댓글 등록 시 댓글 수 증가.
 		return comment;
 	}

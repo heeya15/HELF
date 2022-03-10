@@ -1,7 +1,7 @@
 package com.aisher.helf.api.service;
 
-import com.aisher.helf.api.response.ShareBoardFindAllGetRes;
-import com.aisher.helf.api.response.ShareBoardFindGetRes;
+import com.aisher.helf.api.response.ShareBoardFindAllRes;
+import com.aisher.helf.api.response.ShareBoardFindRes;
 import com.aisher.helf.db.entity.ShareBoard;
 import java.util.List;
 
@@ -12,10 +12,10 @@ public interface ShareBoardService {
 
 	/** 공유 게시글 하나의 정보를 가져오는(상세보기) findByBoardId 입니다.
 	 * @return*/
-	public List<ShareBoardFindGetRes> findByShareBoardId(Long board_no);
+	public List<ShareBoardFindRes> findByShareBoardId(Long board_no);
 
 	/** 모든 공유 게시글의 정보를 가져오는 findAllBoard 입니다. (목록 부분에 사용)*/
-	public List<ShareBoardFindAllGetRes> findAllShareBoard();
+	public List<ShareBoardFindAllRes> findAllShareBoard();
 
 	/** 좋아요 부문 확인하고 세팅하는 메소드 */
 	ShareBoard getShareBoard(Long boardNo);

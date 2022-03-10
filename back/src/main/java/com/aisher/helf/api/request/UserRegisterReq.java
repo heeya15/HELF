@@ -13,7 +13,7 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @ApiModel("UserRegisterPostRequest")
-public class UserRegisterPostReq {
+public class UserRegisterReq {
 
 	@ApiModelProperty(name="유저 ID", example="ssafy1")
 	private String user_id;
