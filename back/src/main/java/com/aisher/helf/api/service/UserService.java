@@ -1,5 +1,6 @@
 package com.aisher.helf.api.service;
 
+import com.aisher.helf.api.request.UserFindPasswordPostReq;
 import com.aisher.helf.api.request.UserRegisterPostReq;
 import com.aisher.helf.api.request.UserUpdatePutReq;
 import com.aisher.helf.db.entity.User;
@@ -16,5 +17,6 @@ public interface UserService {
 	boolean checkUserId(String userid);
 	int checkUserEmail(String userEmail);
 	boolean deleteByUserId(User user);
+	User getUser(UserFindPasswordPostReq userFindPasswordPostReq);
 	public List<User> findAll();
 }
