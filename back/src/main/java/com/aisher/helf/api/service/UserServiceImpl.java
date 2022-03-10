@@ -43,13 +43,17 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public User getUserByUserId(String userId) {
 		// 디비에 유저 정보 조회 (userId 를 통한 조회).
-		User user = userRepositorySupport.findUserByUserId(userId).get();
-		return user;
+		Optional<User> user = userRepositorySupport.findUserByUserId(userId);
+
+		if(user.isPresent()) {
+			return user.get();
+		} else {
+			return null;
+		}
 	}
 	@Transactional
 	@Override
 	public void updateUser(UserUpdatePutReq updateUserDto) {
-		System.out.println("수정 들어옴?");
 		User user = userRepositorySupport.findUserByUserId(updateUserDto.getUser_id()).get();
 		// 보안을 위해서 유저 패스워드 암호화 하여 디비에 저장.
 		String password = passwordEncoder.encode(updateUserDto.getUser_password());
@@ -80,7 +84,7 @@ public class UserServiceImpl implements UserService {
 		Optional<User> user = userRepository.findByUserIdAndUserNameAndUserEmail(userId, userName, userEmail);
 
 		if(user.isPresent()) {
-			return userRepository.findByUserIdAndUserNameAndUserEmail(userId, userName, userEmail).get();
+			return user.get();
 		} else {
 			return null;
 		}

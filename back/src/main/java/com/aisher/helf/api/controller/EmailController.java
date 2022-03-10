@@ -45,7 +45,7 @@ public class EmailController {
             emailService.sendMail(user);    // 이메일 전송
             return ResponseEntity.status(200).body("Email Sent");
         } else {
-            return ResponseEntity.status(400).body("Account Not Found");
+            return ResponseEntity.status(404).body("Account Not Found");
         }
     }
 }

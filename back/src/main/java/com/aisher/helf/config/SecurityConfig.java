@@ -2,7 +2,7 @@ package com.aisher.helf.config;
 
 import com.aisher.helf.api.service.UserService;
 import com.aisher.helf.common.auth.JwtAuthenticationFilter;
-import com.aisher.helf.common.auth.SsafyUserDetailService;
+import com.aisher.helf.common.auth.UserDetailService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -25,7 +25,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
-    private SsafyUserDetailService ssafyUserDetailService;
+    private UserDetailService userDetailService;
     
     @Autowired
     private UserService userService;
@@ -42,7 +42,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     DaoAuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
         daoAuthenticationProvider.setPasswordEncoder(passwordEncoder());
-        daoAuthenticationProvider.setUserDetailsService(this.ssafyUserDetailService);
+        daoAuthenticationProvider.setUserDetailsService(this.userDetailService);
         return daoAuthenticationProvider;
     }
 

@@ -1,5 +1,12 @@
 package com.aisher.helf.api.controller;
 
+import com.aisher.helf.api.request.UserLoginPostReq;
+import com.aisher.helf.api.response.UserLoginPostRes;
+import com.aisher.helf.api.service.UserService;
+import com.aisher.helf.common.model.response.BaseResponseBody;
+import com.aisher.helf.common.util.JwtTokenUtil;
+import com.aisher.helf.db.entity.User;
+import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -7,20 +14,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.aisher.helf.api.request.UserLoginPostReq;
-import com.aisher.helf.api.response.UserLoginPostRes;
-import com.aisher.helf.api.service.UserService;
-import com.aisher.helf.common.model.response.BaseResponseBody;
-import com.aisher.helf.common.util.JwtTokenUtil;
-import com.aisher.helf.db.entity.User;
-import com.aisher.helf.db.repository.UserRepositorySupport;
-
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
-import io.swagger.annotations.ApiResponses;
-import io.swagger.annotations.ApiResponse;
 
 /**
  * 인증 관련 API 요청 처리를 위한 컨트롤러 정의.
@@ -48,6 +41,11 @@ public class AuthController {
 		String password = loginInfo.getUser_password();
 		
 		User user = userService.getUserByUserId(userId);
+		// 아이디를 잘못 입력한 경우
+		if(user == null) {
+			return ResponseEntity.status(404).body(UserLoginPostRes.of(401, "Invalid Id", null));
+		}
+
 		// 로그인 요청한 유저로부터 입력된 패스워드 와 디비에 저장된 유저의 암호화된 패스워드가 같은지 확인.(유효한 패스워드인지 여부 확인)
 		if(passwordEncoder.matches(password, user.getUserPassword())) {
 			// 유효한 패스워드가 맞는 경우, 로그인 성공으로 응답.(액세스 토큰을 포함하여 응답값 전달)
