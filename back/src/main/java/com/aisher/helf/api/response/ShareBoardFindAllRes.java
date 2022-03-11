@@ -15,4 +15,5 @@ public interface ShareBoardFindAllRes {
 	LocalDateTime getCreated_at();
 	String getImage_path();
 	String getDescription();
+	int getReply_cnt();
 }
