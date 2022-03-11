@@ -34,6 +34,7 @@ public class ShareBoardController {
 
     /** 공유 게시글 전체 조회 입니다. + pagination
      *  page랑 size랑 sort는 url에 담아서 넘겨줘야 함.
+     *  PageableDefault 에 page 는 기본 0이 처음 페이지 시작 / 인자로 받는 page는 1이 맨 처음 페이지 이다.
      *  */
     @ApiOperation(value="공유 게시글 전체 조회", notes="<strong>공유 게시글을 전체 조회를</strong>시켜줍니다.")
     @ApiResponses({ @ApiResponse(code = 200, message = "성공"),

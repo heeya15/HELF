@@ -15,7 +15,7 @@ public interface ShareBoardService {
 
 	/** 공유 게시글 하나의 정보를 가져오는(상세보기) findByBoardId 입니다.
 	 * @return*/
-	public List<ShareBoardFindRes> findByShareBoardId(Long board_no);
+	public List<ShareBoardFindRes> findByShareBoardId(Long boardNo);
 
 	/** 모든 공유 게시글의 정보를 가져오는 findAllBoard 입니다. (목록 부분에 사용)*/
 	Page<ShareBoard> findAllShareBoard(Pageable pageable);
@@ -23,6 +23,5 @@ public interface ShareBoardService {
 
 	/** 좋아요 부문 확인하고 세팅하는 메소드 */
 	ShareBoard getShareBoard(Long boardNo);
-	boolean getLikeList(String userId, Long boardNo);
 	void setLikeList(String userId, Long boardNo);
 }
