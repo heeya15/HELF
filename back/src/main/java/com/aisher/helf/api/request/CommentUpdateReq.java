@@ -1,8 +1,5 @@
 package com.aisher.helf.api.request;
 
-import com.aisher.helf.db.entity.Comment;
-import com.aisher.helf.db.entity.ShareBoard;
-import com.aisher.helf.db.entity.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -17,7 +14,7 @@ import lombok.Setter;
 public class CommentUpdateReq {
 
 	@ApiModelProperty(name = "댓글 번호")
-	private int comment_no;
+	private int commentNo;
 
 	@ApiModelProperty(name = "댓글 내용", example="insert comment content.....")
 	private String comment;
