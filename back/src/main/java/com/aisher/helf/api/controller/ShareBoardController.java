@@ -3,8 +3,7 @@ package com.aisher.helf.api.controller;
 
 import com.aisher.helf.api.request.ShareBoardLikeReq;
 import com.aisher.helf.api.response.ShareBoardAllRes;
-import com.aisher.helf.api.response.ShareBoardFindAllGetRes;
-import com.aisher.helf.api.response.ShareBoardFindGetRes;
+import com.aisher.helf.api.response.ShareBoardFindRes;
 import com.aisher.helf.api.service.ShareBoardService;
 import com.aisher.helf.common.model.response.BaseResponseBody;
 import com.aisher.helf.db.entity.ShareBoard;
@@ -55,9 +54,9 @@ public class ShareBoardController {
             @ApiResponse(code = 401, message = "인증 실패"),
             @ApiResponse(code = 404, message = "사용자 없음"),
             @ApiResponse(code = 500, message = "서버 오류") })
-    public ResponseEntity<List<ShareBoardFindGetRes>> findShareBoardInfo(@PathVariable Long board_no) {
-        List<ShareBoardFindGetRes> shareboardInfo = shareboardService.findByShareBoardId(board_no);
-        return new ResponseEntity<List<ShareBoardFindGetRes>>(shareboardInfo, HttpStatus.OK);
+    public ResponseEntity<List<ShareBoardFindRes>> findShareBoardInfo(@PathVariable Long board_no) {
+        List<ShareBoardFindRes> shareboardInfo = shareboardService.findByShareBoardId(board_no);
+        return new ResponseEntity<List<ShareBoardFindRes>>(shareboardInfo, HttpStatus.OK);
     }
 
     @PostMapping("/like")

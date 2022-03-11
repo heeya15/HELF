@@ -1,8 +1,7 @@
 package com.aisher.helf.api.service;
 
 import com.aisher.helf.api.response.ShareBoardAllRes;
-import com.aisher.helf.api.response.ShareBoardFindAllGetRes;
-import com.aisher.helf.api.response.ShareBoardFindGetRes;
+import com.aisher.helf.api.response.ShareBoardFindRes;
 import com.aisher.helf.db.entity.FoodDiary;
 import com.aisher.helf.db.entity.LikeList;
 import com.aisher.helf.db.entity.ShareBoard;
@@ -40,9 +39,9 @@ public class ShareBoardServiceImpl implements ShareBoardService {
     /** 공유 게시글 하나의 정보를 가져오는(상세보기) findByBoardId 입니다.
      * @return*/
     @Override
-    public List<ShareBoardFindGetRes> findByShareBoardId(Long board_no) {
+    public List<ShareBoardFindRes> findByShareBoardId(Long board_no) {
         shareboardRepository.updateView(board_no); // 상세 게시글 클릭시 조회수 1 증가.
-        List<ShareBoardFindGetRes> shareboard = shareboardRepository.findShareBoard(board_no);
+        List<ShareBoardFindRes> shareboard = shareboardRepository.findShareBoard(board_no);
         return shareboard;
     }
 
