@@ -1,7 +1,5 @@
 package com.aisher.helf.db.repository;
 
-import com.aisher.helf.api.response.ShareBoardFindAllGetRes;
-import com.aisher.helf.api.response.ShareBoardFindGetRes;
 import com.aisher.helf.db.entity.*;
 import com.querydsl.core.QueryResults;
 import com.querydsl.core.types.Order;

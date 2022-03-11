@@ -41,7 +41,7 @@ public class ShareBoardController {
             @ApiResponse(code = 404, message = "사용자 없음"),
             @ApiResponse(code = 500, message = "서버 오류")})
     @GetMapping("/findAll/{userId}")
-    public ResponseEntity<Page<ShareBoardAllRes>> findAllShareBoard(@PageableDefault(page = 0, size =6, sort = "boardNo", direction = Sort.Direction.DESC) Pageable pageable, @PathVariable String userId){
+    public ResponseEntity<Page<ShareBoardAllRes>> findAllShareBoard(@PageableDefault(page = 0, size =2, sort = "boardNo", direction = Sort.Direction.DESC) Pageable pageable, @PathVariable String userId){
         System.out.println(pageable.getSort());
         Page<ShareBoard> shareBoards = shareboardService.findAllShareBoard(pageable);
         Page<ShareBoardAllRes> shareBoardAllRes = shareboardService.findInfoShareBoard(shareBoards, userId);
