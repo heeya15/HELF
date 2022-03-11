@@ -1,8 +1,5 @@
 package com.aisher.helf.api.controller;
 
-import java.util.List;
-import java.util.NoSuchElementException;
-
 import com.aisher.helf.api.request.CommentRegisterReq;
 import com.aisher.helf.api.request.CommentUpdateReq;
 import com.aisher.helf.api.response.CommentFindAllRes;
@@ -10,24 +7,19 @@ import com.aisher.helf.api.service.CommentService;
 import com.aisher.helf.common.auth.UserDetails;
 import com.aisher.helf.common.model.response.BaseResponseBody;
 import com.aisher.helf.db.entity.Comment;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
+
+import java.util.List;
+import java.util.NoSuchElementException;
 
 /**
  * 공유 게시판 댓글 관련 API 요청 처리를 위한 컨트롤러 정의.
@@ -72,8 +64,8 @@ public class CommentController {
 					@ApiResponse(code = 404, message = "댓글 없음"),
 					@ApiResponse(code = 500, message = "서버 오류")})
 	@GetMapping("/findAll/{board_no}")
-    public ResponseEntity<List<CommentFindAllRes>> findAllComment(@PathVariable Long board_no){
-        List<CommentFindAllRes> comments = commentService.findAllByBoardNo(board_no);
+    public ResponseEntity<List<CommentFindAllRes>> findAllComment(@PathVariable Long boardNo){
+        List<CommentFindAllRes> comments = commentService.findAllByBoardNo(boardNo);
         return new ResponseEntity<List<CommentFindAllRes>>(comments,HttpStatus.OK);
     }
 
@@ -84,8 +76,8 @@ public class CommentController {
 			@ApiResponse(code = 404, message = "댓글 없음"),
 			@ApiResponse(code = 500, message = "서버 오류")})
 	@GetMapping("/find/{board_no}")
-	public ResponseEntity<Integer> findReplyCnt(@PathVariable Long board_no){
-		List<CommentFindAllRes> comments = commentService.findAllByBoardNo(board_no);
+	public ResponseEntity<Integer> findReplyCnt(@PathVariable Long boardNo){
+		List<CommentFindAllRes> comments = commentService.findAllByBoardNo(boardNo);
 		return new ResponseEntity<Integer>(comments.size(),HttpStatus.OK);
 	}
 
@@ -99,7 +91,7 @@ public class CommentController {
 	public ResponseEntity<String> updateComment(@RequestBody CommentUpdateReq commentReq) throws Exception {
 		Comment comment;
 		try {
-			comment = commentService.findByCommentNo(commentReq.getComment_no());
+			comment = commentService.findByCommentNo(commentReq.getCommentNo());
 		}catch(NoSuchElementException E) {
 			return  ResponseEntity.status(500).body("해당 댓글이 없어서 댓글 수정 실패");
 		}
@@ -113,11 +105,11 @@ public class CommentController {
 					@ApiResponse(code = 401, message = "인증 실패"),
 					@ApiResponse(code = 404, message = "댓글 없음"),
 					@ApiResponse(code = 500, message = "서버 오류")})
-	@DeleteMapping("/remove/{comment_no}")
-	public ResponseEntity<String> deleteComment(@PathVariable("comment_no") int comment_no) throws Exception {
+	@DeleteMapping("/remove/{commentNo}")
+	public ResponseEntity<String> deleteComment(@PathVariable("commentNo") int commentNo) throws Exception {
 		Comment comment;
 		try {
-			comment = commentService.findByCommentNo(comment_no);
+			comment = commentService.findByCommentNo(commentNo);
 			commentService.deleteComment(comment);
 		}catch(Exception e ) {
 			e.printStackTrace();
@@ -125,5 +117,4 @@ public class CommentController {
 		}
 		return ResponseEntity.status(200).body(comment.getCommentNo()+"번 해당 댓글 삭제"+SUCCESS);
 	}
-
 }

@@ -1,13 +1,13 @@
 package com.aisher.helf.db.repository;
 
-import java.util.List;
-
 import com.aisher.helf.api.response.CommentFindAllRes;
 import com.aisher.helf.db.entity.Comment;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 @Repository
 public interface CommentRepository extends JpaRepository<Comment, Integer>{
@@ -20,5 +20,5 @@ public interface CommentRepository extends JpaRepository<Comment, Integer>{
             "where c.board_no = :board_no\n" +
             "order by c.comment_no asc;"
             , nativeQuery = true)
-	List<CommentFindAllRes> findAllByBoardNo(@Param("board_no") Long board_no);
+	List<CommentFindAllRes> findAllByBoardNo(@Param("boardNo") Long boardNo);
 }

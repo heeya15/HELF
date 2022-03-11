@@ -31,14 +31,14 @@ public class CommentServiceImpl implements CommentService {
 	/** 모든 댓글 정보를 가져오는 findAllByBoardNo 입니다. */
 	@Override
 	@Transactional
-	public List<CommentFindAllRes> findAllByBoardNo(Long board_no) {
-		List<CommentFindAllRes> comments = commentRepository.findAllByBoardNo(board_no);
+	public List<CommentFindAllRes> findAllByBoardNo(Long boardNo) {
+		List<CommentFindAllRes> comments = commentRepository.findAllByBoardNo(boardNo);
 		return comments;
 	}
 	/** 댓글 정보를 댓글 번호로 가져오는 findByCommentNo 입니다. */
 	@Override
-	public Comment findByCommentNo(int comment_no) {
-		Comment comment = commentRepository.findById(comment_no).get();
+	public Comment findByCommentNo(int commentNo) {
+		Comment comment = commentRepository.findById(commentNo).get();
 		return comment;
 	}
 	/** 댓글 수정을 위한 updateComment 입니다. */

@@ -1,14 +1,15 @@
 package com.aisher.helf.db.repository;
 
-import javax.transaction.Transactional;
 import com.aisher.helf.api.response.ShareBoardFindAllRes;
 import com.aisher.helf.api.response.ShareBoardFindRes;
 import com.aisher.helf.db.entity.ShareBoard;
-import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+
+import javax.transaction.Transactional;
 import java.util.List;
 
 
@@ -25,7 +26,7 @@ public interface ShareBoardRepository extends JpaRepository<ShareBoard, Long> { 
 	@Transactional
 	@Modifying
 	@Query(value ="update share_board set hit = hit + 1 where board_no = :board_no", nativeQuery = true)
-	void updateView(@Param("board_no") Long board_no);
+	void updateView(@Param("board_no") Long boardNo);
 
 	@Query(value="select s.board_no, s.description,s.created_at, fd.diary_no, fd.image_path, d.weight, f.food_name, f.kcal, f.carbohydrate, f.protein, f.fat\n" +
 			"from share_board s \n" +
@@ -34,7 +35,7 @@ public interface ShareBoardRepository extends JpaRepository<ShareBoard, Long> { 
 			"join food f on (f.food_name = d.food_name)\n" +
 			"where s.board_no = :board_no "
 			,nativeQuery = true)
-	List<ShareBoardFindRes> findShareBoard(Long board_no);
+	List<ShareBoardFindRes> findShareBoard(Long boardNo);
 
 	@Query(value="select s.board_no, s.hit, s.created_at, fd.image_path, s.description, s.reply_cnt\n" +
 			"from (select c.board_no, sb.hit, sb.created_at, sb.description, sb.diary_no, count(*) as reply_cnt\n" +
