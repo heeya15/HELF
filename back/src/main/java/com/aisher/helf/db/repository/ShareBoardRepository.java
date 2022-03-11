@@ -1,8 +1,8 @@
 package com.aisher.helf.db.repository;
 
 import javax.transaction.Transactional;
-import com.aisher.helf.api.response.ShareBoardFindAllGetRes;
-import com.aisher.helf.api.response.ShareBoardFindGetRes;
+import com.aisher.helf.api.response.ShareBoardFindAllRes;
+import com.aisher.helf.api.response.ShareBoardFindRes;
 import com.aisher.helf.db.entity.ShareBoard;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -34,12 +34,14 @@ public interface ShareBoardRepository extends JpaRepository<ShareBoard, Long> { 
 			"join food f on (f.food_name = d.food_name)\n" +
 			"where s.board_no = :board_no "
 			,nativeQuery = true)
-	List<ShareBoardFindGetRes> findShareBoard(Long board_no);
+	List<ShareBoardFindRes> findShareBoard(Long board_no);
 
-	@Query(value="select s.board_no, s.hit, s.created_at, fd.image_path, s.description\n" +
-			"from share_board s \n" +
-			"join food_diary fd on (s.diary_no = fd.diary_no)\n" +
-			"order by s.board_no asc"
+	@Query(value="select s.board_no, s.hit, s.created_at, fd.image_path, s.description, s.reply_cnt\n" +
+			"from (select c.board_no, sb.hit, sb.created_at, sb.description, sb.diary_no, count(*) as reply_cnt\n" +
+			"\t  from comment c join share_board sb on (c.board_no = sb.board_no)\n" +
+			"\t  group by c.board_no\n" +
+			"\t  order by c.board_no, sb.diary_no) as s\n" +
+			"\t join food_diary fd on (s.diary_no = fd.diary_no)"
 			,nativeQuery = true)
-	List<ShareBoardFindAllGetRes>findAllShareBoard();
+	List<ShareBoardFindAllRes>findAllShareBoard();
 }

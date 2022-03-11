@@ -1,8 +1,8 @@
 package com.aisher.helf.api.service;
 
-import com.aisher.helf.api.request.UserFindPasswordPostReq;
-import com.aisher.helf.api.request.UserRegisterPostReq;
-import com.aisher.helf.api.request.UserUpdatePutReq;
+import com.aisher.helf.api.request.UserFindPasswordReq;
+import com.aisher.helf.api.request.UserRegisterReq;
+import com.aisher.helf.api.request.UserUpdateReq;
 import com.aisher.helf.db.entity.User;
 
 import java.util.List;
@@ -11,12 +11,12 @@ import java.util.List;
  *	유저 관련 비즈니스 로직 처리를 위한 서비스 인터페이스 정의.
  */
 public interface UserService {
-	User registerUser(UserRegisterPostReq userRegisterInfo);
+	User registerUser(UserRegisterReq userRegisterInfo);
 	User getUserByUserId(String userId);
-	void updateUser(UserUpdatePutReq updateUserDto);
+	void updateUser(UserUpdateReq updateUserDto);
 	boolean checkUserId(String userid);
 	int checkUserEmail(String userEmail);
 	boolean deleteByUserId(User user);
-	User getUser(UserFindPasswordPostReq userFindPasswordPostReq);
+	User getUser(UserFindPasswordReq userFindPasswordPostReq);
 	public List<User> findAll();
 }

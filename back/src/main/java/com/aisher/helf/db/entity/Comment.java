@@ -2,6 +2,8 @@ package com.aisher.helf.db.entity;
 
 import java.time.LocalDateTime;
 import javax.persistence.*;
+
+import com.aisher.helf.api.request.CommentUpdateReq;
 import lombok.*;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -11,8 +13,11 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 /**
  * 댓글 모델 정의.
  */
-@Data
 @Entity
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @Table
 @Builder
 public class Comment{
@@ -39,9 +44,18 @@ public class Comment{
 	@OnDelete(action = OnDeleteAction.CASCADE)
 	User user;   // 유저 아이디
 
+	public void updateComment(CommentUpdateReq commentReq) {
+		this.comment = commentReq.getComment();
+	}
+
 	@Override
 	public String toString() {
-		return "Comment [commentNo=" + commentNo + ", content=" + comment + ", createdAt=" + createdAt + ", user="
-				+ user + ", ShareBoard=" + shareboard + "]";
-	}	
+		return "Comment{" +
+				"commentNo=" + commentNo +
+				", comment='" + comment + '\'' +
+				", createdAt=" + createdAt +
+				", shareboard=" + shareboard.getBoardNo() +
+				", user=" + user.getUserId() +
+				'}';
+	}
 }

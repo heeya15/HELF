@@ -1,8 +1,8 @@
 package com.aisher.helf.api.service;
 
-import com.aisher.helf.api.request.UserFindPasswordPostReq;
-import com.aisher.helf.api.request.UserRegisterPostReq;
-import com.aisher.helf.api.request.UserUpdatePutReq;
+import com.aisher.helf.api.request.UserFindPasswordReq;
+import com.aisher.helf.api.request.UserRegisterReq;
+import com.aisher.helf.api.request.UserUpdateReq;
 import com.aisher.helf.db.entity.User;
 import com.aisher.helf.db.repository.UserRepository;
 import com.aisher.helf.db.repository.UserRepositorySupport;
@@ -29,7 +29,7 @@ public class UserServiceImpl implements UserService {
 	PasswordEncoder passwordEncoder;
 	
 	@Override
-	public User registerUser(UserRegisterPostReq userRegisterInfo) {
+	public User registerUser(UserRegisterReq userRegisterInfo) {
 		User user = new User();
 		user.setUserId(userRegisterInfo.getUser_id());
 		// 보안을 위해서 유저 패스워드 암호화 하여 디비에 저장.
@@ -43,13 +43,17 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public User getUserByUserId(String userId) {
 		// 디비에 유저 정보 조회 (userId 를 통한 조회).
-		User user = userRepositorySupport.findUserByUserId(userId).get();
-		return user;
+		Optional<User> user = userRepositorySupport.findUserByUserId(userId);
+
+		if(user.isPresent()) {
+			return user.get();
+		} else {
+			return null;
+		}
 	}
 	@Transactional
 	@Override
-	public void updateUser(UserUpdatePutReq updateUserDto) {
-		System.out.println("수정 들어옴?");
+	public void updateUser(UserUpdateReq updateUserDto) {
 		User user = userRepositorySupport.findUserByUserId(updateUserDto.getUser_id()).get();
 		// 보안을 위해서 유저 패스워드 암호화 하여 디비에 저장.
 		String password = passwordEncoder.encode(updateUserDto.getUser_password());
@@ -72,7 +76,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public User getUser(UserFindPasswordPostReq userFindPasswordPostReq) {
+	public User getUser(UserFindPasswordReq userFindPasswordPostReq) {
 		String userId = userFindPasswordPostReq.getUser_id();
 		String userName = userFindPasswordPostReq.getUser_name();
 		String userEmail = userFindPasswordPostReq.getUser_email();
@@ -80,7 +84,7 @@ public class UserServiceImpl implements UserService {
 		Optional<User> user = userRepository.findByUserIdAndUserNameAndUserEmail(userId, userName, userEmail);
 
 		if(user.isPresent()) {
-			return userRepository.findByUserIdAndUserNameAndUserEmail(userId, userName, userEmail).get();
+			return user.get();
 		} else {
 			return null;
 		}
