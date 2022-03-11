@@ -52,4 +52,5 @@ public class ShareBoard {
                 ", diaryNo=" + diaryNo.getDiaryNo() +
                 '}';
     }
+
 }

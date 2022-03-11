@@ -8,7 +8,7 @@ import lombok.Data;
 @ApiModel("ShareBoardLikeReq")
 public class ShareBoardLikeReq {
     @ApiModelProperty(name="사용자 id", example="user_id")
-    String userId;
+    private String userId;
     @ApiModelProperty(name="공유 게시글 번호", example="board_no")
-    long boardNo;
+    private long boardNo;
 }
