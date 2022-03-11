@@ -25,8 +25,8 @@ public class Diet {
     private FoodDiary foodDiary;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "food_name")
+    @JoinColumn(name = "food_no")
     @OnDelete(action = OnDeleteAction.CASCADE)
-    private Food foodName;
+    private Food foodNo;
 
 }
