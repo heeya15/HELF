@@ -39,9 +39,9 @@ public class ShareBoardServiceImpl implements ShareBoardService {
     /** 공유 게시글 하나의 정보를 가져오는(상세보기) findByBoardId 입니다.
      * @return*/
     @Override
-    public List<ShareBoardFindRes> findByShareBoardId(Long board_no) {
-        shareboardRepository.updateView(board_no); // 상세 게시글 클릭시 조회수 1 증가.
-        List<ShareBoardFindRes> shareboard = shareboardRepository.findShareBoard(board_no);
+    public List<ShareBoardFindRes> findByShareBoardId(Long boardNo) {
+        shareboardRepository.updateView(boardNo); // 상세 게시글 클릭시 조회수 1 증가.
+        List<ShareBoardFindRes> shareboard = shareboardRepository.findShareBoard(boardNo);
         return shareboard;
     }
 
@@ -70,7 +70,7 @@ public class ShareBoardServiceImpl implements ShareBoardService {
 
             LikeList likeList = likeListRepositorySupport.findLikeListByUserIdAndBoardNo(userId, s.getBoardNo()).orElse(null);
             boolean isLike;
-            if(likeList == null) isLike = false;
+            if(likeList == null) isLike = false; // 찜 목록 리스트 값이 null이면
             else isLike = true;
             sr.setLike(isLike);
             temp.add(sr);
@@ -80,30 +80,28 @@ public class ShareBoardServiceImpl implements ShareBoardService {
         return res;
     }
 
+    /** 해당 공유 게시글 번호에 대한 [ 게시글 정보 들고와서 ] 반환 하는 메서드**/
     @Override
     public ShareBoard getShareBoard(Long boardNo) {
         ShareBoard shareBoard = shareBoardRepositorySupport.findShareBoardByBoardNo(boardNo).orElse(null);
         return shareBoard;
     }
 
-    @Override
-    public boolean getLikeList(String userId, Long boardNo) {
-        LikeList likeList = likeListRepositorySupport.findLikeListByUserIdAndBoardNo(userId, boardNo).orElse(null);
-        if (likeList != null) return true;
-        else return false;
-    }
-
+    /** 해당 공유 게시글을 좋아요 버튼을 처음 누르면 찜 목록 테이블에 추가되고, 다시 좋아요 버튼을 누르면 삭제 시켜줌.   **/
     @Transactional
     @Override
     public void setLikeList(String userId, Long boardNo) {
-        ShareBoard shareBoard = getShareBoard(boardNo);
+        ShareBoard shareBoard = getShareBoard(boardNo); // 해당 게시글 번호에 대한 게시글 정보를 가져와서 객체에 저장.
 
         LikeList likeList = likeListRepositorySupport.findLikeListByUserIdAndBoardNo(userId, boardNo).orElse(null);
         if(likeList != null) {
             likeListRepository.delete(likeList);
         } else {
             User user = userService.getUserByUserId(userId);
-            likeList = LikeList.builder().user(user).shareBoard(shareBoard).build();
+            likeList = LikeList.builder()
+                       .user(user)
+                       .shareBoard(shareBoard)
+                       .build();
             likeListRepository.save(likeList);
         }
     }

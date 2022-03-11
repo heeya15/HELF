@@ -33,17 +33,17 @@ public class ShareBoardRepositorySupport {
                 .offset(pageable.getOffset())
                 .fetchResults();
         if(shareBoards == null) return Page.empty();
-        return new PageImpl<ShareBoard>(shareBoards.getResults(), pageable, shareBoards.getTotal());
+        return new PageImpl<ShareBoard>(shareBoards.getResults(), pageable, shareBoards.getTotal()); // 게시글 전체 조회한거, 페이지 네이션 정보, 총 게시글 수
     }
 
     private OrderSpecifier[] orderCondition(Pageable pageable) {
         PathBuilder<ShareBoard> entityPath = new PathBuilder<>(ShareBoard.class, "shareBoard");
-        return pageable.getSort() // (2)
+        return pageable.getSort() // (2) pageable 안에 있는 sort 라는 정보를 가져옴.
                 .stream() // (3)
                 .map(order -> new OrderSpecifier(Order.valueOf(order.getDirection().name()), entityPath.get(order.getProperty()))) // (4)
                 .toArray(OrderSpecifier[]::new); // (5)
     }
-
+    /** 해당 게시글 번호에 대한 공유 게시글 조회-> 좋아요 부분에서 사용 됨 **/
     public Optional<ShareBoard> findShareBoardByBoardNo(Long boardNo){
 
         ShareBoard shareBoard = jpaQueryFactory
