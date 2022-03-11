@@ -25,17 +25,17 @@ public interface ShareBoardRepository extends JpaRepository<ShareBoard, Long> { 
 	// 조회 수 증가.
 	@Transactional
 	@Modifying
-	@Query(value ="update share_board set hit = hit + 1 where board_no = :board_no", nativeQuery = true)
-	void updateView(@Param("board_no") Long boardNo);
+	@Query(value ="update share_board set hit = hit + 1 where board_no = :boardNo", nativeQuery = true)
+	void updateView(@Param("boardNo") Long boardNo);
 
 	@Query(value="select s.board_no, s.description,s.created_at, fd.diary_no, fd.image_path, d.weight, f.food_name, f.kcal, f.carbohydrate, f.protein, f.fat\n" +
 			"from share_board s \n" +
 			"join food_diary fd on (s.diary_no = fd.diary_no)\n" +
 			"join diet d on (fd.diary_no = d.history_id)\n" +
 			"join food f on (f.food_name = d.food_name)\n" +
-			"where s.board_no = :board_no "
+			"where s.board_no = :boardNo "
 			,nativeQuery = true)
-	List<ShareBoardFindRes> findShareBoard(Long boardNo);
+	List<ShareBoardFindRes> findShareBoard(@Param("boardNo") Long boardNo);
 
 	@Query(value="select s.board_no, s.hit, s.created_at, fd.image_path, s.description, s.reply_cnt\n" +
 			"from (select c.board_no, sb.hit, sb.created_at, sb.description, sb.diary_no, count(*) as reply_cnt\n" +

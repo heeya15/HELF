@@ -13,7 +13,7 @@ import lombok.Setter;
 @ApiModel("UserLoginPostRequest")
 public class UserLoginReq {
 	@ApiModelProperty(name="유저 ID", example="ssafy_web")
-	String user_id;
+	String userId;
 	@ApiModelProperty(name="유저 Password", example="your_password")
-	String user_password;
+	String userPassword;
 }

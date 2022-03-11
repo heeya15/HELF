@@ -31,12 +31,12 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public User registerUser(UserRegisterReq userRegisterInfo) {
 		User user = new User();
-		user.setUserId(userRegisterInfo.getUser_id());
+		user.setUserId(userRegisterInfo.getUserId());
 		// 보안을 위해서 유저 패스워드 암호화 하여 디비에 저장.
-		user.setUserPassword(passwordEncoder.encode(userRegisterInfo.getUser_password()));
-		user.setUserName(userRegisterInfo.getUser_name());
+		user.setUserPassword(passwordEncoder.encode(userRegisterInfo.getUserPassword()));
+		user.setUserName(userRegisterInfo.getUserName());
 		user.setBirthday(userRegisterInfo.getBirthday());
-		user.setUserEmail(userRegisterInfo.getUser_email());
+		user.setUserEmail(userRegisterInfo.getUserEmail());
 		return userRepository.save(user);
 	}
 
@@ -54,10 +54,10 @@ public class UserServiceImpl implements UserService {
 	@Transactional
 	@Override
 	public void updateUser(UserUpdateReq updateUserDto) {
-		User user = userRepositorySupport.findUserByUserId(updateUserDto.getUser_id()).get();
+		User user = userRepositorySupport.findUserByUserId(updateUserDto.getUserId()).get();
 		// 보안을 위해서 유저 패스워드 암호화 하여 디비에 저장.
-		String password = passwordEncoder.encode(updateUserDto.getUser_password());
-		user.updateUser(updateUserDto.getUser_name(),password);
+		String password = passwordEncoder.encode(updateUserDto.getUserPassword());
+		user.updateUser(updateUserDto.getUserName(),password);
 	}
 
 	@Override
@@ -77,9 +77,9 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public User getUser(UserFindPasswordReq userFindPasswordPostReq) {
-		String userId = userFindPasswordPostReq.getUser_id();
-		String userName = userFindPasswordPostReq.getUser_name();
-		String userEmail = userFindPasswordPostReq.getUser_email();
+		String userId = userFindPasswordPostReq.getUserId();
+		String userName = userFindPasswordPostReq.getUserName();
+		String userEmail = userFindPasswordPostReq.getUserEmail();
 
 		Optional<User> user = userRepository.findByUserIdAndUserNameAndUserEmail(userId, userName, userEmail);
 

@@ -12,11 +12,11 @@ import lombok.Setter;
 @NoArgsConstructor /** Cannot construct instance of~ error를 해결해주었다.  파라미터가 없는 생성자 만들어줌* */ 
 public class UserUpdateReq {
 	@ApiModelProperty(name = "유저 id")
-	private String user_id;
+	private String userId;
 
 	@ApiModelProperty(name = "유저 Password")
-	private String user_password;
+	private String userPassword;
 
 	@ApiModelProperty(name = "유저 이름")
-	private String user_name;
+	private String userName;
 }

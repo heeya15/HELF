@@ -16,12 +16,12 @@ import javax.validation.constraints.Email;
 public class UserFindPasswordReq {
 
 	@ApiModelProperty(name="유저 ID", example="ssafy1")
-	private String user_id;
+	private String userId;
 
 	@ApiModelProperty(name="유저 Name", example="kimssafy")
-	private String user_name;
+	private String userName;
 
 	@ApiModelProperty(name="유저 Email", example="ssafy1@ssafy.com")
 	@Email(message = "이메일 형식이 아닙니다.")
-	private String user_email;
+	private String userEmail;
 }
