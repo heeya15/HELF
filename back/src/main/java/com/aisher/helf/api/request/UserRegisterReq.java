@@ -16,18 +16,18 @@ import java.time.LocalDate;
 public class UserRegisterReq {
 
 	@ApiModelProperty(name="유저 ID", example="ssafy1")
-	private String user_id;
+	private String userId;
 
 	@ApiModelProperty(name="유저 Password", example="ssafy11!")
-	private String user_password;
+	private String userPassword;
 
 	@ApiModelProperty(name="유저 Name", example="kimssafy")
-	private String user_name;
+	private String userName;
 
 	@ApiModelProperty(name="유저 birthday")
 	private LocalDate birthday;
 
 	@ApiModelProperty(name="유저 Email", example="ssafy@ssafy.com")
 	@Email(message = "이메일 형식이 아닙니다.")
-	private String user_email;
+	private String userEmail;
 }

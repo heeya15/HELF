@@ -17,7 +17,7 @@ public interface CommentRepository extends JpaRepository<Comment, Integer>{
             "from user u \n" +
             "join comment c on (u.user_id = c.user_id)\n" +
             "join share_board sb on (sb.board_no = c.board_no)\n" +
-            "where c.board_no = :board_no\n" +
+            "where c.board_no = :boardNo\n" +
             "order by c.comment_no asc;"
             , nativeQuery = true)
 	List<CommentFindAllRes> findAllByBoardNo(@Param("boardNo") Long boardNo);

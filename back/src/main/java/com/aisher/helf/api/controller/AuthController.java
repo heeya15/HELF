@@ -37,8 +37,8 @@ public class AuthController {
         @ApiResponse(code = 500, message = "서버 오류", response = BaseResponseBody.class)
     })
 	public ResponseEntity<UserLoginRes> login(@RequestBody @ApiParam(value="로그인 정보", required = true) UserLoginReq loginInfo) {
-		String userId = loginInfo.getUser_id();
-		String password = loginInfo.getUser_password();
+		String userId = loginInfo.getUserId();
+		String password = loginInfo.getUserPassword();
 		
 		User user = userService.getUserByUserId(userId);
 		// 아이디를 잘못 입력한 경우

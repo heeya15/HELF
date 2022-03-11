@@ -103,7 +103,7 @@ public class UserController {
 	public ResponseEntity<String> updateUser(@RequestBody UserUpdateReq updateUserDto) throws Exception {
 		User user;
 		try {
-			user = userService.getUserByUserId(updateUserDto.getUser_id());
+			user = userService.getUserByUserId(updateUserDto.getUserId());
 		}catch(NoSuchElementException E) {
 			System.out.println("회원 수정 실패");
 			return  ResponseEntity.status(500).body("해당 회원 정보가 없어서 회원 수정 실패");
@@ -119,11 +119,11 @@ public class UserController {
 			        @ApiResponse(code = 401, message = "인증 실패"),
 			        @ApiResponse(code = 404, message = "사용자 없음"),
 			        @ApiResponse(code = 500, message = "해당 회원 없음")})
-	@DeleteMapping("/remove/{user_id}")
-	public ResponseEntity<String> deleteUser(@PathVariable("user_id") String id) throws Exception {
+	@DeleteMapping("/remove/{userId}")
+	public ResponseEntity<String> deleteUser(@PathVariable("userId") String userId) throws Exception {
 		boolean result;
 		try {
-			User user = userService.getUserByUserId(id);
+			User user = userService.getUserByUserId(userId);
 			result = userService.deleteByUserId(user);
 		}catch(NoSuchElementException E) {
 			logger.debug("회원 탈퇴 실패");
