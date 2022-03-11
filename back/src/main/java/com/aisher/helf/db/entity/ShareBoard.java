@@ -8,6 +8,7 @@ import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -32,11 +33,23 @@ public class ShareBoard {
 
     @JsonIgnore
     @OneToMany(mappedBy = "shareboard", fetch = FetchType.EAGER)
-    List<Comment> replies;
+    List<Comment> replies = new ArrayList<>();
 
     //식단 일지 번호
     @OneToOne
     @JoinColumn(name = "diary_no")
     @OnDelete(action = OnDeleteAction.CASCADE)
     FoodDiary diaryNo;
+
+    @Override
+    public String toString() {
+        return "ShareBoard{" +
+                "boardNo=" + boardNo +
+                ", description='" + description + '\'' +
+                ", hit=" + hit +
+                ", createdAt=" + createdAt +
+                ", replies=" + replies +
+                ", diaryNo=" + diaryNo.getDiaryNo() +
+                '}';
+    }
 }

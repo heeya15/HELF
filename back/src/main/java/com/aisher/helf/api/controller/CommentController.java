@@ -66,7 +66,7 @@ public class CommentController {
 	}
 	
 	/** 댓글 전체 조회 입니다. */
-	@ApiOperation(value="댓글 전체 조회", notes="<strong>해당 게시글의 댓글을 전체 조회를</strong>시켜줍니다.")
+	@ApiOperation(value="해당 게시글에 대한 댓글 전체 조회", notes="<strong>해당 게시글에 대한 댓글 전체 조회를</strong>시켜줍니다.")
 	@ApiResponses({ @ApiResponse(code = 200, message = "성공"),
 					@ApiResponse(code = 401, message = "인증 실패"),
 					@ApiResponse(code = 404, message = "댓글 없음"),
@@ -76,6 +76,18 @@ public class CommentController {
         List<CommentFindAllRes> comments = commentService.findAllByBoardNo(board_no);
         return new ResponseEntity<List<CommentFindAllRes>>(comments,HttpStatus.OK);
     }
+
+	/** 해당 게시글에 달린 댓글 전체 개수 조회 입니다. */
+	@ApiOperation(value="해당 게시글 댓글 전체 개수 조회", notes="<strong>해당 게시글 댓글 전체 개수 조회를</strong>시켜줍니다.")
+	@ApiResponses({ @ApiResponse(code = 200, message = "성공"),
+			@ApiResponse(code = 401, message = "인증 실패"),
+			@ApiResponse(code = 404, message = "댓글 없음"),
+			@ApiResponse(code = 500, message = "서버 오류")})
+	@GetMapping("/find/{board_no}")
+	public ResponseEntity<Integer> findReplyCnt(@PathVariable Long board_no){
+		List<CommentFindAllRes> comments = commentService.findAllByBoardNo(board_no);
+		return new ResponseEntity<Integer>(comments.size(),HttpStatus.OK);
+	}
 
 	/** 댓글 수정 입니다. */
 	@ApiOperation(value = "댓글 정보 수정 (token)", notes = "댓글 정보 수정.")
