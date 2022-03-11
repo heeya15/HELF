@@ -1,7 +1,9 @@
 package com.aisher.helf.api.service;
 
+import com.aisher.helf.api.response.ShareBoardAllRes;
 import com.aisher.helf.api.response.ShareBoardFindAllGetRes;
 import com.aisher.helf.api.response.ShareBoardFindGetRes;
+import com.aisher.helf.db.entity.FoodDiary;
 import com.aisher.helf.db.entity.LikeList;
 import com.aisher.helf.db.entity.ShareBoard;
 import com.aisher.helf.db.entity.User;
@@ -10,9 +12,13 @@ import com.aisher.helf.db.repository.LikeListRepositorySupport;
 import com.aisher.helf.db.repository.ShareBoardRepository;
 import com.aisher.helf.db.repository.ShareBoardRepositorySupport;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service("shareboardService")
@@ -42,9 +48,37 @@ public class ShareBoardServiceImpl implements ShareBoardService {
 
     /** 모든 공유 게시글의 정보를 가져오는 findAllBoard 입니다. (목록 부분에 사용)*/
     @Override
-    public List<ShareBoardFindAllGetRes> findAllShareBoard() {
-        List<ShareBoardFindAllGetRes> shareboards = shareboardRepository.findAllShareBoard();
-        return shareboards;
+    public Page<ShareBoard> findAllShareBoard(Pageable pageable) {
+        Page<ShareBoard> shareBoards = shareBoardRepositorySupport.findAllShareBoard(pageable);
+        return shareBoards;
+    }
+
+    @Override
+    public Page<ShareBoardAllRes> findInfoShareBoard(Page<ShareBoard> shareBoards, String userId) {
+        List<ShareBoardAllRes> temp = new ArrayList<>();
+
+        Pageable pageable = shareBoards.getPageable();
+        long total = shareBoards.getTotalElements();
+
+        for (ShareBoard s : shareBoards.getContent()) {
+            ShareBoardAllRes sr = new ShareBoardAllRes();
+            FoodDiary foodDiary = s.getDiaryNo();
+            sr.setBoardNo(s.getBoardNo());
+            sr.setHit(s.getHit());
+            sr.setCreatedAt(s.getCreatedAt());
+            sr.setDescription(s.getDescription());
+            sr.setImagePath(foodDiary.getImagePath());
+
+            LikeList likeList = likeListRepositorySupport.findLikeListByUserIdAndBoardNo(userId, s.getBoardNo()).orElse(null);
+            boolean isLike;
+            if(likeList == null) isLike = false;
+            else isLike = true;
+            sr.setLike(isLike);
+            temp.add(sr);
+        }
+
+        Page<ShareBoardAllRes> res = new PageImpl<ShareBoardAllRes>(temp,pageable,total);
+        return res;
     }
 
     @Override

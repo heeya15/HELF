@@ -39,4 +39,5 @@ public class ShareBoard {
     @JoinColumn(name = "diary_no")
     @OnDelete(action = OnDeleteAction.CASCADE)
     FoodDiary diaryNo;
+
 }
