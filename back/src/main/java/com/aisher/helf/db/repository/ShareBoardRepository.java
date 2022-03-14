@@ -30,9 +30,9 @@ public interface ShareBoardRepository extends JpaRepository<ShareBoard, Long> { 
 
 	@Query(value="select s.board_no, s.description,s.created_at, fd.diary_no, fd.image_path, d.weight, f.food_name, f.kcal, f.carbohydrate, f.protein, f.fat\n" +
 			"from share_board s \n" +
-			"join food_diary fd on (s.diary_no = fd.diary_no)\n" +
-			"join diet d on (fd.diary_no = d.history_id)\n" +
-			"join food f on (f.food_name = d.food_name)\n" +
+			"join diet_diary fd on (s.diary_no = fd.diary_no)\n" +
+			"join diet d on (fd.diary_no = d.diary_no)\n" +
+			"join food f on (f.food_no = d.food_no)\n" +
 			"where s.board_no = :boardNo "
 			,nativeQuery = true)
 	List<ShareBoardFindRes> findShareBoard(@Param("boardNo") Long boardNo);
@@ -42,7 +42,7 @@ public interface ShareBoardRepository extends JpaRepository<ShareBoard, Long> { 
 			"\t  from comment c join share_board sb on (c.board_no = sb.board_no)\n" +
 			"\t  group by c.board_no\n" +
 			"\t  order by c.board_no, sb.diary_no) as s\n" +
-			"\t join food_diary fd on (s.diary_no = fd.diary_no)"
+			"\t join diet_diary fd on (s.diary_no = fd.diary_no)"
 			,nativeQuery = true)
 	List<ShareBoardFindAllRes>findAllShareBoard();
 }
