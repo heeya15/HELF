@@ -6,8 +6,6 @@ import com.querydsl.core.types.dsl.*;
 
 import com.querydsl.core.types.PathMetadata;
 import javax.annotation.Generated;
-
-import com.aisher.helf.db.entity.BaseEntity;
 import com.querydsl.core.types.Path;
 
 
@@ -17,7 +15,7 @@ import com.querydsl.core.types.Path;
 @Generated("com.querydsl.codegen.SupertypeSerializer")
 public class QBaseEntity extends EntityPathBase<BaseEntity> {
 
-    private static final long serialVersionUID = 1717725014L;
+    private static final long serialVersionUID = -468390449L;
 
     public static final QBaseEntity baseEntity = new QBaseEntity("baseEntity");
 

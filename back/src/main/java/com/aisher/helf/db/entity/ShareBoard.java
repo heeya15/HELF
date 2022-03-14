@@ -39,7 +39,7 @@ public class ShareBoard {
     @OneToOne
     @JoinColumn(name = "diary_no")
     @OnDelete(action = OnDeleteAction.CASCADE)
-    FoodDiary diaryNo;
+    DietDiary diaryNo;
 
     @Override
     public String toString() {

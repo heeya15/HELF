@@ -2,7 +2,7 @@ package com.aisher.helf.api.service;
 
 import com.aisher.helf.api.response.ShareBoardAllRes;
 import com.aisher.helf.api.response.ShareBoardFindRes;
-import com.aisher.helf.db.entity.FoodDiary;
+import com.aisher.helf.db.entity.DietDiary;
 import com.aisher.helf.db.entity.LikeList;
 import com.aisher.helf.db.entity.ShareBoard;
 import com.aisher.helf.db.entity.User;
@@ -61,12 +61,12 @@ public class ShareBoardServiceImpl implements ShareBoardService {
 
         for (ShareBoard s : shareBoards.getContent()) {
             ShareBoardAllRes sr = new ShareBoardAllRes();
-            FoodDiary foodDiary = s.getDiaryNo();
+            DietDiary dietDiary = s.getDiaryNo();
             sr.setBoardNo(s.getBoardNo());
             sr.setHit(s.getHit());
             sr.setCreatedAt(s.getCreatedAt());
             sr.setDescription(s.getDescription());
-            sr.setImagePath(foodDiary.getImagePath());
+            sr.setImagePath(dietDiary.getImagePath());
 
             LikeList likeList = likeListRepositorySupport.findLikeListByUserIdAndBoardNo(userId, s.getBoardNo()).orElse(null);
             boolean isLike;
