@@ -44,11 +44,11 @@ public class CommentController {
 	public ResponseEntity CommentRegister(@RequestBody CommentRegisterReq commentReq, @ApiIgnore Authentication authentication)
 	{
 		UserDetails userDetails = (UserDetails) authentication.getDetails();
-		String user_id = userDetails.getUsername();
+		String userId = userDetails.getUsername();
 		
 		Comment comment;
 		try {
-			commentReq.setUserId(user_id);
+			commentReq.setUserId(userId);
 			comment = commentService.registerComment(commentReq);
 		}catch(Exception E) {
 			E.printStackTrace();
@@ -63,7 +63,7 @@ public class CommentController {
 					@ApiResponse(code = 401, message = "인증 실패"),
 					@ApiResponse(code = 404, message = "댓글 없음"),
 					@ApiResponse(code = 500, message = "서버 오류")})
-	@GetMapping("/findAll/{board_no}")
+	@GetMapping("/findAll/{boardNo}")
     public ResponseEntity<List<CommentFindAllRes>> findAllComment(@PathVariable Long boardNo){
         List<CommentFindAllRes> comments = commentService.findAllByBoardNo(boardNo);
         return new ResponseEntity<List<CommentFindAllRes>>(comments,HttpStatus.OK);
@@ -75,7 +75,7 @@ public class CommentController {
 			@ApiResponse(code = 401, message = "인증 실패"),
 			@ApiResponse(code = 404, message = "댓글 없음"),
 			@ApiResponse(code = 500, message = "서버 오류")})
-	@GetMapping("/find/{board_no}")
+	@GetMapping("/find/{boardNo}")
 	public ResponseEntity<Integer> findReplyCnt(@PathVariable Long boardNo){
 		List<CommentFindAllRes> comments = commentService.findAllByBoardNo(boardNo);
 		return new ResponseEntity<Integer>(comments.size(),HttpStatus.OK);

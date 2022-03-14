@@ -49,14 +49,14 @@ public class ShareBoardController {
         return ResponseEntity.status(200).body(shareBoardAllRes);
     }
 
-    @GetMapping("/find/{board_no}")
-    @ApiOperation(value ="공유 게시글 상세  조회", notes ="해당 Board_no 공유 게시판 상세 정보 출력")
+    @GetMapping("/find/{boardNo}")
+    @ApiOperation(value ="공유 게시글 상세  조회", notes ="해당 boardNo 공유 게시판 상세 정보 출력")
     @ApiResponses({ @ApiResponse(code = 200, message = "성공"),
             @ApiResponse(code = 401, message = "인증 실패"),
             @ApiResponse(code = 404, message = "사용자 없음"),
             @ApiResponse(code = 500, message = "서버 오류") })
-    public ResponseEntity<List<ShareBoardFindRes>> findShareBoardInfo(@PathVariable Long board_no) {
-        List<ShareBoardFindRes> shareboardInfo = shareboardService.findByShareBoardId(board_no);
+    public ResponseEntity<List<ShareBoardFindRes>> findShareBoardInfo(@PathVariable Long boardNo) {
+        List<ShareBoardFindRes> shareboardInfo = shareboardService.findByShareBoardId(boardNo);
         return new ResponseEntity<List<ShareBoardFindRes>>(shareboardInfo, HttpStatus.OK);
     }
 
