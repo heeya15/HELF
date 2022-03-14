@@ -77,7 +77,7 @@ public class FoodController {
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
     }
 
-    @PostMapping("/remove/{foodNo}")
+    @DeleteMapping("/remove/{foodNo}")
     @ApiOperation(value = "음식 삭제", notes = "<strong>음식 번호</strong>을 통해 음식 정보를 삭제한다.")
     @ApiResponses({
             @ApiResponse(code = 200, message = "성공"),

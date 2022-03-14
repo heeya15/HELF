@@ -6,9 +6,8 @@ import com.querydsl.core.types.dsl.*;
 
 import com.querydsl.core.types.PathMetadata;
 import javax.annotation.Generated;
-
-import com.aisher.helf.db.entity.User;
 import com.querydsl.core.types.Path;
+import com.querydsl.core.types.dsl.PathInits;
 
 
 /**
@@ -17,24 +16,23 @@ import com.querydsl.core.types.Path;
 @Generated("com.querydsl.codegen.EntitySerializer")
 public class QUser extends EntityPathBase<User> {
 
-    private static final long serialVersionUID = 846542477L;
+    private static final long serialVersionUID = -263697466L;
 
     public static final QUser user = new QUser("user");
 
-    public final QBaseEntity _super = new QBaseEntity(this);
+    public final DatePath<java.time.LocalDate> birthday = createDate("birthday", java.time.LocalDate.class);
 
-    public final StringPath department = createString("department");
+    public final DateTimePath<java.time.LocalDateTime> joinDate = createDateTime("joinDate", java.time.LocalDateTime.class);
 
-    //inherited
-    public final NumberPath<Long> id = _super.id;
+    public final ListPath<LikeList, QLikeList> likeList = this.<LikeList, QLikeList>createList("likeList", LikeList.class, QLikeList.class, PathInits.DIRECT2);
 
-    public final StringPath name = createString("name");
-
-    public final StringPath password = createString("password");
-
-    public final StringPath position = createString("position");
+    public final StringPath userEmail = createString("userEmail");
 
     public final StringPath userId = createString("userId");
+
+    public final StringPath userName = createString("userName");
+
+    public final StringPath userPassword = createString("userPassword");
 
     public QUser(String variable) {
         super(User.class, forVariable(variable));

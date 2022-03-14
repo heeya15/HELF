@@ -1,14 +1,19 @@
 package com.aisher.helf.db.entity;
 
-import lombok.Data;
+import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 
-@Data
 @Entity
+@Setter
+@Getter
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString
+@Builder
 public class Diet {
     @Id
     @Column(name = "diet_no")
@@ -20,9 +25,9 @@ public class Diet {
     int weight;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "history_id")
+    @JoinColumn(name = "diary_no")
     @OnDelete(action = OnDeleteAction.CASCADE)
-    private FoodDiary foodDiary;
+    private DietDiary diaryNo;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "food_no")

@@ -1,6 +1,6 @@
 package com.aisher.helf.api.response;
 
-import com.aisher.helf.db.entity.FoodDiary;
+import com.aisher.helf.db.entity.DietDiary;
 import com.aisher.helf.db.entity.ShareBoard;
 import com.aisher.helf.db.repository.LikeListRepositorySupport;
 import io.swagger.annotations.ApiModel;
@@ -28,7 +28,7 @@ public class ShareBoardAllRes {
     LocalDateTime createdAt;
     @ApiModelProperty(name="ShareBoard description")
     String description;
-    @ApiModelProperty(name="FoodDiary imagePath")
+    @ApiModelProperty(name="DietDiary imagePath")
     String imagePath;
     @ApiModelProperty(name="LikeList isLike")
     boolean isLike;
@@ -41,9 +41,9 @@ public class ShareBoardAllRes {
 
         for (ShareBoard s : shareBoards.getContent()) {
             ShareBoardAllRes sr = new ShareBoardAllRes();
-            FoodDiary foodDiary = s.getDiaryNo();
+            DietDiary dietDiary = s.getDiaryNo();
 
-            sr.setImagePath(foodDiary.getImagePath());
+            sr.setImagePath(dietDiary.getImagePath());
 
             temp.add(sr);
         }
