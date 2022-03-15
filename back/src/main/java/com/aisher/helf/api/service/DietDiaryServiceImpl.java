@@ -12,6 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -32,10 +35,12 @@ public class DietDiaryServiceImpl implements DietDiaryService{
     @Override
     @Transactional
     public DietDiary registerDietDiary(DietDiaryRegisterReq dietDiaryRegisterReq) {
-        // 식단 일지 table 에 등록
-        DietDiary dietDiary = dietDiaryRepository.save(dietDiaryRegisterReq.toEntity());
+        // String 형태로 받은 날짜 데이터를 LocalDateTime으로 변경한 뒤, DB에 저장
+        LocalDateTime diaryDate = LocalDateTime.parse(dietDiaryRegisterReq.getDiaryDate(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
 
-        int dietDiaryNo = dietDiaryRepository.getDietDiaryNo();
+        // 식단 일지 table 에 등록
+        DietDiary dietDiary = dietDiaryRepository.save(dietDiaryRegisterReq.toEntity(diaryDate));
+        int dietDiaryNo = dietDiaryRepository.getDietDiaryNo();     // 현재 저장하는 식단 일지 번호 (dietDiaryNo) 가져오기
 
         // 식단 table 에 등록
         List<DietRegisterReq> dietRegisterReqList = dietDiaryRegisterReq.getDietRegisterReqList();
@@ -54,17 +59,17 @@ public class DietDiaryServiceImpl implements DietDiaryService{
     /** 식단 일지 정보를 번호로 가져오는 findByDietDiaryNo 입니다. **/
     @Override
     public DietDiaryFindRes findByDietDiaryNo(int dietDiaryNo) {
-        DietDiary dietDiaryRegisterReq = dietDiaryRepository.findById(dietDiaryNo);
-        System.out.println(">>>>>>>>>>>>>>>>>>> 수정할 데이터 : " + dietDiaryRegisterReq.toString());
+        DietDiary dietDiary = dietDiaryRepository.findById(dietDiaryNo);
+        System.out.println(">>>>>>>>>>>>>>>>>>> 수정할 데이터 : " + dietDiary.toString());
 
         DietDiaryFindRes dietDiaryFindRes = new DietDiaryFindRes();
-        dietDiaryFindRes.setDiaryNo(dietDiaryRegisterReq.getDiaryNo());
-        dietDiaryFindRes.setDiaryDate(dietDiaryRegisterReq.getDiaryDate());
-        dietDiaryFindRes.setMealTime(dietDiaryRegisterReq.getMealTime());
-        dietDiaryFindRes.setIsShared(dietDiaryRegisterReq.getIsShared());
-        dietDiaryFindRes.setDescription(dietDiaryRegisterReq.getDescription());
+        dietDiaryFindRes.setDiaryNo(dietDiary.getDiaryNo());
+        dietDiaryFindRes.setDiaryDate(dietDiary.getDiaryDate());
+        dietDiaryFindRes.setMealTime(dietDiary.getMealTime());
+        dietDiaryFindRes.setIsShared(dietDiary.getIsShared());
+        dietDiaryFindRes.setDescription(dietDiary.getDescription());
 
-        List<DietFindRes> dietFindResList = dietRepository.findAllDiet(dietDiaryRegisterReq.getDiaryNo());
+        List<DietFindRes> dietFindResList = dietRepository.findAllDiet(dietDiary.getDiaryNo());
         dietDiaryFindRes.setDietFindResList(dietFindResList);
 
         System.out.println(dietDiaryFindRes.toString());
@@ -73,16 +78,46 @@ public class DietDiaryServiceImpl implements DietDiaryService{
 
     /** 모든 식단 일지 정보를 가져오는 findAllFood 입니다. **/
     @Override
-    public List<DietDiary> findAllDietDiary() {
-        return null;
+    public List<DietDiaryFindRes> findAllByDiaryDate(String date) {
+        // 원하는 날짜의 식단 일지 정보 가져오기
+        List<DietDiary> dietDiaryList = dietDiaryRepository.findByDiaryDateLike(date);
+
+        List<DietDiaryFindRes> dietDiaryFindResList = new ArrayList<DietDiaryFindRes>();
+        for(int i=0; i<dietDiaryList.size(); i++) {
+            // 해당 일자에 기록한 식단 일지 하나 하나 세팅
+            DietDiaryFindRes dietDiaryFindRes = new DietDiaryFindRes();
+
+            dietDiaryFindRes.setDiaryNo(dietDiaryList.get(i).getDiaryNo());
+            dietDiaryFindRes.setDiaryDate(dietDiaryList.get(i).getDiaryDate());
+            dietDiaryFindRes.setMealTime(dietDiaryList.get(i).getMealTime());
+            dietDiaryFindRes.setIsShared(dietDiaryList.get(i).getIsShared());
+            dietDiaryFindRes.setDescription(dietDiaryList.get(i).getDescription());
+
+            List<DietFindRes> dietFindResList = dietRepository.findAllDiet(dietDiaryList.get(i).getDiaryNo());
+            dietDiaryFindRes.setDietFindResList(dietFindResList);
+
+            // 하나의 세팅이 완료되었다면 최종 list에 추가
+            dietDiaryFindResList.add(dietDiaryFindRes);
+        }
+        return dietDiaryFindResList;
     }
 
     /** 식단 일지 정보를 수정하는 updateDietDiary 입니다. **/
     @Override
-    public void updateDietDiary(int dietDiaryNo) {
+    public void updateDietDiary(DietDiary dietDiary, DietDiaryRegisterReq dietDiaryRegisterReq) {
+        // 식단 일지 테이블 수정
+        dietDiary.updateDietDiary(dietDiaryRegisterReq);
+
+        // 식단 테이블 기존의 데이터 삭제 후, 새로운 데이터로 생성
+        dietRepository.deleteByDietDiary(dietDiary.getDiaryNo());
+        List<DietRegisterReq> dietRegisterReqList = dietDiaryRegisterReq.getDietRegisterReqList();
+        for(int i=0; i<dietRegisterReqList.size(); i++) {
+            int foodNo = foodRepository.findFoodName(dietRegisterReqList.get(i).getFoodName());
+            dietRepository.save(dietRegisterReqList.get(i).toEntity(dietDiary.getDiaryNo(), foodNo));
+        }
     }
 
-    /** 식단 일지 정보를 수정하는 deleteDietDiary 입니다. **/
+    /** 식단 일지 정보를 삭제하는 deleteDietDiary 입니다. **/
     @Override
     public void deleteDietDiary(DietDiary dietDiary) {
         dietDiaryRepository.delete(dietDiary);

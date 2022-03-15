@@ -1,10 +1,12 @@
 package com.aisher.helf.db.repository;
 
 import com.aisher.helf.db.entity.DietDiary;
-import org.springframework.data.repository.query.Param;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 @Repository
 public interface DietDiaryRepository extends JpaRepository<DietDiary, Integer> {
@@ -17,4 +19,9 @@ public interface DietDiaryRepository extends JpaRepository<DietDiary, Integer> {
 
     // 식단 일지 번호 (diary_no)를 이용하여 데이터 검색
     DietDiary findById(@Param("dietDiaryNo") int dietDiaryNo);
+
+    @Query(value = "select * \n" +
+            "from diet_diary \n" +
+            "where diary_date like %:date% ", nativeQuery = true)
+    List<DietDiary> findByDiaryDateLike(@Param("date") String date);
 }
