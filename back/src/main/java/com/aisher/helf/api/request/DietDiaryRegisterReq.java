@@ -25,7 +25,7 @@ public class DietDiaryRegisterReq {
     private int diaryNo;
 
     @ApiModelProperty(name = "날짜", example="2020-03-14 00:00:00")
-    private LocalDateTime diaryDate;
+    private String diaryDate;
 
     @ApiModelProperty(name = "시간대 분류", example="아침")
     private String mealTime;
@@ -46,13 +46,13 @@ public class DietDiaryRegisterReq {
     @JsonIgnore
     private String userId;
 
-    public DietDiary toEntity() {
+    public DietDiary toEntity(LocalDateTime saveDiaryDate) {
         User user = new User();
         user.setUserId(userId);
 
         return DietDiary.builder()
                 .diaryNo(diaryNo)
-                .diaryDate(diaryDate)
+                .diaryDate(saveDiaryDate)
                 .mealTime(mealTime)
                 .imagePath(imagePath)
                 .isShared(isShared)
