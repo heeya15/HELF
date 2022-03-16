@@ -3,6 +3,7 @@ package com.aisher.helf.api.service;
 import com.aisher.helf.api.request.DietDiaryRegisterReq;
 import com.aisher.helf.api.response.DietDiaryFindRes;
 import com.aisher.helf.db.entity.DietDiary;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -11,7 +12,7 @@ import java.util.List;
  */
 public interface DietDiaryService {
     /** 식단 일지 정보를 생성하는 registerDietDiary 입니다. **/
-    DietDiary registerDietDiary(DietDiaryRegisterReq dietDiaryRegisterReq);
+    DietDiary registerDietDiary(DietDiaryRegisterReq dietDiaryRegisterReq, MultipartFile imagePath) throws Exception;
     /** 식단 일지 정보를 번호로 가져오는 findByDietDiaryNo 입니다. **/
     DietDiary findByDiaryNo(int dietDiaryNo);
     /** 식단 일지 상세정보를 번호로 가져오는 findByDietDiaryNo 입니다. **/

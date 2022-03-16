@@ -3,6 +3,7 @@ package com.aisher.helf.api.controller;
 import com.aisher.helf.api.request.DietDiaryRegisterReq;
 import com.aisher.helf.api.response.DietDiaryFindRes;
 import com.aisher.helf.api.service.DietDiaryService;
+import com.aisher.helf.api.service.S3FileUploadService;
 import com.aisher.helf.common.auth.UserDetails;
 import com.aisher.helf.common.model.response.BaseResponseBody;
 import com.aisher.helf.db.entity.DietDiary;
@@ -14,18 +15,20 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import springfox.documentation.annotations.ApiIgnore;
 
 @Api(value = "식단 일지 API", tags = {"DietDiary"})
 @RestController
 @RequestMapping("/api/dietdiary")
-public class DietDiaryController {
+public class  DietDiaryController {
     public static final Logger logger = LoggerFactory.getLogger(FoodController.class);
     private static final String SUCCESS = "success";
     private static final String FAIL = "fail";
 
     @Autowired
     DietDiaryService dietDiaryService;
+
 
     @PostMapping("/register")
     @ApiOperation(value = "식단 일지 등록", notes = "<strong>식단 일지</strong>를 등록한다.")
@@ -36,7 +39,8 @@ public class DietDiaryController {
             @ApiResponse(code = 500, message = "서버 오류")
     })
     public ResponseEntity<? extends BaseResponseBody> registerFood(
-            @RequestBody @ApiParam(value="식단 일지 등록", required = true) DietDiaryRegisterReq dietDiaryRegisterReq
+            @RequestPart @ApiParam(value="key", required = true) DietDiaryRegisterReq dietDiaryRegisterReq
+            , @RequestPart @ApiParam(value="file") MultipartFile imagePath
             , @ApiIgnore Authentication authentication) {
 
         UserDetails userDetails = (UserDetails) authentication.getDetails();
@@ -46,7 +50,8 @@ public class DietDiaryController {
         try {
             dietDiaryRegisterReq.setUserId(userId);
             System.out.println(dietDiaryRegisterReq.getDietRegisterReqList().size());
-            dietDiary = dietDiaryService.registerDietDiary(dietDiaryRegisterReq);
+            System.out.println(dietDiaryRegisterReq);
+            dietDiary = dietDiaryService.registerDietDiary(dietDiaryRegisterReq, imagePath);
         } catch (Exception E) {
             E.printStackTrace();
             ResponseEntity.status(400).body(BaseResponseBody.of(500, "DB Transaction Failed"));

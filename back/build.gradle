@@ -160,8 +160,12 @@ dependencies {
     implementation('org.kurento:kurento-client:6.16.0')
     implementation('org.kurento:kurento-utils-js:6.15.0')
 
+    //AWS S3관련 의존성 추가
+    implementation("io.awspring.cloud:spring-cloud-aws-context:2.3.3")
+    implementation("org.springframework.cloud:spring-cloud-aws-autoconfigure:2.2.6.RELEASE")
 
-    //IntelliJ용
+
+   //IntelliJ용
     //IntelliJ에서는 하기 annotationProcessor를 쓰면 별도의 querydsl 플러그인 및 플러그인 설정이 불필요.
     annotationProcessor("com.querydsl:querydsl-apt:${querydslVer}:jpa")
 
