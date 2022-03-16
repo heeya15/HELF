@@ -10,6 +10,7 @@ import com.aisher.helf.db.repository.DietRepository;
 import com.aisher.helf.db.repository.FoodRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
@@ -31,10 +32,18 @@ public class DietDiaryServiceImpl implements DietDiaryService{
     @Autowired
     FoodRepository foodRepository;
 
+    @Autowired
+    S3FileUploadService s3FileUploadService;
+
     /** 식단 일지 정보를 생성하는 registerDietDiary 입니다. **/
     @Override
     @Transactional
-    public DietDiary registerDietDiary(DietDiaryRegisterReq dietDiaryRegisterReq) {
+
+    public DietDiary registerDietDiary(DietDiaryRegisterReq dietDiaryRegisterReq, MultipartFile imagePath) throws Exception {
+        // 이미지 업로드
+        String savingFileName = s3FileUploadService.upload(imagePath);
+        dietDiaryRegisterReq.setSaveImagePath(savingFileName);
+
         // String 형태로 받은 날짜 데이터를 LocalDateTime으로 변경한 뒤, DB에 저장
         LocalDateTime diaryDate = LocalDateTime.parse(dietDiaryRegisterReq.getDiaryDate(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
 

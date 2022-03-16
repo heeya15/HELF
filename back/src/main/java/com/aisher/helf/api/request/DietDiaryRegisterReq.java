@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -30,8 +31,7 @@ public class DietDiaryRegisterReq {
     @ApiModelProperty(name = "시간대 분류", example="아침")
     private String mealTime;
 
-    @ApiModelProperty(name = "이미지 경로", example="../../image.JPG")
-    private String imagePath;
+    private String saveImagePath;
 
     @ApiModelProperty(name = "공유 여부", example="1")
     private Boolean isShared;
@@ -54,7 +54,7 @@ public class DietDiaryRegisterReq {
                 .diaryNo(diaryNo)
                 .diaryDate(saveDiaryDate)
                 .mealTime(mealTime)
-                .imagePath(imagePath)
+                .imagePath(saveImagePath)
                 .isShared(isShared)
                 .description(description)
                 .userId(user)
