@@ -5,6 +5,7 @@ import com.aisher.helf.api.request.ShareBoardLikeReq;
 import com.aisher.helf.api.response.ShareBoardAllRes;
 import com.aisher.helf.api.response.ShareBoardFindRes;
 import com.aisher.helf.api.service.ShareBoardService;
+import com.aisher.helf.common.auth.UserDetails;
 import com.aisher.helf.common.model.response.BaseResponseBody;
 import com.aisher.helf.db.entity.ShareBoard;
 import io.swagger.annotations.*;
@@ -15,7 +16,9 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
+import springfox.documentation.annotations.ApiIgnore;
 
 import java.util.List;
 
@@ -36,13 +39,16 @@ public class ShareBoardController {
      *  page랑 size랑 sort는 url에 담아서 넘겨줘야 함.
      *  PageableDefault 에 page 는 기본 0이 처음 페이지 시작 / 인자로 받는 page는 1이 맨 처음 페이지 이다.
      *  */
-    @ApiOperation(value="공유 게시글 전체 조회", notes="<strong>공유 게시글을 전체 조회를</strong>시켜줍니다.")
+    @ApiOperation(value="공유 게시글 전체 조회(token)", notes="<strong>공유 게시글을 전체 조회를</strong>시켜줍니다.")
     @ApiResponses({ @ApiResponse(code = 200, message = "성공"),
             @ApiResponse(code = 401, message = "인증 실패"),
             @ApiResponse(code = 404, message = "사용자 없음"),
             @ApiResponse(code = 500, message = "서버 오류")})
-    @GetMapping("/findAll/{userId}")
-    public ResponseEntity<Page<ShareBoardAllRes>> findAllShareBoard(@PageableDefault(page = 0, size =2, sort = "boardNo", direction = Sort.Direction.DESC) Pageable pageable, @PathVariable String userId){
+    @GetMapping("/findAll")
+    public ResponseEntity<Page<ShareBoardAllRes>> findAllShareBoard(@PageableDefault(page = 0, size =2, sort = "boardNo", direction = Sort.Direction.DESC) Pageable pageable, @ApiIgnore Authentication authentication){
+        UserDetails userDetails = (UserDetails) authentication.getDetails();
+        String userId = userDetails.getUsername();
+
         System.out.println(pageable.getSort());
         Page<ShareBoard> shareBoards = shareboardService.findAllShareBoard(pageable);
         Page<ShareBoardAllRes> shareBoardAllRes = shareboardService.findInfoShareBoard(shareBoards, userId);

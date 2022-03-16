@@ -18,9 +18,9 @@ public interface DietDiaryService {
     /** 식단 일지 상세정보를 번호로 가져오는 findByDietDiaryNo 입니다. **/
     DietDiaryFindRes findByDietDiaryNo(int dietDiaryNo);
     /** 모든 식단 일지 정보를 가져오는 findAllFood 입니다. **/
-    List<DietDiary> findAllDietDiary();
+    List<DietDiaryFindRes> findAllByDiaryDate(String date);
     /** 식단 일지 정보를 수정하는 updateDietDiary 입니다. **/
-    void updateDietDiary(int dietDiaryNo);
-    /** 식단 일지 정보를 수정하는 deleteDietDiary 입니다. **/
+    void updateDietDiary(DietDiary dietDiary, DietDiaryRegisterReq dietDiaryRegisterReq);
+    /** 식단 일지 정보를 삭제하는 deleteDietDiary 입니다. **/
     void deleteDietDiary(DietDiary dietDiary);
 }
