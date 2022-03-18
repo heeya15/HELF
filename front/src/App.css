@@ -36,3 +36,29 @@
     transform: rotate(360deg);
   }
 }
+
+.navBar {
+  display: flex;
+  background-color: #65DA71;
+  justify-content: space-between;
+  flex-direction: row;
+  align-items :flex-end;
+}
+
+.mainIMG {
+  box-sizing: content-box;
+}
+
+
+.welcome {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
+.welcomeStart {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+
