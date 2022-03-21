@@ -1,3 +1,5 @@
+*.idea
+*.gz
 
 # Created by https://www.toptal.com/developers/gitignore/api/react,database,python,macos,windows,jupyternotebooks,visualstudiocode
 # Edit at https://www.toptal.com/developers/gitignore?templates=react,database,python,macos,windows,jupyternotebooks,visualstudiocode
