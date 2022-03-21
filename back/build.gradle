@@ -52,7 +52,7 @@ sourceCompatibility = '1.8'
 
 node {
     download = true
-    version = '14.17.0'
+    version = '16.14.0'
     // Set the work directory where node_modules should be located
     nodeModulesDir = file("${project.projectDir}/../front")
 }
@@ -124,6 +124,10 @@ processResources {
 //[끝]
 
 dependencies {
+    // STMP 라이브러리 추가
+    implementation("org.springframework.boot:spring-boot-starter-mail")
+
+    implementation("org.springframework.boot:spring-boot-starter-validation")
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-websocket")
     implementation("org.springframework.boot:spring-boot-starter-security")
@@ -156,8 +160,12 @@ dependencies {
     implementation('org.kurento:kurento-client:6.16.0')
     implementation('org.kurento:kurento-utils-js:6.15.0')
 
+    //AWS S3관련 의존성 추가
+    implementation("io.awspring.cloud:spring-cloud-aws-context:2.3.3")
+    implementation("org.springframework.cloud:spring-cloud-aws-autoconfigure:2.2.6.RELEASE")
 
-    //IntelliJ용
+
+   //IntelliJ용
     //IntelliJ에서는 하기 annotationProcessor를 쓰면 별도의 querydsl 플러그인 및 플러그인 설정이 불필요.
     annotationProcessor("com.querydsl:querydsl-apt:${querydslVer}:jpa")
 
