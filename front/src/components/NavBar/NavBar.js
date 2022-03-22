@@ -20,7 +20,7 @@ function NavBar() {
         <Link to="/"  className='anc'>PT 자세교정</Link>          
       </div>
       <div>
-        <Link to="/"  className='anc'>회원가입</Link>      
+        <Link to="/SignUp"  className='anc'>회원가입</Link>      
         <Link to="/"  className='anc'>로그인</Link>   
       </div>
     </div>

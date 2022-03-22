@@ -10,7 +10,7 @@ import { Route, Link } from 'react-router-dom';
 import NavBar from './components/NavBar/NavBar'
 import SharedBoard from './components/SharedBoard/SharedBoard'
 import Main from './components/Main/Main'
-
+import SignUp from './pages/User/SignUp/SignUp'
 // import Placeholder from 'react-bootstrap/Placeholder';
 
 
@@ -24,6 +24,7 @@ function App() {
       < NavBar/>
       <Route exact path="/" component={Main} />
       <Route path="/SharedBoard" component={SharedBoard} />
+      <Route path="/SignUp" component={SignUp} />
       
     </div>
   );
