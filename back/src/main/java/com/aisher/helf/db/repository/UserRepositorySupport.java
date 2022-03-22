@@ -23,7 +23,20 @@ public class UserRepositorySupport {
         if(user == null) return Optional.empty();
         return Optional.ofNullable(user);
     }
-
+    // id 중복체크 함수
+    public boolean findByUserIdEquals(String userId) {
+        User user = jpaQueryFactory.select(qUser).from(qUser)
+                .where(qUser.userId.eq(userId)).fetchOne();
+        if(user == null) return true;
+        return false;
+    }
+    // 이메일 중복체크 함수
+    public boolean  findByUserEmailEquals(String userEmail) {
+        User user = jpaQueryFactory.select(qUser).from(qUser)
+                .where(qUser.userEmail.eq(userEmail)).fetchOne();
+        if(user == null) return true;
+        return false; // 중복이 있다면 false
+    }
 //    public Optional<User> findByUserIdAndUserNameAndUserEmail(String userId, String userName, String userEmail) {
 //        User user = jpaQueryFactory.select(qUser).from(qUser)
 //                .where(qUser.userId.eq(userId)

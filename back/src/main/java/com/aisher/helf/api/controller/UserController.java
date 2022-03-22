@@ -132,4 +132,20 @@ public class UserController {
 		logger.debug("회원 탈퇴 성공");
 		return ResponseEntity.status(200).body("회원 탈퇴 성공");
 	}
+
+	@GetMapping("/idCheck/{user_id}")
+	@ApiOperation(value = "회원 아이디 중복 체크", notes = "회원가입 시 회원 아이디 중복 체크 검사 - <strong> true : 중복 없음 , false : 중복 있음<strong> ")
+	@ApiResponses({ @ApiResponse(code = 200, message = "성공"),
+			@ApiResponse(code = 401, message = "인증 실패"),
+			@ApiResponse(code = 404, message = "사용자 없음"),
+			@ApiResponse(code = 500, message = "서버 오류")
+	})
+	public ResponseEntity<Boolean> idCheck(@PathVariable("user_id") String userId) {
+		System.out.println(userService.checkUserId(userId));
+		if (userService.checkUserId(userId) == true) {
+			System.out.println("id 중복이 없다");
+			return ResponseEntity.status(200).body(userService.checkUserId(userId));
+		} else System.out.println("id 중복이 있다.");
+		return ResponseEntity.status(401).body(userService.checkUserId(userId));
+	}
 }

@@ -14,8 +14,8 @@ public interface UserService {
 	User registerUser(UserRegisterReq userRegisterInfo);
 	User getUserByUserId(String userId);
 	void updateUser(UserUpdateReq updateUserDto);
-	boolean checkUserId(String userid);
-	int checkUserEmail(String userEmail);
+	boolean checkUserId(String userId);
+	boolean checkUserEmail(String userEmail);
 	boolean deleteByUserId(User user);
 	User getUser(UserFindPasswordReq userFindPasswordPostReq);
 	public List<User> findAll();
