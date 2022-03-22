@@ -24,9 +24,6 @@ public class UserRegisterReq {
 	@ApiModelProperty(name="유저 Name", example="kimssafy")
 	private String userName;
 
-	@ApiModelProperty(name="유저 birthday")
-	private LocalDate birthday;
-
 	@ApiModelProperty(name="유저 Email", example="ssafy@ssafy.com")
 	@Email(message = "이메일 형식이 아닙니다.")
 	private String userEmail;
