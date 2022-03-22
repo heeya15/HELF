@@ -1,0 +1,1 @@
+export const BASE_URL = 'https://j6e102.p.ssafy.io:8080/api/';
