@@ -1,0 +1,11 @@
+.logo {
+  height:4rem;
+}
+
+.anc {
+  text-decoration: none;
+  color: black;
+  flex-direction: flex;
+  align-items :center;
+  text-align: center;
+}
