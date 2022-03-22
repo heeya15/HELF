@@ -1,0 +1,40 @@
+import produce from "immer";
+const initialState = {
+  dietThumbnail: null,
+  imagePath: null,
+  mealTime: "",
+  diaryDate: "",
+  description: "",
+  foodName: [],
+};
+
+export const MY_DIET_IMAGE_REQUEST = "MY_DIET_IMAGE_REQUEST";
+export const MY_DIET_IMAGE_SUCCESS = "MY_DIET_IMAGE_SUCCESS";
+export const MY_DIET_IMAGE_FAILURE = "MY_DIET_IMAGE_FAILURE";
+export const MY_DIET_REGISTER_REQUEST = "MY_DIET_REGISTER_REQUEST";
+export const MY_DIET_REGISTER_SUCCESS = "MY_DIET_REGISTER_SUCCESS";
+export const MY_DIET_REGISTER_FAILURE = "MY_DIET_REGISTER_FAILURE";
+
+const reducer = (state = initialState, action) =>
+  produce(state, (draft) => {
+    switch (action.type) {
+      case MY_DIET_IMAGE_REQUEST:
+        break;
+      case MY_DIET_IMAGE_SUCCESS:
+        action.forEach((foods) => {
+          draft.foodName.push(foods);
+        });
+        break;
+      case MY_DIET_IMAGE_FAILURE:
+        break;
+      case MY_DIET_REGISTER_REQUEST:
+        break;
+      case MY_DIET_REGISTER_SUCCESS:
+        break;
+      case MY_DIET_REGISTER_FAILURE:
+        break;
+      default:
+        break;
+    }
+  });
+export default reducer;
