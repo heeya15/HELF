@@ -20,8 +20,6 @@ public class QUser extends EntityPathBase<User> {
 
     public static final QUser user = new QUser("user");
 
-    public final DatePath<java.time.LocalDate> birthday = createDate("birthday", java.time.LocalDate.class);
-
     public final DateTimePath<java.time.LocalDateTime> joinDate = createDateTime("joinDate", java.time.LocalDateTime.class);
 
     public final ListPath<LikeList, QLikeList> likeList = this.<LikeList, QLikeList>createList("likeList", LikeList.class, QLikeList.class, PathInits.DIRECT2);

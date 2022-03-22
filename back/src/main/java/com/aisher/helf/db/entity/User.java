@@ -28,11 +28,6 @@ public class User {
     @Column(name = "user_name", length= 20, nullable = false)
     String userName;
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, timezone = "Asia/Seoul")
-//  @Temporal(TemporalType.DATE)//자바8에서 지원하는 LocalDate, LocalDateTime을 사용할때는 생략 가능
-    @Column(name = "birthday")
-    LocalDate birthday;
-
     @Email
     @Column(name = "user_email",length = 100, nullable = false)
     String userEmail;
