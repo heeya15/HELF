@@ -8,4 +8,6 @@
   flex-direction: flex;
   align-items :center;
   text-align: center;
+  font-size: large;
+  padding: 0rem 1rem;
 }
