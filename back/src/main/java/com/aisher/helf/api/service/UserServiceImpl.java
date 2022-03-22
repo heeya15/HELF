@@ -65,13 +65,15 @@ public class UserServiceImpl implements UserService {
 		return true;
 	}
 	@Override
-	public boolean checkUserId(String userid) {
-		return false;
+	public boolean checkUserId(String userId) {
+		boolean result = userRepositorySupport.findByUserIdEquals(userId);
+		return result;
 	}
 
 	@Override
-	public int checkUserEmail(String userEmail) {
-		return 0;
+	public boolean checkUserEmail(String userEmail) {
+		System.out.println("이메일 체크 함수 들어옴??>> "+ userEmail);
+		return userRepositorySupport.findByUserEmailEquals(userEmail);
 	}
 
 	@Override
