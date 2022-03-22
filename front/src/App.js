@@ -10,6 +10,7 @@ import NavBar from "./components/NavBar/NavBar";
 import SharedBoard from "./components/SharedBoard/SharedBoard";
 import Main from "./components/Main/Main";
 import SignUp from "./pages/User/SignUp/SignUp";
+import LogIn from "./pages/User/LogIn";
 import MyDietRegister from "./components/MyDiet/MyDietRegister";
 // import Placeholder from 'react-bootstrap/Placeholder';
 
@@ -22,6 +23,7 @@ function App() {
       <Route path="/SharedBoard" component={SharedBoard} />
       <Route path="/SignUp" component={SignUp} />
       <Route path="/MyDietRegister" component={MyDietRegister} />
+      <Route path="/LogIn" component={LogIn} />
     </div>
   );
 }
