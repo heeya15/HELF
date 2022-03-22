@@ -18,9 +18,11 @@ function NavBar() {
         <Link to="/"  className='anc'>게시판</Link>      
         <Link to="/"  className='anc'>MY식단</Link>        
         <Route path="/about" component={SharedBoard} />
-        </div>
-        <div>
         <Link to="/"  className='anc'>PT 자세교정</Link>          
+      </div>
+      <div>
+        <Link to="/"  className='anc'>회원가입</Link>      
+        <Link to="/"  className='anc'>로그인</Link>   
       </div>
     </div>
     
