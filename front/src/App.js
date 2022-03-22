@@ -1,8 +1,15 @@
 import logo from './logo.png';
 import './App.css';
+import React from 'react';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
-import Placeholder from 'react-bootstrap/Placeholder';
+import { Route, Link } from 'react-router-dom';
+
+
+// 컴포넌트 추가
+import NavBar from './components/NavBar/NavBar'
+// import Placeholder from 'react-bootstrap/Placeholder';
+
 
 
 
@@ -11,14 +18,7 @@ function App() {
     <div className="App">
       <div className='mainPage'>
       {/* NavBar */}
-      <div className='navBar'>
-        <div>
-        <a href="/#"><img  src={ logo } alt="" /></a>          
-        <a href="/#">게시판</a>          
-        <a href="/#">MY식단</a>          
-        </div>
-        <a href="/#">PT 자세교정</a>          
-      </div>
+      < NavBar/>
 
       {/*  메인페이지 상단 이미지 */}
       <div className='mainIMG'>
@@ -38,6 +38,7 @@ function App() {
       
       <hr/>
       <div className='container'>
+        
         {/* 메인페이지 상단 2 */}
         <div className='welcome2'>
           <h1>우리사이트에 오신것을 환영합니다.</h1> 
