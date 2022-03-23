@@ -23,13 +23,13 @@ function App() {
       {/* NavBar */}
       <NavBar />
       <Route exact path="/" component={Main} />
-      <Route path="/SharedBoard" component={SharedBoard} />
-      <Route path="/SignUp" component={SignUp} />
-      <Route path="/MyPage" component={MyPage} />
-      <Route path="/MyDietRegister" component={MyDietRegister} />
-      <Route path="/LogIn" component={LogIn} />
-      <Route path="/MyDiet" component={MyDiet} />
-      <Route path="/Exercise" component={Exercise} />
+      <Route path="/sharedboard" component={SharedBoard} />
+      <Route path="/signup" component={SignUp} />
+      <Route path="/mypage" component={MyPage} />
+      <Route path="/mydietregister" component={MyDietRegister} />
+      <Route path="/login" component={LogIn} />
+      <Route path="/mydiet" component={MyDiet} />
+      <Route path="/exercise" component={Exercise} />
     </div>
   );
 }

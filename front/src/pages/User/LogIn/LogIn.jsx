@@ -10,7 +10,7 @@ import {
   LoginHeader,
 } from './Login.style';
 import { useHistory } from 'react-router';
-export default function SharedBoard() {
+export default function LogIn() {
   const dispatch = useDispatch(); // 해당 store에 함수에 해당하는 인자로 요청 가능.
   const { logInDone } = useSelector((state) => state.user);
   const history = useHistory();
