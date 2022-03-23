@@ -42,8 +42,8 @@ public class  DietDiaryController {
             @ApiResponse(code = 500, message = "서버 오류")
     })
     public ResponseEntity<? extends BaseResponseBody> registerFood(
-            @RequestPart @ApiParam(value="key", required = true) DietDiaryRegisterReq dietDiaryRegisterReq
-            , @RequestPart @ApiParam(value="file") MultipartFile imagePath
+            @RequestPart(value="key") DietDiaryRegisterReq dietDiaryRegisterReq
+            , @RequestPart(value="file") MultipartFile imagePath
             , @ApiIgnore Authentication authentication) {
 
         UserDetails userDetails = (UserDetails) authentication.getDetails();
@@ -53,7 +53,6 @@ public class  DietDiaryController {
         try {
             dietDiaryRegisterReq.setUserId(userId);
             System.out.println(dietDiaryRegisterReq.getDietRegisterReqList().size());
-            System.out.println(dietDiaryRegisterReq);
             dietDiary = dietDiaryService.registerDietDiary(dietDiaryRegisterReq, imagePath);
         } catch (Exception E) {
             E.printStackTrace();
