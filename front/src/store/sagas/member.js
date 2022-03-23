@@ -8,7 +8,6 @@ import {
 import {
   EmailCheckAPI,
   LoginAPI,
-  LogoutAPI,
   NickNameCheckAPI,
   ResetPasswordAPI,
   SignupAPI,
@@ -33,16 +32,17 @@ import {
   EMAIL_CHECK_FAILURE,
   EMAIL_CHECK_SUCCESS,
 } from '../modules/member';
-// import { MY_PAGE_REQUEST } from '../modules/mypage';
+import { MY_PAGE_REQUEST } from '../modules/mypage';
 import swal from 'sweetalert'; // 예쁜 alert 창을 위해 사용
 // 로그인 처리
 function* loadLogin(action) {
   try { // 함수안에 yield 객체만 사용 가능.
-    const result = yield call(LoginAPI, action.data);
+    console.log("함수 요청");
+    const result = yield call(LoginAPI, action.data); // 해당 동기 함수 호출
     console.log(result);
-    yield put({ type: LOG_IN_SUCCESS, data: result });
+    yield put({ type: LOG_IN_SUCCESS, data: result }); // action dispatch
     sessionStorage.setItem('jwt', result.data.accessToken); // userToken 세션스토리지 저장
-    // yield put({ type: MY_PAGE_REQUEST, data: result.data.accessToken }); // mypage 정보 바로 조회
+    yield put({ type: MY_PAGE_REQUEST, data: result.data.accessToken }); // mypage 정보 바로 조회
     swal('로그인 성공', '  ', 'success', {
       buttons: false,
       timer: 1800,
@@ -62,16 +62,17 @@ function* loadLogin(action) {
 }
 
 function* watchLoadLogin() {
+  console.log("함수 대기");
   yield takeLatest(LOG_IN_REQUEST, loadLogin);
 }
 
 // 로그아웃 처리
 function* loadLogout(action) {
   try {
-    const result = yield call(LogoutAPI, action.data);
+    // const result = yield call(LogoutAPI, action.data);
     sessionStorage.clear(); // userToken 세션스토리지 삭제
     document.location.href = '/'; // 로그아웃 처리하면 새로고침 해서 세션 사라진 걸 인식 해줘야함.
-    yield put({ type: LOG_OUT_SUCCESS, data: result });
+    yield put({ type: LOG_OUT_SUCCESS});
   } catch (err) {
     yield put({ type: LOG_OUT_FAILURE });
   }

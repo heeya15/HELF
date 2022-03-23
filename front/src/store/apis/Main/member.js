@@ -10,12 +10,6 @@ export async function LoginAPI({ id, pw }) {
   return result;
 }
 
-// 로그아웃
-export async function LogoutAPI({ memberId }) {
-  const result = await axios.get(`${BASE_URL}members/logout/${memberId}`);
-  return result;
-}
-
 // 회원가입
 export async function SignupAPI({
   email,
