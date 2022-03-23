@@ -10,7 +10,7 @@ import NavBar from "./components/NavBar/NavBar";
 import SharedBoard from "./components/SharedBoard/SharedBoard";
 import Main from "./components/Main/Main";
 import SignUp from "./pages/User/SignUp/SignUp";
-import LogIn from "./pages/User/LogIn";
+import LogIn from "./pages/User/LogIn/LogIn";
 import MyPage from "./pages/MyPage/MyPage";
 import MyDietRegister from "./components/MyDiet/MyDietRegister";
 import MyDiet from "./pages/MyDiet/MyDiet"

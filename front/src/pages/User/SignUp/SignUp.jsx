@@ -14,7 +14,7 @@ import {createTheme, ThemeProvider} from '@mui/material/styles';
 import { useDispatch, useSelector } from 'react-redux';
 import "../user.css"
 import { StayPrimaryLandscapeSharp } from '@mui/icons-material';
-import { SIGN_UP_REQUEST, ID_CHECK_REQUEST, EMAIL_CHECK_REQUEST } from "../../../store/modules/member";
+import { SIGN_UP_REQUEST, ID_CHECK_REQUEST, EMAIL_CHECK_REQUEST } from "../../../store/modules/user";
 import { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 
@@ -42,7 +42,7 @@ export default function SignUp() {
     const [isPasswordCheck, setIsPasswordCheck] = useState("");
     const [isEmail, setIsEmail] = useState("");
 
-    const { signUpDone, idCheckDone, emailCheckDone } = useSelector(state => state.member);
+    const { signUpDone, idCheckDone, emailCheckDone } = useSelector(state => state.user);
     
     const onIdHandler = (event) => {
         setId(event.target.value)

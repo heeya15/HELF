@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Route,Link } from 'react-router-dom';
-import { Layout, Wrapper } from '../../style/variables';
-import { LOG_IN_REQUEST} from '../../store/modules/member';
+import { Layout, Wrapper } from '../../../style/variables';
+import { LOG_IN_REQUEST} from '../../../store/modules/user';
 import {
   LoginBlock,
   LoginContent,
@@ -12,7 +12,7 @@ import {
 import { useHistory } from 'react-router';
 export default function SharedBoard() {
   const dispatch = useDispatch(); // 해당 store에 함수에 해당하는 인자로 요청 가능.
-  const { logInDone } = useSelector((state) => state.member);
+  const { logInDone } = useSelector((state) => state.user);
   const history = useHistory();
     const [id, SetId] = useState('');
     const [pw, SetPw] = useState('');
