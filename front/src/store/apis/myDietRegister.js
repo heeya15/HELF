@@ -4,8 +4,12 @@ import { BASE_URL } from "../../utils/https";
 export async function myDietImageAPI(imageFile) {
   const header = { headers: { "Content-Type": "multipart/form-data" } };
   const formData = new FormData();
-  formData.append("imageFile", imageFile);
-  const result = await axios.post(`${BASE_URL}`, formData, header);
+  formData.append("file", imageFile);
+  const result = await axios.post(
+    `${BASE_URL}dietdiary/segmentation`,
+    formData,
+    header
+  );
   return result;
 }
 
