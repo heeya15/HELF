@@ -19,6 +19,7 @@ com/aisher/helf/config/SwaggerConfig.java
  com.aisher.helf.config.SwaggerConfig$Page
 com/aisher/helf/api/service/DietDiaryServiceImpl.java
  com.aisher.helf.api.service.DietDiaryServiceImpl
+ com.aisher.helf.api.service.DietDiaryServiceImpl$MyTranslator
 com/aisher/helf/config/SecurityConfig.java
  com.aisher.helf.config.SecurityConfig
 com/aisher/helf/config/AmazonS3Config.java

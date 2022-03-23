@@ -1,10 +1,15 @@
 package com.aisher.helf.api.service;
 
+import ai.djl.MalformedModelException;
+import ai.djl.modality.Classifications;
+import ai.djl.modality.cv.output.DetectedObjects;
+import ai.djl.repository.zoo.ModelNotFoundException;
 import com.aisher.helf.api.request.DietDiaryRegisterReq;
 import com.aisher.helf.api.response.DietDiaryFindRes;
 import com.aisher.helf.db.entity.DietDiary;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -23,4 +28,6 @@ public interface DietDiaryService {
     void updateDietDiary(DietDiary dietDiary, DietDiaryRegisterReq dietDiaryRegisterReq);
     /** 식단 일지 정보를 삭제하는 deleteDietDiary 입니다. **/
     void deleteDietDiary(DietDiary dietDiary);
+    /** 음식을 인식하는 foodSegmentation **/
+    DetectedObjects foodSegmentation(MultipartFile imagePath) throws IOException, ModelNotFoundException, MalformedModelException;
 }

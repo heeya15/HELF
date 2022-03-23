@@ -9,6 +9,52 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/api" />
+            <option value="$PROJECT_DIR$/basicdataset" />
+            <option value="$PROJECT_DIR$/djl-zero" />
+            <option value="$PROJECT_DIR$/engines" />
+            <option value="$PROJECT_DIR$/engines/dlr" />
+            <option value="$PROJECT_DIR$/engines/dlr/dlr-engine" />
+            <option value="$PROJECT_DIR$/engines/dlr/dlr-native" />
+            <option value="$PROJECT_DIR$/engines/ml" />
+            <option value="$PROJECT_DIR$/engines/ml/xgboost" />
+            <option value="$PROJECT_DIR$/engines/mxnet" />
+            <option value="$PROJECT_DIR$/engines/mxnet/jnarator" />
+            <option value="$PROJECT_DIR$/engines/mxnet/mxnet-engine" />
+            <option value="$PROJECT_DIR$/engines/mxnet/mxnet-model-zoo" />
+            <option value="$PROJECT_DIR$/engines/mxnet/native" />
+            <option value="$PROJECT_DIR$/engines/onnxruntime" />
+            <option value="$PROJECT_DIR$/engines/onnxruntime/onnxruntime-engine" />
+            <option value="$PROJECT_DIR$/engines/paddlepaddle" />
+            <option value="$PROJECT_DIR$/engines/paddlepaddle/paddlepaddle-engine" />
+            <option value="$PROJECT_DIR$/engines/paddlepaddle/paddlepaddle-model-zoo" />
+            <option value="$PROJECT_DIR$/engines/paddlepaddle/paddlepaddle-native" />
+            <option value="$PROJECT_DIR$/engines/pytorch" />
+            <option value="$PROJECT_DIR$/engines/pytorch/pytorch-engine" />
+            <option value="$PROJECT_DIR$/engines/pytorch/pytorch-jni" />
+            <option value="$PROJECT_DIR$/engines/pytorch/pytorch-model-zoo" />
+            <option value="$PROJECT_DIR$/engines/pytorch/pytorch-native" />
+            <option value="$PROJECT_DIR$/engines/tensorflow" />
+            <option value="$PROJECT_DIR$/engines/tensorflow/tensorflow-api" />
+            <option value="$PROJECT_DIR$/engines/tensorflow/tensorflow-engine" />
+            <option value="$PROJECT_DIR$/engines/tensorflow/tensorflow-model-zoo" />
+            <option value="$PROJECT_DIR$/engines/tensorflow/tensorflow-native" />
+            <option value="$PROJECT_DIR$/engines/tensorrt" />
+            <option value="$PROJECT_DIR$/engines/tflite" />
+            <option value="$PROJECT_DIR$/engines/tflite/tflite-engine" />
+            <option value="$PROJECT_DIR$/engines/tflite/tflite-native" />
+            <option value="$PROJECT_DIR$/examples" />
+            <option value="$PROJECT_DIR$/extensions" />
+            <option value="$PROJECT_DIR$/extensions/aws-ai" />
+            <option value="$PROJECT_DIR$/extensions/benchmark" />
+            <option value="$PROJECT_DIR$/extensions/fasttext" />
+            <option value="$PROJECT_DIR$/extensions/hadoop" />
+            <option value="$PROJECT_DIR$/extensions/opencv" />
+            <option value="$PROJECT_DIR$/extensions/sentencepiece" />
+            <option value="$PROJECT_DIR$/extensions/tokenizers" />
+            <option value="$PROJECT_DIR$/integration" />
+            <option value="$PROJECT_DIR$/model-zoo" />
+            <option value="$PROJECT_DIR$/testing" />
           </set>
         </option>
       </GradleProjectSettings>

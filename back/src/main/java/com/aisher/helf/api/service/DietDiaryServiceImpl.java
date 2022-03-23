@@ -1,5 +1,17 @@
 package com.aisher.helf.api.service;
 
+import ai.djl.Application;
+import ai.djl.MalformedModelException;
+import ai.djl.inference.Predictor;
+import ai.djl.modality.Classifications;
+import ai.djl.modality.cv.Image;
+import ai.djl.modality.cv.ImageFactory;
+import ai.djl.modality.cv.output.DetectedObjects;
+import ai.djl.repository.zoo.Criteria;
+import ai.djl.repository.zoo.ModelNotFoundException;
+import ai.djl.repository.zoo.ModelZoo;
+import ai.djl.repository.zoo.ZooModel;
+import ai.djl.translate.TranslateException;
 import com.aisher.helf.api.request.DietDiaryRegisterReq;
 import com.aisher.helf.api.request.DietRegisterReq;
 import com.aisher.helf.api.response.DietDiaryFindRes;
@@ -13,10 +25,50 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
+import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+
+import java.util.*;
+import ai.djl.Application;
+import ai.djl.ModelException;
+import ai.djl.engine.Engine;
+import ai.djl.inference.Predictor;
+import ai.djl.modality.cv.Image;
+import ai.djl.modality.cv.ImageFactory;
+import ai.djl.modality.cv.output.BoundingBox;
+import ai.djl.modality.cv.output.DetectedObjects;
+import ai.djl.modality.cv.output.Rectangle;
+import ai.djl.modality.cv.util.NDImageUtils;
+import ai.djl.ndarray.NDArray;
+import ai.djl.ndarray.NDList;
+import ai.djl.ndarray.types.DataType;
+import ai.djl.repository.zoo.Criteria;
+import ai.djl.repository.zoo.ModelZoo;
+import ai.djl.repository.zoo.ZooModel;
+import ai.djl.training.util.ProgressBar;
+import ai.djl.translate.Batchifier;
+import ai.djl.translate.TranslateException;
+import ai.djl.translate.Translator;
+import ai.djl.translate.TranslatorContext;
+import ai.djl.util.JsonUtils;
+import com.google.gson.annotations.SerializedName;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * 식단 일지 관련 비즈니스 로직 처리를 위한 서비스 구현 정의
@@ -131,4 +183,117 @@ public class DietDiaryServiceImpl implements DietDiaryService{
     public void deleteDietDiary(DietDiary dietDiary) {
         dietDiaryRepository.delete(dietDiary);
     }
+    /** 음식을 인식하는 foodSegmentation 입니다. **/
+    @Override
+    public DetectedObjects foodSegmentation(MultipartFile imagePath) throws IOException, ModelNotFoundException, MalformedModelException {
+        Image image = ImageFactory.getInstance().fromImage(imagePath);
+
+        Criteria<Image, DetectedObjects> criteria =
+                Criteria.builder()
+                        .optApplication(Application.CV.IMAGE_CLASSIFICATION)
+                        .setTypes(Image.class, DetectedObjects.class)
+                        .optTranslator(new MyTranslator())
+                        .optModelUrls("src/main/resources/dist/model")
+                        .optModelName("model-final")
+                        .build();
+        try (ZooModel<Image, DetectedObjects> model = ModelZoo.loadModel(criteria);
+             Predictor<Image, DetectedObjects> predictor = model.newPredictor()) {
+            DetectedObjects detection = predictor.predict(image);
+            saveBoundingBoxImage(image, detection);
+            return detection;
+        } catch (TranslateException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+    // 인식 잘되는지 테스트용
+    private void saveBoundingBoxImage(Image image, DetectedObjects detection) throws IOException {
+        Path outputDir = Paths.get("src/main/resources/dist/model/result");
+        Files.createDirectories(outputDir);
+        Image newImage = image.duplicate();
+        newImage.drawBoundingBoxes(detection);
+
+        Path imagePath = outputDir.resolve("detected-test.png");
+        newImage.save(Files.newOutputStream(imagePath), "png");
+    }
+private static final class MyTranslator implements Translator<Image, DetectedObjects> {
+
+    private Map<Integer, String> classes;
+    private int maxBoxes;
+    private float threshold;
+
+    MyTranslator() {
+        maxBoxes = 10;
+        threshold = 0.7f;
+    }
+
+    @Override
+    public NDList processInput(TranslatorContext ctx, Image input) {
+        NDArray array = input.toNDArray(ctx.getNDManager(), Image.Flag.COLOR);
+        array = NDImageUtils.resize(array, 224);
+        array = array.toType(DataType.UINT8, true);
+        array = array.expandDims(0);
+        return new NDList(array);
+    }
+
+/*        @Override
+        public void prepare(NDManager manager, Model model) throws IOException {
+            if (classes == null) {
+                classes = loadSynset();
+            }
+        }*/
+
+    @Override
+    public DetectedObjects processOutput(TranslatorContext ctx, NDList list) {
+
+        int[] classIds = null;
+        float[] probabilities = null;
+        NDArray boundingBoxes = null;
+        for (NDArray array : list) {
+            if ("detection_boxes".equals(array.getName())) {
+                boundingBoxes = array.get(0);
+            } else if ("detection_scores".equals(array.getName())) {
+                probabilities = array.get(0).toFloatArray();
+            } else if ("detection_classes".equals(array.getName())) {
+                classIds = array.get(0).toType(DataType.INT32, true).toIntArray();
+            }
+        }
+        Objects.requireNonNull(classIds);
+        Objects.requireNonNull(probabilities);
+        Objects.requireNonNull(boundingBoxes);
+
+        List<String> retNames = new ArrayList<>();
+        List<Double> retProbs = new ArrayList<>();
+        List<BoundingBox> retBB = new ArrayList<>();
+
+        for (int i = 0; i < Math.min(classIds.length, maxBoxes); ++i) {
+            int classId = classIds[i];
+            double probability = probabilities[i];
+            if (classId > 0 && probability > threshold) {
+                String className = classes.getOrDefault(classId, "#" + classId);
+                float[] box = boundingBoxes.get(i).toFloatArray();
+                float yMin = box[0];
+                float xMin = box[1];
+                float yMax = box[2];
+                float xMax = box[3];
+                Rectangle rect = new Rectangle(xMin, yMin, xMax - xMin, yMax - yMin);
+                retNames.add(className);
+                retProbs.add(probability);
+                retBB.add(rect);
+            }
+        }
+
+        return new DetectedObjects(retNames, retProbs, retBB);
+    }
+
+    @Override
+    public Batchifier getBatchifier() {
+        return null;
+    }
+
+    @Override
+    public void prepare(TranslatorContext ctx) throws Exception {
+        Translator.super.prepare(ctx);
+    }
+}
 }
