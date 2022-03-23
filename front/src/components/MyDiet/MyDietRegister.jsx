@@ -36,13 +36,12 @@ export default function MyDietRegister() {
   const onImageHandler = (e) => {
     if (e.target.files && e.target.files.length > 0) {
       const file = e.target.files[0];
-
       setDietThumbnail(URL.createObjectURL(file));
       setImagePath(file);
       console.log(myDietRegister);
       dispatch({
         type: MY_DIET_IMAGE_REQUEST,
-        data: { imageFile: file },
+        data: { imagePath: file },
       });
     }
   };

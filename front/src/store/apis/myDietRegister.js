@@ -1,12 +1,13 @@
 import axios from "axios";
 import { BASE_URL } from "../../utils/https";
 
-export async function myDietImageAPI(imageFile) {
+export async function myDietImageAPI(imagePath) {
+  console.log(imagePath.imagePath);
   const header = { headers: { "Content-Type": "multipart/form-data" } };
   const formData = new FormData();
-  formData.append("file", imageFile);
+  formData.append("file", imagePath.imagePath);
   const result = await axios.post(
-    `${BASE_URL}dietdiary/segmentation`,
+    `https://localhost:8080/api/dietdiary/segmentation`,
     formData,
     header
   );
