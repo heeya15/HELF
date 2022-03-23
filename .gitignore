@@ -8,6 +8,7 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+back/build/
 
 # Created by https://www.toptal.com/developers/gitignore/api/visualstudiocode,react,java,intellij
 # Edit at https://www.toptal.com/developers/gitignore?templates=visualstudiocode,react,java,intellij

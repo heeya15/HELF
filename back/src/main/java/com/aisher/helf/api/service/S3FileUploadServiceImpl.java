@@ -20,7 +20,7 @@ import java.util.UUID;
 @Service("s3FileUploadService")
 public class S3FileUploadServiceImpl implements S3FileUploadService{
 
-    @Value("${cloud.aws.s3.bucket")
+    @Value("${cloud.aws.s3.bucket}")
     private String bucket;
 
     private final AmazonS3Client amazonS3Client;
@@ -28,7 +28,6 @@ public class S3FileUploadServiceImpl implements S3FileUploadService{
     @Override
     public String upload(MultipartFile uploadFile) throws IOException {
         String origName = uploadFile.getOriginalFilename();
-        System.out.println(origName);
         String fileName;
         try {
             // 확장자를 찾기 위한 코드
@@ -38,7 +37,6 @@ public class S3FileUploadServiceImpl implements S3FileUploadService{
             // 파일 객체 생성
             // System.getProperty => 시스템 환경에 관한 정보를 얻을 수 있다. (user.dir = 현재 작업 디렉토리를 의미함)
             File file = new File(System.getProperty("user.dir") + saveFileName);
-            System.out.println(file);
             // 파일 변환
             uploadFile.transferTo(file);
             // S3 파일 업로드
