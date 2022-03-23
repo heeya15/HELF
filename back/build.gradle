@@ -192,6 +192,22 @@ dependencies {
     annotationProcessor("org.projectlombok:lombok:1.18.20")
 
     testCompile('org.springframework.boot:spring-boot-starter-test')
+
+    //djl
+    // https://jmaven.com/maven/ai.djl.pytorch/pytorch-native-cu101
+    implementation("ai.djl.pytorch:pytorch-native-cu101:1.7.1")
+    // https://jmaven.com/maven/ai.djl/api
+    implementation("ai.djl:api:0.15.0")
+    // https://mvnrepository.com/artifact/ai.djl.pytorch/pytorch-engine
+    implementation("ai.djl.pytorch:pytorch-engine:0.15.0")
+    // https://mvnrepository.com/artifact/ai.djl.pytorch/pytorch-native-auto
+    runtimeOnly("ai.djl.pytorch:pytorch-native-auto:1.6.0")
+
+    // https://mvnrepository.com/artifact/org.slf4j/slf4j-simple
+    testImplementation("org.slf4j:slf4j-simple:1.7.26")
+
+    // https://mvnrepository.com/artifact/ai.djl/model-zoo
+    implementation("ai.djl.pytorch:pytorch-model-zoo:0.15.0")
 }
 
 test {
