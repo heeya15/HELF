@@ -58,10 +58,12 @@ const reducer = (state = initialState, action) =>
         draft.logInLoading = true;
         draft.logInError = null;
         draft.logInDone = false;
+        console.log("요청들어옴?");
         break;
       case LOG_IN_SUCCESS:
         draft.logInLoading = false;
         draft.logInDone = true;
+        console.log(draft.logInDone);
         break;
       case LOG_IN_FAILURE:
         draft.logInLoading = false;

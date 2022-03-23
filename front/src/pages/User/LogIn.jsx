@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { Route,Link } from 'react-router-dom';
 import { Layout, Wrapper } from '../../style/variables';
 import { LOG_IN_REQUEST} from '../../store/modules/member';
 import {
@@ -9,8 +9,11 @@ import {
   LoginContentRow,
   LoginHeader,
 } from './Login.style';
+import { useHistory } from 'react-router';
 export default function SharedBoard() {
-    const dispatch = useDispatch(); // 해당 store에 함수에 해당하는 인자로 요청 가능.
+  const dispatch = useDispatch(); // 해당 store에 함수에 해당하는 인자로 요청 가능.
+  const { logInDone } = useSelector((state) => state.member);
+  const history = useHistory();
     const [id, SetId] = useState('');
     const [pw, SetPw] = useState('');
     const LoginButton = () => {
@@ -20,11 +23,12 @@ export default function SharedBoard() {
         alert('패스워드를 입력하세요');
     } else {
         dispatch({
-        type: LOG_IN_REQUEST,
-        data: { id: id, pw: pw },
+          type: LOG_IN_REQUEST,
+          data: { id: id, pw: pw },
         });
-    }
-    };
+      }
+      (logInDone === false) && history.push("/")   
+  };
   return (
     <Layout>
       <Wrapper>
