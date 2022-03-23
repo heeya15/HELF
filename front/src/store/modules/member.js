@@ -13,9 +13,9 @@ const initialState = {
   emailCheckLoading: false, // 이메일 인증시도중
   emailCheckDone: false,
   emailCheckError: null,
-  nickCheckLoading: false, // 닉네임 중복체크 시도중
-  nickCheckDone: false,
-  nickCheckError: null,
+  idCheckLoading: false, // 아이디 중복체크 시도중
+  idCheckDone: false,
+  idCheckError: null,
   findPwLoading: false, // 비밀번호 시도중
   findPwDone: false,
   findPwError: null,
@@ -37,9 +37,10 @@ export const EMAIL_CHECK_REQUEST = 'EMAIL_CHECK_REQUEST';
 export const EMAIL_CHECK_SUCCESS = 'EMAIL_CHECK_SUCCESS';
 export const EMAIL_CHECK_FAILURE = 'EMAIL_CHECK_FAILURE';
 
-export const NICK_CHECK_REQUEST = 'NICK_CHECK_REQUEST';
-export const NICK_CHECK_SUCCESS = 'NICK_CHECK_SUCCESS';
-export const NICK_CHECK_FAILURE = 'NICK_CHECK_FAILURE';
+export const ID_CHECK_REQUEST = 'ID_CHECK_REQUEST';
+export const ID_CHECK_SUCCESS = 'ID_CHECK_SUCCESS';
+export const ID_CHECK_FAILURE = 'ID_CHECK_FAILURE';
+export const ID_CHECK_RESET = 'ID_CHECK_RESET';
 
 export const FIND_PW_REQUEST = 'FIND_PW_REQUEST';
 export const FIND_PW_SUCCESS = 'FIND_PW_SUCCESS';
@@ -110,18 +111,23 @@ const reducer = (state = initialState, action) =>
         draft.emailCheckLoading = false;
         draft.emailCheckError = action.error;
         break;
-      case NICK_CHECK_REQUEST:
-        draft.nickCheckLoading = true;
-        draft.nickCheckError = null;
-        draft.nickCheckDone = false;
+      case ID_CHECK_REQUEST:
+        draft.idCheckLoading = true;
+        draft.idCheckError = null;
+        draft.idCheckDone = false;
         break;
-      case NICK_CHECK_SUCCESS:
-        draft.nickCheckLoading = false;
-        draft.nickCheckDone = true;
+      case ID_CHECK_SUCCESS:
+        draft.idCheckLoading = false;
+        draft.idCheckDone = true;
         break;
-      case NICK_CHECK_FAILURE:
-        draft.nickCheckLoading = false;
-        draft.nickCheckError = action.error;
+      case ID_CHECK_FAILURE:
+        draft.idCheckLoading = false;
+        draft.idCheckError = action.error;
+        break;
+      case ID_CHECK_RESET:
+        draft.idCheckLoading = false;
+        draft.idCheckDone = false;
+        draft.idCheckError = null;
         break;
       case FIND_PW_REQUEST:
         draft.findPwLoading = true;

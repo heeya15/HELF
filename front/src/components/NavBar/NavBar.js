@@ -51,7 +51,7 @@ export default function NavBar() {
       <div>
         <Link to="/"  className='anc'><img className="logo" src={ logo } alt="" /></Link>  
         <Link to="/SharedBoard"  className='anc'>게시판</Link>      
-        <Link to="/"  className='anc'>MY식단</Link>        
+        <Link to="/MyDiet"  className='anc'>MY식단</Link>        
         <Link to="/"  className='anc'>PT 자세교정</Link>          
       </div>
       <div>
