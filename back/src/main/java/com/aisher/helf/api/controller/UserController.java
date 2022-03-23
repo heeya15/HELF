@@ -133,19 +133,34 @@ public class UserController {
 		return ResponseEntity.status(200).body("회원 탈퇴 성공");
 	}
 
-	@GetMapping("/idCheck/{user_id}")
+	@GetMapping("/idCheck/{userId}")
 	@ApiOperation(value = "회원 아이디 중복 체크", notes = "회원가입 시 회원 아이디 중복 체크 검사 - <strong> true : 중복 없음 , false : 중복 있음<strong> ")
 	@ApiResponses({ @ApiResponse(code = 200, message = "성공"),
 			@ApiResponse(code = 401, message = "인증 실패"),
 			@ApiResponse(code = 404, message = "사용자 없음"),
 			@ApiResponse(code = 500, message = "서버 오류")
 	})
-	public ResponseEntity<Boolean> idCheck(@PathVariable("user_id") String userId) {
+	public ResponseEntity<Boolean> idCheck(@PathVariable("userId") String userId) {
 		System.out.println(userService.checkUserId(userId));
 		if (userService.checkUserId(userId) == true) {
 			System.out.println("id 중복이 없다");
 			return ResponseEntity.status(200).body(userService.checkUserId(userId));
 		} else System.out.println("id 중복이 있다.");
 		return ResponseEntity.status(401).body(userService.checkUserId(userId));
+	}
+
+	@GetMapping("/emailCheck/{userEmail}")
+	@ApiOperation(value = "회원 이메일 중복 체크", notes = "회원가입 시 회원 이메일 중복 체크 검사. "
+			+ "<strong>이메일이 중복: false, 이메일이 중복x : true 리턴시킴 <strong>")
+	@ApiResponses({ @ApiResponse(code = 200, message = "성공"),
+			@ApiResponse(code = 401, message = "인증 실패"),
+			@ApiResponse(code = 404, message = "사용자 없음"),
+			@ApiResponse(code = 500, message = "서버 오류")
+	})
+	public ResponseEntity<Boolean> emailCheck(@PathVariable("userEmail") String userEmail) {
+		System.out.println(">>>>>>>>>>>>>>>>>>>>> emailChk : " + userService.checkUserEmail(userEmail));
+		if (userService.checkUserEmail(userEmail)==true) { // 이메일 중복이 없다면.
+			return ResponseEntity.status(200).body(true);
+		} else return ResponseEntity.status(401).body(false);
 	}
 }

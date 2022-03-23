@@ -45,19 +45,4 @@ public class EmailController {
             return ResponseEntity.status(404).body("Account Not Found");
         }
     }
-
-    @GetMapping("/emailCheck/{user_email}")
-    @ApiOperation(value = "회원 이메일 중복 체크", notes = "회원가입 시 회원 이메일 중복 체크 검사. "
-            + "<strong>이메일이 중복: false, 이메일이 중복x : true 리턴시킴 <strong>")
-    @ApiResponses({ @ApiResponse(code = 200, message = "성공"),
-                    @ApiResponse(code = 401, message = "인증 실패"),
-                    @ApiResponse(code = 404, message = "사용자 없음"),
-                    @ApiResponse(code = 500, message = "서버 오류")
-    })
-    public ResponseEntity<Boolean> emailCheck(@PathVariable("user_email") String user_email) {
-        System.out.println(">>>>>>>>>>>>>>>>>>>>> emailChk : " + userService.checkUserEmail(user_email));
-        if (userService.checkUserEmail(user_email)==true) { // 이메일 중복이 없다면.
-            return ResponseEntity.status(200).body(true);
-        } else return ResponseEntity.status(401).body(false);
-    }
 }
