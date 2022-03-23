@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { blockColor, device } from '../../styles/variables';
+import { blockColor, device } from '../../style/variables';
 
 const MypageProfileImgDiv = styled.div`
   width: 15vh;
