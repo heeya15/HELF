@@ -14,6 +14,7 @@ import LogIn from "./pages/User/LogIn/LogIn";
 import MyPage from "./pages/MyPage/MyPage";
 import MyDietRegister from "./components/MyDiet/MyDietRegister";
 import MyDiet from "./pages/MyDiet/MyDiet"
+import Exercise from "./pages/Exercise/Exercise"
 // import Placeholder from 'react-bootstrap/Placeholder';
 
 function App() {
@@ -28,6 +29,7 @@ function App() {
       <Route path="/MyDietRegister" component={MyDietRegister} />
       <Route path="/LogIn" component={LogIn} />
       <Route path="/MyDiet" component={MyDiet} />
+      <Route path="/Exercise" component={Exercise} />
     </div>
   );
 }
