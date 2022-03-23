@@ -40,10 +40,10 @@ export default function MyDietRegister() {
       setDietThumbnail(URL.createObjectURL(file));
       setImagePath(file);
       console.log(myDietRegister);
-      // dispatch({
-      //   type: MY_DIET_IMAGE_REQUEST,
-      //   data: file,
-      // });
+      dispatch({
+        type: MY_DIET_IMAGE_REQUEST,
+        data: { imageFile: file },
+      });
     }
   };
 
@@ -60,7 +60,6 @@ export default function MyDietRegister() {
   };
 
   const registerMyDietButton = () => {
-    console.log(myDietRegister);
     if (myDietRegister.imagePath === "") alert("이미지를 등록해주세요.");
     else if (myDietRegister.diaryDate === "") alert("시간을 등록해주세요.");
     else if (myDietRegister.mealTime === "") alert("시간대를 선택해주세요.");
