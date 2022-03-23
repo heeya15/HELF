@@ -72,6 +72,8 @@ com/aisher/helf/common/util/JwtTokenUtil.java
  com.aisher.helf.common.util.JwtTokenUtil
 com/aisher/helf/common/util/ResponseBodyWriteUtil.java
  com.aisher.helf.common.util.ResponseBodyWriteUtil
+com/aisher/helf/api/request/UserAdditionalInfoRegisterReq.java
+ com.aisher.helf.api.request.UserAdditionalInfoRegisterReq
 com/aisher/helf/api/service/S3FileUploadServiceImpl.java
  com.aisher.helf.api.service.S3FileUploadServiceImpl
 com/aisher/helf/common/model/response/BaseResponseBody.java

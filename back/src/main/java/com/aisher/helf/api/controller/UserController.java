@@ -1,5 +1,6 @@
 package com.aisher.helf.api.controller;
 
+import com.aisher.helf.api.request.UserAdditionalInfoRegisterReq;
 import com.aisher.helf.api.request.UserRegisterReq;
 import com.aisher.helf.api.request.UserUpdateReq;
 import com.aisher.helf.api.response.UserRes;
@@ -37,8 +38,11 @@ public class UserController {
 	@Autowired
 	PasswordEncoder passwordEncoder;
 
+	// 회원 가입
 	@PostMapping("/register/signup")
-	@ApiOperation(value = "회원 가입", notes = "<strong>아이디와 패스워드</strong>를 통해 회원가입 한다.") 
+	@ApiOperation(value = "회원 가입", notes = "<strong>아이디와 패스워드</strong>를 통해 회원가입 한다." +
+			"아이디는 숫자나 문자를 사용하여 4 ~ 12 자리로 구성된다." +
+			"비밀번호는 숫자, 문자, 특수기호를 조합하여 8 ~ 12 자리로 구성된다.")
     @ApiResponses({
         @ApiResponse(code = 200, message = "성공"),
         @ApiResponse(code = 401, message = "인증 실패"),
@@ -133,6 +137,7 @@ public class UserController {
 		return ResponseEntity.status(200).body("회원 탈퇴 성공");
 	}
 
+	// 아이디 중복 체크
 	@GetMapping("/idCheck/{userId}")
 	@ApiOperation(value = "회원 아이디 중복 체크", notes = "회원가입 시 회원 아이디 중복 체크 검사 - <strong> true : 중복 없음 , false : 중복 있음<strong> ")
 	@ApiResponses({ @ApiResponse(code = 200, message = "성공"),
@@ -149,6 +154,7 @@ public class UserController {
 		return ResponseEntity.status(401).body(userService.checkUserId(userId));
 	}
 
+	// 이메일 중복 체크
 	@GetMapping("/emailCheck/{userEmail}")
 	@ApiOperation(value = "회원 이메일 중복 체크", notes = "회원가입 시 회원 이메일 중복 체크 검사. "
 			+ "<strong>이메일이 중복: false, 이메일이 중복x : true 리턴시킴 <strong>")
@@ -162,5 +168,31 @@ public class UserController {
 		if (userService.checkUserEmail(userEmail)==true) { // 이메일 중복이 없다면.
 			return ResponseEntity.status(200).body(true);
 		} else return ResponseEntity.status(401).body(false);
+	}
+
+	// 추가 유저 정보 등록
+	@PostMapping("/register/AdditionalInfo")
+	@ApiOperation(value = "추가 유저 정보 등록(token)", notes = "통계를 위한 <strong>추가적인 유저 정보를 등록</strong> 한다." +
+			"성별은 남자면 false, 여자면 true 의 값을 넣는다.")
+	@ApiResponses({
+			@ApiResponse(code = 200, message = "성공"),
+			@ApiResponse(code = 401, message = "인증 실패"),
+			@ApiResponse(code = 404, message = "사용자 없음"),
+			@ApiResponse(code = 500, message = "서버 오류")
+	})
+	public ResponseEntity<? extends BaseResponseBody> registerSignUp(@RequestBody UserAdditionalInfoRegisterReq userAdditionalInfoRegisterReq, @ApiIgnore Authentication authentication) {
+		UserDetails userDetails = (UserDetails) authentication.getDetails();
+		String userId = userDetails.getUsername();
+
+		User user;
+		try {
+			user = userService.getUserByUserId(userId);
+		}catch(NoSuchElementException E) {
+			return  ResponseEntity.status(500).body(BaseResponseBody.of(500, "Bad Request"));
+		}
+		userService.registerAdditionalUserInfo(userAdditionalInfoRegisterReq, userId);
+		System.out.println("추가 정보 등록 성공");
+
+		return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
 	}
 }
