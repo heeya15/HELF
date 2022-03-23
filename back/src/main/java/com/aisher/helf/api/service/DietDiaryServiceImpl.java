@@ -14,6 +14,7 @@ import ai.djl.repository.zoo.ZooModel;
 import ai.djl.translate.TranslateException;
 import com.aisher.helf.api.request.DietDiaryRegisterReq;
 import com.aisher.helf.api.request.DietRegisterReq;
+import com.aisher.helf.api.response.DietDiaryAllRes;
 import com.aisher.helf.api.response.DietDiaryFindRes;
 import com.aisher.helf.api.response.DietFindRes;
 import com.aisher.helf.db.entity.DietDiary;
@@ -137,11 +138,11 @@ public class DietDiaryServiceImpl implements DietDiaryService{
         return dietDiaryFindRes;
     }
 
-    /** 모든 식단 일지 정보를 가져오는 findAllFood 입니다. **/
+    /** 검색 날짜에 해당하는 유저의 식단 일지 정보를 가져오는 findAllFood 입니다. **/
     @Override
-    public List<DietDiaryFindRes> findAllByDiaryDate(String date) {
+    public List<DietDiaryFindRes> findAllByDiaryDate(String date, String userId) {
         // 원하는 날짜의 식단 일지 정보 가져오기
-        List<DietDiary> dietDiaryList = dietDiaryRepository.findByDiaryDateLike(date);
+        List<DietDiary> dietDiaryList = dietDiaryRepository.findByDiaryDateLike(date, userId);
 
         List<DietDiaryFindRes> dietDiaryFindResList = new ArrayList<DietDiaryFindRes>();
         for(int i=0; i<dietDiaryList.size(); i++) {
@@ -161,6 +162,12 @@ public class DietDiaryServiceImpl implements DietDiaryService{
             dietDiaryFindResList.add(dietDiaryFindRes);
         }
         return dietDiaryFindResList;
+    }
+
+    /** 유저의 모든 식단 일지 정보를 가져오는 findAllFood 입니다. **/
+    @Override
+    public List<DietDiaryAllRes> findAllByUserId(String userId) {
+        return dietDiaryRepository.findByUserId(userId);
     }
 
     /** 식단 일지 정보를 수정하는 updateDietDiary 입니다. **/
