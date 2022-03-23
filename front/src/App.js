@@ -15,6 +15,7 @@ import MyPage from "./pages/MyPage/MyPage";
 import MyDietRegister from "./components/MyDiet/MyDietRegister";
 import MyDiet from "./pages/MyDiet/MyDiet"
 import Exercise from "./pages/Exercise/Exercise"
+import FindPassword from "./components/User/FindPassword/FindPassword";
 // import Placeholder from 'react-bootstrap/Placeholder';
 
 function App() {
@@ -29,6 +30,7 @@ function App() {
       <Route path="/mydietregister" component={MyDietRegister} />
       <Route path="/login" component={LogIn} />
       <Route path="/mydiet" component={MyDiet} />
+      <Route path="/find/password"component={FindPassword}/>
       <Route path="/exercise" component={Exercise} />
     </div>
   );
