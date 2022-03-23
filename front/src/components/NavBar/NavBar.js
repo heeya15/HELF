@@ -50,19 +50,19 @@ export default function NavBar() {
     <div className='navBar'>
       <div>
         <Link to="/"  className='anc'><img className="logo" src={ logo } alt="" /></Link>  
-        <Link to="/SharedBoard"  className='anc'>게시판</Link>      
-        <Link to="/MyDiet"  className='anc'>MY식단</Link>        
-        <Link to="/Exercise"  className='anc'>PT 자세교정</Link>          
+        <Link to="/sharedboard"  className='anc'>게시판</Link>      
+        <Link to="/mydiet"  className='anc'>MY식단</Link>        
+        <Link to="/exercise"  className='anc'>PT 자세교정</Link>          
       </div>
       <div>
       {(logInDone ===false) &&
-        <Link to="/SignUp"  className='anc'>회원가입</Link>      
+        <Link to="/signup"  className='anc'>회원가입</Link>      
         }
       {(logInDone ===false) &&
-        <Link to="/LogIn" className='anc'>로그인</Link>  
+        <Link to="/login" className='anc'>로그인</Link>  
       }
       {(logInDone ===true) &&
-        <Link to="/MyPage" className="anc"> mypage </Link>
+        <Link to="/mypage" className="anc"> mypage </Link>
         }
       {(logInDone === true) &&
           <DrawerListRow
