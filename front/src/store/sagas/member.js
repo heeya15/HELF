@@ -8,9 +8,9 @@ import {
 import {
   EmailCheckAPI,
   LoginAPI,
-  NickNameCheckAPI,
+  IdCheckAPI,
   ResetPasswordAPI,
-  SignupAPI,
+  SignUpAPI,
 } from '../apis/Main/member';
 import {
   LOG_IN_REQUEST,
@@ -25,9 +25,10 @@ import {
   FIND_PW_REQUEST,
   FIND_PW_SUCCESS,
   FIND_PW_FAILURE,
-  NICK_CHECK_SUCCESS,
-  NICK_CHECK_FAILURE,
-  NICK_CHECK_REQUEST,
+  ID_CHECK_SUCCESS,
+  ID_CHECK_FAILURE,
+  ID_CHECK_REQUEST,
+  ID_CHECK_RESET,
   EMAIL_CHECK_REQUEST,
   EMAIL_CHECK_FAILURE,
   EMAIL_CHECK_SUCCESS,
@@ -83,18 +84,18 @@ function* watchLoadLogout() {
 }
 
 // 회원가입 처리
-function* loadSignup(action) {
+function* loadSignUp(action) {
   try {
-    const result = yield call(SignupAPI, action.data);
+    const result = yield call(SignUpAPI, action.data);
     yield put({ type: SIGN_UP_SUCCESS, data: result });
-    swal('회원가입 성공', '이메일 인증 후 로그인 할 수 있습니다.', 'success');
+    swal('회원가입 성공', '로그인을 진행하여 서비스를 즐겨보세요!', 'success');
   } catch (err) {
     yield put({ type: SIGN_UP_FAILURE });
   }
 }
 
-function* watchLoadSignup() {
-  yield takeLatest(SIGN_UP_REQUEST, loadSignup);
+function* watchLoadSignUp() {
+  yield takeLatest(SIGN_UP_REQUEST, loadSignUp);
 }
 
 // 이메일 중복체크 처리
@@ -113,20 +114,32 @@ function* watchLoadEmailCheck() {
   yield takeLatest(EMAIL_CHECK_REQUEST, loadEmailCheck);
 }
 
-// 닉네임 중복체크 처리
-function* loadNickCheck(action) {
+// 아이디 중복체크 처리
+function* loadIdCheck(action) {
   try {
-    const result = yield call(NickNameCheckAPI, action.data);
-    alert('사용할 수 있는 닉네임 입니다.');
-    yield put({ type: NICK_CHECK_SUCCESS, data: result });
+    const result = yield call(IdCheckAPI, action.data);
+    alert('사용할 수 있는 아이디 입니다.');
+    yield put({ type: ID_CHECK_SUCCESS, data: result });
   } catch (err) {
-    alert('이미 사용중이거나 사용할 수 없는 닉네임 입니다.');
-    yield put({ type: NICK_CHECK_FAILURE });
+    alert('이미 사용중이거나 사용할 수 없는 아이디 입니다.');
+    yield put({ type: ID_CHECK_FAILURE });
   }
 }
 
-function* watchLoadNickCheck() {
-  yield takeLatest(NICK_CHECK_REQUEST, loadNickCheck);
+function* watchLoadIdCheck() {
+  yield takeLatest(ID_CHECK_REQUEST, loadIdCheck);
+}
+
+function* resetIdCheck() {
+  try {
+    yield put({ type: ID_CHECK_RESET });
+  } catch(err) {
+    alert('아이디 리셋 실패');
+  }
+}
+
+function* watchResetIdCheck() {
+  yield takeLatest(ID_CHECK_RESET, resetIdCheck);
 }
 
 // 비밀번호 찾기 처리
@@ -153,9 +166,10 @@ export default function* memberSaga() {
   yield all([
     fork(watchLoadLogin),
     fork(watchLoadLogout),
-    fork(watchLoadSignup),
+    fork(watchLoadSignUp),
     fork(watchLoadFindPw),
     fork(watchLoadEmailCheck),
-    fork(watchLoadNickCheck),
+    fork(watchLoadIdCheck),
+    fork(watchResetIdCheck),
   ]);
 }

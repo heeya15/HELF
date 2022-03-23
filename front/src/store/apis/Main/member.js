@@ -11,32 +11,30 @@ export async function LoginAPI({ id, pw }) {
 }
 
 // 회원가입
-export async function SignupAPI({
-  email,
+export async function SignUpAPI({
+  id,
+  password, 
   name,
-  phoneNumber,
-  password,
-  nickName,
-  address,
-  birth,
-  gender,
+  email,
 }) {
-  const result = await axios.post(`${BASE_URL}members/register`, {
-    memberAddress: address,
-    memberBirth: birth,
-    memberEmail: email,
-    memberGender: gender,
-    memberName: name,
-    memberNick: nickName,
-    memberPassword: password,
-    memberPhone: phoneNumber,
+  const result = await axios.post(`${BASE_URL}user/register/signup`, {
+    userId: id,
+    userPassword: password,
+    userName: name,
+    userEmail: email,
   });
   return result;
 }
 
 // 이메일 중복체크
 export async function EmailCheckAPI({ email }) {
-  const result = await axios.get(`${BASE_URL}members/email-check/${email}`);
+  const result = await axios.get(`${BASE_URL}email/emailCheck/${email}`);
+  return result;
+}
+
+// 아이디 중복체크
+export async function IdCheckAPI({ id }) {
+  const result = await axios.get(`${BASE_URL}user/idCheck/${id}`);
   return result;
 }
 
@@ -46,11 +44,5 @@ export async function ResetPasswordAPI({ email, name }) {
     memberEmail: email,
     memberName: name,
   });
-  return result;
-}
-
-// 닉네임 중복체크
-export async function NickNameCheckAPI({ nickName }) {
-  const result = await axios.get(`${BASE_URL}members/nick-check/${nickName}`);
   return result;
 }

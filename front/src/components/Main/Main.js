@@ -25,12 +25,12 @@ function Main() {
 
       {/*  메인페이지 상단 1 */}
       <div className='welcome'>
-       <img  src={ logo } alt="" /> 
+       {/* <img  src={ logo } alt="" />  */}
        <div className='welcomeStart'>
           <h1>우리사이트에 오신것을 환영합니다.</h1> 
           <Button variant="success">빠른 시작</Button> 
         </div> 
-       <img  src={ logo } alt="" /> 
+       {/* <img  src={ logo } alt="" />  */}
       </div>
       
       <hr/>
