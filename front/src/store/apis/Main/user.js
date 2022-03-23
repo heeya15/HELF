@@ -39,10 +39,12 @@ export async function IdCheckAPI({ id }) {
 }
 
 // 비밀번호 초기화
-export async function ResetPasswordAPI({ email, name }) {
-  const result = await axios.post(`${BASE_URL}members`, {
-    memberEmail: email,
-    memberName: name,
+export async function ResetPasswordAPI({ email, name, id }) {
+  console.log(email, id, name);
+  const result = await axios.post(`${BASE_URL}email/send`, {
+    userEmail: email,
+    userId : id,
+    userName: name,
   });
   return result;
 }
