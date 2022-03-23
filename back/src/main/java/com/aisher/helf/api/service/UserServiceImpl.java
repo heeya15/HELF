@@ -1,5 +1,6 @@
 package com.aisher.helf.api.service;
 
+import com.aisher.helf.api.request.UserAdditionalInfoRegisterReq;
 import com.aisher.helf.api.request.UserFindPasswordReq;
 import com.aisher.helf.api.request.UserRegisterReq;
 import com.aisher.helf.api.request.UserUpdateReq;
@@ -93,6 +94,14 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public List<User> findAll() {
+		return null;
+	}
+
+	@Transactional
+	@Override
+	public User registerAdditionalUserInfo(UserAdditionalInfoRegisterReq userAdditionalInfoRegisterReq, String userId) {
+		User user = userRepositorySupport.findUserByUserId(userId).get();
+		user.updateAdditionalUserInfo(userAdditionalInfoRegisterReq.getWeight(), userAdditionalInfoRegisterReq.getHeight(), userAdditionalInfoRegisterReq.isGender());
 		return null;
 	}
 }

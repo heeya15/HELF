@@ -20,6 +20,10 @@ public class QUser extends EntityPathBase<User> {
 
     public static final QUser user = new QUser("user");
 
+    public final BooleanPath gender = createBoolean("gender");
+
+    public final NumberPath<Integer> height = createNumber("height", Integer.class);
+
     public final DateTimePath<java.time.LocalDateTime> joinDate = createDateTime("joinDate", java.time.LocalDateTime.class);
 
     public final ListPath<LikeList, QLikeList> likeList = this.<LikeList, QLikeList>createList("likeList", LikeList.class, QLikeList.class, PathInits.DIRECT2);
@@ -31,6 +35,8 @@ public class QUser extends EntityPathBase<User> {
     public final StringPath userName = createString("userName");
 
     public final StringPath userPassword = createString("userPassword");
+
+    public final NumberPath<Integer> weight = createNumber("weight", Integer.class);
 
     public QUser(String variable) {
         super(User.class, forVariable(variable));
