@@ -1,8 +1,11 @@
 import axios from "axios";
 import { BASE_URL } from "../../utils/https";
 
-export async function myDietImageAPI() {
-  const result = await axios.get(`${BASE_URL}`);
+export async function myDietImageAPI(imageFile) {
+  const header = { headers: { "Content-Type": "multipart/form-data" } };
+  const formData = new FormData();
+  formData.append("imageFile", imageFile);
+  const result = await axios.post(`${BASE_URL}`, formData, header);
   return result;
 }
 
@@ -22,15 +25,26 @@ export async function myDietRegisterAPI({
     mealTime: mealTime,
     saveImagePath: "",
   };
-  var formData = new FormData();
-  formData.append("file", imagePath);
+  const token = sessionStorage.getItem("jwt");
+  const header = {
+    headers: {
+      "Content-Type": "multipart/form-data",
+      Authorization: `Bearer ${token}`,
+    },
+  };
+  const formData = new FormData();
   formData.append(
     "key",
     new Blob([JSON.stringify(dietDiaryRegisterReq)], {
       type: "application/json",
     })
   );
-  // const result = await axios.post(`${BASE_URL}register`);
-  const result = "SUCCESS";
+  formData.append("file", imagePath);
+  // const result = await axios.post(`${BASE_URL}dietdiary/register`, formData, header);
+  const result = await axios.post(
+    `https://localhost:8080/api/dietdiary/register`,
+    formData,
+    header
+  );
   return result;
 }
