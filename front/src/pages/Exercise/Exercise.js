@@ -1,10 +1,12 @@
 import React from "react";
+import Exercise from "../../components/Exercise/Exercise"
 
-
-function Exercise() {
+export default function Main() {
   return (
-    <h1>자세교정 페이지 입니다</h1>
+    <div>
+      <h1>자세교정 페이지 입니다</h1>
+      <Exercise></Exercise>
+    </div>
   );
 }
 
-export default Exercise
