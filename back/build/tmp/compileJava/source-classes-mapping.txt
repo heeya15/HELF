@@ -148,6 +148,8 @@ com/aisher/helf/db/repository/LikeListRepositorySupport.java
  com.aisher.helf.db.repository.LikeListRepositorySupport
 com/aisher/helf/common/auth/JwtAuthenticationFilter.java
  com.aisher.helf.common.auth.JwtAuthenticationFilter
+com/aisher/helf/api/response/DietDiaryAllRes.java
+ com.aisher.helf.api.response.DietDiaryAllRes
 com/aisher/helf/api/request/FoodRegisterReq.java
  com.aisher.helf.api.request.FoodRegisterReq
 com/aisher/helf/db/repository/FoodRepository.java

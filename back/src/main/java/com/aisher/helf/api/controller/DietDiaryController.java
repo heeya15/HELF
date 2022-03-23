@@ -1,6 +1,7 @@
 package com.aisher.helf.api.controller;
 
 import com.aisher.helf.api.request.DietDiaryRegisterReq;
+import com.aisher.helf.api.response.DietDiaryAllRes;
 import com.aisher.helf.api.response.DietDiaryFindRes;
 import com.aisher.helf.api.service.DietDiaryService;
 import com.aisher.helf.api.service.S3FileUploadService;
@@ -74,16 +75,36 @@ public class  DietDiaryController {
     }
 
     @GetMapping("/findAll/{date}")
-    @ApiOperation(value = "해당 날의 식단 일지 전체 조회", notes = "<strong>원하는 날짜에 해당하는 식단 일지</strong>를 조회한다.")
+    @ApiOperation(value = "해당 날의 유저의 식단 일지 전체 조회(token)", notes = "<strong>원하는 날짜에 해당하는 식단 일지</strong>를 전체 조회한다.")
     @ApiResponses({
             @ApiResponse(code = 200, message = "성공"),
             @ApiResponse(code = 401, message = "인증 실패"),
             @ApiResponse(code = 404, message = "사용자 없음"),
             @ApiResponse(code = 500, message = "서버 오류")
     })
-    public ResponseEntity<List<DietDiaryFindRes>> findAllByDiaryDate(@PathVariable("date") String date) {
-        List<DietDiaryFindRes> dietDiaryFindResList = dietDiaryService.findAllByDiaryDate(date);
+    public ResponseEntity<List<DietDiaryFindRes>> findAllByDiaryDate(@PathVariable("date") String date, @ApiIgnore Authentication authentication) {
+        UserDetails userDetails = (UserDetails) authentication.getDetails();
+        String userId = userDetails.getUsername();
+
+        List<DietDiaryFindRes> dietDiaryFindResList = dietDiaryService.findAllByDiaryDate(date, userId);
         return new ResponseEntity<List<DietDiaryFindRes>>(dietDiaryFindResList, HttpStatus.OK);
+    }
+
+    // 캘린더에 출력을 위한 유저 식단 일지 전체 조회
+    @GetMapping("/findAll")
+    @ApiOperation(value = "유저의 식단 일지 전체 조회(token)", notes = "<strong>유저의 식단 일지</strong>를 전체 조회한다.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "성공"),
+            @ApiResponse(code = 401, message = "인증 실패"),
+            @ApiResponse(code = 404, message = "사용자 없음"),
+            @ApiResponse(code = 500, message = "서버 오류")
+    })
+    public ResponseEntity<List<DietDiaryAllRes>> findAllDietDiary(@ApiIgnore Authentication authentication) {
+        UserDetails userDetails = (UserDetails) authentication.getDetails();
+        String userId = userDetails.getUsername();
+
+        List<DietDiaryAllRes> dietDiaryList = dietDiaryService.findAllByUserId(userId);
+        return new ResponseEntity<List<DietDiaryAllRes>>(dietDiaryList, HttpStatus.OK);
     }
 
     @PutMapping("/update")
@@ -145,4 +166,6 @@ public class  DietDiaryController {
         }
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
     }
+
+ 
 }

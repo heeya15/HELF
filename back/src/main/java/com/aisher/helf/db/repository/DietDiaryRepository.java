@@ -1,5 +1,6 @@
 package com.aisher.helf.db.repository;
 
+import com.aisher.helf.api.response.DietDiaryAllRes;
 import com.aisher.helf.db.entity.DietDiary;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -22,6 +23,11 @@ public interface DietDiaryRepository extends JpaRepository<DietDiary, Integer> {
 
     @Query(value = "select * \n" +
             "from diet_diary \n" +
-            "where diary_date like %:date% ", nativeQuery = true)
-    List<DietDiary> findByDiaryDateLike(@Param("date") String date);
+            "where diary_date like %:date% and user_id = :userId ", nativeQuery = true)
+    List<DietDiary> findByDiaryDateLike(@Param("date") String date, @Param("userId") String userId);
+
+    @Query(value = "select diary_no, Date(diary_date) as diary_date, meal_time, image_path, is_shared, description \n" +
+            "from diet_diary \n" +
+            "where user_id = :userId ", nativeQuery = true)
+    List<DietDiaryAllRes> findByUserId(@Param("userId") String userId);
 }
