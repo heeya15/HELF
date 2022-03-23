@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { blockColor, device, pointColor } from '../../style/variables';
+import { blockColor, device, pointColor } from '../../../style/variables';
 
 const LoginSignupBlock = styled.div`
   //border: 1px solid red;

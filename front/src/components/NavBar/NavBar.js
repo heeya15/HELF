@@ -10,7 +10,7 @@ import {
   LOG_IN_SUCCESS,
   LOG_OUT_REQUEST,
   SET_MENU,
-} from '../../store/modules/member';
+} from '../../store/modules/user';
 import {
   NavbarWrapper,
   CenterMenu,
@@ -26,7 +26,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { MY_PAGE_REQUEST } from '../../store/modules/mypage';
 export default function NavBar() {
   const dispatch = useDispatch();
-  const { logInDone, menu } = useSelector(state => state.member);
+  const { logInDone, menu } = useSelector(state => state.user);
   const { me } = useSelector(state => state.mypage); // 0: 비로그인, 4: 스타, 3:사용자, 2: 관계자 ,1:관리자
   const [open, setOpen] = useState(false);
 

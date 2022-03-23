@@ -1,9 +1,9 @@
 import { combineReducers } from "redux";
 import myDietRegister from "./myDietRegister";
-import member from "./member";
+import user from "./user";
 import mypage from './mypage';
 export default combineReducers({
   myDietRegister,
-  member,
+  user,
   mypage,
 });

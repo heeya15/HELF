@@ -11,7 +11,7 @@ import {
   IdCheckAPI,
   ResetPasswordAPI,
   SignUpAPI,
-} from '../apis/Main/member';
+} from '../apis/Main/user';
 import {
   LOG_IN_REQUEST,
   LOG_IN_SUCCESS,
@@ -32,7 +32,7 @@ import {
   EMAIL_CHECK_REQUEST,
   EMAIL_CHECK_FAILURE,
   EMAIL_CHECK_SUCCESS,
-} from '../modules/member';
+} from '../modules/user';
 import { MY_PAGE_REQUEST } from '../modules/mypage';
 import swal from 'sweetalert'; // 예쁜 alert 창을 위해 사용
 // 로그인 처리
@@ -162,7 +162,7 @@ function* watchLoadFindPw() {
   yield takeLatest(FIND_PW_REQUEST, loadFindPw);
 }
 
-export default function* memberSaga() {
+export default function* UserSaga() {
   yield all([
     fork(watchLoadLogin),
     fork(watchLoadLogout),
