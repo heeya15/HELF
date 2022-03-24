@@ -44,7 +44,7 @@
 .fc-v-event {
 }
 
-    /*title 옆에 점*/
+/*title 옆에 점*/
 .fc-daygrid-event-dot {
 }
 
@@ -54,4 +54,8 @@
     background-color: #ffc107 !important;
     color: #000 !important;
     font-weight: bold !important;
+}
+
+.fc-daygrid-day-frame {
+    cursor: pointer;
 }
