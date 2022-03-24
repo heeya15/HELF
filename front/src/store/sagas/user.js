@@ -34,6 +34,7 @@ import {
   EMAIL_CHECK_SUCCESS,
 } from '../modules/user';
 import { MY_PAGE_REQUEST } from '../modules/mypage';
+import { MY_DIET_DIARY_LIST_REQUEST } from '../modules/myDietRegister';
 import swal from 'sweetalert'; // 예쁜 alert 창을 위해 사용
 // 로그인 처리
 function* loadLogin(action) {
@@ -44,6 +45,8 @@ function* loadLogin(action) {
     yield put({ type: LOG_IN_SUCCESS, data: result }); // action dispatch
     sessionStorage.setItem('jwt', result.data.accessToken); // userToken 세션스토리지 저장
     yield put({ type: MY_PAGE_REQUEST, data: result.data.accessToken }); // mypage 정보 바로 조회
+    console.log('here');
+    yield put({ type: MY_DIET_DIARY_LIST_REQUEST, data: result });
     swal('로그인 성공', '  ', 'success', {
       buttons: false,
       timer: 1800,

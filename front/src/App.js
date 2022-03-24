@@ -16,6 +16,7 @@ import MyDietRegister from "./components/MyDiet/MyDietRegister";
 import MyDiet from "./pages/MyDiet/MyDiet"
 import Exercise from "./pages/Exercise/Exercise"
 import FindPassword from "./components/User/FindPassword/FindPassword";
+import MyDietDaily from "./components/MyDiet/MyDietDaily"
 // import Placeholder from 'react-bootstrap/Placeholder';
 
 function App() {
@@ -32,6 +33,7 @@ function App() {
       <Route path="/mydiet" component={MyDiet} />
       <Route path="/find/password"component={FindPassword}/>
       <Route path="/exercise" component={Exercise} />
+      <Route path="/dietdiary/:date" component={MyDietDaily} />
     </div>
   );
 }

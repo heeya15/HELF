@@ -6,6 +6,8 @@ const initialState = {
   diaryDate: "",
   description: "",
   foodName: [],
+  myDietDiaryList: [],
+  myDietDiaryDailyInfo: [],
 };
 
 export const MY_DIET_IMAGE_REQUEST = "MY_DIET_IMAGE_REQUEST";
@@ -14,6 +16,13 @@ export const MY_DIET_IMAGE_FAILURE = "MY_DIET_IMAGE_FAILURE";
 export const MY_DIET_REGISTER_REQUEST = "MY_DIET_REGISTER_REQUEST";
 export const MY_DIET_REGISTER_SUCCESS = "MY_DIET_REGISTER_SUCCESS";
 export const MY_DIET_REGISTER_FAILURE = "MY_DIET_REGISTER_FAILURE";
+
+export const MY_DIET_DIARY_LIST_REQUEST = "MY_DIET_DIARY_LIST_REQUEST";
+export const MY_DIET_DIARY_LIST_SUCCESS = "MY_DIET_DIARY_LIST_SUCCESS";
+export const MY_DIET_DIARY_LIST_FAILURE = "MY_DIET_DIARY_LIST_FAILURE";
+export const MY_DIET_DIARY_DAILY_INFO_REQUEST = "MY_DIET_DIARY_DAILY_INFO_REQUEST";
+export const MY_DIET_DIARY_DAILY_INFO_SUCCESS = "MY_DIET_DIARY_DAILY_INFO_SUCCESS";
+export const MY_DIET_DIARY_DAILY_INFO_FAILURE = "MY_DIET_DIARY_DAILY_INFO_FAILURE";
 
 const reducer = (state = initialState, action) =>
   produce(state, (draft) => {
@@ -32,6 +41,20 @@ const reducer = (state = initialState, action) =>
       case MY_DIET_REGISTER_SUCCESS:
         break;
       case MY_DIET_REGISTER_FAILURE:
+        break;
+      case MY_DIET_DIARY_LIST_REQUEST:
+        break;
+      case MY_DIET_DIARY_LIST_SUCCESS:
+        draft.myDietDiaryList = action.data;
+        break;
+      case MY_DIET_DIARY_LIST_FAILURE:
+        break;
+      case MY_DIET_DIARY_DAILY_INFO_REQUEST:
+        break;
+      case MY_DIET_DIARY_DAILY_INFO_SUCCESS:
+        draft.myDietDiaryDailyInfo = action.data;
+        break;
+      case MY_DIET_DIARY_DAILY_INFO_FAILURE:
         break;
       default:
         break;
