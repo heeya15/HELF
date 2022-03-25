@@ -37,7 +37,7 @@ function* watchLoadMyPage() {
   yield takeLatest(MY_PAGE_REQUEST, loadMyPage);
 }
 
-// 회원정보 수정
+// 마이페이지 회원정보 수정
 function* loadUpdateUser(action) {
   try {
     const result = yield call(MemberModifyAPI, action.data);
