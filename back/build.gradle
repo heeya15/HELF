@@ -125,20 +125,20 @@ processResources {
 
 dependencies {
     // STMP 라이브러리 추가
-    implementation("org.springframework.boot:spring-boot-starter-mail")
+    implementation 'org.springframework.boot:spring-boot-starter-mail'
 
-    implementation("org.springframework.boot:spring-boot-starter-validation")
-    implementation("org.springframework.boot:spring-boot-starter-web")
-    implementation("org.springframework.boot:spring-boot-starter-websocket")
-    implementation("org.springframework.boot:spring-boot-starter-security")
-    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
-    implementation("org.springframework.boot:spring-boot-starter-actuator")
-    implementation("org.springframework.plugin:spring-plugin-core:2.0.0.RELEASE")
-    testImplementation("org.springframework.security:spring-security-test")
-    annotationProcessor("org.springframework.boot:spring-boot-starter-data-jpa")
-    runtimeOnly("mysql:mysql-connector-java")
-    developmentOnly("org.springframework.boot:spring-boot-devtools")
-    annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-websocket'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation 'org.springframework.plugin:spring-plugin-core:2.0.0.RELEASE'
+    testImplementation 'org.springframework.security:spring-security-test'
+    annotationProcessor 'org.springframework.boot:spring-boot-starter-data-jpa'
+    runtimeOnly 'mysql:mysql-connector-java'
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+    annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
 
     implementation('commons-io:commons-io:2.6')
     implementation("org.apache.commons:commons-collections4:4.4")
@@ -161,13 +161,13 @@ dependencies {
     implementation('org.kurento:kurento-utils-js:6.15.0')
 
     //AWS S3관련 의존성 추가
-    implementation("io.awspring.cloud:spring-cloud-aws-context:2.3.3")
-    implementation("org.springframework.cloud:spring-cloud-aws-autoconfigure:2.2.6.RELEASE")
+    implementation 'io.awspring.cloud:spring-cloud-aws-context:2.3.3'
+    implementation'org.springframework.cloud:spring-cloud-aws-autoconfigure:2.2.6.RELEASE'
 
 
    //IntelliJ용
     //IntelliJ에서는 하기 annotationProcessor를 쓰면 별도의 querydsl 플러그인 및 플러그인 설정이 불필요.
-    annotationProcessor("com.querydsl:querydsl-apt:${querydslVer}:jpa")
+    annotationProcessor ("com.querydsl:querydsl-apt:${querydslVer}:jpa")
 
     implementation("com.squareup.retrofit2:retrofit:2.7.1")
     implementation("com.squareup.retrofit2:converter-jackson:2.7.1")
@@ -178,7 +178,7 @@ dependencies {
 
     testImplementation("com.jayway.jsonpath:json-path:2.4.0")
 
-    implementation("com.auth0:java-jwt:3.10.3")
+    implementation 'com.auth0:java-jwt:3.10.3'
     
     implementation("io.springfox:springfox-swagger2:3.0.0")
     implementation("io.springfox:springfox-swagger-ui:3.0.0")
