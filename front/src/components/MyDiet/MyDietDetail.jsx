@@ -11,7 +11,7 @@ import {
   setDietDetailDietRegisterReqList,
   MY_DIET_DETAIL_REQUEST,
   MY_DIET_UPDATE_REQUEST,
-} from "../../store/modules/MyDiet";
+} from "../../store/modules/myDiet";
 import { MY_DIET_IMAGE_REQUEST } from "../../store/modules/myDiet";
 import { Row, Col } from "react-bootstrap";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
