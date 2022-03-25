@@ -56,6 +56,7 @@ const LoginHeader = styled.div`
 const LoginContent = styled.div`
   height: 50%;
 `;
+
 const LoginContentRow = styled.div`
   font-size: 15px;
   input {
@@ -69,7 +70,7 @@ const LoginContentRow = styled.div`
     border: 0;
     border-radius: 4px;
   }
-  #login-button {
+  #loginButton {
     font-size: 15px;
     display: block;
     width: 320px;
