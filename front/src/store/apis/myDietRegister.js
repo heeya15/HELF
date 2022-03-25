@@ -57,25 +57,31 @@ export async function myDietRegisterAPI({
 // 식단 일지 전체 목록 가져오기
 export async function myDietDiaryListAPI() {
   const token = sessionStorage.getItem("jwt");
-  const header = { headers: { Authorization: `Bearer ${token}` } };
+  const header = { headers: { Authorization: `Bearer ${token}` }};
   const result = await axios.get(
     // `${BASE_URL}dietdiary/findAll`,
-    `https://localhost:8080/api/dietdiary/findAll`
-    // header
+    `https://localhost:8443/api/dietdiary/findAll`,
+    header
   );
-  console.log(result.data);
   return result.data;
 }
 
 // 해당 날짜에 해당하는 식단 일지 정보 가져오기
 export async function myDietDiaryDailyInfoAPI({ date }) {
   const token = sessionStorage.getItem("jwt");
-  const header = { headers: { Authorization: `Bearer ${token}` } };
+  const header = { headers: { Authorization: `Bearer ${token}` }};
   const result = await axios.get(
     // `${BASE_URL}dietdiary/findAll`,
-    `https://localhost:8080/api/dietdiary/findAll/${date}`,
+    `https://localhost:8443/api/dietdiary/findAll/${date}`,
     header
   );
-  console.log(">>>>>>>>>>>>> axios 요청 결과 값: ", result.data);
   return result.data;
+}
+
+// 해당 식단 일지 정보 삭제
+export async function myDietDiaryItemDeleteAPI({ date }) {
+  const result = await axios.delete(
+    `https://localhost:8443/api/dietdiary/remove/${date.diaryNo}`,
+  );
+  return result;
 }

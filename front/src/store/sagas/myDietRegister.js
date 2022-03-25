@@ -1,5 +1,5 @@
 import { all, call, put, fork, takeLatest } from "redux-saga/effects";
-import { myDietImageAPI, myDietRegisterAPI, myDietDiaryListAPI, myDietDiaryDailyInfoAPI } from "../apis/myDietRegister";
+import { myDietImageAPI, myDietRegisterAPI, myDietDiaryListAPI, myDietDiaryDailyInfoAPI, myDietDiaryItemDeleteAPI } from "../apis/myDietRegister";
 import {
   MY_DIET_IMAGE_REQUEST,
   MY_DIET_IMAGE_SUCCESS,
@@ -13,6 +13,9 @@ import {
   MY_DIET_DIARY_DAILY_INFO_REQUEST,
   MY_DIET_DIARY_DAILY_INFO_SUCCESS,
   MY_DIET_DIARY_DAILY_INFO_FAILURE,
+  MY_DIET_DIARY_DELETE_REQUEST,
+  MY_DIET_DIARY_DELETE_SUCCESS,
+  MY_DIET_DIARY_DELETE_FAILURE,
 } from "../modules/myDietRegister";
 
 function* loadMyDietImage(action) {
@@ -59,7 +62,7 @@ function* watchMyDietDiaryList() {
 // 해당 날짜에 해당하는 식단 일지 정보 가져오기
 function* loadMyDietDiaryDailyInfo(action) {
   try {
-    console.log(">>>>>>>>>>> here : ", action.data);
+    console.log(">>>>>>>>>>>>> 목록 찾으러 왔어요", action.data);
     const result = yield call(myDietDiaryDailyInfoAPI, action.data);
     yield put({ type: MY_DIET_DIARY_DAILY_INFO_SUCCESS, data: result });
   } catch (error) {
@@ -71,11 +74,31 @@ function* watchMyDietDiaryDailyInfo() {
   yield takeLatest(MY_DIET_DIARY_DAILY_INFO_REQUEST, loadMyDietDiaryDailyInfo);
 }
 
+// 식단 일지 번호를 이용하여 식단 일지 정보 삭제하기
+function* loadMyDietDiaryItemDelete(action) {
+  try {
+    const result = yield call(myDietDiaryItemDeleteAPI, action.data);
+    yield put({ type: MY_DIET_DIARY_DELETE_SUCCESS, data: result });
+
+    // const result2 = {
+    //   date: action.data.date.diaryDate
+    // }
+    // yield put({ type: MY_DIET_DIARY_DAILY_INFO_REQUEST, data: result2 });  // 식단일지 정보 조회
+  } catch (error) {
+    yield put({ type: MY_DIET_DIARY_DELETE_FAILURE });
+  }
+}
+
+function* watchMyDietDiaryItemDelete() {
+  yield takeLatest(MY_DIET_DIARY_DELETE_REQUEST, loadMyDietDiaryItemDelete);
+}
+
 export default function* myDietImageSaga() {
   yield all([
     fork(watchLoadMyDietImage),
     fork(watchLoadMyDietRegister),
     fork(watchMyDietDiaryList),
     fork(watchMyDietDiaryDailyInfo),
+    fork(watchMyDietDiaryItemDelete),
   ]);
 }
