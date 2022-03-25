@@ -28,7 +28,7 @@ public interface DietDiaryService {
     /** 유저의 모든 식단 일지 정보를 가져오는 findAllFood 입니다. **/
     List<DietDiaryAllRes> findAllByUserId(String userId);
     /** 식단 일지 정보를 수정하는 updateDietDiary 입니다. **/
-    void updateDietDiary(DietDiary dietDiary, DietDiaryRegisterReq dietDiaryRegisterReq);
+    DietDiaryFindRes updateDietDiary(DietDiary dietDiary, DietDiaryRegisterReq dietDiaryRegisterReq);
     /** 식단 일지 정보를 삭제하는 deleteDietDiary 입니다. **/
     void deleteDietDiary(DietDiary dietDiary);
     /** 음식을 인식하는 foodSegmentation **/

@@ -26,7 +26,7 @@ public interface DietDiaryRepository extends JpaRepository<DietDiary, Integer> {
             "where diary_date like %:date% and user_id = :userId ", nativeQuery = true)
     List<DietDiary> findByDiaryDateLike(@Param("date") String date, @Param("userId") String userId);
 
-    @Query(value = "select diary_no, Date(diary_date) as diary_date, meal_time, image_path, is_shared, description \n" +
+    @Query(value = "select diary_no, diary_date, meal_time, image_path, is_shared, description \n" +
             "from diet_diary \n" +
             "where user_id = :userId ", nativeQuery = true)
     List<DietDiaryAllRes> findByUserId(@Param("userId") String userId);

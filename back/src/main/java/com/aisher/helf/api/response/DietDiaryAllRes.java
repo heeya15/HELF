@@ -16,7 +16,7 @@ import java.util.List;
 @ApiModel("DietDiaryAllResponse")
 public interface DietDiaryAllRes {
     int getDiary_no();
-    LocalDate getDiary_date();
+    LocalDateTime getDiary_date();
     String getMeal_time();
     String getImage_path();
     Boolean getIs_shared();
