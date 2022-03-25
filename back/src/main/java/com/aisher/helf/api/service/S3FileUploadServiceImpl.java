@@ -2,6 +2,7 @@ package com.aisher.helf.api.service;
 
 import com.amazonaws.AmazonClientException;
 import com.amazonaws.services.s3.AmazonS3Client;
+import com.amazonaws.services.s3.model.DeleteObjectRequest;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.amazonaws.services.s3.transfer.TransferManager;
 import com.amazonaws.services.s3.transfer.Upload;
@@ -57,7 +58,7 @@ public class S3FileUploadServiceImpl implements S3FileUploadService{
 
     @Override
     public void deleteFile(String fileName) {
-
+        amazonS3Client.deleteObject(new DeleteObjectRequest(bucket, fileName));
     }
 
     @Override
