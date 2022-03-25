@@ -23,7 +23,7 @@ import {
   MenuBlock,
 } from './Navbar.style';
 import { useSelector, useDispatch } from 'react-redux';
-import { MY_PAGE_REQUEST } from '../../store/modules/mypage';
+import { MY_PAGE_REQUEST } from '../../store/modules/myPage';
 export default function NavBar() {
   const dispatch = useDispatch();
   const { logInDone, menu } = useSelector(state => state.user);
