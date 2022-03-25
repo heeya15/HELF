@@ -1,1 +1,1 @@
-export { default as MyDiet } from "../components/MyDiet/MyDietRegister";
+export { default as MyDietRegister } from "../components/MyDiet/MyDietRegister";
