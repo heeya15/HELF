@@ -53,6 +53,8 @@ class SharedBoard extends Component {
                 width: '100%',
               }}
             />
+            {/* 좋아요 기능 넣는곳 */}
+            <Label>{index + 1}</Label>
           </div>
         ))}
       </Masonry>
