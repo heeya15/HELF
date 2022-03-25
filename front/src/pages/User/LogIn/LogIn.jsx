@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Route,Link } from 'react-router-dom';
 import { Layout, Wrapper } from '../../../style/variables';
 import { LOG_IN_REQUEST} from '../../../store/modules/user';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import {
   LoginBlock,
   LoginContent,
@@ -10,35 +12,60 @@ import {
   LoginHeader,
 } from './Login.style';
 import { useHistory } from 'react-router';
+
 export default function LogIn() {
   const dispatch = useDispatch(); // 해당 store에 함수에 해당하는 인자로 요청 가능.
   const { logInDone } = useSelector((state) => state.user);
+  
   const history = useHistory();
     const [id, SetId] = useState('');
     const [pw, SetPw] = useState('');
-    const LoginButton = () => {
-    if (id === '') {
-        alert('아이디를 입력하세요');
-    } else if (pw === '') {
-        alert('패스워드를 입력하세요');
-    } else {
-        dispatch({
-          type: LOG_IN_REQUEST,
-          data: { id: id, pw: pw },
-        });
-      }
-      (logInDone === false) && history.push("/")   
+    const [visible, setVisible] = useState(false);
+    const [inputType, setInputType] = useState("password");
+
+    const handleLogIn = (event) => {
+      if (id === '') {
+          alert('아이디를 입력하세요');
+      } else if (pw === '') {
+          alert('패스워드를 입력하세요');
+      } else {
+          dispatch({
+            type: LOG_IN_REQUEST,
+            data: { id: id, pw: pw },
+          });
+          // (logInDone) && history.push('/');
+          if(logInDone) history.push('/');
+          else event.preventDefault();
+        }
+    };
+
+  const handleKeyPress = (e) => {
+    if(e.key === 'Enter') {
+      handleLogIn();
+    }
   };
+
+  const handleVisibleIcon = () => {
+    console.log(">>>>>>>>>>>>>>> icon : ", visible);
+    if(visible === true) {
+      setInputType("password");
+      setVisible(false);
+    } else {
+      setInputType("text");
+      setVisible(true);
+    }
+  }
+
   return (
     <Layout>
       <Wrapper>
-       <LoginBlock>
+        <LoginBlock>
           <LoginHeader>
             <div id="title">LOGIN</div>
             <div id="word">당신의 건강을 챙겨보실래요?</div>
           </LoginHeader>
           
-          <LoginContent>
+          <LoginContent onKeyPress={ handleKeyPress }>
             <LoginContentRow>
               <input
                 id="id"
@@ -51,16 +78,21 @@ export default function LogIn() {
             </LoginContentRow>
             <LoginContentRow>
               <input
-                type="password"
+                type={ inputType }
                 placeholder="password"
                 onChange={e => {
                   SetPw(e.target.value);
                 }}
               />
+              { visible === true ? <VisibilityIcon onClick={ handleVisibleIcon }></VisibilityIcon> : 
+                                  <VisibilityOffIcon onClick={ handleVisibleIcon }></VisibilityOffIcon>
+              }
             </LoginContentRow>
             <LoginContentRow>
-              <button id="login-button" onClick={() => LoginButton()}>
-                로그인
+              <button
+                id="loginButton"
+                onClick={ handleLogIn }
+                >로그인
               </button>
             </LoginContentRow>
             <LoginContentRow>
