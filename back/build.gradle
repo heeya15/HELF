@@ -58,7 +58,7 @@ sourceCompatibility = '1.8'
 //}
 
 configurations {
-    providedRuntime
+//    providedRuntime
 }
 
 /*task npmInstall(type: NpmTask, overwrite: true) {
