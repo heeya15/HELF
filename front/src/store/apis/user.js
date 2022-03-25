@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { BASE_URL } from "../../../utils/https";
+import { BASE_URL } from "../../utils/https";
 
 // 로그인
 export async function LoginAPI({ id, pw }) {

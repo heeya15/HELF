@@ -1,8 +1,7 @@
 import axios from 'axios';
-import { BASE_URL } from "../../../utils/https";
+import { BASE_URL } from "../../utils/https";
 
 // 자신의 정보 조회
-// !!!!!!!!header에 'Bearer ' + 토큰 정보 담아줘야함!!!!!!!!!!!!!!
 export async function MypageAPI() {
   const result = await axios.get(`${BASE_URL}user/find/me`, {
     headers: {

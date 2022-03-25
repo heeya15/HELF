@@ -3,7 +3,7 @@ import {
   MemberDeleteAPI,
   MemberModifyAPI,
   MypageAPI,
-} from '../apis/Main/mypage';
+} from '../apis/myPage';
 import {
   MY_PAGE_REQUEST,
   MY_PAGE_SUCCESS,
@@ -14,7 +14,7 @@ import {
   DELETE_MEMBER_SUCCESS,
   DELETE_MEMBER_REQUEST,
   DELETE_MEMBER_FAILURE,
-} from '../modules/mypage';
+} from '../modules/myPage';
 import swal from 'sweetalert';
 
 // 마이페이지 회원정보 조회
