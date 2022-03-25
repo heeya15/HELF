@@ -33,11 +33,13 @@ export default function MyDietDetail() {
   const { myDietDetail } = useSelector((state) => state.myDiet);
   const myDietUpdate = {
     description: myDietDetail.description,
-    diaryDate: myDietDetail.diaryDate,
+    diaryDate: dayjs(myDietDetail.diaryDate).format("YYYY-MM-DD HH:mm:ss"),
     dietRegisterReqList: myDietDetail.dietFindResList,
     imagePath: myDietDetail.imagePath,
     mealTime: myDietDetail.mealTime,
     diaryNo: myDietDetail.diaryNo,
+    isShared: myDietDetail.isShared,
+    saveImagePath: myDietDetail.imagePath,
   };
   const { foodName } = useSelector((state) => state.myDietRegister);
   const mealType = ["아침", "점심", "저녁", "간식"];

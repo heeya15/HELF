@@ -172,7 +172,13 @@ public class DietDiaryServiceImpl implements DietDiaryService{
 
     /** 식단 일지 정보를 수정하는 updateDietDiary 입니다. **/
     @Override
-    public void updateDietDiary(DietDiary dietDiary, DietDiaryRegisterReq dietDiaryRegisterReq) {
+    public void updateDietDiary(DietDiary dietDiary, DietDiaryRegisterReq dietDiaryRegisterReq, MultipartFile imagePath) throws Exception {
+        // 이미지 수정시 업로드
+        if(imagePath != null) {
+            String savingFileName = s3FileUploadService.upload(imagePath);
+            dietDiaryRegisterReq.setSaveImagePath(savingFileName);
+        }
+
         // 식단 일지 테이블 수정
         dietDiary.updateDietDiary(dietDiaryRegisterReq);
 

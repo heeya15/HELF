@@ -1,30 +1,31 @@
 import axios from "axios";
 import { BASE_URL } from "../../../utils/https";
+import { LOCAL_URL } from "../../../utils/https";
 
 export async function myDietDetailAPI(diaryNo) {
-  const result = await axios.get(
-    `https://localhost:8443/api/dietdiary/find/${diaryNo}`
-  );
+  const result = await axios.get(`${LOCAL_URL}dietdiary/find/${diaryNo}`);
   // const result = await axios.get(`${BASE_URL}dietdiary/find/${diaryNo}`);
   return result;
 }
 
-export async function myDietUpdateAPI(
+export async function myDietUpdateAPI({
   imagePath,
   diaryDate,
   mealTime,
   description,
   dietRegisterReqList,
-  diaryNo
-) {
+  diaryNo,
+  isShared,
+  saveImagePath,
+}) {
   const dietDiaryRegisterReq = {
     description: description,
     diaryDate: diaryDate,
     diaryNo: diaryNo,
     dietRegisterReqList: dietRegisterReqList,
-    isShared: false,
+    isShared: isShared,
     mealTime: mealTime,
-    saveImagePath: "",
+    saveImagePath: saveImagePath,
   };
   const header = { headers: { "Content-Type": "multipart/form-data" } };
   const formData = new FormData();
@@ -38,7 +39,7 @@ export async function myDietUpdateAPI(
     formData.append("file", imagePath);
   }
   const result = await axios.put(
-    `${BASE_URL}dietdiary/update`,
+    `${LOCAL_URL}dietdiary/update`,
     formData,
     header
   );
