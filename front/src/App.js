@@ -13,10 +13,11 @@ import SignUp from "./pages/User/SignUp/SignUp";
 import LogIn from "./pages/User/LogIn/LogIn";
 import MyPage from "./pages/MyPage/MyPage";
 import MyDietRegister from "./components/MyDiet/MyDietRegister";
-import MyDiet from "./pages/MyDiet/MyDiet"
-import Exercise from "./pages/Exercise/Exercise"
+import MyDiet from "./pages/MyDiet/MyDiet";
+import Exercise from "./pages/Exercise/Exercise";
 import FindPassword from "./components/User/FindPassword/FindPassword";
-import MyDietDaily from "./components/MyDiet/MyDietDaily"
+import MyDietDaily from "./components/MyDiet/MyDietDaily";
+import MyDietDetail from "./components/MyDiet/MyDietDetail";
 // import Placeholder from 'react-bootstrap/Placeholder';
 
 function App() {
@@ -28,12 +29,13 @@ function App() {
       <Route path="/sharedboard" component={SharedBoard} />
       <Route path="/signup" component={SignUp} />
       <Route path="/mypage" component={MyPage} />
-      <Route path="/mydietregister" component={MyDietRegister} />
+      <Route path="/mydietregister/:date" component={MyDietRegister} />
       <Route path="/login" component={LogIn} />
       <Route path="/mydiet" component={MyDiet} />
-      <Route path="/find/password"component={FindPassword}/>
+      <Route path="/find/password" component={FindPassword} />
       <Route path="/exercise" component={Exercise} />
       <Route path="/dietdiary/:date" component={MyDietDaily} />
+      <Route path="/mydietdetail/:diaryNo" component={MyDietDetail} />
     </div>
   );
 }
