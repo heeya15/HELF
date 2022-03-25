@@ -120,14 +120,15 @@ public class  DietDiaryController {
     public ResponseEntity<? extends BaseResponseBody> updateDietDiary(
             @RequestPart(value="key") DietDiaryRegisterReq dietDiaryRegisterReq
             , @RequestPart(value="file", required=false) MultipartFile imagePath) throws Exception {
-        DietDiary dietDiary;
+        DietDiary dietDiary = null;
+        DietDiaryFindRes dietDiaryFindRes = null;
         try {
             dietDiary = dietDiaryService.findByDiaryNo(dietDiaryRegisterReq.getDiaryNo());
         } catch(NoSuchElementException e) {
-            return ResponseEntity.status(400).body(BaseResponseBody.of(400, "Bad Request"));
+            return new ResponseEntity<DietDiaryFindRes>(dietDiaryFindRes, HttpStatus.BAD_REQUEST);
         }
-        dietDiaryService.updateDietDiary(dietDiary, dietDiaryRegisterReq, imagePath);
-        return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
+        dietDiaryFindRes = dietDiaryService.updateDietDiary(dietDiary, dietDiaryRegisterReq, imagePath);
+        return new ResponseEntity<DietDiaryFindRes>(dietDiaryFindRes, HttpStatus.OK);
     }
 
     @DeleteMapping("/remove/{diaryNo}")

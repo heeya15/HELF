@@ -150,6 +150,7 @@ public class DietDiaryServiceImpl implements DietDiaryService{
             DietDiaryFindRes dietDiaryFindRes = new DietDiaryFindRes();
 
             dietDiaryFindRes.setDiaryNo(dietDiaryList.get(i).getDiaryNo());
+            dietDiaryFindRes.setImagePath(dietDiaryList.get(i).getImagePath());
             dietDiaryFindRes.setDiaryDate(dietDiaryList.get(i).getDiaryDate());
             dietDiaryFindRes.setMealTime(dietDiaryList.get(i).getMealTime());
             dietDiaryFindRes.setIsShared(dietDiaryList.get(i).getIsShared());
@@ -172,7 +173,7 @@ public class DietDiaryServiceImpl implements DietDiaryService{
 
     /** 식단 일지 정보를 수정하는 updateDietDiary 입니다. **/
     @Override
-    public void updateDietDiary(DietDiary dietDiary, DietDiaryRegisterReq dietDiaryRegisterReq, MultipartFile imagePath) throws Exception {
+    public DietDiaryFindRes updateDietDiary(DietDiary dietDiary, DietDiaryRegisterReq dietDiaryRegisterReq, MultipartFile imagePath) throws Exception {
         // 이미지 수정시 업로드
         if(imagePath != null) {
             String savingFileName = s3FileUploadService.upload(imagePath);
@@ -189,6 +190,9 @@ public class DietDiaryServiceImpl implements DietDiaryService{
             int foodNo = foodRepository.findFoodName(dietRegisterReqList.get(i).getFoodName());
             dietRepository.save(dietRegisterReqList.get(i).toEntity(dietDiary.getDiaryNo(), foodNo));
         }
+
+        // 수정된 데이터 가져오기
+        return findByDietDiaryNo(dietDiary.getDiaryNo());
     }
 
     /** 식단 일지 정보를 삭제하는 deleteDietDiary 입니다. **/
