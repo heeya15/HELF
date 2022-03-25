@@ -27,7 +27,7 @@ public class JwtTokenUtil {
 
     public static final String TOKEN_PREFIX = "Bearer ";
     public static final String HEADER_STRING = "Authorization";
-    public static final String ISSUER = "ssafy.com";
+    public static final String ISSUER = "com.aisher.helf";
     
     @Autowired
 	public JwtTokenUtil(@Value("${jwt.secret}") String secretKey, @Value("${jwt.expiration}") Integer expirationTime) {
