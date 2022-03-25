@@ -4,7 +4,7 @@ import { IMAGE_URL } from "../../utils/https";
 import {
   MY_DIET_IMAGE_REQUEST,
   MY_DIET_REGISTER_REQUEST,
-} from "../../store/modules/myDietRegister";
+} from "../../store/modules/myDiet";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import TimePicker from "@mui/lab/TimePicker";
@@ -22,7 +22,7 @@ export default function MyDietRegister() {
   const [mealTime, setMealTime] = useState("");
   const [description, setDescription] = useState("");
 
-  const { foodName } = useSelector((state) => state.myDietRegister);
+  const { foodName } = useSelector((state) => state.myDiet);
   const mealType = ["아침", "점심", "저녁", "간식"];
 
   const myDietRegister = {
