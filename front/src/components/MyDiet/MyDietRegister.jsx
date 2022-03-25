@@ -39,10 +39,10 @@ export default function MyDietRegister() {
       setDietThumbnail(URL.createObjectURL(file));
       setImagePath(file);
       console.log(myDietRegister);
-      dispatch({
-        type: MY_DIET_IMAGE_REQUEST,
-        data: { imagePath: file },
-      });
+      // dispatch({
+      //   type: MY_DIET_IMAGE_REQUEST,
+      //   data: { imagePath: file },
+      // });
     }
   };
 

@@ -7,7 +7,7 @@ export async function myDietImageAPI(imagePath) {
   const formData = new FormData();
   formData.append("file", imagePath.imagePath);
   const result = await axios.post(
-    `https://localhost:8080/api/dietdiary/segmentation`,
+    `https://localhost:8443/api/dietdiary/segmentation`,
     formData,
     header
   );
@@ -47,7 +47,7 @@ export async function myDietRegisterAPI({
   formData.append("file", imagePath);
   // const result = await axios.post(`${BASE_URL}dietdiary/register`, formData, header);
   const result = await axios.post(
-    `https://localhost:8080/api/dietdiary/register`,
+    `https://localhost:8443/api/dietdiary/register`,
     formData,
     header
   );
@@ -57,10 +57,10 @@ export async function myDietRegisterAPI({
 // 식단 일지 전체 목록 가져오기
 export async function myDietDiaryListAPI() {
   const token = sessionStorage.getItem("jwt");
-  const header = { headers: { Authorization: `Bearer ${token}` }};
+  const header = { headers: { Authorization: `Bearer ${token}` } };
   const result = await axios.get(
     // `${BASE_URL}dietdiary/findAll`,
-    `https://localhost:8080/api/dietdiary/findAll`,
+    `https://localhost:8080/api/dietdiary/findAll`
     // header
   );
   console.log(result.data);
@@ -70,7 +70,7 @@ export async function myDietDiaryListAPI() {
 // 해당 날짜에 해당하는 식단 일지 정보 가져오기
 export async function myDietDiaryDailyInfoAPI({ date }) {
   const token = sessionStorage.getItem("jwt");
-  const header = { headers: { Authorization: `Bearer ${token}` }};
+  const header = { headers: { Authorization: `Bearer ${token}` } };
   const result = await axios.get(
     // `${BASE_URL}dietdiary/findAll`,
     `https://localhost:8080/api/dietdiary/findAll/${date}`,
