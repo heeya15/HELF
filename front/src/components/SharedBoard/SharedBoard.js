@@ -34,32 +34,36 @@ class SharedBoard extends Component {
   	render() {
       return(
       <div className="boxdiv"> 
-      <Link to="/login" className='anc'>
-      <Box sx={{ width: 800, minHeight: 829 }}>
-      <Masonry columns={3} spacing={2}>
-        {itemData.map((item, index) => (
-          <div key={index} >
-            {/* 이름 적는 곳( 유저 닉네임 적을 것) */}
-            <Label>{index + 1}</Label>
-            <img
-              src={`${item.img}?w=162&auto=format`}
-              srcSet={`${item.img}?w=162&auto=format&dpr=2 2x`}
-              alt={item.title}
-              loading="lazy"
-              style={{
-                borderBottomLeftRadius: 4,
-                borderBottomRightRadius: 4,
-                display: 'block',
-                width: '100%',
-              }}
-            />
-            {/* 좋아요 기능 넣는곳 */}
-            <Label>{index + 1}</Label>
-          </div>
-        ))}
-      </Masonry>
-    </Box>   
-    </Link>  
+      <div className="shardbox"> 대충 제목이라는 뜻</div>
+      
+        <Box sx={{ width: 800, minHeight: 829 }}>
+        <Masonry columns={3} spacing={2}>
+          {itemData.map((item, index) => (
+            <Link to="/login" className='anc'>
+            <div key={index} >
+              {/* 이름 적는 곳( 유저 닉네임 적을 것) */}
+              <Label>{index + 1}</Label>
+              <img
+                src={`${item.img}?w=162&auto=format`}
+                srcSet={`${item.img}?w=162&auto=format&dpr=2 2x`}
+                alt={item.title}
+                loading="lazy"
+                style={{
+                  borderBottomLeftRadius: 4,
+                  borderBottomRightRadius: 4,
+                  display: 'block',
+                  width: '100%',
+                }}
+              />
+              {/* 좋아요 기능 넣는곳 */}
+              <Label>{index + 1}</Label>
+            </div>
+            </Link>
+          ))}
+          
+        </Masonry>
+      </Box>   
+ 
     </div>
       );
     }
