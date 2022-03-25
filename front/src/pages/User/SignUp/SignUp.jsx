@@ -5,14 +5,20 @@ import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
-import Link from '@mui/material/Link';
+import { Link } from 'react-router-dom';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import {createTheme, ThemeProvider} from '@mui/material/styles';
 import { useDispatch, useSelector } from 'react-redux';
-import "../user.css"
+import { 
+    AuthButton, 
+    SignUpButton,
+    Message,
+    Success,
+    Error,
+    SignInLink, } from "./SignUp.style"
 import { StayPrimaryLandscapeSharp } from '@mui/icons-material';
 import { SIGN_UP_REQUEST, ID_CHECK_REQUEST, EMAIL_CHECK_REQUEST } from "../../../store/modules/user";
 import { useEffect } from 'react';
@@ -183,22 +189,17 @@ export default function SignUp() {
                                     onChange={onIdHandler}/>
                             </Grid>
                             <Grid item xs={12} sm={3}>
-                                <Button
-                                    className='checkButton'
-                                    fullWidth
-                                    variant="contained"
-                                    color="success"
-                                    size="large"
+                                <AuthButton
                                     onClick={() => {
                                         idCheck();
                                     }}>
                                     인증
-                                </Button>
+                                </AuthButton>
                             </Grid>
                             { (id.length > 0 && idMessage.length > 0 ) && 
-                                <Grid item xs={12}
-                                    className={isId ? "success" : "error"}>
-                                    {idMessage}
+                                <Grid item xs={12}>
+                                    { isId ? <Success>{ idMessage } </Success> : 
+                                    <Error>{ idMessage }</Error>}
                                 </Grid>
                             }
                             <Grid item xs={12} sm={6}>
@@ -221,9 +222,9 @@ export default function SignUp() {
                                     onChange={onPasswordCheckHandler}/>
                             </Grid>
                             { (password.length > 0 && passwordMessage.length > 0 ) && 
-                                <Grid item xs={12}
-                                    className={isPassword ? "success" : "error"}>
-                                    {passwordMessage}
+                                <Grid item xs={12}>
+                                    { isPassword ? <Success>{ passwordMessage } </Success> : 
+                                    <Error>{ passwordMessage }</Error>}
                                 </Grid>
                             }
                             <Grid item xs={12}>
@@ -246,40 +247,33 @@ export default function SignUp() {
                                     onChange={onEmailHandler}/>
                             </Grid>
                             <Grid item xs={12} sm={3}>
-                                <Button
-                                    className='checkButton'
-                                    fullWidth
-                                    variant="contained"
-                                    color="success"
-                                    size="large"
+                                <AuthButton
                                     onClick={() => {
                                         emailCheck();
                                     }}>
                                     인증
-                                </Button>
+                                </AuthButton>
                             </Grid>  
                             { (email.length > 0 && emailMessage.length > 0 ) && 
-                                <Grid item xs={12}
-                                    className={ isEmail ? "success" : "error"}>
-                                    {emailMessage}
+                                <Grid item xs={12}>
+                                    { isEmail ? <Success>{ emailMessage }</Success> : 
+                                        <Error>{ emailMessage }</Error>
+                                    }
                                 </Grid>
                             }         
                         </Grid>
-                        <Button
+                        <SignUpButton
                             type="submit"
-                            fullWidth
-                            variant="contained"
-                            color="success"
                             sx={{
                                 mt: 3,
                                 mb: 2
                             }}>
                             Sign Up
-                        </Button>
+                        </SignUpButton>
                         <Grid container justifyContent="flex-end">
                             <Grid item>
-                                <Link href="#" variant="body2">
-                                    Already have an account? Sign in
+                                <Link to="/login" variant="body2">
+                                    <SignInLink>Already have an account? Sign in</SignInLink>
                                 </Link>
                             </Grid>
                         </Grid>
