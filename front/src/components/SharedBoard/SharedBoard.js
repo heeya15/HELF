@@ -39,7 +39,7 @@ class SharedBoard extends Component {
         <Box sx={{ width: 800, minHeight: 829 }}>
         <Masonry columns={3} spacing={2}>
           {itemData.map((item, index) => (
-            <Link to="/login" className='anc'>
+            <Link  to="/#" className='anc'>
             <div key={index} >
               {/* 이름 적는 곳( 유저 닉네임 적을 것) */}
               <Label>{index + 1}</Label>
