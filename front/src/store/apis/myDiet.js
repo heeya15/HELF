@@ -1,6 +1,6 @@
 import axios from "axios";
-import { BASE_URL } from "../../../utils/https";
-import { LOCAL_URL } from "../../../utils/https";
+import { BASE_URL } from "../../utils/https";
+import { LOCAL_URL } from "../../utils/https";
 
 // 이미지 보내서 음식 정보 가져오기
 export async function myDietImageAPI(imagePath) {

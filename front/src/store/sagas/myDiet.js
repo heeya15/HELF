@@ -7,7 +7,7 @@ import {
   myDietUpdateAPI,
   myDietDetailAPI,
   myDietDiaryItemDeleteAPI,
-} from "../apis/Main/myDiet";
+} from "../apis/myDiet";
 import {
   MY_DIET_IMAGE_REQUEST,
   MY_DIET_IMAGE_SUCCESS,
@@ -30,7 +30,7 @@ import {
   MY_DIET_DIARY_DELETE_REQUEST,
   MY_DIET_DIARY_DELETE_SUCCESS,
   MY_DIET_DIARY_DELETE_FAILURE,
-} from "../modules/MyDiet";
+} from "../modules/myDiet";
 
 function* loadMyDietImage(action) {
   try {

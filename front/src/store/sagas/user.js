@@ -34,7 +34,7 @@ import {
   EMAIL_CHECK_SUCCESS,
 } from '../modules/user';
 import { MY_PAGE_REQUEST } from '../modules/mypage';
-import { MY_DIET_DIARY_LIST_REQUEST } from '../modules/myDietRegister';
+import { MY_DIET_DIARY_LIST_REQUEST } from '../modules/myDiet';
 import swal from 'sweetalert'; // 예쁜 alert 창을 위해 사용
 // 로그인 처리
 function* loadLogin(action) {
