@@ -33,6 +33,8 @@ public class  DietDiaryController {
     @Autowired
     DietDiaryService dietDiaryService;
 
+    @Autowired
+    S3FileUploadService s3FileUploadService;
 
     @PostMapping("/register")
     @ApiOperation(value = "식단 일지 등록", notes = "<strong>식단 일지</strong>를 등록한다.")
@@ -115,7 +117,9 @@ public class  DietDiaryController {
             @ApiResponse(code = 404, message = "사용자 없음"),
             @ApiResponse(code = 500, message = "서버 오류")
     })
-    public ResponseEntity<DietDiaryFindRes> updateDietDiary(@RequestBody @ApiParam(value="식단 일지 수정", required = true) DietDiaryRegisterReq dietDiaryRegisterReq) {
+    public ResponseEntity<? extends BaseResponseBody> updateDietDiary(
+            @RequestPart(value="key") DietDiaryRegisterReq dietDiaryRegisterReq
+            , @RequestPart(value="file", required=false) MultipartFile imagePath) throws Exception {
         DietDiary dietDiary = null;
         DietDiaryFindRes dietDiaryFindRes = null;
         try {
@@ -123,7 +127,7 @@ public class  DietDiaryController {
         } catch(NoSuchElementException e) {
             return new ResponseEntity<DietDiaryFindRes>(dietDiaryFindRes, HttpStatus.BAD_REQUEST);
         }
-        dietDiaryFindRes = dietDiaryService.updateDietDiary(dietDiary, dietDiaryRegisterReq);
+        dietDiaryFindRes = dietDiaryService.updateDietDiary(dietDiary, dietDiaryRegisterReq, imagePath);
         return new ResponseEntity<DietDiaryFindRes>(dietDiaryFindRes, HttpStatus.OK);
     }
 
@@ -140,6 +144,7 @@ public class  DietDiaryController {
         DietDiary dietDiary;
         try {
             dietDiary = dietDiaryService.findByDiaryNo(diaryNo);
+            s3FileUploadService.deleteFile(dietDiary.getImagePath());
             dietDiaryService.deleteDietDiary(dietDiary);
         } catch(Exception e) {
             e.printStackTrace();

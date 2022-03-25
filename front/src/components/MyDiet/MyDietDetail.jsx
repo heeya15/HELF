@@ -12,7 +12,7 @@ import {
   MY_DIET_DETAIL_REQUEST,
   MY_DIET_UPDATE_REQUEST,
 } from "../../store/modules/MyDiet";
-import { MY_DIET_IMAGE_REQUEST } from "../../store/modules/myDietRegister";
+import { MY_DIET_IMAGE_REQUEST } from "../../store/modules/myDiet";
 import { Row, Col } from "react-bootstrap";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
@@ -33,13 +33,15 @@ export default function MyDietDetail() {
   const { myDietDetail } = useSelector((state) => state.myDiet);
   const myDietUpdate = {
     description: myDietDetail.description,
-    diaryDate: myDietDetail.diaryDate,
+    diaryDate: dayjs(myDietDetail.diaryDate).format("YYYY-MM-DD HH:mm:ss"),
     dietRegisterReqList: myDietDetail.dietFindResList,
     imagePath: myDietDetail.imagePath,
     mealTime: myDietDetail.mealTime,
     diaryNo: myDietDetail.diaryNo,
+    isShared: myDietDetail.isShared,
+    saveImagePath: myDietDetail.imagePath,
   };
-  const { foodName } = useSelector((state) => state.myDietRegister);
+  const { foodName } = useSelector((state) => state.myDiet);
   const mealType = ["아침", "점심", "저녁", "간식"];
 
   const [dietDetailThumbnail, setDietDetailThumbnail] = useState(
