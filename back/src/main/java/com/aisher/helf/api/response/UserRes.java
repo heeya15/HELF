@@ -2,6 +2,7 @@ package com.aisher.helf.api.response;
 
 import com.aisher.helf.db.entity.User;
 
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
@@ -23,11 +24,23 @@ public class UserRes {
 	@ApiModelProperty(name="User email")
 	String userEmail;
 
+	@ApiModelProperty(name="User gender")
+	boolean gender;
+
+	@ApiModelProperty(name="User height")
+	int height;
+
+	@ApiModelProperty(name="User weight")
+	int weight;
+
 	public static UserRes of(User user) {
 		UserRes res = new UserRes();
 		res.setUserId(user.getUserId());
 		res.setUserName(user.getUserName());
 		res.setUserEmail(user.getUserEmail());
+		res.setGender(user.isGender());
+		res.setHeight(user.getHeight());
+		res.setWeight(user.getWeight());
 		return res;
 	}
 }

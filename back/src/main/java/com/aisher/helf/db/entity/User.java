@@ -1,5 +1,6 @@
 package com.aisher.helf.db.entity;
 
+import com.aisher.helf.api.request.UserUpdateReq;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -58,9 +59,12 @@ public class User {
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER) //참조를 당하는 쪽에서 읽기만 가능!
     List<LikeList> likeList ;
 
-    public void updateUser(String userName, String userPassword) {
-        this.userName = userName;
-        this.userPassword =userPassword;
+    public void updateUser(UserUpdateReq userUpdateReq, String userPassword) {
+        this.userName = userUpdateReq.getUserName();
+        this.userPassword = userPassword;
+        this.gender = userUpdateReq.isGender();
+        this.height = userUpdateReq.getHeight();
+        this.weight = userUpdateReq.getWeight();
     }
 
     public void updateAdditionalUserInfo(int weight, int height, boolean gender) {

@@ -40,24 +40,28 @@ public class UserServiceImpl implements UserService {
 		return userRepository.save(user);
 	}
 
+	// 회원(유저) 정보 조회
 	@Override
 	public User getUserByUserId(String userId) {
 		// 디비에 유저 정보 조회 (userId 를 통한 조회).
 		Optional<User> user = userRepositorySupport.findUserByUserId(userId);
 
 		if(user.isPresent()) {
+			System.out.println(">>>>>>>>>>>>>>> 유저 정보 : " + user.get());
 			return user.get();
 		} else {
 			return null;
 		}
 	}
+
+	// 회원 정보 수정 (이름, 비밀번호, 키, 몸무게 수정)
 	@Transactional
 	@Override
 	public void updateUser(UserUpdateReq updateUserDto) {
 		User user = userRepositorySupport.findUserByUserId(updateUserDto.getUserId()).get();
 		// 보안을 위해서 유저 패스워드 암호화 하여 디비에 저장.
 		String password = passwordEncoder.encode(updateUserDto.getUserPassword());
-		user.updateUser(updateUserDto.getUserName(),password);
+		user.updateUser(updateUserDto, password);
 	}
 
 	@Override

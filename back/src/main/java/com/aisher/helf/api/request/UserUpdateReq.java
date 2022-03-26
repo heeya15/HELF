@@ -19,4 +19,13 @@ public class UserUpdateReq {
 
 	@ApiModelProperty(name = "유저 이름")
 	private String userName;
+
+	@ApiModelProperty(name = "유저 성별")
+	private boolean gender;
+
+	@ApiModelProperty(name = "유저 키")
+	private int height;
+
+	@ApiModelProperty(name = "유저 몸무게")
+	private int weight;
 }

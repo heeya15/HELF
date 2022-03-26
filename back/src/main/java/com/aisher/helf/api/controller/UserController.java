@@ -101,7 +101,7 @@ public class UserController {
 		return ResponseEntity.status(401).body("Invalid Password");
 	}
 
-	// 회원 정보 수정 (이름, 비밀번호 수정)
+	// 회원 정보 수정 (이름, 비밀번호, 성별, 키, 몸무게 수정)
 	@ApiOperation(value = "회원 정보 수정", notes = "회원 정보 수정")
 	@PutMapping("/update")
 	public ResponseEntity<String> updateUser(@RequestBody UserUpdateReq updateUserDto) throws Exception {
