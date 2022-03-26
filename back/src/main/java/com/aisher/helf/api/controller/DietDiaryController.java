@@ -117,7 +117,7 @@ public class  DietDiaryController {
             @ApiResponse(code = 404, message = "사용자 없음"),
             @ApiResponse(code = 500, message = "서버 오류")
     })
-    public ResponseEntity<? extends BaseResponseBody> updateDietDiary(
+    public ResponseEntity<DietDiaryFindRes> updateDietDiary(
             @RequestPart(value="key") DietDiaryRegisterReq dietDiaryRegisterReq
             , @RequestPart(value="file", required=false) MultipartFile imagePath) throws Exception {
         DietDiary dietDiary = null;

@@ -78,10 +78,10 @@ com/aisher/helf/api/service/S3FileUploadServiceImpl.java
  com.aisher.helf.api.service.S3FileUploadServiceImpl
 com/aisher/helf/common/model/response/BaseResponseBody.java
  com.aisher.helf.common.model.response.BaseResponseBody
-com/aisher/helf/api/service/EmailService.java
- com.aisher.helf.api.service.EmailService
 com/aisher/helf/api/service/S3FileUploadService.java
  com.aisher.helf.api.service.S3FileUploadService
+com/aisher/helf/api/service/EmailService.java
+ com.aisher.helf.api.service.EmailService
 com/aisher/helf/db/repository/LikeListRepository.java
  com.aisher.helf.db.repository.LikeListRepository
 com/aisher/helf/api/service/UserServiceImpl.java
