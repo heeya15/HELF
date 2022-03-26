@@ -1,0 +1,61 @@
+.MyDiet {
+    padding: 30px;
+}
+
+/*요일*/
+.fc-col-header-cell-cushion {
+    color: #000;
+}
+.fc-col-header-cell-cushion:hover {
+    text-decoration: none;
+    color: #000;
+}
+/*일자*/
+.fc-daygrid-day-number {
+    color: #000;
+    font-size: 1em;
+    cursor: pointer;
+}
+
+/*종일제목*/
+.fc-event-title.fc-sticky {
+}
+
+/*more버튼*/
+.fc-daygrid-more-link.fc-more-link {
+    color: #000;
+}
+
+/*일정시간*/
+.fc-daygrid-event > .fc-event-time {
+    color: #000;
+}
+
+/*시간제목*/
+.fc-daygrid-dot-event > .fc-event-title {
+    color: #000 !important;
+}
+
+/*가로 줄 - 월달력 종일 or 복수일자*/
+.fc-h-event {
+}
+
+/*세로 줄 - 주달력, 일달력*/
+.fc-v-event {
+}
+
+/*title 옆에 점*/
+.fc-daygrid-event-dot {
+}
+
+/*month/week/day*/
+.fc-button-active {
+    border-color: #ffc107 !important;
+    background-color: #ffc107 !important;
+    color: #000 !important;
+    font-weight: bold !important;
+}
+
+.fc-daygrid-day-frame {
+    cursor: pointer;
+}
