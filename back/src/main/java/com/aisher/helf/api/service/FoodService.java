@@ -2,12 +2,14 @@ package com.aisher.helf.api.service;
 
 import com.aisher.helf.api.request.FoodRegisterReq;
 import com.aisher.helf.db.entity.Food;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 /**
  * 음식을 관리하기 위한 서비스 인터페이스 정의.
  */
+@Service
 public interface FoodService {
     /** 음식 정보을 생성하는 registerFood 입니다. */
     Food registerFood(FoodRegisterReq foodRegisterReq);

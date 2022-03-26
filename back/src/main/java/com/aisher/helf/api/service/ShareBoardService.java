@@ -5,12 +5,14 @@ import com.aisher.helf.api.response.ShareBoardFindRes;
 import com.aisher.helf.db.entity.ShareBoard;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 /**
  *	공유 게시판 관련 비즈니스 로직 처리를 위한 서비스 인터페이스 정의.
  */
+@Service
 public interface ShareBoardService {
 
 	/** 공유 게시글 하나의 정보를 가져오는(상세보기) findByBoardId 입니다.

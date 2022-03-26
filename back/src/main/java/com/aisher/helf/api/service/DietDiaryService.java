@@ -8,6 +8,7 @@ import com.aisher.helf.api.request.DietDiaryRegisterReq;
 import com.aisher.helf.api.response.DietDiaryAllRes;
 import com.aisher.helf.api.response.DietDiaryFindRes;
 import com.aisher.helf.db.entity.DietDiary;
+import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -16,6 +17,7 @@ import java.util.List;
 /**
  * 식단 일지를 관리하기 위한 서비스 인터페이스 정의.
  */
+@Service
 public interface DietDiaryService {
     /** 식단 일지 정보를 생성하는 registerDietDiary 입니다. **/
     DietDiary registerDietDiary(DietDiaryRegisterReq dietDiaryRegisterReq, MultipartFile imagePath) throws Exception;
