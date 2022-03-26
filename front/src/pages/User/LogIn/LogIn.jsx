@@ -33,12 +33,13 @@ export default function LogIn() {
             type: LOG_IN_REQUEST,
             data: { id: id, pw: pw },
           });
-          // (logInDone) && history.push('/');
-          if(logInDone) history.push('/');
-          else event.preventDefault();
         }
     };
-
+    useEffect(() => {
+      if (logInDone) {
+        history.push('/');
+      }
+    }, [logInDone, history]);
   const handleKeyPress = (e) => {
     if(e.key === 'Enter') {
       handleLogIn();
