@@ -5,7 +5,6 @@ import com.aisher.helf.api.service.EmailService;
 import com.aisher.helf.api.service.UserService;
 import com.aisher.helf.db.entity.User;
 import io.swagger.annotations.*;
-import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,13 +19,13 @@ import javax.mail.MessagingException;
 @Api(value = "이메일  API", tags = { "Email" })
 @RestController
 @RequestMapping("/api/email")
-@RequiredArgsConstructor
 public class EmailController {
     public static final Logger logger = LoggerFactory.getLogger(EmailController.class);
     private static final String SUCCESS = "success";
     private static final String FAIL = "fail";
 
-    private final EmailService emailService;
+    @Autowired
+    EmailService emailService;
 
     @Autowired
     UserService userService;

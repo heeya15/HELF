@@ -9,7 +9,6 @@ import com.aisher.helf.common.auth.UserDetails;
 import com.aisher.helf.common.model.response.BaseResponseBody;
 import com.aisher.helf.db.entity.User;
 import io.swagger.annotations.*;
-import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,15 +27,16 @@ import java.util.NoSuchElementException;
 @Api(value = "유저 API", tags = {"User"})
 @RestController
 @RequestMapping("/api/user")
-@RequiredArgsConstructor
 public class UserController {
 	public static final Logger logger = LoggerFactory.getLogger(UserController.class);
 	private static final String SUCCESS = "success";
 	private static final String FAIL = "fail";
 
-	private final PasswordEncoder passwordEncoder;
+	@Autowired
+	PasswordEncoder passwordEncoder;
 
-	private final UserService userService;
+	@Autowired
+	UserService userService;
 
 	// 회원 가입
 	@PostMapping("/register/signup")
