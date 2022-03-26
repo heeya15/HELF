@@ -4,7 +4,6 @@ import com.aisher.helf.api.service.UserService;
 import com.aisher.helf.common.auth.JwtAuthenticationFilter;
 import com.aisher.helf.common.auth.UserDetailService;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -24,12 +23,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
-@RequiredArgsConstructor
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+    @Autowired
+    UserDetailService userDetailService;
 
-    private final UserDetailService userDetailService;
-
-    private final UserService userService;
+    @Autowired
+    UserService userService;
     
     // Password 인코딩 방식에 BCrypt 암호화 방식 사용
     @Bean
