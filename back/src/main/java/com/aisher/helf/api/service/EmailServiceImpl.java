@@ -2,6 +2,7 @@ package com.aisher.helf.api.service;
 
 import com.aisher.helf.db.entity.User;
 import com.aisher.helf.db.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -11,15 +12,15 @@ import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 
 @Service("emailService")
+@RequiredArgsConstructor
 public class EmailServiceImpl implements EmailService {
     @Autowired
     private JavaMailSender javaMailSender;
 
-    @Autowired
-    UserRepository userRepository;
 
-    @Autowired
-    PasswordEncoder passwordEncoder;
+    private final UserRepository userRepository;
+
+    private final PasswordEncoder passwordEncoder;
 
     // 랜덤 비밀번호 생성
     @Override

@@ -10,6 +10,7 @@ import com.aisher.helf.db.repository.LikeListRepository;
 import com.aisher.helf.db.repository.LikeListRepositorySupport;
 import com.aisher.helf.db.repository.ShareBoardRepository;
 import com.aisher.helf.db.repository.ShareBoardRepositorySupport;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -19,7 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
-
+@RequiredArgsConstructor
 @Service("shareboardService")
 public class ShareBoardServiceImpl implements ShareBoardService {
     @Autowired
@@ -28,8 +29,8 @@ public class ShareBoardServiceImpl implements ShareBoardService {
     @Autowired
     LikeListRepositorySupport likeListRepositorySupport;
 
-    @Autowired
-    UserService userService;
+
+    private final UserService userService;
 
     @Autowired
     ShareBoardRepository shareboardRepository;
