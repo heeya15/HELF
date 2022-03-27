@@ -50,11 +50,15 @@ const MyPageIconBlock = styled.div`
 `;
 const MyPageProfileButton = styled.button`
   margin: 5px;
-  margin-top: 20px;
+  padding: 5px 10px;
   font-size: 20px;
-  background-color: ${blockColor};
+  background-color: #2E7D32;
+  border: none;
   border-radius: 5px;
-  color: #000;
+  color: #fff;
+  :hover {
+    transform: scale(1.1);
+  }
 `;
 const MyPageMenuWrapper = styled.div`
   height: 50px;
