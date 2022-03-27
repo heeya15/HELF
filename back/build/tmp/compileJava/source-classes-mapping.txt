@@ -14,6 +14,7 @@ com/aisher/helf/api/request/UserRegisterReq.java
  com.aisher.helf.api.request.UserRegisterReq
 com/aisher/helf/db/entity/ShareBoard.java
  com.aisher.helf.db.entity.ShareBoard
+ com.aisher.helf.db.entity.ShareBoard$ShareBoardBuilder
 com/aisher/helf/config/SwaggerConfig.java
  com.aisher.helf.config.SwaggerConfig
  com.aisher.helf.config.SwaggerConfig$Page
@@ -135,6 +136,8 @@ com/aisher/helf/api/request/PageRequest.java
  com.aisher.helf.api.request.PageRequest
 com/aisher/helf/api/controller/AuthController.java
  com.aisher.helf.api.controller.AuthController
+com/aisher/helf/api/request/ShareBoardRegisterReq.java
+ com.aisher.helf.api.request.ShareBoardRegisterReq
 com/aisher/helf/db/entity/Diet.java
  com.aisher.helf.db.entity.Diet
  com.aisher.helf.db.entity.Diet$DietBuilder
