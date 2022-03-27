@@ -54,8 +54,7 @@ export default function MypageProfile() {
   const [ newGender, setNewGender ] = useState(true);
   const [ newHeight, setNewHeight ] = useState(0);
   const [ newWeight, setNewWeight ] = useState(0);
-
-  console.log('수정 데이터 : ', newName, newPassword, newGender, newHeight, newWeight);
+  const [ showPassword, setShowPassword ] = useState(true);
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -82,10 +81,11 @@ export default function MypageProfile() {
   });
 
   const handleClickShowPassword = () => {
-    setUserInfo({
-      ...userinfo,
-      showPassword: !userinfo.showPassword,
-    });
+    if(showPassword) {
+      setShowPassword(false);
+    } else {
+      setShowPassword(true);
+    }
   };
 
   const handleMouseDownPassword = (event) => {
@@ -139,7 +139,6 @@ export default function MypageProfile() {
   };
 
   useEffect(() => {
-    console.log(">>>>>>>>>> userinfo : ", me);
     if(me.gender) {
       setGender('여');
     } else {
@@ -157,7 +156,7 @@ export default function MypageProfile() {
       })
     }
     setNewName(me.userName);
-    setNewPassword(me.userPassword);
+    setNewPassword(password);
     setNewGender(me.gender);
     setNewHeight(me.height);
     setNewWeight(me.weight);
@@ -238,7 +237,7 @@ export default function MypageProfile() {
                 <OutlinedInput
                   id="outlined-adornment-password"
                   defaultValue={ password }
-                  type={userinfo.showPassword ? 'text' : 'password'}
+                  type={showPassword ? 'password' : 'text'}
                   onChange={ handleNewPassword }
                   endAdornment={
                     <InputAdornment position="end">
@@ -248,7 +247,7 @@ export default function MypageProfile() {
                         onMouseDown={handleMouseDownPassword}
                         edge="end"
                       >
-                        {userinfo.showPassword ? <VisibilityOff /> : <Visibility />}
+                        {showPassword ? <VisibilityOff /> : <Visibility />}
                       </IconButton>
                     </InputAdornment>
                   }

@@ -10,6 +10,18 @@ import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
+import IconButton from '@mui/material/IconButton';
+import Input from '@mui/material/Input';
+import FilledInput from '@mui/material/FilledInput';
+import OutlinedInput from '@mui/material/OutlinedInput';
+import InputLabel from '@mui/material/InputLabel';
+import InputAdornment from '@mui/material/InputAdornment';
+import FormHelperText from '@mui/material/FormHelperText';
+import FormControl from '@mui/material/FormControl';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import RadioGroup from '@mui/material/RadioGroup';
+import FormLabel from '@mui/material/FormLabel';
 import {createTheme, ThemeProvider} from '@mui/material/styles';
 import { useDispatch, useSelector } from 'react-redux';
 import { 
@@ -36,6 +48,8 @@ export default function SignUp() {
     const [passwordCheck, setPasswordCheck] = useState("")
     const [name, setName] = useState("")
     const [email, setEmail] = useState("")
+    const [showPassword, setShowPassword] = useState(true);
+    const [showPasswordCheck, setShowPasswordCheck] = useState(true);
 
     // 오류메시지 상태 저장
     const [idMessage, setIdMessage] = useState("");
@@ -50,6 +64,30 @@ export default function SignUp() {
 
     const { signUpDone, idCheckDone, emailCheckDone } = useSelector(state => state.user);
     
+    const handleClickShowPassword = () => {
+        if(showPassword) {
+            setShowPassword(false);
+        } else {
+            setShowPassword(true);
+        }
+    };
+
+    const handleMouseDownPassword = (event) => {
+        event.preventDefault();
+    };
+
+    const handleClickShowPasswordCheck = () => {
+        if(showPasswordCheck) {
+            setShowPasswordCheck(false);
+        } else {
+            setShowPasswordCheck(true);
+        }
+    };
+
+    const handleMouseDownPasswordCheck = (event) => {
+        event.preventDefault();
+    };
+
     const onIdHandler = (event) => {
         setId(event.target.value)
         if(event.target.value.length < 4 || event.target.value.length > 12) {
@@ -202,7 +240,7 @@ export default function SignUp() {
                                     <Error>{ idMessage }</Error>}
                                 </Grid>
                             }
-                            <Grid item xs={12} sm={6}>
+                            {/* <Grid item xs={12} sm={6}>
                                 <TextField
                                     requried="true"
                                     fullWidth
@@ -211,8 +249,8 @@ export default function SignUp() {
                                     name="password"
                                     response="true"
                                     onChange={onPasswordHandler}/>
-                            </Grid>
-                            <Grid item xs={12} sm={6}>
+                            </Grid> */}
+                            {/* <Grid item xs={12} sm={6}>
                                 <TextField
                                     requried="true"
                                     fullWidth
@@ -220,7 +258,58 @@ export default function SignUp() {
                                     label="Password Check"
                                     name="passwordCheck"
                                     onChange={onPasswordCheckHandler}/>
+                            </Grid> */}
+                            <Grid item xs={12} sm={6}>
+                                <FormControl variant="outlined">
+                                    <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
+                                    <OutlinedInput
+                                    required
+                                    id="password"
+                                    name="password"
+                                    type={ showPassword ? 'password' : 'text'}
+                                    onChange={ onPasswordHandler }
+                                    endAdornment={
+                                        <InputAdornment position="end">
+                                        <IconButton
+                                            aria-label="toggle password visibility"
+                                            onClick={handleClickShowPassword}
+                                            onMouseDown={handleMouseDownPassword}
+                                            edge="end"
+                                        >
+                                            { showPassword ? <VisibilityOff /> : <Visibility /> }
+                                        </IconButton>
+                                        </InputAdornment>
+                                    }
+                                    label="Password"
+                                    />
+                                </FormControl>
                             </Grid>
+                            <Grid item xs={12} sm={6}>
+                                <FormControl variant="outlined">
+                                    <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
+                                    <OutlinedInput
+                                    required
+                                    id="password"
+                                    name="passwordCheck"
+                                    type={ showPasswordCheck ? 'password' : 'text'}
+                                    onChange={ onPasswordCheckHandler }
+                                    endAdornment={
+                                        <InputAdornment position="end">
+                                        <IconButton
+                                            aria-label="toggle password visibility"
+                                            onClick={handleClickShowPasswordCheck}
+                                            onMouseDown={handleMouseDownPasswordCheck}
+                                            edge="end"
+                                        >
+                                            { showPasswordCheck ? <VisibilityOff /> : <Visibility /> }
+                                        </IconButton>
+                                        </InputAdornment>
+                                    }
+                                    label="Password"
+                                    />
+                                </FormControl>
+                            </Grid>
+
                             { (password.length > 0 && passwordMessage.length > 0 ) && 
                                 <Grid item xs={12}>
                                     { isPassword ? <Success>{ passwordMessage } </Success> : 
