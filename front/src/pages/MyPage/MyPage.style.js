@@ -131,4 +131,5 @@ const MyPageContent = styled.div`
   }
 `;
 
+
 export { MyPageWrapper, MyPageHeader, MyPageContent };
