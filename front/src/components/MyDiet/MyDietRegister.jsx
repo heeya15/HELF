@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Link, useParams } from "react-router-dom";
 import { IMAGE_URL } from "../../utils/https";
 import {
   MY_DIET_IMAGE_REQUEST,
@@ -10,9 +11,20 @@ import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import TimePicker from "@mui/lab/TimePicker";
 import dayjs from "dayjs";
 import TextField from "@mui/material/TextField";
+import { Container, Row, Col } from "react-bootstrap";
+import {
+  TotalStyle,
+  RegisterReq,
+  MealTypeButton,
+  RegisterButton,
+  Titles,
+  Description,
+  ImageThumbnail,
+} from "./MyDietRegister.style";
 
 export default function MyDietRegister() {
   const dispatch = useDispatch();
+  const { date } = useParams();
 
   const [dietThumbnail, setDietThumbnail] = useState(
     `${IMAGE_URL}default-image.png`
@@ -51,7 +63,7 @@ export default function MyDietRegister() {
   };
 
   const onDiaryDateHandler = (e) => {
-    setDiaryDate(dayjs(e).format("YYYY-MM-DD HH:mm:ss"));
+    setDiaryDate(date + dayjs(e).format(" HH:mm:ss"));
   };
 
   const onDescriptionHandler = (e) => {
@@ -73,33 +85,57 @@ export default function MyDietRegister() {
 
   return (
     <div>
-      <img src={dietThumbnail} alt="이미지"></img>
-      <label htmlFor="input-file">이미지</label>
-      <input
-        onChange={onImageHandler}
-        type="file"
-        id="input-file"
-        style={{ display: "none" }}
-      ></input>
-      <div>
-        {mealType.map((meal, index) => (
-          <button key={index} value={meal} onClick={onMealTimeHandler}>
-            {meal}
-          </button>
-        ))}
-      </div>
-      <LocalizationProvider dateAdapter={AdapterDateFns}>
-        <TimePicker
-          label="Basic example"
-          value={myDietRegister.diaryDate}
-          onChange={(newValue) => {
-            onDiaryDateHandler(newValue);
-          }}
-          renderInput={(params) => <TextField {...params} />}
-        />
-      </LocalizationProvider>
-      <textarea onChange={onDescriptionHandler}></textarea>
-      <button onClick={registerMyDietButton}>등록</button>
+      <Container>
+        <TotalStyle>
+          <Row>
+            <Col>
+              <ImageThumbnail src={dietThumbnail} alt="이미지"></ImageThumbnail>
+              <label htmlFor="input-file">이미지 선택</label>
+              <input
+                onChange={onImageHandler}
+                type="file"
+                id="input-file"
+                style={{ display: "none" }}
+              ></input>
+            </Col>
+            <Col>
+              <RegisterReq>
+                <Titles>Food</Titles>
+                <Titles>Meal Type</Titles>
+                <div style={{ display: "flex" }}>
+                  {mealType.map((meal, index) => (
+                    <MealTypeButton
+                      key={index}
+                      value={meal}
+                      onClick={onMealTimeHandler}
+                    >
+                      {meal}
+                    </MealTypeButton>
+                  ))}
+                </div>
+                <Titles>Meal Time</Titles>
+                <LocalizationProvider dateAdapter={AdapterDateFns}>
+                  <TimePicker
+                    label="시간을 선택해주세요"
+                    value={myDietRegister.diaryDate}
+                    onChange={(newValue) => {
+                      onDiaryDateHandler(newValue);
+                    }}
+                    renderInput={(params) => <TextField {...params} />}
+                  />
+                </LocalizationProvider>
+                <Titles>Description</Titles>
+                <Description
+                  rows="8"
+                  onChange={onDescriptionHandler}
+                  placeholder="설명을 입력해주세요."
+                ></Description>
+              </RegisterReq>
+            </Col>
+          </Row>
+        </TotalStyle>
+        <RegisterButton onClick={registerMyDietButton}>등록</RegisterButton>
+      </Container>
     </div>
   );
 }
