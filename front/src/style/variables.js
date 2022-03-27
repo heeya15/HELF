@@ -4,7 +4,7 @@ import styled from 'styled-components';
 
 // Colors
 
-export const blockColor = '#F2F4F5'; // 연한 그레이
+export const blockColor = '#D8FFD0'; // 연한 녹색
 export const pointColor = 'green';
 
 export const primaryColor = 'black';
@@ -59,9 +59,9 @@ export const Layout = styled.div`
   }
 `;
 export const Wrapper = styled.div`
-  height: 70%;
+  height: 90%;
   @media ${device.TabletPortrait} {
-    height: 80%;
+    height: 100%;
   }
   display: flex;
   justify-content: center;
