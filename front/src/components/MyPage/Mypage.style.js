@@ -16,6 +16,7 @@ const MyPageProfileWrapper = styled.div`
     padding: 10px;
   }
 `;
+
 const MyPageProfileBlock = styled.div`
   display: flex;
   justify-content: center;
