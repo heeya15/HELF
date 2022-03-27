@@ -45,15 +45,17 @@ export default function MypageProfile() {
   const history = useHistory();
   const { me, passwordConfirmDone, updateUserInfoDone } = useSelector(state => state.mypage);
   const [ password, setPassword ] = useState('');
-  const [open, setOpen] = useState(false);
+  const [ open, setOpen ] = useState(false);
   const [ gender, setGender ] = useState('');
   
   // 수정 데이터
-  const [ newName, setNewName ] = useState(me.userName);
-  const [ newPassword, setNewPassword ] = useState(gender);
-  const [ newGender, setNewGender ] = useState(me.gender);
-  const [ newHeight, setNewHeight ] = useState(me.height);
-  const [ newWeight, setNewWeight ] = useState(me.weight);
+  const [ newName, setNewName ] = useState('');
+  const [ newPassword, setNewPassword ] = useState('');
+  const [ newGender, setNewGender ] = useState(true);
+  const [ newHeight, setNewHeight ] = useState(0);
+  const [ newWeight, setNewWeight ] = useState(0);
+
+  console.log('수정 데이터 : ', newName, newPassword, newGender, newHeight, newWeight);
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -138,6 +140,7 @@ export default function MypageProfile() {
   };
 
   useEffect(() => {
+    console.log(">>>>>>>>>> userinfo : ", me);
     if(me.gender) {
       setGender('여');
     } else {
@@ -154,7 +157,19 @@ export default function MypageProfile() {
         type: MY_PAGE_REQUEST,
       })
     }
-  }, [me, passwordConfirmDone, updateUserInfoDone]);
+  }, [ me, passwordConfirmDone, updateUserInfoDone ]);
+
+  useEffect(() => {
+    dispatch({
+      type: MY_PAGE_REQUEST,
+    });
+    setNewName(me.userName);
+    setNewPassword(me.userPassword);
+    setNewGender(me.gender);
+    setNewHeight(me.height);
+    setNewWeight(me.weight);
+  }, []);
+
 
   return (
     <MyPageProfileWrapper>
