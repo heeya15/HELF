@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { BASE_URL } from "../../utils/https";
+import { BASE_URL, LOCAL_URL } from "../../utils/https";
 
 // 로그인
 export async function LoginAPI({ id, pw }) {
@@ -28,7 +28,7 @@ export async function SignUpAPI({
 
 // 이메일 중복체크
 export async function EmailCheckAPI({ email }) {
-  const result = await axios.get(`${BASE_URL}email/emailCheck/${email}`);
+  const result = await axios.get(`${BASE_URL}user/emailCheck/${email}`);
   return result;
 }
 
