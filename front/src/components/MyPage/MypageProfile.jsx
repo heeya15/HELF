@@ -157,19 +157,18 @@ export default function MypageProfile() {
         type: MY_PAGE_REQUEST,
       })
     }
+    setNewName(me.userName);
+    setNewPassword(me.userPassword);
+    setNewGender(me.gender);
+    setNewHeight(me.height);
+    setNewWeight(me.weight);
   }, [ me, passwordConfirmDone, updateUserInfoDone ]);
 
   useEffect(() => {
     dispatch({
       type: MY_PAGE_REQUEST,
     });
-    setNewName(me.userName);
-    setNewPassword(me.userPassword);
-    setNewGender(me.gender);
-    setNewHeight(me.height);
-    setNewWeight(me.weight);
   }, []);
-
 
   return (
     <MyPageProfileWrapper>
@@ -232,14 +231,14 @@ export default function MypageProfile() {
                 sx={{ m: 1 }}
                 label="Name" 
                 id="outlined-size-normal"
-                defaultValue={newName}
+                defaultValue={me.userName}
                 onChange={ handleNewName }
               />
               <FormControl sx={{ m: 1, width: '25ch' }} variant="outlined">
                 <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
                 <OutlinedInput
                   id="outlined-adornment-password"
-                  defaultValue={newPassword}
+                  defaultValue={me.userPassword}
                   type={userinfo.showPassword ? 'text' : 'password'}
                   onChange={ handleNewPassword }
                   endAdornment={
@@ -272,16 +271,16 @@ export default function MypageProfile() {
               </FormControl>
               <TextField 
                 sx={{ m: 1 }}
-                label="Height" 
+                label="Height"
                 id="outlined-size-normal"
-                defaultValue={newHeight}
+                defaultValue={me.height}
                 onChange={ handleNewHeight }
                 />
               <TextField 
                 sx={{ m: 1 }}
                 label="Weight" 
                 id="outlined-size-normal" 
-                defaultValue={newWeight}
+                defaultValue={me.weight}
                 onChange={ handleNewWeight }
               />
             </div>
