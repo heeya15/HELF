@@ -121,7 +121,6 @@ export default function MypageProfile() {
   };
 
   const handleNewGender = (event) => {
-    console.log(">>>>>>>>>>>>>>> ", event.target.value);
     setNewGender(event.target.value);
   };
 
