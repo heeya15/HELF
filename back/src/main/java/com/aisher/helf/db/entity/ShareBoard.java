@@ -2,18 +2,25 @@ package com.aisher.helf.db.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Data;
+import lombok.*;
+
 import javax.persistence.*;
+
 import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-@Data
 @Entity
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @Table
+@Builder
 public class ShareBoard {
     @Id
     @Column(name = "board_no")
@@ -29,6 +36,7 @@ public class ShareBoard {
 
     @Column(name = "created_at",columnDefinition = "TIMESTAMP")
     @JsonFormat(shape = JsonFormat.Shape.STRING, timezone = "Asia/Seoul")
+    @CreationTimestamp
     LocalDateTime createdAt; // 등록일
 
     @JsonIgnore

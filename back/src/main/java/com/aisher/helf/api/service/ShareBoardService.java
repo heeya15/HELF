@@ -1,5 +1,6 @@
 package com.aisher.helf.api.service;
 
+import com.aisher.helf.api.request.ShareBoardRegisterReq;
 import com.aisher.helf.api.response.ShareBoardAllRes;
 import com.aisher.helf.api.response.ShareBoardFindRes;
 import com.aisher.helf.db.entity.ShareBoard;
@@ -14,6 +15,9 @@ import java.util.List;
  */
 @Service
 public interface ShareBoardService {
+
+	/** 공유 게시판에 게시글(식단 일지) 등록 **/
+	ShareBoard registerShareBoard(ShareBoardRegisterReq shareBoardRegisterReq);
 
 	/** 공유 게시글 하나의 정보를 가져오는(상세보기) findByBoardId 입니다.
 	 * @return*/

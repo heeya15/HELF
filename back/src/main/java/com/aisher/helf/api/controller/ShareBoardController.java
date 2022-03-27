@@ -1,12 +1,15 @@
 package com.aisher.helf.api.controller;
 
 
+import com.aisher.helf.api.request.FoodRegisterReq;
 import com.aisher.helf.api.request.ShareBoardLikeReq;
+import com.aisher.helf.api.request.ShareBoardRegisterReq;
 import com.aisher.helf.api.response.ShareBoardAllRes;
 import com.aisher.helf.api.response.ShareBoardFindRes;
 import com.aisher.helf.api.service.ShareBoardService;
 import com.aisher.helf.common.auth.UserDetails;
 import com.aisher.helf.common.model.response.BaseResponseBody;
+import com.aisher.helf.db.entity.Food;
 import com.aisher.helf.db.entity.ShareBoard;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +37,26 @@ public class ShareBoardController {
 
     @Autowired
     ShareBoardService shareboardService;
+
+    // 공유 게시글 생성
+    @PostMapping("/register")
+    @ApiOperation(value = "게시글 등록", notes = "<strong>공유 식단 일지 정보</strong>를 공유 게시판에 통해 등록한다.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "성공"),
+            @ApiResponse(code = 401, message = "인증 실패"),
+            @ApiResponse(code = 404, message = "사용자 없음"),
+            @ApiResponse(code = 500, message = "서버 오류")
+    })
+    public ResponseEntity<? extends BaseResponseBody> registerShareBoard(
+            @RequestBody @ApiParam(value="게시글 등록", required = true) ShareBoardRegisterReq shareBoardRegisterReq) {
+
+        ShareBoard shareBoard = shareboardService.registerShareBoard(shareBoardRegisterReq);
+        if(shareBoard == null) {
+            ResponseEntity.status(400).body(BaseResponseBody.of(400, "Bad Request"));
+        }
+        return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
+    }
+
 
     /** 공유 게시글 전체 조회 입니다. + pagination
      *  page랑 size랑 sort는 url에 담아서 넘겨줘야 함.
