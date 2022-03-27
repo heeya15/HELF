@@ -237,7 +237,7 @@ export default function MypageProfile() {
                 <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
                 <OutlinedInput
                   id="outlined-adornment-password"
-                  defaultValue={me.userPassword}
+                  defaultValue={ password }
                   type={userinfo.showPassword ? 'text' : 'password'}
                   onChange={ handleNewPassword }
                   endAdornment={
