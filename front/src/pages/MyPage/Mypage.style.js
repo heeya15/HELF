@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { blockColor, device } from '../../style/variables';
 
-const MypageProfileImgDiv = styled.div`
+const MyPageProfileImgDiv = styled.div`
   width: 15vh;
   height: 15vh;
   border-radius: 70%;
@@ -13,7 +13,7 @@ const MypageProfileImgDiv = styled.div`
   box-shadow: 3px 3px 3px 2px #404040;
 `;
 
-const MypageProfileImgTag = styled.img`
+const MyPageProfileImgTag = styled.img`
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -107,7 +107,7 @@ const InFormBlock = styled.div`
   }
 `;
 
-const MypageWrapper = styled.div`
+const MyPageWrapper = styled.div`
   height: 100%;
   margin: 0 10px;
   overflow-y: auto;
@@ -116,7 +116,7 @@ const MypageWrapper = styled.div`
   }
 `;
 
-const MypageHeader = styled.div`
+const MyPageHeader = styled.div`
   display: flex;
   justify-content: center;
   padding: 20px;
@@ -124,11 +124,11 @@ const MypageHeader = styled.div`
     padding: 10px;
   }
 `;
-const MypageContent = styled.div`
+const MyPageContent = styled.div`
   width: 100%;
   .poster {
     padding: 0 10%;
   }
 `;
 
-export { MypageWrapper, MypageHeader, MypageContent };
+export { MyPageWrapper, MyPageHeader, MyPageContent };

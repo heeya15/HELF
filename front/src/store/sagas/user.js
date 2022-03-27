@@ -44,7 +44,7 @@ function* loadLogin(action) {
     console.log(result);
     yield put({ type: LOG_IN_SUCCESS, data: result }); // action dispatch
     sessionStorage.setItem('jwt', result.data.accessToken); // userToken 세션스토리지 저장
-    yield put({ type: MY_PAGE_REQUEST, data: result.data.accessToken }); // mypage 정보 바로 조회
+    // yield put({ type: MY_PAGE_REQUEST, data: result.data.accessToken }); // mypage 정보 바로 조회
     swal('로그인 성공', '  ', 'success', {
       buttons: false,
       timer: 1800,
