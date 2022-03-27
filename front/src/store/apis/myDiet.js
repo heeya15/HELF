@@ -50,7 +50,7 @@ export async function myDietRegisterAPI({
   formData.append("file", imagePath);
   // const result = await axios.post(`${BASE_URL}dietdiary/register`, formData, header);
   const result = await axios.post(
-    `${LOCAL_URL}dietdiary/register`,
+    `${BASE_URL}dietdiary/register`,
     formData,
     header
   );

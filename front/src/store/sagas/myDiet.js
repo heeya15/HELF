@@ -50,6 +50,7 @@ function* loadMyDietRegister(action) {
     console.log(action.data);
     const result = yield call(myDietRegisterAPI, action.data);
     yield put({ type: MY_DIET_REGISTER_SUCCESS, data: result });
+    document.location.href = "/mydiet";
   } catch (error) {
     yield put({ type: MY_DIET_REGISTER_FAILURE });
   }
