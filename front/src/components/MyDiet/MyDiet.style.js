@@ -95,6 +95,10 @@ const CancelButton = styled.button`
     padding: 5px 10px;
 `;
 
+const dietDiaryItem = {
+    cursor: 'pointer',
+};
+
 export { 
     DietDiaryItemWrapper,
     AddButton,
@@ -108,4 +112,5 @@ export {
     ButtonWrapper,
     ConfirmButton,
     CancelButton,
+    dietDiaryItem
 };
