@@ -33,6 +33,7 @@ import {
   ButtonWrapper,
   ConfirmButton,
   CancelButton,
+  dietDiaryItem,
 } from "./MyDiet.style";
 import { useHistory, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -105,7 +106,7 @@ export default function MyDietDaily() {
   const clickAddBtn = () => {
     // 일정 생성 폼에 date 넘겨주기
     console.log(date);
-    // history.push(`/mydietregister/${date}`);
+    history.push(`/mydietregister/${date}`);
   };
 
   const handleShareDietDiary = (diaryNo) => {
@@ -133,6 +134,10 @@ export default function MyDietDaily() {
     });
   };
 
+  const clickDietDiaryItem = (diaryNo) => {
+    history.push(`/mydietdetail/${diaryNo}`);
+  }
+
   useEffect(() => {
     dispatch({
       type: MY_DIET_DIARY_DAILY_INFO_REQUEST,
@@ -157,8 +162,14 @@ export default function MyDietDaily() {
       </div>
       <div>
         {diaryInfoList.map((info) => (
-          <DietDiaryItem key={info.diaryNo}>
-            <img src={info.imageFullPath} alt="식단 이미지"></img>
+          <DietDiaryItem 
+            key={info.diaryNo} 
+            style={dietDiaryItem}
+            >
+            <img 
+              src={info.imageFullPath}
+              alt="식단 이미지"
+              onClick={ () => clickDietDiaryItem(info.diaryNo) }></img>
             <p>{info.mealTime}</p>
             <p>{info.diaryTime}</p>
             <p>{info.printKcal} kcal</p>
