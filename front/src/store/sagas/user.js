@@ -13,6 +13,15 @@ import {
   SignUpAPI,
 } from '../apis/user';
 import {
+  KakaoLoginAPI,
+} from '../apis/kakaoReducer';
+import {
+  KAKAO_LOG_IN_REQUEST,
+  KAKAO_LOG_IN_SUCCESS,
+  KAKAO_LOG_IN_FAILURE,
+  KAKAO_LOG_OUT_REQUEST,
+  KAKAO_LOG_OUT_SUCCESS,
+  KAKAO_LOG_OUT_FAILURE,
   LOG_IN_REQUEST,
   LOG_IN_SUCCESS,
   LOG_IN_FAILURE,
@@ -33,6 +42,7 @@ import {
   EMAIL_CHECK_FAILURE,
   EMAIL_CHECK_SUCCESS,
 } from '../modules/user';
+
 import { MY_PAGE_REQUEST } from '../modules/myPage';
 import { MY_DIET_DIARY_LIST_REQUEST } from '../modules/myDiet';
 import swal from 'sweetalert'; // 예쁜 alert 창을 위해 사용
@@ -67,7 +77,36 @@ function* watchLoadLogin() {
   console.log("함수 대기");
   yield takeLatest(LOG_IN_REQUEST, loadLogin);
 }
+const { Kakao } = window;
+function* kakaoloadLogin(action) {
+  try { // 함수안에 yield 객체만 사용 가능.
+    yield call(KakaoLoginAPI); // 해당 동기 함수 호출
+    console.log("카카오 로그인");
+    const result = Kakao.Auth.getAccessToken();
+    yield put({ type: KAKAO_LOG_IN_SUCCESS, data: result }); // action dispatch
+    sessionStorage.setItem('jwt', result); // userToken 세션스토리지 저장
+    // yield put({ type: MY_PAGE_REQUEST, data: result.data.accessToken }); // mypage 정보 바로 조회
+    swal('카카오 로그인 성공', '  ', 'success', {
+      buttons: false,
+      timer: 1800,
+    });
+  } catch (err) {
+    swal(
+      '카카오 로그인 실패',
+      '소셜 인증을 다시 하십시요.',
+      'error',
+      {
+        buttons: false,
+        timer: 2000,
+      }
+    );
+    yield put({ type: KAKAO_LOG_IN_FAILURE });
+  }
+}
 
+function* watchkakaoLoadLogin() {
+  yield takeLatest(KAKAO_LOG_IN_REQUEST, kakaoloadLogin);
+}
 // 로그아웃 처리
 function* loadLogout(action) {
   try {
@@ -175,6 +214,7 @@ function* watchLoadFindPw() {
 
 export default function* UserSaga() {
   yield all([
+    fork(watchkakaoLoadLogin),
     fork(watchLoadLogin),
     fork(watchLoadLogout),
     fork(watchLoadSignUp),

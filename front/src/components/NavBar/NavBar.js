@@ -26,7 +26,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { MY_PAGE_REQUEST } from '../../store/modules/myPage';
 export default function NavBar() {
   const dispatch = useDispatch();
-  const { logInDone, menu } = useSelector(state => state.user);
+  const { logInDone, menu, kakaologInDone } = useSelector(state => state.user);
   const { me } = useSelector(state => state.mypage); // 0: 비로그인, 4: 스타, 3:사용자, 2: 관계자 ,1:관리자
   const [open, setOpen] = useState(false);
 
@@ -55,16 +55,16 @@ export default function NavBar() {
         <Link to="/exercise"  className='anc'>PT 자세교정</Link>          
       </div>
       <div>
-      {(logInDone ===false) &&
+      {(logInDone ===false && kakaologInDone === false) &&
         <Link to="/signup"  className='anc'>회원가입</Link>      
         }
-      {(logInDone ===false) &&
+      {(logInDone ===false && kakaologInDone === false) &&
         <Link to="/login" className='anc'>로그인</Link>  
       }
-      {(logInDone ===true) &&
+      {(logInDone ===true || kakaologInDone === true) &&
         <Link to="/mypage" className="anc"> mypage </Link>
         }
-      {(logInDone === true) &&
+      {(logInDone === true || kakaologInDone === true) &&
           <DrawerListRow
             style={{ cursor: 'pointer' }}
             onClick={() => {
