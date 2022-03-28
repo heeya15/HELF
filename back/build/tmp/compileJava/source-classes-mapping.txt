@@ -1,5 +1,7 @@
 com/aisher/helf/db/repository/ShareBoardRepositorySupport.java
  com.aisher.helf.db.repository.ShareBoardRepositorySupport
+com/aisher/helf/db/entity/NutritionHistoryId.java
+ com.aisher.helf.db.entity.NutritionHistoryId
 com/aisher/helf/api/controller/UserController.java
  com.aisher.helf.api.controller.UserController
 com/aisher/helf/api/response/ShareBoardFindRes.java
@@ -31,6 +33,8 @@ com/aisher/helf/api/controller/CommentController.java
  com.aisher.helf.api.controller.CommentController
 com/aisher/helf/db/entity/User.java
  com.aisher.helf.db.entity.User
+com/aisher/helf/api/controller/NutritionHistoryController.java
+ com.aisher.helf.api.controller.NutritionHistoryController
 com/aisher/helf/api/request/CommentRegisterReq.java
  com.aisher.helf.api.request.CommentRegisterReq
 com/aisher/helf/api/response/ShareBoardAllRes.java
@@ -48,6 +52,10 @@ com/aisher/helf/api/response/UserLoginRes.java
  com.aisher.helf.api.response.UserLoginRes
 com/aisher/helf/api/service/DietDiaryService.java
  com.aisher.helf.api.service.DietDiaryService
+com/aisher/helf/api/service/NutritionHistoryService.java
+ com.aisher.helf.api.service.NutritionHistoryService
+com/aisher/helf/api/service/NutritionHistoryServiceImpl.java
+ com.aisher.helf.api.service.NutritionHistoryServiceImpl
 com/aisher/helf/db/repository/DietRepositorySupport.java
  com.aisher.helf.db.repository.DietRepositorySupport
 com/aisher/helf/api/request/CommentUpdateReq.java
@@ -93,6 +101,8 @@ com/aisher/helf/api/request/DietDiaryRegisterReq.java
  com.aisher.helf.api.request.DietDiaryRegisterReq
 com/aisher/helf/common/auth/UserDetailService.java
  com.aisher.helf.common.auth.UserDetailService
+com/aisher/helf/db/repository/NutritionHistoryRepository.java
+ com.aisher.helf.db.repository.NutritionHistoryRepository
 com/aisher/helf/db/repository/UserRepository.java
  com.aisher.helf.db.repository.UserRepository
 com/aisher/helf/db/entity/DietDiary.java
@@ -128,8 +138,15 @@ com/aisher/helf/db/repository/DietRepository.java
  com.aisher.helf.db.repository.DietRepository
 com/aisher/helf/config/WebMvcConfig.java
  com.aisher.helf.config.WebMvcConfig
+com/aisher/helf/api/response/NutritionHistoryRes.java
+ com.aisher.helf.api.response.NutritionHistoryRes
+com/aisher/helf/api/response/NutritionRes.java
+ com.aisher.helf.api.response.NutritionRes
 com/aisher/helf/api/service/FoodService.java
  com.aisher.helf.api.service.FoodService
+com/aisher/helf/db/entity/NutritionHistory.java
+ com.aisher.helf.db.entity.NutritionHistory
+ com.aisher.helf.db.entity.NutritionHistory$NutritionHistoryBuilder
 com/aisher/helf/common/auth/UserDetails.java
  com.aisher.helf.common.auth.UserDetails
 com/aisher/helf/api/request/PageRequest.java
@@ -155,6 +172,8 @@ com/aisher/helf/api/response/DietDiaryAllRes.java
  com.aisher.helf.api.response.DietDiaryAllRes
 com/aisher/helf/api/request/FoodRegisterReq.java
  com.aisher.helf.api.request.FoodRegisterReq
+com/aisher/helf/api/response/NutritionHistoryFindRes.java
+ com.aisher.helf.api.response.NutritionHistoryFindRes
 com/aisher/helf/db/repository/FoodRepository.java
  com.aisher.helf.db.repository.FoodRepository
 com/aisher/helf/db/repository/FoodRepositorySupport.java

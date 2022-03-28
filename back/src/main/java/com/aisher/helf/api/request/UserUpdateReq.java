@@ -1,10 +1,13 @@
 package com.aisher.helf.api.request;
 
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.time.LocalDate;
 
 @Getter
 @Setter
@@ -28,4 +31,7 @@ public class UserUpdateReq {
 
 	@ApiModelProperty(name = "유저 몸무게")
 	private int weight;
+
+	@ApiModelProperty(name = "유저 생년월일")
+	private String birthday;
 }

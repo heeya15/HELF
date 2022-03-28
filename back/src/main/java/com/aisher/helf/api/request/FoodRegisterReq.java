@@ -27,13 +27,13 @@ public class FoodRegisterReq {
 	private int kcal;
 
 	@ApiModelProperty(name="탄수화물", example="0.00")
-	private BigDecimal carbohydrate;
+	private double carbohydrate;
 
 	@ApiModelProperty(name="단백질", example="22.98")
-	private BigDecimal protein;
+	private double protein;
 
 	@ApiModelProperty(name="지방", example="1.23")
-	private BigDecimal fat;
+	private double fat;
 
 	public Food toEntity() {
 		return Food.builder()
