@@ -10,6 +10,8 @@ import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import java.time.LocalDate;
@@ -46,6 +48,11 @@ public class User {
     @ColumnDefault("0")
     int height;
 
+    @Column(name = "birthday")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, timezone = "Asia/Seoul")
+    LocalDate birthday;
+
     @Column(name = "gender")
     @ColumnDefault("0")
     boolean gender;
@@ -59,17 +66,19 @@ public class User {
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER) //참조를 당하는 쪽에서 읽기만 가능!
     List<LikeList> likeList ;
 
-    public void updateUser(UserUpdateReq userUpdateReq, String userPassword) {
+    public void updateUser(UserUpdateReq userUpdateReq, String userPassword, LocalDate userBirthday) {
         this.userName = userUpdateReq.getUserName();
         this.userPassword = userPassword;
         this.gender = userUpdateReq.isGender();
         this.height = userUpdateReq.getHeight();
         this.weight = userUpdateReq.getWeight();
+        this.birthday = userBirthday;
     }
 
-    public void updateAdditionalUserInfo(int weight, int height, boolean gender) {
+    public void updateAdditionalUserInfo(int weight, int height, boolean gender, LocalDate birthday) {
         this.weight = weight;
         this.height = height;
         this.gender = gender;
+        this.birthday = birthday;
     }
 }

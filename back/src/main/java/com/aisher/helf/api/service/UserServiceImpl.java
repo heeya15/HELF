@@ -12,6 +12,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 
@@ -44,10 +46,11 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public User getUserByUserId(String userId) {
 		// 디비에 유저 정보 조회 (userId 를 통한 조회).
+		System.out.println(">>>>>>>>>>>>>>>>>>>>>>>> id : " + userId);
 		Optional<User> user = userRepositorySupport.findUserByUserId(userId);
 
 		if(user.isPresent()) {
-			System.out.println(">>>>>>>>>>>>>>> 유저 정보 : " + user.get());
+			System.out.println("data : " + user.get());
 			return user.get();
 		} else {
 			return null;
@@ -61,7 +64,9 @@ public class UserServiceImpl implements UserService {
 		User user = userRepositorySupport.findUserByUserId(updateUserDto.getUserId()).get();
 		// 보안을 위해서 유저 패스워드 암호화 하여 디비에 저장.
 		String password = passwordEncoder.encode(updateUserDto.getUserPassword());
-		user.updateUser(updateUserDto, password);
+		// String으로 받은 생일 날짜 LocalDate로 변환
+		LocalDate birthday = LocalDate.parse(updateUserDto.getBirthday(), DateTimeFormatter.ISO_DATE);
+		user.updateUser(updateUserDto, password, birthday);
 	}
 
 	@Override
@@ -105,7 +110,11 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public User registerAdditionalUserInfo(UserAdditionalInfoRegisterReq userAdditionalInfoRegisterReq, String userId) {
 		User user = userRepositorySupport.findUserByUserId(userId).get();
-		user.updateAdditionalUserInfo(userAdditionalInfoRegisterReq.getWeight(), userAdditionalInfoRegisterReq.getHeight(), userAdditionalInfoRegisterReq.isGender());
+		LocalDate birthday = LocalDate.parse(userAdditionalInfoRegisterReq.getBirthday(), DateTimeFormatter.ISO_DATE);
+		user.updateAdditionalUserInfo(userAdditionalInfoRegisterReq.getWeight(),
+				   					  userAdditionalInfoRegisterReq.getHeight(),
+				  					  userAdditionalInfoRegisterReq.isGender(),
+									  birthday);
 		return null;
 	}
 }

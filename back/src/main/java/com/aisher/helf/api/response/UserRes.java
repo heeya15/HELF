@@ -8,6 +8,8 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDate;
+
 /**
  * 회원 본인 정보 조회 API ([GET] /api/v1/users/me) 요청에 대한 응답값 정의.
  */
@@ -33,6 +35,9 @@ public class UserRes {
 	@ApiModelProperty(name="User weight")
 	int weight;
 
+	@ApiModelProperty(name="User birthday")
+	LocalDate birthday;
+
 	public static UserRes of(User user) {
 		UserRes res = new UserRes();
 		res.setUserId(user.getUserId());
@@ -41,6 +46,7 @@ public class UserRes {
 		res.setGender(user.isGender());
 		res.setHeight(user.getHeight());
 		res.setWeight(user.getWeight());
+		res.setBirthday(user.getBirthday());
 		return res;
 	}
 }

@@ -3,11 +3,14 @@ package com.aisher.helf.api.controller;
 import com.aisher.helf.api.request.DietDiaryRegisterReq;
 import com.aisher.helf.api.response.DietDiaryAllRes;
 import com.aisher.helf.api.response.DietDiaryFindRes;
+import com.aisher.helf.api.response.NutritionHistoryRes;
 import com.aisher.helf.api.service.DietDiaryService;
+import com.aisher.helf.api.service.NutritionHistoryService;
 import com.aisher.helf.api.service.S3FileUploadService;
 import com.aisher.helf.common.auth.UserDetails;
 import com.aisher.helf.common.model.response.BaseResponseBody;
 import com.aisher.helf.db.entity.DietDiary;
+import com.aisher.helf.db.entity.NutritionHistory;
 import io.swagger.annotations.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -142,6 +145,7 @@ public class  DietDiaryController {
     public ResponseEntity<String> deleteDietDiary(
             @PathVariable("diaryNo") int diaryNo) {
         DietDiary dietDiary;
+        NutritionHistory nutritionHistory;
         try {
             dietDiary = dietDiaryService.findByDiaryNo(diaryNo);
             s3FileUploadService.deleteFile(dietDiary.getImagePath());

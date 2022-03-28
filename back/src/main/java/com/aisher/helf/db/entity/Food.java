@@ -26,13 +26,13 @@ public class Food {
     int kcal;
 
     @Column(name = "carbohydrate", scale = 2)
-    BigDecimal carbohydrate;
+    double carbohydrate;
 
     @Column(name = "protein", scale = 2)
-    BigDecimal protein;
+    double protein;
 
     @Column(name = "fat", scale = 2)
-    BigDecimal fat;
+    double fat;
 
     public void updateFood(FoodRegisterReq foodRegisterReq) {
         this.foodName = foodRegisterReq.getFoodName();

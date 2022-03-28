@@ -14,21 +14,25 @@ import ai.djl.repository.zoo.ZooModel;
 import ai.djl.translate.TranslateException;
 import com.aisher.helf.api.request.DietDiaryRegisterReq;
 import com.aisher.helf.api.request.DietRegisterReq;
-import com.aisher.helf.api.response.DietDiaryAllRes;
-import com.aisher.helf.api.response.DietDiaryFindRes;
-import com.aisher.helf.api.response.DietFindRes;
+import com.aisher.helf.api.response.*;
 import com.aisher.helf.db.entity.DietDiary;
 import com.aisher.helf.db.repository.DietDiaryRepository;
 import com.aisher.helf.db.repository.DietRepository;
 import com.aisher.helf.db.repository.FoodRepository;
+import com.aisher.helf.db.repository.NutritionHistoryRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.datetime.DateFormatter;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -74,6 +78,7 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * 식단 일지 관련 비즈니스 로직 처리를 위한 서비스 구현 정의
  */
+@Slf4j
 @Service("dietDiaryService")
 public class DietDiaryServiceImpl implements DietDiaryService{
     @Autowired
@@ -86,30 +91,60 @@ public class DietDiaryServiceImpl implements DietDiaryService{
     FoodRepository foodRepository;
 
     @Autowired
+    NutritionHistoryRepository nutritionHistoryRepository;
+
+    @Autowired
     S3FileUploadService s3FileUploadService;
+
+    @Autowired
+    NutritionHistoryService nutritionHistoryService;
 
     /** 식단 일지 정보를 생성하는 registerDietDiary 입니다. **/
     @Override
     @Transactional
-
     public DietDiary registerDietDiary(DietDiaryRegisterReq dietDiaryRegisterReq, MultipartFile imagePath) throws Exception {
         // 이미지 업로드
         String savingFileName = s3FileUploadService.upload(imagePath);
         dietDiaryRegisterReq.setSaveImagePath(savingFileName);
 
         // String 형태로 받은 날짜 데이터를 LocalDateTime으로 변경한 뒤, DB에 저장
-        LocalDateTime diaryDate = LocalDateTime.parse(dietDiaryRegisterReq.getDiaryDate(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        LocalDateTime diaryDateTime = LocalDateTime.parse(dietDiaryRegisterReq.getDiaryDate(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        LocalDate diaryDate = LocalDate.parse(dietDiaryRegisterReq.getDiaryDate().substring(0,10), DateTimeFormatter.ISO_DATE);
 
         // 식단 일지 table 에 등록
-        DietDiary dietDiary = dietDiaryRepository.save(dietDiaryRegisterReq.toEntity(diaryDate));
+        DietDiary dietDiary = dietDiaryRepository.save(dietDiaryRegisterReq.toEntity(diaryDateTime));
         int dietDiaryNo = dietDiaryRepository.getDietDiaryNo();     // 현재 저장하는 식단 일지 번호 (dietDiaryNo) 가져오기
+
+        // 영양 정보 히스토리 등록을 위해 해당 식단 일지의 단백질, 탄수화물, 지방 누적량
+        double totalCarbohydrate = 0.0;
+        double totalProtein = 0.0;
+        double totalFat = 0.0;
 
         // 식단 table 에 등록
         List<DietRegisterReq> dietRegisterReqList = dietDiaryRegisterReq.getDietRegisterReqList();
-        for(int i=0; i<dietRegisterReqList.size(); i++) {
+        for(int i=0; i<1; i++) {
             int foodNo = foodRepository.findFoodName(dietRegisterReqList.get(i).getFoodName());
+//            int foodNo = foodRepository.findFoodName("토마토");
             dietRepository.save(dietRegisterReqList.get(i).toEntity(dietDiaryNo, foodNo));
+
+            // 식단 영양 성분 정보 찾기
+            int weight = dietRegisterReqList.get(i).getWeight();
+            NutritionRes nutritionRes = foodRepository.findNutrition(foodNo);
+            totalCarbohydrate += nutritionRes.getCarbohydrate() * weight;
+            totalProtein += nutritionRes.getProtein() * weight;
+            totalFat += nutritionRes.getFat() * weight;
         }
+
+        // 영양 성분 히스토리에 등록
+        NutritionHistoryRes nutritionHistoryRes = new NutritionHistoryRes();
+        nutritionHistoryRes.setDiaryNo(dietDiaryNo);
+        nutritionHistoryRes.setUserId(dietDiaryRegisterReq.getUserId());
+        nutritionHistoryRes.setCreatedAt(diaryDate);
+        nutritionHistoryRes.setCarbohydrate(totalCarbohydrate);
+        nutritionHistoryRes.setProtein(totalProtein);
+        nutritionHistoryRes.setFat(totalFat);
+        nutritionHistoryService.registerNutritionHistory(nutritionHistoryRes);
+
         return dietDiary;
     }
 
@@ -122,7 +157,6 @@ public class DietDiaryServiceImpl implements DietDiaryService{
     @Override
     public DietDiaryFindRes findByDietDiaryNo(int dietDiaryNo) {
         DietDiary dietDiary = dietDiaryRepository.findById(dietDiaryNo);
-        System.out.println(">>>>>>>>>>>>>>>>>>> 수정할 데이터 : " + dietDiary.toString());
 
         DietDiaryFindRes dietDiaryFindRes = new DietDiaryFindRes();
         dietDiaryFindRes.setDiaryNo(dietDiary.getDiaryNo());
@@ -183,13 +217,32 @@ public class DietDiaryServiceImpl implements DietDiaryService{
         // 식단 일지 테이블 수정
         dietDiary.updateDietDiary(dietDiaryRegisterReq);
 
+        // 영양 정보 히스토리 수정을 위해 해당 식단 일지의 단백질, 탄수화물, 지방 누적량
+        double totalCarbohydrate = 10.0;
+        double totalProtein = 0.0;
+        double totalFat = 0.0;
+
         // 식단 테이블 기존의 데이터 삭제 후, 새로운 데이터로 생성
         dietRepository.deleteByDietDiary(dietDiary.getDiaryNo());
         List<DietRegisterReq> dietRegisterReqList = dietDiaryRegisterReq.getDietRegisterReqList();
         for(int i=0; i<dietRegisterReqList.size(); i++) {
             int foodNo = foodRepository.findFoodName(dietRegisterReqList.get(i).getFoodName());
+//            int foodNo = 11;
             dietRepository.save(dietRegisterReqList.get(i).toEntity(dietDiary.getDiaryNo(), foodNo));
+
+            // 식단 영양 성분 정보 찾기
+            int weight = dietRegisterReqList.get(i).getWeight();
+            NutritionRes nutritionRes = foodRepository.findNutrition(foodNo);
+            totalCarbohydrate += nutritionRes.getCarbohydrate() * weight;
+            totalProtein += nutritionRes.getProtein() * weight;
+            totalFat += nutritionRes.getFat() * weight;
         }
+
+        // 영양 성분 히스토리도 수정
+        String userId = dietDiary.getUserId().getUserId();
+        LocalDate diaryDate = LocalDate.parse(dietDiaryRegisterReq.getDiaryDate().substring(0,10), DateTimeFormatter.ISO_DATE);
+        int diaryNo = dietDiaryRegisterReq.getDiaryNo();
+        nutritionHistoryService.updateNutritionHistory(userId, diaryNo, diaryDate, totalCarbohydrate, totalProtein, totalFat);
 
         // 수정된 데이터 가져오기
         return findByDietDiaryNo(dietDiary.getDiaryNo());
@@ -200,6 +253,7 @@ public class DietDiaryServiceImpl implements DietDiaryService{
     public void deleteDietDiary(DietDiary dietDiary) {
         dietDiaryRepository.delete(dietDiary);
     }
+
     /** 음식을 인식하는 foodSegmentation 입니다. **/
     @Override
     public DetectedObjects foodSegmentation(MultipartFile imagePath) throws IOException, ModelNotFoundException, MalformedModelException {

@@ -20,6 +20,8 @@ public class QUser extends EntityPathBase<User> {
 
     public static final QUser user = new QUser("user");
 
+    public final DatePath<java.time.LocalDate> birthday = createDate("birthday", java.time.LocalDate.class);
+
     public final BooleanPath gender = createBoolean("gender");
 
     public final NumberPath<Integer> height = createNumber("height", Integer.class);
