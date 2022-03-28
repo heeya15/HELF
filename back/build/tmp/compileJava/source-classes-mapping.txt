@@ -17,6 +17,8 @@ com/aisher/helf/api/request/UserRegisterReq.java
 com/aisher/helf/db/entity/ShareBoard.java
  com.aisher.helf.db.entity.ShareBoard
  com.aisher.helf.db.entity.ShareBoard$ShareBoardBuilder
+com/aisher/helf/api/response/WeightHistoryTenRecordRes.java
+ com.aisher.helf.api.response.WeightHistoryTenRecordRes
 com/aisher/helf/config/SwaggerConfig.java
  com.aisher.helf.config.SwaggerConfig
  com.aisher.helf.config.SwaggerConfig$Page
@@ -29,6 +31,8 @@ com/aisher/helf/config/AmazonS3Config.java
  com.aisher.helf.config.AmazonS3Config
 com/aisher/helf/db/repository/UserRepositorySupport.java
  com.aisher.helf.db.repository.UserRepositorySupport
+com/aisher/helf/api/controller/WeightHistoryController.java
+ com.aisher.helf.api.controller.WeightHistoryController
 com/aisher/helf/api/controller/CommentController.java
  com.aisher.helf.api.controller.CommentController
 com/aisher/helf/db/entity/User.java
@@ -41,6 +45,8 @@ com/aisher/helf/api/response/ShareBoardAllRes.java
  com.aisher.helf.api.response.ShareBoardAllRes
 com/aisher/helf/config/JpaConfig.java
  com.aisher.helf.config.JpaConfig
+com/aisher/helf/api/request/WeightHistoryrRegisterReq.java
+ com.aisher.helf.api.request.WeightHistoryrRegisterReq
 com/aisher/helf/api/response/ShareBoardFindAllRes.java
  com.aisher.helf.api.response.ShareBoardFindAllRes
 com/aisher/helf/api/response/UserRes.java
@@ -87,10 +93,14 @@ com/aisher/helf/api/service/S3FileUploadServiceImpl.java
  com.aisher.helf.api.service.S3FileUploadServiceImpl
 com/aisher/helf/common/model/response/BaseResponseBody.java
  com.aisher.helf.common.model.response.BaseResponseBody
+com/aisher/helf/db/repository/WeightHistoryRepository.java
+ com.aisher.helf.db.repository.WeightHistoryRepository
 com/aisher/helf/api/service/S3FileUploadService.java
  com.aisher.helf.api.service.S3FileUploadService
 com/aisher/helf/api/service/EmailService.java
  com.aisher.helf.api.service.EmailService
+com/aisher/helf/api/service/WeightHistoryService.java
+ com.aisher.helf.api.service.WeightHistoryService
 com/aisher/helf/db/repository/LikeListRepository.java
  com.aisher.helf.db.repository.LikeListRepository
 com/aisher/helf/api/service/UserServiceImpl.java
@@ -103,6 +113,8 @@ com/aisher/helf/common/auth/UserDetailService.java
  com.aisher.helf.common.auth.UserDetailService
 com/aisher/helf/db/repository/NutritionHistoryRepository.java
  com.aisher.helf.db.repository.NutritionHistoryRepository
+com/aisher/helf/db/entity/WeightHistoryId.java
+ com.aisher.helf.db.entity.WeightHistoryId
 com/aisher/helf/db/repository/UserRepository.java
  com.aisher.helf.db.repository.UserRepository
 com/aisher/helf/db/entity/DietDiary.java
@@ -110,6 +122,8 @@ com/aisher/helf/db/entity/DietDiary.java
  com.aisher.helf.db.entity.DietDiary$DietDiaryBuilder
 com/aisher/helf/api/request/DietRegisterReq.java
  com.aisher.helf.api.request.DietRegisterReq
+com/aisher/helf/db/repository/WeightHistoryRepositorySupport.java
+ com.aisher.helf.db.repository.WeightHistoryRepositorySupport
 com/aisher/helf/api/response/DietFindRes.java
  com.aisher.helf.api.response.DietFindRes
 com/aisher/helf/db/entity/BaseEntity.java
@@ -155,6 +169,11 @@ com/aisher/helf/api/controller/AuthController.java
  com.aisher.helf.api.controller.AuthController
 com/aisher/helf/api/request/ShareBoardRegisterReq.java
  com.aisher.helf.api.request.ShareBoardRegisterReq
+com/aisher/helf/db/entity/WeightHistory.java
+ com.aisher.helf.db.entity.WeightHistory
+ com.aisher.helf.db.entity.WeightHistory$WeightHistoryBuilder
+com/aisher/helf/api/service/WeightHistoryServiceImpl.java
+ com.aisher.helf.api.service.WeightHistoryServiceImpl
 com/aisher/helf/db/entity/Diet.java
  com.aisher.helf.db.entity.Diet
  com.aisher.helf.db.entity.Diet$DietBuilder
