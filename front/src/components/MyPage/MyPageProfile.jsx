@@ -59,6 +59,10 @@ export default function MypageProfile() {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
+  const [user_id, setUserId] = useState();
+  const [nickName, setNickName] = useState();
+  const [email, setEmail] = useState();
+
   const handlePasswordConfirm = () => {
     dispatch({
       type: PASSWORD_CONFIRM_REQUEST,
@@ -71,7 +75,22 @@ export default function MypageProfile() {
       handlePasswordConfirm();
     }
   };
-
+  const getProfile = async () => {
+    try {
+      // Kakao SDK API를 이용해 사용자 정보 획득
+      let data = await window.Kakao.API.request({
+        url: "/v2/user/me",
+      });
+      console.log("hi");
+      console.log(data);
+      // 사용자 정보 변수에 저장
+      setUserId(data.id);
+      setNickName(data.kakao_account.profile.nickname);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  
   const [userinfo, setUserInfo] = useState({
     userName: '',
     userPassword: '',
@@ -160,6 +179,7 @@ export default function MypageProfile() {
     setNewGender(me.gender);
     setNewHeight(me.height);
     setNewWeight(me.weight);
+    getProfile();
   }, [ me, passwordConfirmDone, updateUserInfoDone ]);
 
   useEffect(() => {

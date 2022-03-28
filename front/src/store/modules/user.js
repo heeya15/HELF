@@ -1,6 +1,12 @@
 import produce from 'immer';
 const initialState = {
   menu: 'main',
+  kakaologInLoading: false, // 로그인 시도중
+  kakaologInDone: false,
+  kakaologInError: null,
+  kakaologOutLoading: false, // 로그아웃 시도중
+  kakaologOutDone: false,
+  kakaologOutError: null,
   logInLoading: false, // 로그인 시도중
   logInDone: false,
   logInError: null,
@@ -21,6 +27,14 @@ const initialState = {
   findPwError: null,
 };
 
+export const KAKAO_LOG_IN_REQUEST = 'KAKAO_LOG_IN_REQUEST';
+export const KAKAO_LOG_IN_SUCCESS = 'KAKAO_LOG_IN_SUCCESS';
+export const KAKAO_LOG_IN_FAILURE = 'KAKAO_LOG_IN_FAILURE';
+
+export const KAKAO_LOG_OUT_REQUEST = 'KAKAO_LOG_OUT_REQUEST';
+export const KAKAO_LOG_OUT_SUCCESS = 'KAKAO_LOG_OUT_SUCCESS';
+export const KAKAO_LOG_OUT_FAILURE = 'KAKAO_LOG_OUT_FAILURE';
+////////////////////////////////////////
 export const LOG_IN_REQUEST = 'LOG_IN_REQUEST';
 export const LOG_IN_SUCCESS = 'LOG_IN_SUCCESS';
 export const LOG_IN_FAILURE = 'LOG_IN_FAILURE';
@@ -55,6 +69,33 @@ export const setAddress = address => ({ type: SET_ADDRESS, address });
 const reducer = (state = initialState, action) =>
   produce(state, draft => {
     switch (action.type) {
+      case KAKAO_LOG_IN_REQUEST:
+        draft.kakaologInLoading = true;
+        draft.kakaologInError = null;
+        draft.kakaologInDone = false;
+        break;
+      case KAKAO_LOG_IN_SUCCESS:
+        draft.kakaologInLoading = false;
+        draft.kakaologInDone = true;
+        break;
+      case KAKAO_LOG_IN_FAILURE:
+        draft.kakaologInLoading = false;
+        draft.kakaologInError = action.error;
+        break;
+      case KAKAO_LOG_OUT_REQUEST:
+        draft.kakaologOutLoading = true;
+        draft.kakaologOutError = null;
+        draft.kakaologOutDone = false;
+        break;
+      case KAKAO_LOG_OUT_SUCCESS:
+        draft.kakaologOutLoading = false;
+        draft.kakaologOutDone = true;
+        draft.me = null;
+        break;
+      case KAKAO_LOG_OUT_FAILURE:
+        draft.kakaologOutLoading = false;
+        draft.kakaologOutError = action.error;
+        break;
       case LOG_IN_REQUEST:
         draft.logInLoading = true;
         draft.logInError = null;
