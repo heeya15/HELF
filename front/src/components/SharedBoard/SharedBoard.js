@@ -36,7 +36,7 @@ class SharedBoard extends Component {
             headers: {
               Authorization: `Bearer ${ token }`
             }
-        }).then((result)=>{ console.log(result.data) }).catch((err) => {console.log('앙댐;')})
+        }).then((result)=>{ console.log(result) }).catch((err) => {console.log('앙댐;')})
       console.log('Person Instance is created, and initialized');
     }
   	render() {
