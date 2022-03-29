@@ -22,6 +22,8 @@ import java.util.List;
 @Repository
 public interface ShareBoardRepository extends JpaRepository<ShareBoard, Long> { // 제네릭 안에 해당 엔티티, 엔티티 PK 자료형을 적어줌
 
+	boolean findByDiaryNoEquals(String userId);  // id 중복체크 함수
+
 	// 조회 수 증가.
 	@Transactional
 	@Modifying

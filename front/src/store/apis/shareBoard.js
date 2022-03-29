@@ -9,7 +9,7 @@ export async function shareBoardRegisterAPI({
     createdAt,
 }){
     console.log(diaryNo, shareDescription, )
-    const result = await axios.post(`${LOCAL_URL}shareboard/register`, {
+    const result = await axios.post(`${BASE_URL}shareboard/register`, {
         diaryNo: diaryNo,
         description: shareDescription,
         hit: hit,

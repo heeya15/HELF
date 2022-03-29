@@ -55,4 +55,12 @@ public class ShareBoardRepositorySupport {
 
         return Optional.ofNullable(shareBoard);
     }
+
+    // diaryNo 체크 함수
+    public boolean findByDiaryNoEquals(int diaryNo) {
+        ShareBoard shareBoard = jpaQueryFactory.select(qShareBoard).from(qShareBoard)
+                .where(qShareBoard.diaryNo.diaryNo.eq(diaryNo)).fetchOne();
+        if(shareBoard == null) return true; // 공유된게 없으니 공유 가능하다
+        return false; // 공유 된게 있어서 공유 불가능하다.
+    }
 }

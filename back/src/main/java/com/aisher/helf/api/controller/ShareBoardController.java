@@ -98,4 +98,21 @@ public class ShareBoardController {
         shareboardService.setLikeList(req.getUserId(), req.getBoardNo());
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, "SUCCESS"));
     }
+
+    // 내가 기록한 식단이 이미 공유 되어있는지 체크
+    @GetMapping("/diaryNoCheck/{diaryNo}")
+    @ApiOperation(value = "내가 기록한 식단을 공유 게시판에 이미 공유 되어있는지 체크", notes = "기록한 식단 공유 버튼 클릭 시 공유 게시판에 <strong> [ false : 공유된게 있을경우 ], [ true : 공유된게 없을 경우 ]<strong> ")
+    @ApiResponses({ @ApiResponse(code = 200, message = "성공"),
+                    @ApiResponse(code = 401, message = "인증 실패"),
+                    @ApiResponse(code = 404, message = "사용자 없음"),
+                    @ApiResponse(code = 500, message = "서버 오류")
+    })
+    public ResponseEntity<Boolean> diaryNoCheck(@PathVariable("diaryNo") int diaryNo) {
+
+        if (shareboardService.checkDiaryNo(diaryNo) == true) {
+            System.out.println("내 식단을 공유한 적이 없으니 공유 가능하다.!");
+            return ResponseEntity.status(200).body(shareboardService.checkDiaryNo(diaryNo));
+        } else System.out.println("내 식단을 공유한 적이 있으니 공유 불가능 하다!");
+        return ResponseEntity.status(200).body(shareboardService.checkDiaryNo(diaryNo));
+    }
 }

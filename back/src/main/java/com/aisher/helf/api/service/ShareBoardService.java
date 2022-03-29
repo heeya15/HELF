@@ -30,4 +30,7 @@ public interface ShareBoardService {
 	/** 좋아요 부문 확인하고 세팅하는 메소드 */
 	ShareBoard getShareBoard(Long boardNo);
 	void setLikeList(String userId, Long boardNo);
+
+	/** 내가 기록한 식단이 이미 공유 되어있는지 diaryNo 체크 **/
+	boolean checkDiaryNo(int diaryNo);
 }

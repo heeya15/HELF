@@ -9,7 +9,7 @@ export async function myDietImageAPI(imagePath) {
   const formData = new FormData();
   formData.append("file", imagePath.imagePath);
   const result = await axios.post(
-    `${LOCAL_URL}dietdiary/segmentation`,
+    `${BASE_URL}dietdiary/segmentation`,
     formData,
     header
   );
@@ -63,7 +63,7 @@ export async function myDietDiaryListAPI() {
   const header = { headers: { Authorization: `Bearer ${token}` } };
   const result = await axios.get(
     // `${BASE_URL}dietdiary/findAll`,
-    `${LOCAL_URL}dietdiary/findAll`,
+    `${BASE_URL}dietdiary/findAll`,
     header
   );
   return result.data;
@@ -75,7 +75,7 @@ export async function myDietDiaryDailyInfoAPI({ date }) {
   const header = { headers: { Authorization: `Bearer ${token}` } };
   const result = await axios.get(
     // `${BASE_URL}dietdiary/findAll`,
-    `${LOCAL_URL}dietdiary/findAll/${date}`,
+    `${BASE_URL}dietdiary/findAll/${date}`,
     header
   );
   return result.data;
@@ -84,14 +84,14 @@ export async function myDietDiaryDailyInfoAPI({ date }) {
 // 해당 식단 일지 정보 삭제
 export async function myDietDiaryItemDeleteAPI({ date }) {
   const result = await axios.delete(
-    `${LOCAL_URL}dietdiary/remove/${date.diaryNo}`
+    `${BASE_URL}dietdiary/remove/${date.diaryNo}`
   );
   return result;
 }
 
 // 식단 상세 정보 가져오기
 export async function myDietDetailAPI(diaryNo) {
-  const result = await axios.get(`${LOCAL_URL}dietdiary/find/${diaryNo}`);
+  const result = await axios.get(`${BASE_URL}dietdiary/find/${diaryNo}`);
   // const result = await axios.get(`${BASE_URL}dietdiary/find/${diaryNo}`);
   return result;
 }
@@ -130,7 +130,7 @@ export async function myDietUpdateAPI({
     formData.append("file", imagePath);
   }
   const result = await axios.put(
-    `${LOCAL_URL}dietdiary/update`,
+    `${BASE_URL}dietdiary/update`,
     formData,
     header
   );
