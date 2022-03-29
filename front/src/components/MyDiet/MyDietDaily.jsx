@@ -59,42 +59,38 @@ export default function MyDietDaily() {
     // clickShareBtn(diaryNo);
   };
   const handleClose = () => setOpen(false);
-  console.log(">>>>>>>>>>>>>>>> user : ", me);
 
-  const kcals = [];
+  var kcals = 0;
   const kcalList = [];
   const diaryInfoList = [];
   for (let i = 0; i < myDietDiaryDailyInfo.length; i++) {
-    const hour = myDietDiaryDailyInfo[i].diaryDate.substring(11, 13);
+    var hour = myDietDiaryDailyInfo[i].diaryDate.substring(11, 13);
+    var minute = myDietDiaryDailyInfo[i].diaryDate.substring(14, 16);
     const diaryDate = myDietDiaryDailyInfo[i].diaryDate.substring(0, 10);
-    const diaryTime =
-      myDietDiaryDailyInfo[i].diaryDate.substring(11, 16) +
-      " " +
-      (hour < 12 ? "AM" : "PM");
+
+    var AmPm = hour >= 12 ? 'pm' : 'am';
+    hour = (hour % 12) || 12;
+
+    const diaryTime = hour + ":" + minute + " " + AmPm;
     const foodList = [...myDietDiaryDailyInfo[i].dietFindResList];
     for (let j = 0; j < foodList.length; j++) {
-      kcals.push(foodList[j].weight * foodList[j].kcal);
+      kcals += (foodList[j].kcal * (foodList[j].weight/100)) ;
     }
-
-    // 각 식사시간대별 kcal 누적합 구하기
-    const sumKcal = kcals.reduce((sum, currValue) => {
-      return sum + currValue;
-    });
 
     diaryInfoList.push({
       diaryNo: myDietDiaryDailyInfo[i].diaryNo,
       mealTime: myDietDiaryDailyInfo[i].mealTime,
       diaryDate: diaryDate,
       diaryTime: diaryTime,
-      kcal: sumKcal,
-      printKcal: sumKcal.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","),
+      kcal: kcals,
+      printKcal: kcals.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","),
       description: myDietDiaryDailyInfo[i].description,
       imagePath: myDietDiaryDailyInfo[i].imagePath,
       imageFullPath: `${IMAGE_URL}${myDietDiaryDailyInfo[i].imagePath}`,
       isShared: myDietDiaryDailyInfo[i].isShared,
     });
 
-    kcalList.push(sumKcal); // 총 합을 위한
+    kcalList.push(kcals); // 총 합을 위한
   }
 
   var totalKcal = 0;
@@ -145,12 +141,10 @@ export default function MyDietDaily() {
 
   const clickAddBtn = () => {
     // 일정 생성 폼에 date 넘겨주기
-    console.log(date);
     history.push(`/mydietregister/${date}`);
   };
 
   const handleShareDietDiary = (diaryNo) => {
-    console.log(diaryNo);
     dispatch({
       type: SHARE_BOARD_REGISTER_REQUEST,
       data: {
