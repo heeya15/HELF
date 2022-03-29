@@ -34,7 +34,7 @@ const DeleteButton = styled.button`
 const DietDiaryItem = styled.div`
     margin: 20px auto;
     padding: 30px 30px;
-    width: 80%;
+    width: 70%;
     border: 1px solid #bdbdbd;
     border-radius: 20px;
     box-shadow: 7px 7px #bdbdbd;
@@ -95,9 +95,44 @@ const CancelButton = styled.button`
     padding: 5px 10px;
 `;
 
-const dietDiaryItem = {
-    cursor: 'pointer',
-};
+
+const Bold = styled.span`
+    font-weight: 900;
+`;
+
+const DiaryItemWrapper = styled.div`
+`;
+
+const DiaryItemLeftWrapper = styled.div`
+    text-align: left; 
+    `;
+    
+const DiaryItemRightWrapper = styled.div`
+    text-align: right; 
+`;
+
+const DiaryImg = styled.img`
+    width: 300px;
+    height: 200px;
+    curosr: pointer;
+    border-radius: 20px;
+`;
+
+const DiaryTitle = styled.p`
+    font-size: 30px;
+    font-weight: 700;
+    margin: 0;
+`;
+    
+const DiaryTime = styled.p`
+    margin: 0;
+`;
+
+const DiaryKcal = styled.p`
+`;
+
+const DiaryDesc = styled.p`
+`;
 
 export { 
     DietDiaryItemWrapper,
@@ -112,5 +147,13 @@ export {
     ButtonWrapper,
     ConfirmButton,
     CancelButton,
-    dietDiaryItem
+    Bold,
+    DiaryItemWrapper,
+    DiaryItemLeftWrapper,
+    DiaryItemRightWrapper,
+    DiaryImg,
+    DiaryTitle,
+    DiaryTime,
+    DiaryKcal,
+    DiaryDesc,
 };

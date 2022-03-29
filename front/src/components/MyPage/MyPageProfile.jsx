@@ -54,6 +54,7 @@ export default function MypageProfile() {
   const [ newGender, setNewGender ] = useState(true);
   const [ newHeight, setNewHeight ] = useState(0);
   const [ newWeight, setNewWeight ] = useState(0);
+  const [ newBirthday, setNewBirthday ] = useState();
   const [ showPassword, setShowPassword ] = useState(true);
 
   const handleOpen = () => setOpen(true);
@@ -97,6 +98,7 @@ export default function MypageProfile() {
     gender: false,
     height: 0,
     weight: 0,
+    birthday: '',
   });
 
   const handleClickShowPassword = () => {
@@ -121,6 +123,7 @@ export default function MypageProfile() {
         gender: newGender,
         height: newHeight,
         weight: newWeight,
+        birthday: newBirthday,
       }
     });
   };
@@ -179,6 +182,7 @@ export default function MypageProfile() {
     setNewGender(me.gender);
     setNewHeight(me.height);
     setNewWeight(me.weight);
+    setNewBirthday(me.birthday);
     getProfile();
   }, [ me, passwordConfirmDone, updateUserInfoDone ]);
 
@@ -200,9 +204,10 @@ export default function MypageProfile() {
           { !passwordConfirmDone ? 
             // 기본 마이페이지 유저 profile
             <div>
-              <div id="profileNickname">{me.userName}</div>
-              <div id="profileEmail">{me.userEmail}</div>
-              <div id="profileEmail">{gender} {me.height}cm {me.weight}kg</div>
+              <div>{me.userName}</div>
+              <div>{me.birthday}</div>
+              <div>{me.userEmail}</div>
+              <div>{gender} {me.height}cm {me.weight}kg</div>
               <MyPageProfileButton
                 onClick={ handleOpen }
               >회원 정보 수정</MyPageProfileButton>
