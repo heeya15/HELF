@@ -162,6 +162,7 @@ public class DietDiaryServiceImpl implements DietDiaryService{
         dietDiaryFindRes.setDiaryNo(dietDiary.getDiaryNo());
         dietDiaryFindRes.setDiaryDate(dietDiary.getDiaryDate());
         dietDiaryFindRes.setMealTime(dietDiary.getMealTime());
+        dietDiaryFindRes.setImagePath(dietDiary.getImagePath());
         dietDiaryFindRes.setIsShared(dietDiary.getIsShared());
         dietDiaryFindRes.setDescription(dietDiary.getDescription());
 
