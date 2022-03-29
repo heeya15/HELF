@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useHistory } from "react-router-dom";
 import { IMAGE_URL } from "../../utils/https";
 import Box from "@mui/material/Box";
 import {
@@ -13,16 +13,32 @@ import {
   MY_DIET_UPDATE_REQUEST,
 } from "../../store/modules/myDiet";
 import { MY_DIET_IMAGE_REQUEST } from "../../store/modules/myDiet";
-import { Row, Col } from "react-bootstrap";
+import { Container, Row, Col } from "react-bootstrap";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import TimePicker from "@mui/lab/TimePicker";
 import dayjs from "dayjs";
 import TextField from "@mui/material/TextField";
+import {
+  TotalStyle,
+  RegisterReq,
+  MealTypeButton,
+  RegisterButton,
+  Titles,
+  Description,
+  ImageThumbnail,
+} from "./MyDietRegister.style";
+import {
+  DetailReq,
+  UpdateButton,
+  BackButton,
+  MealTimeDetail,
+} from "./MyDietDetail.style";
 
 export default function MyDietDetail() {
   const dispatch = useDispatch();
-  const { diaryNo } = useParams();
+  const history = useHistory();
+  const { date, diaryNo } = useParams();
   useEffect(() => {
     dispatch({
       type: MY_DIET_DETAIL_REQUEST,
@@ -54,10 +70,10 @@ export default function MyDietDetail() {
       const file = e.target.files[0];
       setDietDetailThumbnail(URL.createObjectURL(file));
       dispatch(setMyDietDetailImagePath(file));
-      dispatch({
-        type: MY_DIET_IMAGE_REQUEST,
-        data: { imagePath: file },
-      });
+      // dispatch({
+      //   type: MY_DIET_IMAGE_REQUEST,
+      //   data: { imagePath: file },
+      // });
       dispatch(setDietDetailDietRegisterReqList(foodName));
     }
   };
@@ -86,6 +102,10 @@ export default function MyDietDetail() {
     setDietUpdate(false);
   };
 
+  const goBack = () => {
+    history.push(`/dietdiary/${date}`);
+  };
+
   const FoodList = myDietDetail.dietFindResList.map((food, index) => {
     return (
       <div key={index}>
@@ -101,70 +121,85 @@ export default function MyDietDetail() {
 
   return (
     <div>
-      <Box>
-        <Row>
-          <Col>
-            <img src={dietDetailThumbnail} alt="이미지"></img>
-            {dietUpdate && (
-              <div>
-                <label htmlFor="input-file">이미지</label>
-                <input
-                  onChange={onImageHandler}
-                  type="file"
-                  id="input-file"
-                  style={{ display: "none" }}
-                ></input>
-              </div>
-            )}
-          </Col>
-          <Col>
-            {dietUpdate ? (
-              <div>
+      <Container>
+        <TotalStyle>
+          <Row>
+            <Col>
+              <ImageThumbnail
+                src={dietDetailThumbnail}
+                alt="이미지"
+              ></ImageThumbnail>
+              {dietUpdate && (
                 <div>
-                  {FoodList}
-                  {mealType.map((meal, index) => (
-                    <button
-                      key={index}
-                      value={meal}
-                      onClick={onMealTimeHandler}
-                    >
-                      {meal}
-                    </button>
-                  ))}
+                  <label htmlFor="input-file">이미지</label>
+                  <input
+                    onChange={onImageHandler}
+                    type="file"
+                    id="input-file"
+                    style={{ display: "none" }}
+                  ></input>
                 </div>
-                <LocalizationProvider dateAdapter={AdapterDateFns}>
-                  <TimePicker
-                    label="Basic example"
-                    value={myDietDetail.diaryDate}
-                    onChange={(newValue) => {
-                      onDiaryDateHandler(newValue);
-                    }}
-                    renderInput={(params) => <TextField {...params} />}
-                  />
-                </LocalizationProvider>
-                <textarea
-                  onChange={onDescriptionHandler}
-                  value={myDietDetail.description}
-                ></textarea>
-              </div>
-            ) : (
-              <div>
-                <p>{myDietDetail.mealTime}식단</p>
-                <p>{myDietDetail.diaryDate}</p>
-                {FoodList}
-                <p>설명</p>
-                <textarea readOnly value={myDietDetail.description}></textarea>
-              </div>
-            )}
-          </Col>
-        </Row>
+              )}
+            </Col>
+            <Col>
+              {dietUpdate ? (
+                <RegisterReq>
+                  <Titles>Food</Titles>
+                  {FoodList}
+                  <Titles>Meal Type</Titles>
+                  <div style={{ display: "flex" }}>
+                    {mealType.map((meal, index) => (
+                      <MealTypeButton
+                        key={index}
+                        value={meal}
+                        onClick={onMealTimeHandler}
+                      >
+                        {meal}
+                      </MealTypeButton>
+                    ))}
+                  </div>
+                  <Titles>Meal Time</Titles>
+                  <LocalizationProvider dateAdapter={AdapterDateFns}>
+                    <TimePicker
+                      label="시간을 선택해주세요"
+                      value={myDietDetail.diaryDate}
+                      onChange={(newValue) => {
+                        onDiaryDateHandler(newValue);
+                      }}
+                      renderInput={(params) => <TextField {...params} />}
+                    />
+                  </LocalizationProvider>
+                  <Titles>Description</Titles>
+                  <Description
+                    rows="8"
+                    onChange={onDescriptionHandler}
+                    value={myDietDetail.description}
+                  ></Description>
+                </RegisterReq>
+              ) : (
+                <DetailReq>
+                  <MealTimeDetail>{myDietDetail.mealTime}식단</MealTimeDetail>
+                  <p>{myDietDetail.diaryDate.substr(0, 16)}</p>
+                  <Titles>Food</Titles>
+                  {FoodList}
+                  <Titles>Description</Titles>
+                  <Description
+                    rows="8"
+                    readOnly
+                    value={myDietDetail.description}
+                  ></Description>
+                </DetailReq>
+              )}
+            </Col>
+          </Row>
+        </TotalStyle>
         {dietUpdate ? (
-          <button onClick={dietUpdateButton}>등록</button>
+          <RegisterButton onClick={dietUpdateButton}>등록</RegisterButton>
         ) : (
-          <button onClick={dietUpdateStateButton}>수정</button>
+          <UpdateButton onClick={dietUpdateStateButton}>수정</UpdateButton>
         )}
-        <button>나가기</button>
-      </Box>
+        <BackButton onClick={goBack}>나가기</BackButton>
+      </Container>
     </div>
   );
 }

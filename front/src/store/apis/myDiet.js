@@ -107,6 +107,7 @@ export async function myDietUpdateAPI({
   isShared,
   saveImagePath,
 }) {
+  if (typeof imagePath !== "string") saveImagePath = "";
   const dietDiaryRegisterReq = {
     description: description,
     diaryDate: diaryDate,
@@ -125,6 +126,7 @@ export async function myDietUpdateAPI({
     })
   );
   if (typeof imagePath !== "string") {
+    console.log(imagePath);
     formData.append("file", imagePath);
   }
   const result = await axios.put(
