@@ -4,6 +4,7 @@ import {
   UserModifyAPI,
   MypageAPI,
   PasswordConfirmAPI,
+  NutritionHistoryAPI,
 } from '../apis/myPage';
 import {
   MY_PAGE_REQUEST,
@@ -18,6 +19,9 @@ import {
   PASSWORD_CONFIRM_REQUEST,
   PASSWORD_CONFIRM_SUCCESS,
   PASSWORD_CONFIRM_FAILURE,
+  NUTRITION_HISTORY_REQUEST,
+  NUTRITION_HISTORY_SUCCESS,
+  NUTRITION_HISTORY_FAILURE,
 } from '../modules/myPage';
 import swal from 'sweetalert';
 
@@ -107,11 +111,31 @@ function* watchLoadPasswordConfirm() {
   yield takeLatest(PASSWORD_CONFIRM_REQUEST, loadPasswordConfirm);
 }
 
+// 영양 성분 조회
+function* loadNutritionHistory(action) {
+  try {
+    const result = yield call(NutritionHistoryAPI, action.data);
+    yield put({
+      type: NUTRITION_HISTORY_SUCCESS,
+      data: result,
+    });
+  } catch (err) {
+    yield put({
+      type: NUTRITION_HISTORY_FAILURE,
+    });
+  }
+}
+
+function* watchLoadNutritionHistory() {
+  yield takeLatest(NUTRITION_HISTORY_REQUEST, loadNutritionHistory);
+}
+
 export default function* myPageSaga() {
   yield all([
     fork(watchLoadMyPage),
     fork(watchLoadUpdateUser),
     fork(watchLoadDeleteUser),
     fork(watchLoadPasswordConfirm),
+    fork(watchLoadNutritionHistory),
   ]);
 }

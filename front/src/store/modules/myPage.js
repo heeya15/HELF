@@ -9,6 +9,8 @@ const initialState = {
     height: 0,
     weight: 0,
   },
+  nutritionHistoryList: [],
+
   mymenu: 1, // 1. 나의 팬미팅 2. 추억 보관함
   meetingDetailState: false, // 이미지 상세보기 modal 버튼
   meetingRepositoryState: false, // 추억보관함 상세보기 modal 버튼
@@ -26,6 +28,9 @@ const initialState = {
   passwordConfirmLoading: false, // 비밀번호 확인
   passwordConfirmDone: false,
   passwordConfirmError: false,
+  nutritionHistoryLoading: false, // 영양 성분
+  nutritionHistoryDone: false,
+  nutritionHistoryError: null,
 };
 
 export const MY_PAGE_REQUEST = 'MY_PAGE_REQUEST';
@@ -45,6 +50,10 @@ export const PASSWORD_CONFIRM_REQUEST = 'PASSWORD_CONFIRM_REQUEST';
 export const PASSWORD_CONFIRM_SUCCESS = 'PASSWORD_CONFIRM_SUCCESS';
 export const PASSWORD_CONFIRM_FAILURE = 'PASSWORD_CONFIRM_FAILURE';
 export const PASSWORD_CONFIRM_RESET = 'PASSWORD_CONFIRM_RESET';
+
+export const NUTRITION_HISTORY_REQUEST = 'NUTRITION_HISTORY_REQUEST';
+export const NUTRITION_HISTORY_SUCCESS = 'NUTRITION_HISTORY_SUCCESS';
+export const NUTRITION_HISTORY_FAILURE = 'NUTRITION_HISTORY_FAILURE';
 
 const SET_MEETING_DETAIL_STATE = 'SET_MEETING_DETAIL_STATE'; // 미팅 상세보기 MODAL창 활성화 action
 export const setMeetingDetailState = state => ({
@@ -113,7 +122,6 @@ const reducer = (state = initialState, action) =>
         draft.deleteMemberError = action.error;
         break;
       case SET_MYMENU:
-        console.log(action.data);
         draft.mymenu = action.data; // 마이페이지 메뉴 변경
         break;
       case SET_NOW_ID:
@@ -150,6 +158,20 @@ const reducer = (state = initialState, action) =>
         draft.passwordConfirmLoading = false;
         draft.passwordConfirmError = null;
         draft.passwordConfirmDone = false;
+        break;
+      case NUTRITION_HISTORY_REQUEST:
+        draft.nutritionHistoryLoading = true;
+        draft.nutritionHistoryDone = false;
+        draft.nutritionHistoryError = null;
+        break;
+      case NUTRITION_HISTORY_SUCCESS:
+        draft.nutritionHistoryLoading = false;
+        draft.nutritionHistoryDone = true;
+        draft.nutritionHistoryList = action.data;
+        break;
+      case NUTRITION_HISTORY_FAILURE:
+        draft.nutritionHistoryLoading = false;
+        draft.nutritionHistoryError = action.error;
         break;
       default:
         break;
