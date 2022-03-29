@@ -1,3 +1,4 @@
+import kakaoimage from '../../../img/kakao_login_medium_narrow.png';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Route,Link } from 'react-router-dom';
@@ -12,7 +13,7 @@ import {
   LoginHeader,
 } from './Login.style';
 import { useHistory } from 'react-router';
-import { kakaoLogin, kakaoLogout } from '../../../store/apis/kakaoReducer';
+import { kakaoLogin, kakaoLogout } from '../../../store/apis/kakaoUser';
 export default function LogIn() {
   const dispatch = useDispatch(); // 해당 store에 함수에 해당하는 인자로 요청 가능.
   const { logInDone,kakaologInDone } = useSelector((state) => state.user);
@@ -128,13 +129,13 @@ export default function LogIn() {
               </div>
             </LoginContentRow>
             <LoginContentRow>
+            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
               <div id="footer">
-               
-              <button
-                id="loginButton"
-                onClick={ onSocialLogin }
-                >카카오 로그인
-              </button>
+              <img
+                  src={kakaoimage}
+                   onClick={ onSocialLogin }
+                   alt='카카오로그인 이미지 버튼'
+              />
               </div>
             </LoginContentRow>
           </LoginContent>

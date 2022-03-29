@@ -8,13 +8,15 @@ import {
 import {
   EmailCheckAPI,
   LoginAPI,
+  KaKaoIdCheckAPI,
   IdCheckAPI,
   ResetPasswordAPI,
   SignUpAPI,
 } from '../apis/user';
 import {
   KakaoLoginAPI,
-} from '../apis/kakaoReducer';
+  getUserInfoAPI
+} from '../apis/kakaoUser';
 import {
   KAKAO_LOG_IN_REQUEST,
   KAKAO_LOG_IN_SUCCESS,
@@ -22,6 +24,12 @@ import {
   KAKAO_LOG_OUT_REQUEST,
   KAKAO_LOG_OUT_SUCCESS,
   KAKAO_LOG_OUT_FAILURE,
+  KAKAO_ID_CHECK_SUCCESS,
+  KAKAO_ID_CHECK_FAILURE,
+  KAKAO_ID_CHECK_REQUEST,
+  KAKAO_SIGN_UP_REQUEST,
+  KAKAO_SIGN_UP_SUCCESS,
+  KAKAO_SIGN_UP_FAILURE,
   LOG_IN_REQUEST,
   LOG_IN_SUCCESS,
   LOG_IN_FAILURE,
@@ -54,7 +62,7 @@ function* loadLogin(action) {
     console.log(result);
     yield put({ type: LOG_IN_SUCCESS, data: result }); // action dispatch
     sessionStorage.setItem('jwt', result.data.accessToken); // userToken 세션스토리지 저장
-    // yield put({ type: MY_PAGE_REQUEST, data: result.data.accessToken }); // mypage 정보 바로 조회
+    yield put({ type: MY_PAGE_REQUEST, data: result.data.accessToken }); // mypage 정보 바로 조회
     swal('로그인 성공', '  ', 'success', {
       buttons: false,
       timer: 1800,
@@ -78,34 +86,89 @@ function* watchLoadLogin() {
   yield takeLatest(LOG_IN_REQUEST, loadLogin);
 }
 const { Kakao } = window;
+var isSignUp = false;
+var data = {};
 function* kakaoloadLogin(action) {
   try { // 함수안에 yield 객체만 사용 가능.
     yield call(KakaoLoginAPI); // 해당 동기 함수 호출
     console.log("카카오 로그인");
     const result = Kakao.Auth.getAccessToken();
-    yield put({ type: KAKAO_LOG_IN_SUCCESS, data: result }); // action dispatch
-    sessionStorage.setItem('jwt', result); // userToken 세션스토리지 저장
-    // yield put({ type: MY_PAGE_REQUEST, data: result.data.accessToken }); // mypage 정보 바로 조회
+   
+    const res = yield call(getUserInfoAPI); // 해당 동기 함수 호출
+    const id = res.kakao_account.email.split('@');
+
+    data= {
+      id: id[0], 
+      password: res.kakao_account.email, 
+      name: res.properties.nickname,
+      email: res.kakao_account.email,
+    }
+  
+    yield put({ type: KAKAO_ID_CHECK_REQUEST, id:id[0] }); // id check 여부
+    console.log(data);
+ 
+    } catch (err) {
+    yield put({ type: KAKAO_LOG_IN_FAILURE });
+  }
+}
+
+function* watchKakaoLoadLogin() {
+  yield takeLatest(KAKAO_LOG_IN_REQUEST, kakaoloadLogin);
+}
+
+
+// 카카오아이디 중복체크 처리 및 각 동기 함수 호출.
+function* kakaoloadIdCheck(action) {
+  isSignUp = yield call(KaKaoIdCheckAPI, { id: action.id });
+  yield put({ type:  KAKAO_ID_CHECK_SUCCESS, data: isSignUp });
+  console.log("카카오 아이디 체크 중복 체크 여부 " + isSignUp);
+  if (isSignUp === true) { // 중복이 없다면 해당 카카오 로그인 사용자 정보 insert
+    console.log("중복이 없으니 여기로 들어옴");
+    yield put({ type: KAKAO_SIGN_UP_REQUEST, data }); // id check 여부
+  } else if (isSignUp === false) {
+    const temp = { id: data.id, pw: data.password };
+    yield put({ type: KAKAO_SIGN_UP_FAILURE, data }); 
+    const result_info = yield call(LoginAPI, temp); // 해당 동기 함수 호출
+    console.log(result_info);
+    yield put({ type: KAKAO_LOG_IN_SUCCESS, data: result_info }); // action dispatch
+    sessionStorage.setItem('jwt', result_info.data.accessToken); // userToken 세션스토리지 저장
+    
+    swal('카카오 로그인 성공', '  ', 'success', {
+      buttons: false,
+      timer: 1800,
+    });
+  }
+}
+
+function* watchKakaoLoadIdCheck() {
+  yield takeLatest(KAKAO_ID_CHECK_REQUEST, kakaoloadIdCheck);
+}
+
+
+// 카카오 회원가입 처리 및 로그인
+function* loadKakaoSignUp(action) {
+  console.log(action);
+  try {
+    console.log("회원가입 성공");
+    const result = yield call(SignUpAPI, action.data);
+    yield put({ type: KAKAO_SIGN_UP_SUCCESS, data: result });
+    const temp = { id: data.id, pw: data.password };
+    const result_info = yield call(LoginAPI, temp); // 해당 동기 함수 호출
+    console.log(result_info);
+    yield put({ type: KAKAO_LOG_IN_SUCCESS, data: result_info }); // action dispatch
+    sessionStorage.setItem('jwt', result_info.data.accessToken); // userToken 세션스토리지 저장
+    
     swal('카카오 로그인 성공', '  ', 'success', {
       buttons: false,
       timer: 1800,
     });
   } catch (err) {
-    swal(
-      '카카오 로그인 실패',
-      '소셜 인증을 다시 하십시요.',
-      'error',
-      {
-        buttons: false,
-        timer: 2000,
-      }
-    );
-    yield put({ type: KAKAO_LOG_IN_FAILURE });
+    yield put({ type: KAKAO_SIGN_UP_FAILURE });
   }
 }
 
-function* watchkakaoLoadLogin() {
-  yield takeLatest(KAKAO_LOG_IN_REQUEST, kakaoloadLogin);
+function* watchKakaoLoadSignUp() {
+  yield takeLatest(KAKAO_SIGN_UP_REQUEST, loadKakaoSignUp);
 }
 // 로그아웃 처리
 function* loadLogout(action) {
@@ -126,6 +189,7 @@ function* watchLoadLogout() {
 // 회원가입 처리
 function* loadSignUp(action) {
   try {
+    console.log(action.data);
     const result = yield call(SignUpAPI, action.data);
     yield put({ type: SIGN_UP_SUCCESS, data: result });
     swal('회원가입 성공', '로그인을 진행하여 서비스를 즐겨보세요!', 'success');
@@ -156,13 +220,14 @@ function* watchLoadEmailCheck() {
 
 // 아이디 중복체크 처리
 function* loadIdCheck(action) {
-  try {
-    const result = yield call(IdCheckAPI, action.data);
+  console.log(action);
+  
+  const result = yield call(IdCheckAPI, action.data);
+  if (result === true) {
     alert('사용할 수 있는 아이디 입니다.');
     yield put({ type: ID_CHECK_SUCCESS, data: result });
-  } catch (err) {
+  } else {
     alert('이미 사용중이거나 사용할 수 없는 아이디 입니다.');
-    yield put({ type: ID_CHECK_FAILURE });
   }
 }
 
@@ -214,7 +279,9 @@ function* watchLoadFindPw() {
 
 export default function* UserSaga() {
   yield all([
-    fork(watchkakaoLoadLogin),
+    fork(watchKakaoLoadSignUp),
+    fork(watchKakaoLoadLogin),
+    fork(watchKakaoLoadIdCheck),
     fork(watchLoadLogin),
     fork(watchLoadLogout),
     fork(watchLoadSignUp),

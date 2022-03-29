@@ -17,7 +17,7 @@ export async function SignUpAPI({
   name,
   email,
 }) {
-  const result = await axios.post(`${BASE_URL}user/register/signup`, {
+  const result = await axios.post(`${LOCAL_URL}user/register/signup`, {
     userId: id,
     userPassword: password,
     userName: name,
@@ -32,10 +32,16 @@ export async function EmailCheckAPI({ email }) {
   return result;
 }
 
+// 카카오 아이디 중복체크
+export async function KaKaoIdCheckAPI({ id }) {
+  const result = await axios.get(`${LOCAL_URL}user/idCheck/${id}`);
+  return result.data;
+}
 // 아이디 중복체크
 export async function IdCheckAPI({ id }) {
-  const result = await axios.get(`${BASE_URL}user/idCheck/${id}`);
-  return result;
+  const result = await axios.get(`${LOCAL_URL}user/idCheck/${id}`);
+  console.log(result.data);
+  return result.data;
 }
 
 // 비밀번호 초기화

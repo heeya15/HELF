@@ -34,6 +34,15 @@ export const KAKAO_LOG_IN_FAILURE = 'KAKAO_LOG_IN_FAILURE';
 export const KAKAO_LOG_OUT_REQUEST = 'KAKAO_LOG_OUT_REQUEST';
 export const KAKAO_LOG_OUT_SUCCESS = 'KAKAO_LOG_OUT_SUCCESS';
 export const KAKAO_LOG_OUT_FAILURE = 'KAKAO_LOG_OUT_FAILURE';
+
+export const KAKAO_SIGN_UP_REQUEST = 'KAKAO_SIGN_UP_REQUEST';
+export const KAKAO_SIGN_UP_SUCCESS = 'KAKAO_SIGN_UP_SUCCESS';
+export const KAKAO_SIGN_UP_FAILURE = 'KAKAO_SIGN_UP_FAILURE';
+
+export const KAKAO_ID_CHECK_REQUEST = 'KAKAO_ID_CHECK_REQUEST';
+export const KAKAO_ID_CHECK_SUCCESS = 'KAKAO_ID_CHECK_SUCCESS';
+export const KAKAO_ID_CHECK_FAILURE = 'KAKAO_ID_CHECK_FAILURE';
+export const KAKAO_ID_CHECK_RESET = 'KAKAO_ID_CHECK_RESET';
 ////////////////////////////////////////
 export const LOG_IN_REQUEST = 'LOG_IN_REQUEST';
 export const LOG_IN_SUCCESS = 'LOG_IN_SUCCESS';
@@ -96,16 +105,46 @@ const reducer = (state = initialState, action) =>
         draft.kakaologOutLoading = false;
         draft.kakaologOutError = action.error;
         break;
+      case KAKAO_SIGN_UP_REQUEST: // 카카오 signup 요청
+        draft.signUpLoading = true;
+        draft.signUpError = null;
+        draft.signUpDone = false;
+        break;
+      case KAKAO_SIGN_UP_SUCCESS:
+        draft.signUpLoading = false;
+        draft.signUpDone = true;
+        draft.nickCheckDone = false; // 닉네임 수정 중복확인을 위해 회원가입 후 nickCheckDone 초기화
+        break;
+      case KAKAO_SIGN_UP_FAILURE:
+        draft.signUpLoading = false;
+        draft.signUpError = action.error;
+        break;
+      case KAKAO_ID_CHECK_REQUEST:
+        draft.idCheckLoading = true;
+        draft.idCheckError = null;
+        draft.idCheckDone = false;
+        break;
+      case KAKAO_ID_CHECK_SUCCESS:
+        draft.idCheckLoading = false;
+        draft.idCheckDone = true;
+        break;
+      case KAKAO_ID_CHECK_FAILURE:
+        draft.idCheckLoading = false;
+        draft.idCheckError = action.error;
+        break;
+      case KAKAO_ID_CHECK_RESET:
+        draft.idCheckLoading = false;
+        draft.idCheckDone = false;
+        draft.idCheckError = null;
+        break;
       case LOG_IN_REQUEST:
         draft.logInLoading = true;
         draft.logInError = null;
         draft.logInDone = false;
-        console.log("요청들어옴?");
         break;
       case LOG_IN_SUCCESS:
         draft.logInLoading = false;
         draft.logInDone = true;
-        console.log(draft.logInDone);
         break;
       case LOG_IN_FAILURE:
         draft.logInLoading = false;
