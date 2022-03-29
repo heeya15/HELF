@@ -4,7 +4,7 @@ import {BASE_URL, LOCAL_URL} from "../../utils/https";
 
 // 자신의 정보 조회
 export async function MypageAPI() {
-    const result = await axios.get(`${LOCAL_URL}user/find/me`, {
+    const result = await axios.get(`${BASE_URL}user/find/me`, {
         headers: {
             Authorization: 'Bearer ' + sessionStorage.getItem('jwt')
         }
@@ -23,7 +23,7 @@ export async function UserModifyAPI({
     weight,
     birthday,
 }) {
-    const result = await axios.put(`${LOCAL_URL}user/update`, {
+    const result = await axios.put(`${BASE_URL}user/update`, {
         userId : userId,
         userName : userName,
         userPassword : userPassword, 
@@ -44,7 +44,7 @@ export async function MemberDeleteAPI({memberId}) {
 // 비밀번호 확인
 export async function PasswordConfirmAPI(password) {
     // const result = await axios.post(`${BASE_URL}user/checkPassword`, {
-    const result = await axios.post(`${LOCAL_URL}user/checkPassword`, null, {
+    const result = await axios.post(`${BASE_URL}user/checkPassword`, null, {
         headers: {
             Authorization: 'Bearer ' + sessionStorage.getItem('jwt')
         },
@@ -57,7 +57,7 @@ export async function PasswordConfirmAPI(password) {
 
 // 영양 성분 조회
 export async function NutritionHistoryAPI() {
-    const result = await axios.get(`${LOCAL_URL}nutritionhistory/find`, {
+    const result = await axios.get(`${BASE_URL}nutritionhistory/find`, {
         headers: {
             Authorization: 'Bearer ' + sessionStorage.getItem('jwt')
         },

@@ -120,8 +120,6 @@ com/aisher/helf/api/controller/WeightHistoryController.java
  com.aisher.helf.api.controller.WeightHistoryController
 com/aisher/helf/api/controller/CommentController.java
  com.aisher.helf.api.controller.CommentController
-com/aisher/helf/api/controller/KakaoController.java
- com.aisher.helf.api.controller.KakaoController
 com/aisher/helf/api/controller/NutritionHistoryController.java
  com.aisher.helf.api.controller.NutritionHistoryController
 com/aisher/helf/api/response/ShareBoardAllRes.java

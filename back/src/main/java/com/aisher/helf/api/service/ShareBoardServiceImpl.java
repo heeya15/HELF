@@ -114,4 +114,9 @@ public class ShareBoardServiceImpl implements ShareBoardService {
             likeListRepository.save(likeList);
         }
     }
+
+    @Override
+    public boolean checkDiaryNo(int diaryNo) {
+        return shareBoardRepositorySupport.findByDiaryNoEquals(diaryNo);
+    }
 }

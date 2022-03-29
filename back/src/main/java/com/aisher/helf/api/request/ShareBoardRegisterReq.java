@@ -21,23 +21,16 @@ public class ShareBoardRegisterReq {
     @ApiModelProperty(name="식단 일지 번호", example="1")
     private int diaryNo;
 
-    @ApiModelProperty(name="공유 내용", example="this is description....")
+    @ApiModelProperty(name="공유 내용", example="꿀팁 대 방출")
     private String description;
-
-    @ApiModelProperty(name="조회수", example="1")
-    private int hit;
-
-    @ApiModelProperty(name="식단 일지 번호", example="")
-    private LocalDateTime createdAt;
 
     public ShareBoard toEntity() {
         DietDiary dietDiary = new DietDiary();
         dietDiary.setDiaryNo(diaryNo);
-
+        LocalDateTime createdAt = LocalDateTime.now();
         return ShareBoard.builder()
                 .diaryNo(dietDiary)
                 .description(description)
-                .hit(hit)
                 .createdAt(createdAt)
                 .build();
     }
