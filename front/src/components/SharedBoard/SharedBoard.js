@@ -7,6 +7,9 @@ import Masonry from '@mui/lab/Masonry';
 import { styled } from '@mui/material/styles';
 import './Shardboard.css'
 import { Link } from 'react-router-dom';
+import { BASE_URL } from "../../utils/https";
+import { LOCAL_URL } from "../../utils/https";
+import ShardDetail from "./SharedDetail"
 
 
 const Label = styled(Paper)(({ theme }) => ({
@@ -24,7 +27,10 @@ class SharedBoard extends Component {
 	constructor(props) {
       super(props);
       const token = sessionStorage.getItem("jwt");
-      axios.get("https://j6e102.p.ssafy.io:8080/api/shareboard/findAll", {
+      axios.get(
+          `${BASE_URL}shareboard/findAll`,
+            // `${LOCAL_URL}shareboard/findAll`, 
+            {
             headers: {
               Authorization: `Bearer ${ token }`
             }
@@ -35,11 +41,11 @@ class SharedBoard extends Component {
       return(
       <div className="boxdiv"> 
       <div className="shardbox"> 대충 제목이라는 뜻</div>
-      
+        
         <Box sx={{ width: 800, minHeight: 829 }}>
         <Masonry columns={3} spacing={2}>
           {itemData.map((item, index) => (
-            <Link  to="/#" className='anc'>
+            <Link  to={`/sharedetail/${index}`}  state={{ data: index}} className='anc'>
             <div key={index} >
               {/* 이름 적는 곳( 유저 닉네임 적을 것) */}
               <Label>{index + 1}</Label>
@@ -63,8 +69,9 @@ class SharedBoard extends Component {
           
         </Masonry>
       </Box>   
- 
+          
     </div>
+    
       );
     }
 } export default SharedBoard
@@ -141,4 +148,5 @@ const itemData = [
     title: 'Bike',
   },  
 ]
+
 
