@@ -16,6 +16,7 @@
     "@mui/icons-material": "^5.5.1",
     "@mui/lab": "^5.0.0-alpha.74",
     "@mui/material": "^5.5.2",
+    "@mui/styles": "^5.5.3",
     "@teachablemachine/pose": "^0.8.6",
     "@tensorflow/tfjs": "^3.15.0",
     "@testing-library/jest-dom": "^5.16.2",

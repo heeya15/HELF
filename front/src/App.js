@@ -9,7 +9,7 @@ import { Route, Link } from "react-router-dom";
 import NavBar from "./components/NavBar/NavBar";
 import SharedBoard from "./components/SharedBoard/SharedBoard";
 import ShareDetail from "./components/SharedBoard/SharedDetail";
-import Main from "./components/Main/Main";
+import Main from "./pages/Main/Main";
 import SignUp from "./pages/User/SignUp/SignUp";
 import LogIn from "./pages/User/LogIn/LogIn";
 import MyPage from "./pages/MyPage/MyPage";
@@ -20,6 +20,8 @@ import FindPassword from "./components/User/FindPassword/FindPassword";
 import MyDietDaily from "./components/MyDiet/MyDietDaily";
 import MyDietDetail from "./components/MyDiet/MyDietDetail";
 import Nutrition from "./components/MyPage/Statistics/Nutrition";
+import withRoot from './withRoot';
+
 // import Placeholder from 'react-bootstrap/Placeholder';
 
 function App() {
@@ -46,4 +48,5 @@ function App() {
   );
 }
 
-export default App;
+// export default App;
+export default withRoot(App);
