@@ -35,7 +35,7 @@ function App() {
       <Route path="/find/password" component={FindPassword} />
       <Route path="/exercise" component={Exercise} />
       <Route path="/dietdiary/:date" component={MyDietDaily} />
-      <Route path="/mydietdetail/:diaryNo" component={MyDietDetail} />
+      <Route path="/mydietdetail/:date/:diaryNo" component={MyDietDetail} />
     </div>
   );
 }

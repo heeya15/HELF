@@ -122,6 +122,7 @@ const reducer = (state = initialState, action) =>
         draft.myDietDetail.mealTime = action.data.data.mealTime;
         draft.myDietDetail.mealTime = action.data.data.mealTime;
         draft.myDietDetail.dietFindResList = action.data.data.dietFindResList;
+        console.log(action.data.data);
         break;
       case MY_DIET_DETAIL_FAILURE:
         break;

@@ -54,7 +54,7 @@ public class DietDiary {
 
         this.diaryDate = diaryDate;
         this.mealTime = dietDiaryRegisterReq.getMealTime();
-        //this.imagePath = dietDiaryRegisterReq.getImagePath();
+        this.imagePath = dietDiaryRegisterReq.getSaveImagePath();
         this.isShared = dietDiaryRegisterReq.getIsShared();
         this.description = dietDiaryRegisterReq.getDescription();
     }

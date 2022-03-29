@@ -3,8 +3,8 @@ import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import Fab from "@mui/material/Fab";
 import AddIcon from "@mui/icons-material/Add";
-import Typography from '@mui/material/Typography';
-import Modal from '@mui/material/Modal';
+import Typography from "@mui/material/Typography";
+import Modal from "@mui/material/Modal";
 import styled from "styled-components";
 import DeleteIcon from "@mui/icons-material/Delete";
 import IconButton from "@mui/material/IconButton";
@@ -15,9 +15,7 @@ import {
   MY_DIET_DIARY_DELETE_REQUEST,
   MY_DIET_DIARY_DELETE_SUCCESS,
 } from "../../store/modules/myDiet";
-import {
-  SHARE_BOARD_REGISTER_REQUEST,
-} from "../../store/modules/shareBoard";
+import { SHARE_BOARD_REGISTER_REQUEST } from "../../store/modules/shareBoard";
 
 // import styled from "styled-components";
 import {
@@ -47,11 +45,11 @@ export default function MyDietDaily() {
   );
 
   const [open, setOpen] = useState(false);
-  const [ shareDescription, setShareDescription ] = useState('');
+  const [shareDescription, setShareDescription] = useState("");
   const handleOpen = (diaryNo) => {
     setOpen(true);
     // clickShareBtn(diaryNo);
-  }
+  };
   const handleClose = () => setOpen(false);
 
   const kcals = [];
@@ -117,10 +115,10 @@ export default function MyDietDaily() {
         diaryNo: diaryNo,
         shareDescription: shareDescription,
         hit: 0,
-        createdAt: '',
+        createdAt: "",
       },
     });
-    setOpen(false);   // 모달 창 닫기
+    setOpen(false); // 모달 창 닫기
     history.push(`/sharedboard`);
     // 공유게시판 등록 페이지에 diaryNo 넘겨주기
   };
@@ -135,8 +133,8 @@ export default function MyDietDaily() {
   };
 
   const clickDietDiaryItem = (diaryNo) => {
-    history.push(`/mydietdetail/${diaryNo}`);
-  }
+    history.push(`/mydietdetail/${date}/${diaryNo}`);
+  };
 
   useEffect(() => {
     dispatch({
@@ -162,14 +160,12 @@ export default function MyDietDaily() {
       </div>
       <div>
         {diaryInfoList.map((info) => (
-          <DietDiaryItem 
-            key={info.diaryNo} 
-            style={dietDiaryItem}
-            >
-            <img 
+          <DietDiaryItem key={info.diaryNo} style={dietDiaryItem}>
+            <img
               src={info.imageFullPath}
               alt="식단 이미지"
-              onClick={ () => clickDietDiaryItem(info.diaryNo) }></img>
+              onClick={() => clickDietDiaryItem(info.diaryNo)}
+            ></img>
             <p>{info.mealTime}</p>
             <p>{info.diaryTime}</p>
             <p>{info.printKcal} kcal</p>
@@ -183,11 +179,11 @@ export default function MyDietDaily() {
               aria-labelledby="modal-modal-title"
               aria-describedby="modal-modal-description"
             >
-              <Box sx={ shareBox }>
+              <Box sx={shareBox}>
                 <Typography id="modal-modal-title" variant="h4" component="h2">
                   식단 공유
                 </Typography>
-                <hr/>
+                <hr />
                 <Typography id="modal-modal-description" sx={{ mt: 2 }}>
                   식단 공유와 함께 추가 설명을 적어주세요.
                 </Typography>
@@ -195,25 +191,25 @@ export default function MyDietDaily() {
                   maxRows={4}
                   aria-label="maximum height"
                   placeholder="this is description..."
-                  style={ descriptionArea }
-                  onChange={ (event) => {
+                  style={descriptionArea}
+                  onChange={(event) => {
                     setShareDescription(event.target.value);
                   }}
                 />
                 <ButtonWrapper>
-                  <ConfirmButton onClick={ () => handleShareDietDiary(info.diaryNo) }>
+                  <ConfirmButton
+                    onClick={() => handleShareDietDiary(info.diaryNo)}
+                  >
                     확인
                   </ConfirmButton>
-                  <CancelButton onClick={ () => handleClose }>
-                    닫기
-                  </CancelButton>
+                  <CancelButton onClick={() => handleClose}>닫기</CancelButton>
                 </ButtonWrapper>
               </Box>
             </Modal>
             <IconButton aria-label="delete" size="large">
               <DeleteIcon
                 fontSize="inherit"
-                onClick={ () => clickDeleteBtn(info) }
+                onClick={() => clickDeleteBtn(info)}
               />
             </IconButton>
           </DietDiaryItem>
