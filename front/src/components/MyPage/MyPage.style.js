@@ -109,15 +109,61 @@ const ConfirmButton = styled.button`
   border-radius: 10px;
   padding: 5px 10px;
   margin-right: 5px;
-  `;
+`;
   
-  const CancelButton = styled.button`
+const CancelButton = styled.button`
   background-color: #fff;
   color: #2E7D32;
   border: 2px solid #2E7D32;
   border-radius: 10px;
   padding: 5px 10px;
+`;
+
+const MessageWrapper = styled.div`
+  display: flex;
+  justify-content: space-around;
+  width: 40%;
+  margin: 30px auto;
+  padding: 5px 0px;
+  // border-radius: 5px;
+  // background-color: #fff;
+`;
+
+const LackMessage = styled.button`
+  background-color: #f0df00;
+  color: #fff;
+  font-weight: bold;
+  border: none;
+  border-radius: 10px;
+  padding: 5px 10px;
+  cursor: pointer;
   `;
+  
+const NormalMessage = styled.button`
+  background-color: #43a047;
+  color: #fff;
+  font-weight: bold;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 10px;
+  cursor: pointer;
+  `;
+  
+const TooMuchMessage = styled.button`
+  background-color: #c94c4c;
+  color: #fff;
+  font-weight: bold;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 10px;
+  cursor: pointer;
+`;
+
+const Title = styled.div`
+  font-weighit: bold;
+  font-size: 28px;
+  margin-bottom: 25px;
+`;
 
 export {
   MyPageMenuWrapper,
@@ -130,4 +176,9 @@ export {
   ButtonWrapper,
   ConfirmButton,
   CancelButton,
+  MessageWrapper,
+  LackMessage,
+  NormalMessage,
+  TooMuchMessage,
+  Title,
 };

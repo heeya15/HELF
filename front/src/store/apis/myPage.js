@@ -52,3 +52,13 @@ export async function PasswordConfirmAPI(password) {
     });
     return result;
 }
+
+// 영양 성분 조회
+export async function NutritionHistoryAPI() {
+    const result = await axios.get(`${LOCAL_URL}nutritionhistory/find`, {
+        headers: {
+            Authorization: 'Bearer ' + sessionStorage.getItem('jwt')
+        },
+    });
+    return result.data;
+}

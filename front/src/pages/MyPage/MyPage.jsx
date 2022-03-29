@@ -3,6 +3,9 @@ import { useDispatch } from 'react-redux';
 import { MyPageContent, MyPageHeader, MyPageWrapper } from './MyPage.style';
 import { Block, Layout, Wrapper } from '../../style/variables';
 import MyPageProfile from '../../components/MyPage/MyPageProfile';
+import Nutrition from '../../components/MyPage/Statistics/Nutrition';
+
+
 
 export default function MyPage() {
   
@@ -17,9 +20,10 @@ export default function MyPage() {
             </MyPageHeader>
             <MyPageContent>
               {/* <MypageMenu /> */}
-              <div className="poster">
+              {/* <div className="poster">
                 
-              </div>
+              </div> */}
+              <Nutrition></Nutrition>
             </MyPageContent>
           </MyPageWrapper>
         </Block>
