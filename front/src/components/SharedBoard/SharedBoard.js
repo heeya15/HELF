@@ -29,6 +29,7 @@ class SharedBoard extends Component {
       super(props);
       const token = sessionStorage.getItem("jwt");
       // 공유 게시물 전부 조회
+      
       axios.get(
           `${BASE_URL}shareboard/findAll`,
             // `${LOCAL_URL}shareboard/findAll`, 
@@ -36,7 +37,7 @@ class SharedBoard extends Component {
             headers: {
               Authorization: `Bearer ${ token }`
             }
-        }).then((result)=>{ console.log(result) }).catch((err) => {console.log('앙댐;')})
+        }).then((result)=>{ console.log(result.data.content) }).catch((err) => {console.log('앙댐;')})
       console.log('Person Instance is created, and initialized');
     }
   	render() {
