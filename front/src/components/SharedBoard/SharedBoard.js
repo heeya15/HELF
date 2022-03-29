@@ -9,9 +9,9 @@ import './Shardboard.css'
 import { Link } from 'react-router-dom';
 import { BASE_URL } from "../../utils/https";
 import { LOCAL_URL } from "../../utils/https";
-import ShardDetail from "./SharedDetail"
+import ShardDetail from "../ShardDetail/SharedDetail"
 
-
+// 박스 내부 CSS
 const Label = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
   ...theme.typography.body2,
@@ -22,11 +22,13 @@ const Label = styled(Paper)(({ theme }) => ({
   borderBottomRightRadius: 0,
 }));
 
-
+// 메인 보드
 class SharedBoard extends Component {
-	constructor(props) {
+	// 초기 랜더링
+  constructor(props) {
       super(props);
       const token = sessionStorage.getItem("jwt");
+      // 공유 게시물 전부 조회
       axios.get(
           `${BASE_URL}shareboard/findAll`,
             // `${LOCAL_URL}shareboard/findAll`, 
@@ -39,12 +41,15 @@ class SharedBoard extends Component {
     }
   	render() {
       return(
+      
       <div className="boxdiv"> 
       <div className="shardbox"> 대충 제목이라는 뜻</div>
-        
+        {/* 이미지 페이지 */}
         <Box sx={{ width: 800, minHeight: 829 }}>
+          {/* 이미지 갯수 설정 */}
         <Masonry columns={3} spacing={2}>
           {itemData.map((item, index) => (
+            //  array 를 박스로 출력, data 를 link 를 통해 전송
             <Link  to={`/sharedetail/${index}`}  state={{ data: index}} className='anc'>
             <div key={index} >
               {/* 이름 적는 곳( 유저 닉네임 적을 것) */}
