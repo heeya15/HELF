@@ -8,6 +8,7 @@ import { Route, Link } from "react-router-dom";
 // 컴포넌트 추가
 import NavBar from "./components/NavBar/NavBar";
 import SharedBoard from "./components/SharedBoard/SharedBoard";
+import ShareDetail from "./components/SharedBoard/SharedDetail";
 import Main from "./components/Main/Main";
 import SignUp from "./pages/User/SignUp/SignUp";
 import LogIn from "./pages/User/LogIn/LogIn";
@@ -38,6 +39,9 @@ function App() {
       <Route path="/dietdiary/:date" component={MyDietDaily} />
       <Route path="/mydietdetail/:date/:diaryNo" component={MyDietDetail} />
       <Route path="/nutrition" component={Nutrition}/>
+      <Route exact path="/sharedetail/:index" component={ShareDetail}/>
+      
+ 
     </div>
   );
 }
