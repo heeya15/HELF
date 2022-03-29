@@ -1,4 +1,5 @@
 import produce from "immer";
+import { IMAGE_URL } from "../../utils/https";
 
 const initialState = {
   myDietDetail: {
@@ -10,6 +11,7 @@ const initialState = {
     isShared: false,
     dietFindResList: [],
   },
+  dietDetailThumbnail: null,
   dietThumbnail: null,
   imagePath: null,
   mealTime: "",
@@ -80,6 +82,12 @@ export const setDietDetailDietRegisterReqList = (state) => ({
   state,
 });
 
+const SET_MY_DIET_DETAIL_THUMBNAIL = "SET_MY_DIET_DETAIL_THUMBNAIL";
+export const setDietDetailThumbnail = (state) => ({
+  type: SET_MY_DIET_DETAIL_THUMBNAIL,
+  state,
+});
+
 const reducer = (state = initialState, action) =>
   produce(state, (draft) => {
     switch (action.type) {
@@ -120,9 +128,8 @@ const reducer = (state = initialState, action) =>
         draft.myDietDetail.diaryNo = action.data.data.diaryNo;
         draft.myDietDetail.imagePath = action.data.data.imagePath;
         draft.myDietDetail.mealTime = action.data.data.mealTime;
-        draft.myDietDetail.mealTime = action.data.data.mealTime;
         draft.myDietDetail.dietFindResList = action.data.data.dietFindResList;
-        console.log(action.data.data);
+        draft.dietDetailThumbnail = `${IMAGE_URL}${action.data.data.imagePath}`;
         break;
       case MY_DIET_DETAIL_FAILURE:
         break;
@@ -158,6 +165,9 @@ const reducer = (state = initialState, action) =>
         break;
       case SET_MY_DIET_DETAIL_REGISTERREQLIST:
         draft.myDietDetail.dietFindResList = action.state;
+        break;
+      case SET_MY_DIET_DETAIL_THUMBNAIL:
+        draft.dietDetailThumbnail = action.state;
         break;
       default:
         break;

@@ -33,4 +33,10 @@ const MealTimeDetail = styled.div`
   font-weight: bold;
 `;
 
-export { DetailReq, UpdateButton, BackButton, MealTimeDetail };
+const FoodTableTitle = styled.div`
+  font-size: 17px;
+  margin-left: 5%;
+  margin-top: 5%;
+`;
+
+export { DetailReq, UpdateButton, BackButton, MealTimeDetail, FoodTableTitle };
