@@ -1,4 +1,4 @@
-import { React, useState }  from 'react';
+import React, { useState }  from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -11,17 +11,12 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import IconButton from '@mui/material/IconButton';
-import Input from '@mui/material/Input';
-import FilledInput from '@mui/material/FilledInput';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import InputLabel from '@mui/material/InputLabel';
 import InputAdornment from '@mui/material/InputAdornment';
-import FormHelperText from '@mui/material/FormHelperText';
 import FormControl from '@mui/material/FormControl';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
-import RadioGroup from '@mui/material/RadioGroup';
-import FormLabel from '@mui/material/FormLabel';
 import {createTheme, ThemeProvider} from '@mui/material/styles';
 import { useDispatch, useSelector } from 'react-redux';
 import { 
@@ -31,7 +26,6 @@ import {
     Success,
     Error,
     SignInLink, } from "./SignUp.style"
-import { StayPrimaryLandscapeSharp } from '@mui/icons-material';
 import { SIGN_UP_REQUEST, ID_CHECK_REQUEST, EMAIL_CHECK_REQUEST } from "../../../store/modules/user";
 import { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
@@ -192,7 +186,7 @@ export default function SignUp() {
         if(signUpDone) {
             history.push('/LogIn');
         }
-    })
+    });
 
     return (
         <ThemeProvider theme={theme}>
@@ -240,25 +234,6 @@ export default function SignUp() {
                                     <Error>{ idMessage }</Error>}
                                 </Grid>
                             }
-                            {/* <Grid item xs={12} sm={6}>
-                                <TextField
-                                    requried="true"
-                                    fullWidth
-                                    id="password"
-                                    label="Password"
-                                    name="password"
-                                    response="true"
-                                    onChange={onPasswordHandler}/>
-                            </Grid> */}
-                            {/* <Grid item xs={12} sm={6}>
-                                <TextField
-                                    requried="true"
-                                    fullWidth
-                                    id="passwordCheck"
-                                    label="Password Check"
-                                    name="passwordCheck"
-                                    onChange={onPasswordCheckHandler}/>
-                            </Grid> */}
                             <Grid item xs={12} sm={6}>
                                 <FormControl variant="outlined">
                                     <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
