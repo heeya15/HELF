@@ -64,14 +64,33 @@ export default function Nutrition() {
         dataSource.push({ nutrition: '지방', amount: totalFat },)
     }
 
+    const now = new Date();   // 현재 날짜 및 시간
+    const year = now.getFullYear(); // 연도
+    const month = now.getMonth();   // 월
+    const day = now.getDate();      // 일
+    const userYear = me.birthday.substring(0, 4);
+    const userMonth = me.birthday.substring(5, 7);
+    const userDay = me.birthday.substring(9, 10);
+
+    var age = 0;
+
+    if(month < userYear) {
+        age = year - userYear - 1;
+    } else if(month == userYear) {
+        if(day < userDay) {
+        age = year - userYear - 1;
+        }
+    }
+
+    console.log(totalCarbohydrate, totalProtein, totalFat);
+    console.log(">>>>>>>>>>>>>> user age : ", age);
+
     var bmr = 0;
     // 유저 기초대사량 구하기 (Mifflin-St Jeor Equation)
     if(!me.gender) { // 남성인 경우
-        bmr = (me.weight * 10 + me.height * 6.25 - 5 * 25 + 5);
-        // setBmr(me.weight * 10 + me.height * 6.25 - 5 * age + 5);
+        bmr = (me.weight * 10 + me.height * 6.25 - 5 * age + 5);
     } else {         // 여성인 경우
-        bmr = (me.weight * 10 + me.height * 6.25 - 5 * 25 - 161);
-        // setBmr(me.weight * 10 + me.height * 6.25 - 5 * age - 161);
+        bmr = (me.weight * 10 + me.height * 6.25 - 5 * age - 161);
     }
 
     var carbohydrateCheck = 0;
@@ -120,9 +139,9 @@ export default function Nutrition() {
         dispatch({
             type: NUTRITION_HISTORY_REQUEST,
         });
-        dispatch({
-            type: MY_PAGE_REQUEST,
-        });
+        // dispatch({
+        //     type: MY_PAGE_REQUEST,
+        // });
     }, []);
 
     return (
@@ -172,7 +191,7 @@ export default function Nutrition() {
                     { carbohydrateCheck === 0 && <LackMessage onClick={ handleLackMessage }>탄수화물</LackMessage> }
                     { carbohydrateCheck === 1 && <NormalMessage onClick={ handleNormalMessage }>탄수화물</NormalMessage> }
                     { carbohydrateCheck === 2 && <TooMuchMessage onClick={ handleTooMuchMessage }>탄수화물</TooMuchMessage> }
-                    { proteinCheck === 0 && <LackMessage> onClick={ handleLackMessage }단백질</LackMessage> }
+                    { proteinCheck === 0 && <LackMessage onClick={ handleLackMessage }>단백질</LackMessage> }
                     { proteinCheck === 1 && <NormalMessage onClick={ handleNormalMessage }>단백질</NormalMessage> }
                     { proteinCheck === 2 && <TooMuchMessage onClick={ handleTooMuchMessage }>단백질</TooMuchMessage> }
                     { fatCheck === 0 && <LackMessage onClick={ handleLackMessage }>지방</LackMessage> }

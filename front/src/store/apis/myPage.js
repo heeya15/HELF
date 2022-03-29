@@ -21,6 +21,7 @@ export async function UserModifyAPI({
     gender,
     height,
     weight,
+    birthday,
 }) {
     const result = await axios.put(`${LOCAL_URL}user/update`, {
         userId : userId,
@@ -29,6 +30,7 @@ export async function UserModifyAPI({
         gender : gender,
         height : height,
         weight : weight,
+        birthday : birthday,
     });
     return result;
 }

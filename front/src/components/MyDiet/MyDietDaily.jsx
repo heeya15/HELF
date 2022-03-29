@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from "react";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
-import Fab from "@mui/material/Fab";
+import Grid from '@mui/material/Grid';
 import AddIcon from "@mui/icons-material/Add";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
-import styled from "styled-components";
 import DeleteIcon from "@mui/icons-material/Delete";
 import IconButton from "@mui/material/IconButton";
 import { TextareaAutosize } from "@mui/material";
@@ -31,7 +30,15 @@ import {
   ButtonWrapper,
   ConfirmButton,
   CancelButton,
-  dietDiaryItem,
+  Bold,
+  DiaryItemWrapper,
+  DiaryItemLeftWrapper,
+  DiaryItemRightWrapper,
+  DiaryImg,
+  DiaryTitle,
+  DiaryTime,
+  DiaryKcal,
+  DiaryDesc,
 } from "./MyDiet.style";
 import { useHistory, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -43,6 +50,7 @@ export default function MyDietDaily() {
   const { myDietDiaryDailyInfo, myDietDiaryDeleteDone } = useSelector(
     (state) => state.myDiet
   );
+  const { me } = useSelector(state => state.mypage);
 
   const [open, setOpen] = useState(false);
   const [shareDescription, setShareDescription] = useState("");
@@ -51,6 +59,7 @@ export default function MyDietDaily() {
     // clickShareBtn(diaryNo);
   };
   const handleClose = () => setOpen(false);
+  console.log(">>>>>>>>>>>>>>>> user : ", me);
 
   const kcals = [];
   const kcalList = [];
@@ -96,6 +105,39 @@ export default function MyDietDaily() {
     totalKcal = totalKcal.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   }
 
+  const now = new Date();   // 현재 날짜 및 시간
+  const year = now.getFullYear(); // 연도
+  const month = now.getMonth();   // 월
+  const day = now.getDate();      // 일
+  const userYear = me.birthday.substring(0, 4);
+  const userMonth = me.birthday.substring(5, 7);
+  const userDay = me.birthday.substring(9, 10);
+
+  // 유저 만 나이 구하기
+  var age = 0;
+  if(month < userYear) {
+    age = year - userYear - 1;
+  } else if(month == userYear) {
+    if(day < userDay) {
+      age = year - userYear - 1;
+    }
+  }
+
+  // 유저 기초대사량 구하기 (Mifflin-St Jeor Equation)
+  var bmr = 0;
+  if(!me.gender) { // 남성인 경우
+      bmr = (me.weight * 10 + me.height * 6.25 - 5 * age + 5);
+  } else {         // 여성인 경우
+      bmr = (me.weight * 10 + me.height * 6.25 - 5 * age - 161);
+  }
+
+  // 하루 필요 에너지
+  // 1. 활동이 적은 경우 1.2
+  // 2. 적당한 활동이 있는 경우 1.35 (v)
+  // 3. 운동 선수나 하루종일 몸을 사용하는 일을 하는 경우 1.5
+  bmr = Math.round(bmr * 1.35);
+  var suggestTotalKcal = bmr.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+
   const history = useHistory();
   const goBack = () => {
     history.push("/mydiet");
@@ -124,12 +166,15 @@ export default function MyDietDaily() {
   };
 
   const clickDeleteBtn = (info) => {
-    alert("삭제하시겠습니까~?");
-    console.log(info);
-    dispatch({
-      type: MY_DIET_DIARY_DELETE_REQUEST,
-      data: { date: info },
-    });
+    if(window.confirm("정말 삭제합니까?")) {
+      dispatch({
+        type: MY_DIET_DIARY_DELETE_REQUEST,
+        data: { date: info },
+      });
+      alert("삭제되었습니다");
+    } else {
+      alert("취소합니다.");
+    }
   };
 
   const clickDietDiaryItem = (diaryNo) => {
@@ -160,62 +205,83 @@ export default function MyDietDaily() {
       </div>
       <div>
         {diaryInfoList.map((info) => (
-          <DietDiaryItem key={info.diaryNo} style={dietDiaryItem}>
-            <img
-              src={info.imageFullPath}
-              alt="식단 이미지"
-              onClick={() => clickDietDiaryItem(info.diaryNo)}
-            ></img>
-            <p>{info.mealTime}</p>
-            <p>{info.diaryTime}</p>
-            <p>{info.printKcal} kcal</p>
-            <p>{info.description}</p>
-            <ShareButton onClick={() => handleOpen(info.diaryNo)}>
-              Share
-            </ShareButton>
-            <Modal
-              open={open}
-              onClose={handleClose}
-              aria-labelledby="modal-modal-title"
-              aria-describedby="modal-modal-description"
-            >
-              <Box sx={shareBox}>
-                <Typography id="modal-modal-title" variant="h4" component="h2">
-                  식단 공유
-                </Typography>
-                <hr />
-                <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                  식단 공유와 함께 추가 설명을 적어주세요.
-                </Typography>
-                <TextareaAutosize
-                  maxRows={4}
-                  aria-label="maximum height"
-                  placeholder="this is description..."
-                  style={descriptionArea}
-                  onChange={(event) => {
-                    setShareDescription(event.target.value);
-                  }}
-                />
-                <ButtonWrapper>
-                  <ConfirmButton
-                    onClick={() => handleShareDietDiary(info.diaryNo)}
-                  >
-                    확인
-                  </ConfirmButton>
-                  <CancelButton onClick={() => handleClose}>닫기</CancelButton>
-                </ButtonWrapper>
-              </Box>
-            </Modal>
-            <IconButton aria-label="delete" size="large">
-              <DeleteIcon
-                fontSize="inherit"
-                onClick={() => clickDeleteBtn(info)}
-              />
-            </IconButton>
+          <DietDiaryItem key={info.diaryNo}>
+            <Box sx={{
+                        marginTop: 1,
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center'
+                    }}>
+              <Grid container spacing={2}>
+                <Grid item xs={12} sm={6}>
+                  <DiaryImg
+                    src={info.imageFullPath}
+                    alt="식단 이미지"
+                    onClick={() => clickDietDiaryItem(info.diaryNo)}
+                  ></DiaryImg>
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <DiaryItemWrapper>
+                    <DiaryItemLeftWrapper>
+                      <DiaryTitle>{info.mealTime}</DiaryTitle>
+                      <DiaryTime>{info.diaryTime}</DiaryTime>
+                      <DiaryKcal>{info.printKcal} kcal</DiaryKcal>
+                      <DiaryDesc>{info.description}</DiaryDesc>
+                  </DiaryItemLeftWrapper>
+                  <DiaryItemRightWrapper>
+                    <ShareButton onClick={() => handleOpen(info.diaryNo)}>
+                      Share
+                    </ShareButton>
+                    <Modal
+                      open={open}
+                      onClose={handleClose}
+                      aria-labelledby="modal-modal-title"
+                      aria-describedby="modal-modal-description"
+                    >
+                      <Box sx={shareBox}>
+                        <Typography id="modal-modal-title" variant="h4" component="h2">
+                          식단 공유
+                        </Typography>
+                        <hr />
+                        <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+                          식단 공유와 함께 추가 설명을 적어주세요.
+                        </Typography>
+                        <TextareaAutosize
+                          maxRows={4}
+                          aria-label="maximum height"
+                          placeholder="this is description..."
+                          style={descriptionArea}
+                          onChange={(event) => {
+                            setShareDescription(event.target.value);
+                          }}
+                        />
+                        <ButtonWrapper>
+                          <ConfirmButton
+                            onClick={() => handleShareDietDiary(info.diaryNo)}
+                          >
+                            확인
+                          </ConfirmButton>
+                          <CancelButton onClick={() => handleClose}>닫기</CancelButton>
+                        </ButtonWrapper>
+                      </Box>
+                    </Modal>
+                    <IconButton aria-label="delete" size="large">
+                      <DeleteIcon
+                        fontSize="inherit"
+                        onClick={() => clickDeleteBtn(info)}
+                      />
+                    </IconButton>
+                    </DiaryItemRightWrapper>
+                  </DiaryItemWrapper>
+                </Grid>
+              </Grid>
+            </Box> 
+
           </DietDiaryItem>
         ))}
       </div>
       <TotalKcal>Total Kcal : {totalKcal} kcal</TotalKcal>
+      <div>({me.userId}님의 하루 권장 섭취 칼로리는 <Bold>{suggestTotalKcal} Kcal</Bold> 입니다.)</div>
     </DietDiaryItemWrapper>
   );
 }

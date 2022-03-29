@@ -5,9 +5,11 @@ const initialState = {
     userId: '',
     userName: '',
     userPassword: '',
+    userEmail: '',
     gender: false,
     height: 0,
     weight: 0,
+    birthday: '',
   },
   nutritionHistoryList: [],
 
@@ -85,10 +87,12 @@ const reducer = (state = initialState, action) =>
         draft.myPageDone = true;
         draft.me.userId = action.data.userId;
         draft.me.userPassword = action.data.userPassword;
+        draft.me.userEmail = action.data.userEmail;
         draft.me.userName = action.data.userName;
         draft.me.gender = action.data.gender;
         draft.me.height = action.data.height;
         draft.me.weight = action.data.weight;
+        draft.me.birthday = action.data.birthday;
         draft.me.isLogin = action.data.isLogin;
         break;
       case MY_PAGE_FAILURE:
