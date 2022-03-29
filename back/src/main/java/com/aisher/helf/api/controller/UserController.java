@@ -151,7 +151,7 @@ public class UserController {
 			System.out.println("id 중복이 없다");
 			return ResponseEntity.status(200).body(userService.checkUserId(userId));
 		} else System.out.println("id 중복이 있다.");
-		return ResponseEntity.status(401).body(userService.checkUserId(userId));
+		return ResponseEntity.status(200).body(userService.checkUserId(userId));
 	}
 
 	// 이메일 중복 체크
