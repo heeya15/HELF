@@ -58,7 +58,9 @@ export default function MyDietRegister() {
     }
   };
 
+  const [mealTimeIndex, setMealTimeIndex] = useState(4);
   const onMealTimeHandler = (e) => {
+    setMealTimeIndex(e.target.getAttribute("data-index"));
     setMealTime(e.target.value);
   };
 
@@ -102,17 +104,19 @@ export default function MyDietRegister() {
               <RegisterReq>
                 <Titles>Food</Titles>
                 <Titles>Meal Type</Titles>
-                <div style={{ display: "flex" }}>
+                <MealTypeButton style={{ display: "flex" }}>
                   {mealType.map((meal, index) => (
-                    <MealTypeButton
+                    <button
+                      className={mealTimeIndex == index ? "active" : ""}
                       key={index}
                       value={meal}
+                      data-index={index}
                       onClick={onMealTimeHandler}
                     >
                       {meal}
-                    </MealTypeButton>
+                    </button>
                   ))}
-                </div>
+                </MealTypeButton>
                 <Titles>Meal Time</Titles>
                 <LocalizationProvider dateAdapter={AdapterDateFns}>
                   <TimePicker

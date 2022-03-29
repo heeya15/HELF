@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams, useHistory } from "react-router-dom";
-import { IMAGE_URL } from "../../utils/https";
-import Box from "@mui/material/Box";
 import {
   setMyDietDetailImagePath,
   setDietDetailMealTime,
   setDietDetailDiaryDate,
   setDietDetailDescription,
   setDietDetailDietRegisterReqList,
+  setDietDetailThumbnail,
   MY_DIET_DETAIL_REQUEST,
   MY_DIET_UPDATE_REQUEST,
 } from "../../store/modules/myDiet";
@@ -19,6 +18,11 @@ import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import TimePicker from "@mui/lab/TimePicker";
 import dayjs from "dayjs";
 import TextField from "@mui/material/TextField";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableRow from "@mui/material/TableRow";
 import {
   TotalStyle,
   RegisterReq,
@@ -33,6 +37,7 @@ import {
   UpdateButton,
   BackButton,
   MealTimeDetail,
+  FoodTableTitle,
 } from "./MyDietDetail.style";
 
 export default function MyDietDetail() {
@@ -60,15 +65,14 @@ export default function MyDietDetail() {
   const { foodName } = useSelector((state) => state.myDiet);
   const mealType = ["아침", "점심", "저녁", "간식"];
 
-  const [dietDetailThumbnail, setDietDetailThumbnail] = useState(
-    `${IMAGE_URL}${myDietDetail.imagePath}`
-  );
+  const { dietDetailThumbnail } = useSelector((state) => state.myDiet);
+
   const [dietUpdate, setDietUpdate] = useState(false);
 
   const onImageHandler = (e) => {
     if (e.target.files && e.target.files.length > 0) {
       const file = e.target.files[0];
-      setDietDetailThumbnail(URL.createObjectURL(file));
+      dispatch(setDietDetailThumbnail(URL.createObjectURL(file)));
       dispatch(setMyDietDetailImagePath(file));
       // dispatch({
       //   type: MY_DIET_IMAGE_REQUEST,
@@ -78,7 +82,9 @@ export default function MyDietDetail() {
     }
   };
 
+  const [mealTimeIndex, setMealTimeIndex] = useState(4);
   const onMealTimeHandler = (e) => {
+    setMealTimeIndex(e.target.getAttribute("data-index"));
     dispatch(setDietDetailMealTime(e.target.value));
   };
 
@@ -91,6 +97,7 @@ export default function MyDietDetail() {
   };
 
   const dietUpdateStateButton = () => {
+    dispatch(setDietDetailDietRegisterReqList([]));
     setDietUpdate(true);
   };
 
@@ -109,12 +116,60 @@ export default function MyDietDetail() {
   const FoodList = myDietDetail.dietFindResList.map((food, index) => {
     return (
       <div key={index}>
-        <p>{food.food_name}</p>
-        <p>{food.kcal}</p>
-        <p>{food.carbohydrate}</p>
-        <p>{food.protein}</p>
-        <p>{food.fat}</p>
-        <p>{food.weight}</p>
+        <FoodTableTitle>
+          {food.food_name} {food.weight}g
+        </FoodTableTitle>
+        <TableContainer>
+          <Table>
+            <TableBody>
+              <TableRow>
+                <TableCell
+                  sx={{ fontWeight: "bold" }}
+                  style={{ width: "25%" }}
+                  align="center"
+                >
+                  칼로리
+                </TableCell>
+                <TableCell
+                  sx={{ fontWeight: "bold" }}
+                  style={{ width: "25%" }}
+                  align="center"
+                >
+                  탄수화물
+                </TableCell>
+                <TableCell
+                  sx={{ fontWeight: "bold" }}
+                  style={{ width: "25%" }}
+                  align="center"
+                >
+                  단백질
+                </TableCell>
+                <TableCell
+                  sx={{ fontWeight: "bold" }}
+                  style={{ width: "25%" }}
+                  align="center"
+                >
+                  지방
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell style={{ width: "25%" }} align="center">
+                  {Math.round((food.weight / 100) * food.kcal * 100) / 100}
+                </TableCell>
+                <TableCell style={{ width: "25%" }} align="center">
+                  {Math.round((food.weight / 100) * food.carbohydrate * 100) /
+                    100}
+                </TableCell>
+                <TableCell style={{ width: "25%" }} align="center">
+                  {Math.round((food.weight / 100) * food.protein * 100) / 100}
+                </TableCell>
+                <TableCell style={{ width: "25%" }} align="center">
+                  {Math.round((food.weight / 100) * food.fat * 100) / 100}
+                </TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
+        </TableContainer>
       </div>
     );
   });
@@ -147,17 +202,19 @@ export default function MyDietDetail() {
                   <Titles>Food</Titles>
                   {FoodList}
                   <Titles>Meal Type</Titles>
-                  <div style={{ display: "flex" }}>
+                  <MealTypeButton style={{ display: "flex" }}>
                     {mealType.map((meal, index) => (
-                      <MealTypeButton
+                      <button
+                        className={mealTimeIndex == index ? "active" : ""}
                         key={index}
                         value={meal}
+                        data-index={index}
                         onClick={onMealTimeHandler}
                       >
                         {meal}
-                      </MealTypeButton>
+                      </button>
                     ))}
-                  </div>
+                  </MealTypeButton>
                   <Titles>Meal Time</Titles>
                   <LocalizationProvider dateAdapter={AdapterDateFns}>
                     <TimePicker

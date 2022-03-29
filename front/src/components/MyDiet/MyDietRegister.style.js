@@ -22,14 +22,20 @@ const RegisterReq = styled.div`
   margin-bottom: 5%;
 `;
 
-const MealTypeButton = styled.button`
-  margin-right: 2%;
-  color: #272727;
-  background-color: #b3dfa8;
-  border: none;
-  border-radius: 30px;
-  width: 60%;
-  max-width: 120px;
+const MealTypeButton = styled.div`
+  button {
+    margin-right: 2%;
+    color: #272727;
+    background-color: #b3dfa8;
+    border: none;
+    border-radius: 30px;
+    width: 60%;
+    max-width: 120px;
+  }
+  .active {
+    background-color: #56a75f;
+    color: #fff;
+  }
 `;
 
 const Description = styled.textarea`
