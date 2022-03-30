@@ -17,7 +17,7 @@ import java.time.LocalDate;
 public class WeightHistoryrRegisterReq {
 
 	@ApiModelProperty(name="등록 날짜", example="")
-	private LocalDate createdAt;
+	private String createdAt;
 
 	@ApiModelProperty(name="유저 ID", example="ssafy")
 	private String userId;

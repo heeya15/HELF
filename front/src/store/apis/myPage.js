@@ -64,3 +64,37 @@ export async function NutritionHistoryAPI() {
     });
     return result.data;
 }
+
+// 가장 최근 몸무게 기록한 정보 10개 들고오는 함수
+export async function WeightHistoryAPI() {
+    const result = await axios.get(`${BASE_URL}weight/history/search/ten/weight`, {
+        headers: {
+            Authorization: 'Bearer ' + sessionStorage.getItem('jwt')
+        },
+    });
+    console.log("상위 10개 데이터");
+    console.log(result);
+    return result.data;
+}
+
+// 회원정보 수정시 몸무게 정보 히스토리 테이블에 추가
+export async function WeightHistoryUpdateAPI({ createdAt, weight }) {
+    const token = sessionStorage.getItem("jwt");
+    const header = { headers: { Authorization: `Bearer ${token}` } };
+    console.log("몸무게 히스토리 등록 시 뭐가 찍히는지 확인하자");
+    console.log(token);
+    console.log(createdAt);
+    console.log(weight);
+    const result = await axios.post(`${LOCAL_URL}weight/history/register/weight`, { 
+            createdAt: createdAt,
+            weight: weight
+        },
+        {
+            headers: {
+                Authorization: 'Bearer ' + sessionStorage.getItem('jwt')
+            },
+        },
+    );
+    console.log(result);
+    return result;
+}

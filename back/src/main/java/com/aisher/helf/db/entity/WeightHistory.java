@@ -5,6 +5,8 @@ import com.aisher.helf.api.request.WeightHistoryrRegisterReq;
 import lombok.*;
 
 import javax.persistence.*;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 @Entity
 @Setter
@@ -21,8 +23,8 @@ public class WeightHistory {
     int weight;
 
     public void updateWeightHistory(WeightHistoryrRegisterReq weightHistoryrRegisterReq) {
-       this.weightHistoryId.userId = weightHistoryId.userId;
-       this.weightHistoryId.setCreatedAt(weightHistoryrRegisterReq.getCreatedAt());
+       LocalDate createAt = LocalDate.parse(weightHistoryrRegisterReq.getCreatedAt(), DateTimeFormatter.ISO_DATE);
+       this.weightHistoryId.setCreatedAt(createAt);
        this.weight = weightHistoryrRegisterReq.getWeight();
     }
 }

@@ -80,22 +80,7 @@ export default function MypageProfile() {
       handlePasswordConfirm();
     }
   };
-  const getProfile = async () => {
-    try {
-      // Kakao SDK API를 이용해 사용자 정보 획득
-      let data = await window.Kakao.API.request({
-        url: "/v2/user/me",
-      });
-      console.log("hi");
-      console.log(data);
-      // 사용자 정보 변수에 저장
-      setUserId(data.id);
-      setNickName(data.kakao_account.profile.nickname);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-  
+
   const [userinfo, setUserInfo] = useState({
     userName: '',
     userPassword: '',
@@ -197,7 +182,6 @@ export default function MypageProfile() {
     setNewHeight(me.height);
     setNewWeight(me.weight);
     setNewBirthday(me.birthday);
-    getProfile();
   }, [ me, updateUserInfoDone, passwordConfirmDone ]);
 
   // 페이지 랜더링될 때, 최초 1회 유저 정보 가져오기
@@ -271,11 +255,12 @@ export default function MypageProfile() {
                   </Typography>
                   <ModalBodyWrapper onKeyPress={ handlePasswordConfirmKeyPress }>
                     <span>비밀번호 : </span>
-                    <input
-                      id="password"
-                      onChange={e => {
-                        setPassword(e.target.value);
-                      }}
+                      <input
+                        type="password"
+                        id="password"
+                        onChange={e => {
+                          setPassword(e.target.value);
+                        }}
                       ></input>
                   </ModalBodyWrapper>
                   <hr/>

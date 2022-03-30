@@ -4,6 +4,7 @@ import { MyPageContent, MyPageHeader, MyPageWrapper } from "./MyPage.style";
 import { Block, Layout, Wrapper } from "../../style/variables";
 import MyPageProfile from "../../components/MyPage/MyPageProfile";
 import Nutrition from "../../components/MyPage/Statistics/Nutrition";
+import WeightHistory from '../../components/MyPage/Statistics/WeightHistory';
 import ExerciseHistory from "../../components/MyPage/Statistics/ExerciseHistory";
 
 export default function MyPage() {
@@ -16,10 +17,7 @@ export default function MyPage() {
               <MyPageProfile />
             </MyPageHeader>
             <MyPageContent>
-              {/* <MypageMenu /> */}
-              {/* <div className="poster">
-                
-              </div> */}
+              <WeightHistory></WeightHistory> 
               <Nutrition></Nutrition>
               <ExerciseHistory></ExerciseHistory>
             </MyPageContent>

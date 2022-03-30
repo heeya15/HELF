@@ -10,6 +10,7 @@ import com.aisher.helf.api.request.WeightHistoryrRegisterReq;
 import com.aisher.helf.api.response.WeightHistoryTenRecordRes;
 import com.aisher.helf.api.service.WeightHistoryService;
 import com.aisher.helf.common.auth.UserDetails;
+import com.aisher.helf.common.model.response.BaseResponseBody;
 import com.aisher.helf.db.entity.User;
 import com.aisher.helf.db.entity.WeightHistory;
 import io.swagger.annotations.*;
@@ -44,15 +45,24 @@ public class WeightHistoryController {
 					@ApiResponse(code = 404, message = "사용자 없음"), 
 					@ApiResponse(code = 500, message = "서버 오류")})
 	public ResponseEntity<WeightHistory> registerWeightHistory(
-			@RequestBody @ApiParam(value="daily 몸무게 정보", required = true) WeightHistoryrRegisterReq registerInfo,
-			@ApiIgnore Authentication authentication)
+			@ApiIgnore Authentication authentication,
+			@RequestBody @ApiParam(value="daily 몸무게 정보", required = true) WeightHistoryrRegisterReq registerInfo
+			)
 	{
+		System.out.println(registerInfo.toString());
 		UserDetails userDetails = (UserDetails)authentication.getDetails();
 		String userId = userDetails.getUsername();
 		registerInfo.setUserId(userId);
 		System.out.println(userId);
 		System.out.println(registerInfo.toString());
-		WeightHistory UserWeightHistory = weighthistoryService.registerWeightHistory(registerInfo);
+		WeightHistory UserWeightHistory = null;
+		try{
+			UserWeightHistory = weighthistoryService.registerWeightHistory(registerInfo);
+		}catch(NoSuchElementException e){
+			e.printStackTrace();
+			return new ResponseEntity<WeightHistory>(UserWeightHistory,HttpStatus.EXPECTATION_FAILED);
+		}
+
 		return new ResponseEntity<WeightHistory>(UserWeightHistory,HttpStatus.OK);
 	}
 

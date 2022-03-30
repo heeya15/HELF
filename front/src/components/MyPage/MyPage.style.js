@@ -1,6 +1,10 @@
 import styled from 'styled-components';
 import { blockColor, device, pointColor } from '../../style/variables';
 
+const Container = styled.div`
+  width: 90vw;
+  max-width: 900px;
+`;
 const MyPageProfileWrapper = styled.div`
   background-color: white;
   border-radius: 8px;
@@ -166,6 +170,7 @@ const Title = styled.div`
 `;
 
 export {
+  Container,
   MyPageMenuWrapper,
   MyPageProfileWrapper,
   MyPageIconBlock,
