@@ -20,9 +20,8 @@ import FindPassword from "./components/User/FindPassword/FindPassword";
 import MyDietDaily from "./components/MyDiet/MyDietDaily";
 import MyDietDetail from "./components/MyDiet/MyDietDetail";
 import Nutrition from "./components/MyPage/Statistics/Nutrition";
-// import Placeholder from 'react-bootstrap/Placeholder';
-import withRoot from './withRoot';
-
+import withRoot from "./withRoot";
+import ExerciseHistory from "./components/MyPage/Statistics/ExerciseHistory";
 
 // import Placeholder from 'react-bootstrap/Placeholder';
 
@@ -42,10 +41,9 @@ function App() {
       <Route path="/exercise" component={Exercise} />
       <Route path="/dietdiary/:date" component={MyDietDaily} />
       <Route path="/mydietdetail/:date/:diaryNo" component={MyDietDetail} />
-      <Route path="/nutrition" component={Nutrition}/>
-      <Route exact path="/sharedetail/:index" component={ShareDetail}/>
-      
- 
+      <Route path="/nutrition" component={Nutrition} />
+      <Route exact path="/sharedetail/:index" component={ShareDetail} />
+      <Route path="/exercisehistory" component={ExerciseHistory} />
     </div>
   );
 }

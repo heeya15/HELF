@@ -99,7 +99,7 @@ const reducer = (state = initialState, action) =>
       case MY_DIET_IMAGE_REQUEST:
         break;
       case MY_DIET_IMAGE_SUCCESS:
-        action.forEach((foods) => {
+        action.data.data.forEach((foods) => {
           draft.foodName.push(foods);
         });
         break;
