@@ -255,6 +255,11 @@ public class DietDiaryServiceImpl implements DietDiaryService{
         dietDiaryRepository.delete(dietDiary);
     }
 
+    @Override
+    public void updateDiaryShareStatus(int diaryNo) {
+        dietDiaryRepository.updateShareStatus(diaryNo);
+    }
+
     /** 음식을 인식하는 foodSegmentation 입니다. **/
     @Override
     public DetectedObjects foodSegmentation(MultipartFile imagePath) throws IOException, ModelNotFoundException, MalformedModelException {

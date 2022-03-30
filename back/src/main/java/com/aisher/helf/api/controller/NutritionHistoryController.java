@@ -36,7 +36,7 @@ public class NutritionHistoryController {
     NutritionHistoryService nutritionHistoryService;
 
     @GetMapping("/find")
-    @ApiOperation(value ="식단 일지 정보 조회", notes = "유저의 <strong>일별 섭취 영양 성분 정보</strong>를 조회한다.")
+    @ApiOperation(value ="식단 일지 정보 조회(token)", notes = "유저의 <strong>일별 섭취 영양 성분 정보</strong>를 조회한다.")
     @ApiResponses({ @ApiResponse(code = 200, message = "성공"),
             @ApiResponse(code = 401, message = "인증 실패"),
             @ApiResponse(code = 404, message = "사용자 없음"),
