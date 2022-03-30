@@ -21,6 +21,10 @@ import MyDietDaily from "./components/MyDiet/MyDietDaily";
 import MyDietDetail from "./components/MyDiet/MyDietDetail";
 import Nutrition from "./components/MyPage/Statistics/Nutrition";
 // import Placeholder from 'react-bootstrap/Placeholder';
+import withRoot from './withRoot';
+
+
+// import Placeholder from 'react-bootstrap/Placeholder';
 
 function App() {
   return (
@@ -46,4 +50,7 @@ function App() {
   );
 }
 
-export default App;
+// export default App;
+export default withRoot(App);
+
+
