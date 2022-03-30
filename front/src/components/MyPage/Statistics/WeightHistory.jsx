@@ -8,6 +8,7 @@ import {
 } from '../MyPage.style';
 export default function WeightHistory() {
     var temp = [];
+
     const { me } = useSelector(state => state.mypage);
     const datas = {
         labels: [],
@@ -50,12 +51,15 @@ export default function WeightHistory() {
             temp.push(weight[i]);
         }
     }
+    
+   
     useEffect(() => {
         dispatch({
             type: WEIGHT_HISTORY_REQUEST,
         });
-    },[weightHistoryList]);
-  
+    }, []);
+
+   
     return (
         <div>
         {

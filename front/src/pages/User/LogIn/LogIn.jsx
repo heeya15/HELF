@@ -75,7 +75,7 @@ export default function LogIn() {
         history.push('/');
       }
     }
-  }, [ me ]);
+  }, [ me, kakaologInDone, logInDone ]);
   // }, [logInDone, kakaologInDone, history]);
   
   return (

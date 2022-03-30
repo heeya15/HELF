@@ -34,7 +34,7 @@ export default function Nutrition() {
     const dispatch = useDispatch();
     const { nutritionHistoryList } = useSelector(state => state.mypage);
     const { me } = useSelector(state => state.mypage);
-    console.log(nutritionHistoryList);
+    // console.log(nutritionHistoryList);
     const CarbohydrateList = [];
     const ProteinList = [];
     const FatList = [];

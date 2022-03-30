@@ -44,13 +44,12 @@ import { usePickerState } from '@mui/lab/internal/pickers/hooks/usePickerState';
 export default function MypageProfile() {
   const dispatch = useDispatch();
   const history = useHistory();
-  const { me, passwordConfirmDone, updateUserInfoDone } = useSelector(state => state.mypage);
+  
+  const { me, passwordConfirmDone, updateUserInfoDone,weightHistoryList } = useSelector(state => state.mypage);
   const { kakaologInDone } = useSelector(state => state.user);
   const [ password, setPassword ] = useState('');
   const [ open, setOpen ] = useState(false);
   const [ gender, setGender ] = useState('');
-  
-  console.log("로그인 여부", kakaologInDone );
 
   // 수정 데이터
   const [ newName, setNewName ] = useState('');
@@ -175,7 +174,7 @@ export default function MypageProfile() {
         type: MY_PAGE_REQUEST,
       })
     }
-    
+    console.log(updateUserInfoDone);
     setNewName(me.userName);
     setNewPassword(password);
     setNewGender(me.gender);

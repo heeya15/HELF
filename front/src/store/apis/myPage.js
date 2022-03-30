@@ -72,8 +72,6 @@ export async function WeightHistoryAPI() {
             Authorization: 'Bearer ' + sessionStorage.getItem('jwt')
         },
     });
-    console.log("상위 10개 데이터");
-    console.log(result);
     return result.data;
 }
 
@@ -85,7 +83,8 @@ export async function WeightHistoryUpdateAPI({ createdAt, weight }) {
     console.log(token);
     console.log(createdAt);
     console.log(weight);
-    const result = await axios.post(`${LOCAL_URL}weight/history/register/weight`, { 
+    const result = await axios.post(`${LOCAL_URL}weight/history/register/weight`,
+        { 
             createdAt: createdAt,
             weight: weight
         },
