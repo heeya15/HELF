@@ -51,7 +51,10 @@ export default function MyDiet(props) {
   };
 
   const selectedEvent = (info) => {
-    console.log(info.event.id); // 이벤트 상세보기를 위해서 넘겨줄 diary_no
+    const date = info.event.startStr;
+    const diaryNo = info.event.id;
+    history.push(`/mydietdetail/${date}/${diaryNo}`);
+    // console.log(info.event.id); // 이벤트 상세보기를 위해서 넘겨줄 diary_no
   };
 
   useEffect(() => {

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useHistory } from "react-router-dom";
 import { IMAGE_URL } from "../../utils/https";
 import {
   MY_DIET_IMAGE_REQUEST,
@@ -17,6 +17,7 @@ import {
   RegisterReq,
   MealTypeButton,
   RegisterButton,
+  BackButton,
   Titles,
   Description,
   ImageThumbnail,
@@ -24,6 +25,7 @@ import {
 
 export default function MyDietRegister() {
   const dispatch = useDispatch();
+  const history = useHistory();
   const { date } = useParams();
 
   const [dietThumbnail, setDietThumbnail] = useState(
@@ -85,6 +87,10 @@ export default function MyDietRegister() {
     }
   };
 
+  const goBack = () => {
+    history.push(`/dietdiary/${date}`);
+  };
+
   return (
     <div>
       <Container>
@@ -139,6 +145,7 @@ export default function MyDietRegister() {
           </Row>
         </TotalStyle>
         <RegisterButton onClick={registerMyDietButton}>등록</RegisterButton>
+        <BackButton onClick={goBack}>나가기</BackButton>
       </Container>
     </div>
   );
