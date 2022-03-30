@@ -12,12 +12,14 @@ import {
   LoginContentRow,
   LoginHeader,
 } from './Login.style';
+import { MY_PAGE_REQUEST } from '../../../store/modules/myPage';
 import { useHistory } from 'react-router';
-import { kakaoLogin, kakaoLogout } from '../../../store/apis/kakaoUser';
+
 export default function LogIn() {
   const dispatch = useDispatch(); // 해당 store에 함수에 해당하는 인자로 요청 가능.
   const { logInDone,kakaologInDone } = useSelector((state) => state.user);
-  
+  const { me } = useSelector(state => state.mypage);
+
   const history = useHistory();
   const [kakaoAT , setkakaoAT] = useState('');
   const [id, SetId] = useState('');
@@ -37,7 +39,7 @@ export default function LogIn() {
           });
         }
     };
-   
+  
   const handleKeyPress = (e) => {
     if(e.key === 'Enter') {
       handleLogIn();
@@ -60,16 +62,22 @@ export default function LogIn() {
       type: KAKAO_LOG_IN_REQUEST
     });
   };
+
   // const kakaoLogoutHandler = () => {
   //     dispatch(kakaoLogout(kakaoAT, localAT))
   // };
+  
   useEffect(() => {
-    if (logInDone) {
-      history.push('/');
-    } else if (kakaologInDone) {
-      history.push('/');
+    if (logInDone || kakaologInDone) {
+      if(me.weight === 0 && me.height === 0 && me.birthday === null) {
+        history.push('/additionalUserInfo');
+      } else {
+        history.push('/');
+      }
     }
-  }, [logInDone, kakaologInDone, history]);
+  }, [ me ]);
+  // }, [logInDone, kakaologInDone, history]);
+  
   return (
     <Layout>
       <Wrapper>
@@ -133,8 +141,8 @@ export default function LogIn() {
               <div id="footer">
               <img
                   src={kakaoimage}
-                   onClick={ onSocialLogin }
-                   alt='카카오로그인 이미지 버튼'
+                  onClick={ onSocialLogin }
+                  alt='카카오로그인 이미지 버튼'
               />
               </div>
             </LoginContentRow>

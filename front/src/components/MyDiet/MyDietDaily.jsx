@@ -12,7 +12,6 @@ import { IMAGE_URL } from "../../utils/https";
 import {
   MY_DIET_DIARY_DAILY_INFO_REQUEST,
   MY_DIET_DIARY_DELETE_REQUEST,
-  MY_DIET_DIARY_DELETE_SUCCESS,
 } from "../../store/modules/myDiet";
 import { SHARE_BOARD_REGISTER_REQUEST } from "../../store/modules/shareBoard";
 
@@ -53,10 +52,17 @@ export default function MyDietDaily() {
   const { me } = useSelector(state => state.mypage);
 
   const [open, setOpen] = useState(false);
+  const [shareDiaryNo, setShareDiaryNo] = useState("");
   const [shareDescription, setShareDescription] = useState("");
-  const handleOpen = (diaryNo) => {
+  const handleOpen = (info) => {
+    console.log("공유할 정보 : ", info);
     // 공유 여부 체크
-    setOpen(true);
+    if(info.isShared) {    // 이미 공유 된 게시글이라면
+      alert('이미 공유한 식단 일지 입니다.');
+    } else {  // 공유되지 않은 게시글이라면
+      setShareDiaryNo(info.diaryNo);
+      setOpen(true);
+    }
   };
   const handleClose = () => setOpen(false);
 
@@ -144,11 +150,12 @@ export default function MyDietDaily() {
     history.push(`/mydietregister/${date}`);
   };
 
-  const handleShareDietDiary = (diaryNo) => {
+  const handleShareDietDiary = () => {
+    console.log("공유된 식단 일지 번호 : ", shareDiaryNo);
     dispatch({
       type: SHARE_BOARD_REGISTER_REQUEST,
       data: {
-        diaryNo: diaryNo,
+        diaryNo: shareDiaryNo,
         shareDescription: shareDescription,
         hit: 0,
         createdAt: "",
@@ -223,7 +230,7 @@ export default function MyDietDaily() {
                       <DiaryDesc>{info.description}</DiaryDesc>
                   </DiaryItemLeftWrapper>
                   <DiaryItemRightWrapper>
-                    <ShareButton onClick={() => handleOpen(info.diaryNo)}>
+                    <ShareButton onClick={() => handleOpen(info)}>
                       Share
                     </ShareButton>
                     <Modal
@@ -251,11 +258,11 @@ export default function MyDietDaily() {
                         />
                         <ButtonWrapper>
                           <ConfirmButton
-                            onClick={() => handleShareDietDiary(info.diaryNo)}
+                            onClick={ handleShareDietDiary}
                           >
                             확인
                           </ConfirmButton>
-                          <CancelButton onClick={() => handleClose}>닫기</CancelButton>
+                          <CancelButton onClick={ handleClose }>닫기</CancelButton>
                         </ButtonWrapper>
                       </Box>
                     </Modal>
