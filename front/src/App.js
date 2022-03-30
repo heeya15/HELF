@@ -22,6 +22,7 @@ import MyDietDetail from "./components/MyDiet/MyDietDetail";
 import Nutrition from "./components/MyPage/Statistics/Nutrition";
 import withRoot from "./withRoot";
 import ExerciseHistory from "./components/MyPage/Statistics/ExerciseHistory";
+import AdditionalUserInfo from "./pages/User/LogIn/AdditionalUserInfo";
 
 // import Placeholder from 'react-bootstrap/Placeholder';
 
@@ -44,6 +45,7 @@ function App() {
       <Route path="/nutrition" component={Nutrition} />
       <Route exact path="/sharedetail/:index" component={ShareDetail} />
       <Route path="/exercisehistory" component={ExerciseHistory} />
+      <Route path="/additionalUserInfo" component={AdditionalUserInfo}/>
     </div>
   );
 }
