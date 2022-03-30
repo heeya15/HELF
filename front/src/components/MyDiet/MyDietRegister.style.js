@@ -62,6 +62,17 @@ const RegisterButton = styled.button`
   width: 10%;
 `;
 
+const BackButton = styled.button`
+  margin-top: 2%;
+  color: #fff;
+  background-color: #db2525;
+  font-size: 18px;
+  border: none;
+  border-radius: 30px;
+  width: 10%;
+  margin-left: 2%;
+`;
+
 const Titles = styled.div`
   font-size: 17px;
   font-weight: bold;
@@ -75,6 +86,7 @@ export {
   RegisterReq,
   MealTypeButton,
   RegisterButton,
+  BackButton,
   Titles,
   Description,
   ImageThumbnail,

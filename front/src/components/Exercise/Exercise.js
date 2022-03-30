@@ -49,12 +49,32 @@ export default function Exercise() {
     window.requestAnimationFrame(loop);
   }
 
+  var status = "wait"
+  var count = 0
+  var soundurl = ''
+
   async function predict() {
     // Prediction #1: run input through posenet
     // estimatePose can take in an image, video or canvas html element
     const { pose, posenetOutput } = await model.estimatePose(webcam.canvas);
     // Prediction 2: run input through teachable machine classification model
     const prediction = await model.predict(posenetOutput);
+
+    
+    if (prediction[0].probability.toFixed(2) > 0.80) {
+      if (status == "action") {
+        count ++
+        soundurl = count%10 + '.mp3' 
+        var audio = new Audio(soundurl)
+        audio.play().catch(error => {
+          console.log(error)
+        });
+        console.log(status, count, soundurl)
+      }
+      status = "wait"
+    } else if (prediction[1].probability.toFixed(2) > 0.80) {
+      status = "action"
+    }
 
     for (let i = 0; i < maxPredictions; i++) {
       const classPrediction =

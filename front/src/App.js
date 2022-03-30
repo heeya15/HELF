@@ -8,7 +8,7 @@ import { Route, Link } from "react-router-dom";
 // 컴포넌트 추가
 import NavBar from "./components/NavBar/NavBar";
 import SharedBoard from "./components/SharedBoard/SharedBoard";
-import ShareDetail from "./components/SharedBoard/SharedDetail";
+import ShareDetail from "./components/ShardDetail/SharedDetail";
 import Main from "./pages/Main/Main";
 import SignUp from "./pages/User/SignUp/SignUp";
 import LogIn from "./pages/User/LogIn/LogIn";
@@ -50,3 +50,5 @@ function App() {
 
 // export default App;
 export default withRoot(App);
+
+

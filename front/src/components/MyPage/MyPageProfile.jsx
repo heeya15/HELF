@@ -44,17 +44,20 @@ export default function MypageProfile() {
   const dispatch = useDispatch();
   const history = useHistory();
   const { me, passwordConfirmDone, updateUserInfoDone } = useSelector(state => state.mypage);
+  const { kakaologInDone } = useSelector(state => state.user);
   const [ password, setPassword ] = useState('');
   const [ open, setOpen ] = useState(false);
   const [ gender, setGender ] = useState('');
   
+  console.log("로그인 여부", kakaologInDone );
+
   // 수정 데이터
   const [ newName, setNewName ] = useState('');
   const [ newPassword, setNewPassword ] = useState('');
-  const [ newGender, setNewGender ] = useState(true);
+  const [ newGender, setNewGender ] = useState(false);
   const [ newHeight, setNewHeight ] = useState(0);
   const [ newWeight, setNewWeight ] = useState(0);
-  const [ newBirthday, setNewBirthday ] = useState();
+  const [ newBirthday, setNewBirthday ] = useState('');
   const [ showPassword, setShowPassword ] = useState(true);
 
   const handleOpen = () => setOpen(true);
@@ -114,6 +117,7 @@ export default function MypageProfile() {
   };
 
   const handleEdit = () => {
+    console.log("수정할 데이터 : ", me.userId, newName, newPassword, newGender, newHeight, newWeight, newBirthday);
     dispatch({
       type: UPDATE_USER_INFO_REQUEST, 
       data: {
@@ -154,21 +158,29 @@ export default function MypageProfile() {
     setNewWeight(event.target.value);
   };
 
-  const handleEditKeyPress = (e) => {
-    if(e.key === 'Enter') {
+  const handleNewBirthday = (event) => {
+    event.target.value = event.target.value.replace(/[^0-9]/g, '').replace(/^(\d{0,4})(\d{0,2})(\d{0,2})$/g, "$1-$2-$3").replace(/(\-{1,2})$/g, "");
+    setNewBirthday(event.target.value);
+  };
+
+  const handleEditKeyPress = (event) => {
+    if(event.key === 'Enter') {
       handleEdit();
     }
   };
 
+  // 유저 정보를 받아왓을때
   useEffect(() => {
     if(me.gender) {
       setGender('여');
     } else {
       setGender('남');
     }
+
     if(passwordConfirmDone) {
       setOpen(false);
     }
+
     if(updateUserInfoDone) {
       dispatch({
         type: UPDATE_USER_INFO_RESET,
@@ -177,6 +189,7 @@ export default function MypageProfile() {
         type: MY_PAGE_REQUEST,
       })
     }
+    
     setNewName(me.userName);
     setNewPassword(password);
     setNewGender(me.gender);
@@ -184,8 +197,9 @@ export default function MypageProfile() {
     setNewWeight(me.weight);
     setNewBirthday(me.birthday);
     getProfile();
-  }, [ me, passwordConfirmDone, updateUserInfoDone ]);
+  }, [ me, updateUserInfoDone, passwordConfirmDone ]);
 
+  // 페이지 랜더링될 때, 최초 1회 유저 정보 가져오기
   useEffect(() => {
     dispatch({
       type: MY_PAGE_REQUEST,
@@ -217,6 +231,35 @@ export default function MypageProfile() {
                 aria-labelledby="modal-modal-title"
                 aria-describedby="modal-modal-description"
               >
+                { kakaologInDone ? 
+                  <Box sx={ editBox }>
+                    <Typography id="modal-modal-title" variant="h4" component="h2">
+                      이메일 확인
+                    </Typography>
+                    <hr/>
+                    <Typography id="modal-modal-description" sx={{ mt: 1 }}>
+                      회원 정보 수정을 위해서는 이메일 확인이 필요합니다. 
+                    </Typography>
+                    <ModalBodyWrapper onKeyPress={ handlePasswordConfirmKeyPress }>
+                      <span>이메일 : </span>
+                      <input
+                        id="password"
+                        onChange={e => {
+                          setPassword(e.target.value);
+                        }}
+                        ></input>
+                    </ModalBodyWrapper>
+                    <hr/>
+                    <ButtonWrapper>
+                      <ConfirmButton onClick={ handlePasswordConfirm }>
+                        확인
+                      </ConfirmButton>
+                      <CancelButton onClick={ handleClose }>
+                        닫기
+                      </CancelButton>
+                    </ButtonWrapper>
+                  </Box>
+                : 
                 <Box sx={ editBox }>
                   <Typography id="modal-modal-title" variant="h4" component="h2">
                     비밀번호 확인
@@ -244,6 +287,7 @@ export default function MypageProfile() {
                     </CancelButton>
                   </ButtonWrapper>
                 </Box>
+              }
               </Modal>
             </div>
           :
@@ -257,41 +301,52 @@ export default function MypageProfile() {
                 defaultValue={me.userName}
                 onChange={ handleNewName }
               />
-              <FormControl sx={{ m: 1, width: '25ch' }} variant="outlined">
-                <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
-                <OutlinedInput
-                  id="outlined-adornment-password"
-                  defaultValue={ password }
-                  type={showPassword ? 'password' : 'text'}
-                  onChange={ handleNewPassword }
-                  endAdornment={
-                    <InputAdornment position="end">
-                      <IconButton
-                        aria-label="toggle password visibility"
-                        onClick={handleClickShowPassword}
-                        onMouseDown={handleMouseDownPassword}
-                        edge="end"
-                      >
-                        {showPassword ? <VisibilityOff /> : <Visibility />}
-                      </IconButton>
-                    </InputAdornment>
-                  }
-                  label="Password"
-                />
-              </FormControl>
-              <FormControl>
-                <RadioGroup
-                  row
-                  aria-labelledby="demo-row-radio-buttons-group-label"
-                  name="row-radio-buttons-group"
-                  defaultValue={me.gender}
-                  onClick={handleNewGender}
-                >
-                  <FormControlLabel value="false" control={<Radio />} label="남자" />
-                  <FormControlLabel value="true" control={<Radio />} label="여자" />
-                  
-                </RadioGroup>
-              </FormControl>
+              <TextField 
+                sx={{ m: 1 }}
+                label="Birthday" 
+                id="outlined-size-normal"
+                defaultValue={me.birthday}
+                onChange={ handleNewBirthday }
+              />
+              { kakaologInDone === false && 
+                <FormControl sx={{ m: 1, width: '25ch' }} variant="outlined">
+                  <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
+                  <OutlinedInput
+                    id="outlined-adornment-password"
+                    defaultValue={ password }
+                    type={showPassword ? 'password' : 'text'}
+                    onChange={ handleNewPassword }
+                    endAdornment={
+                      <InputAdornment position="end">
+                        <IconButton
+                          aria-label="toggle password visibility"
+                          onClick={handleClickShowPassword}
+                          onMouseDown={handleMouseDownPassword}
+                          edge="end"
+                        >
+                          {showPassword ? <VisibilityOff /> : <Visibility />}
+                        </IconButton>
+                      </InputAdornment>
+                    }
+                    label="Password"
+                  />
+                </FormControl>
+              }
+              <div>
+                <FormControl>
+                  <RadioGroup
+                    row
+                    aria-labelledby="demo-row-radio-buttons-group-label"
+                    name="row-radio-buttons-group"
+                    defaultValue={me.gender}
+                    onClick={handleNewGender}
+                  >
+                    <FormControlLabel value="false" control={<Radio />} label="남자" />
+                    <FormControlLabel value="true" control={<Radio />} label="여자" />
+                    
+                  </RadioGroup>
+                </FormControl>
+              </div>
               <TextField 
                 sx={{ m: 1 }}
                 label="Height"

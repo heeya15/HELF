@@ -6,10 +6,13 @@ import com.aisher.helf.api.request.ShareBoardLikeReq;
 import com.aisher.helf.api.request.ShareBoardRegisterReq;
 import com.aisher.helf.api.response.ShareBoardAllRes;
 import com.aisher.helf.api.response.ShareBoardFindRes;
+import com.aisher.helf.api.service.DietDiaryService;
 import com.aisher.helf.api.service.ShareBoardService;
 import com.aisher.helf.common.auth.UserDetails;
 import com.aisher.helf.common.model.response.BaseResponseBody;
+import com.aisher.helf.db.entity.DietDiary;
 import com.aisher.helf.db.entity.Food;
+import com.aisher.helf.db.entity.NutritionHistory;
 import com.aisher.helf.db.entity.ShareBoard;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +39,10 @@ public class ShareBoardController {
     private static final String FAIL = "fail";
 
     @Autowired
-    ShareBoardService shareboardService;
+    ShareBoardService shareBoardService;
+
+    @Autowired
+    DietDiaryService dietDiaryService;
 
     // 공유 게시글 생성
     @PostMapping("/register")
@@ -50,10 +56,14 @@ public class ShareBoardController {
     public ResponseEntity<? extends BaseResponseBody> registerShareBoard(
             @RequestBody @ApiParam(value="게시글 등록", required = true) ShareBoardRegisterReq shareBoardRegisterReq) {
 
-        ShareBoard shareBoard = shareboardService.registerShareBoard(shareBoardRegisterReq);
+        ShareBoard shareBoard = shareBoardService.registerShareBoard(shareBoardRegisterReq);
         if(shareBoard == null) {
             ResponseEntity.status(400).body(BaseResponseBody.of(400, "Bad Request"));
         }
+
+        // 해당 식단 일지 공유 여부 상태 변경
+        dietDiaryService.updateDiaryShareStatus(shareBoardRegisterReq.getDiaryNo());
+
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
     }
 
@@ -73,8 +83,8 @@ public class ShareBoardController {
         String userId = userDetails.getUsername();
 
         System.out.println(pageable.getSort());
-        Page<ShareBoard> shareBoards = shareboardService.findAllShareBoard(pageable);
-        Page<ShareBoardAllRes> shareBoardAllRes = shareboardService.findInfoShareBoard(shareBoards, userId);
+        Page<ShareBoard> shareBoards = shareBoardService.findAllShareBoard(pageable);
+        Page<ShareBoardAllRes> shareBoardAllRes = shareBoardService.findInfoShareBoard(shareBoards, userId);
         return ResponseEntity.status(200).body(shareBoardAllRes);
     }
 
@@ -85,7 +95,7 @@ public class ShareBoardController {
             @ApiResponse(code = 404, message = "사용자 없음"),
             @ApiResponse(code = 500, message = "서버 오류") })
     public ResponseEntity<List<ShareBoardFindRes>> findShareBoardInfo(@PathVariable Long boardNo) {
-        List<ShareBoardFindRes> shareboardInfo = shareboardService.findByShareBoardId(boardNo);
+        List<ShareBoardFindRes> shareboardInfo = shareBoardService.findByShareBoardId(boardNo);
         return new ResponseEntity<List<ShareBoardFindRes>>(shareboardInfo, HttpStatus.OK);
     }
 
@@ -95,8 +105,31 @@ public class ShareBoardController {
             @ApiResponse(code = 200, message = "성공", response = BaseResponseBody.class),
     })
     public ResponseEntity<? extends BaseResponseBody> shareBoardLike(@RequestBody @ApiParam(required = true) ShareBoardLikeReq req) {
-        shareboardService.setLikeList(req.getUserId(), req.getBoardNo());
+        shareBoardService.setLikeList(req.getUserId(), req.getBoardNo());
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, "SUCCESS"));
+    }
+
+    // 게시글 삭제
+    @DeleteMapping("/remove")
+    @ApiOperation(value = "게시글 삭제(param)", notes = "<strong>게시글 번호</strong>를 통해 공유 게시판에서 해당 식단 일지 정보를 삭제한다." +
+            "param으로 boardNo와 diaryNo을 넘겨받는다.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "성공"),
+            @ApiResponse(code = 401, message = "인증 실패"),
+            @ApiResponse(code = 404, message = "사용자 없음"),
+            @ApiResponse(code = 500, message = "서버 오류")
+    })
+    public ResponseEntity<String> deleteDietDiary(@RequestParam("boardNo") Long boardNo, @RequestParam("diaryNo") int diaryNo) {
+        try {
+            // 해당 게시글을 공유 게시판에서 삭제
+            shareBoardService.deleteShareBoard(boardNo);
+            // 해당 식단 일지 공유 여부 상태 변경
+            dietDiaryService.updateDiaryShareStatus(diaryNo);
+        } catch(Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(400).body("Bad Request");
+        }
+        return ResponseEntity.status(200).body("Success");
     }
 
     // 내가 기록한 식단이 이미 공유 되어있는지 체크
@@ -109,10 +142,9 @@ public class ShareBoardController {
     })
     public ResponseEntity<Boolean> diaryNoCheck(@PathVariable("diaryNo") int diaryNo) {
 
-        if (shareboardService.checkDiaryNo(diaryNo) == true) {
-            System.out.println("내 식단을 공유한 적이 없으니 공유 가능하다.!");
-            return ResponseEntity.status(200).body(shareboardService.checkDiaryNo(diaryNo));
-        } else System.out.println("내 식단을 공유한 적이 있으니 공유 불가능 하다!");
-        return ResponseEntity.status(200).body(shareboardService.checkDiaryNo(diaryNo));
+        if (shareBoardService.checkDiaryNo(diaryNo) == true) {
+            return ResponseEntity.status(200).body(shareBoardService.checkDiaryNo(diaryNo));
+        }
+        return ResponseEntity.status(200).body(shareBoardService.checkDiaryNo(diaryNo));
     }
 }

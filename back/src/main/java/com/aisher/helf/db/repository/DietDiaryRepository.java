@@ -3,9 +3,11 @@ package com.aisher.helf.db.repository;
 import com.aisher.helf.api.response.DietDiaryAllRes;
 import com.aisher.helf.db.entity.DietDiary;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -30,4 +32,11 @@ public interface DietDiaryRepository extends JpaRepository<DietDiary, Integer> {
             "from diet_diary \n" +
             "where user_id = :userId ", nativeQuery = true)
     List<DietDiaryAllRes> findByUserId(@Param("userId") String userId);
+
+    @Transactional
+    @Modifying
+    @Query(value = "update diet_diary \n" +
+            "set is_shared = IF(is_shared, false, true) \n" +
+            "where diary_no = :diaryNo ", nativeQuery = true)
+    void updateShareStatus(@Param("diaryNo") int diaryNo);
 }
