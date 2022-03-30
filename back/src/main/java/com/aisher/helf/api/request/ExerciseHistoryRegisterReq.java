@@ -12,7 +12,7 @@ public class ExerciseHistoryRegisterReq {
     @ApiModelProperty(name="운동 번호", example="1")
     Long exerciseNo;
 
-    @ApiModelProperty(name = "날짜", example="2020-03-28 00:00:00")
+    @ApiModelProperty(name = "날짜", example="2022-03-28 00:00:00")
     String exerciseDate;
 
     @ApiModelProperty(name="운동 횟수", example="5")
