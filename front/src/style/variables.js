@@ -71,7 +71,7 @@ export const Block = styled.div`
   max-width: 1200px;
   width: 70%;
   height: 100%;
-  background-color: ${blockColor};
+
   border-radius: 10px;
   @media ${device.TabletPortrait} {
     border-radius: 0px;

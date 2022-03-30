@@ -12,7 +12,7 @@ const initialState = {
     birthday: '',
   },
   nutritionHistoryList: [],
-
+  weightHistoryList: [],
   mymenu: 1, // 1. 나의 팬미팅 2. 추억 보관함
   meetingDetailState: false, // 이미지 상세보기 modal 버튼
   meetingRepositoryState: false, // 추억보관함 상세보기 modal 버튼
@@ -33,6 +33,14 @@ const initialState = {
   nutritionHistoryLoading: false, // 영양 성분
   nutritionHistoryDone: false,
   nutritionHistoryError: null,
+
+  weightHistoryLoading: false, // 운동 히스토리
+  weightHistoryDone: false,
+  weightHistoryError: null,
+
+  registerweightHistoryLoading: false, // 운동 히스토리
+  registerweightHistoryDone: false,
+  registerweightHistoryError: null,
 };
 
 export const MY_PAGE_REQUEST = 'MY_PAGE_REQUEST';
@@ -56,6 +64,14 @@ export const PASSWORD_CONFIRM_RESET = 'PASSWORD_CONFIRM_RESET';
 export const NUTRITION_HISTORY_REQUEST = 'NUTRITION_HISTORY_REQUEST';
 export const NUTRITION_HISTORY_SUCCESS = 'NUTRITION_HISTORY_SUCCESS';
 export const NUTRITION_HISTORY_FAILURE = 'NUTRITION_HISTORY_FAILURE';
+
+export const WEIGHT_HISTORY_REQUEST = 'WEIGHT_HISTORY_REQUEST';
+export const WEIGHT_HISTORY_SUCCESS = 'WEIGHT_HISTORY_SUCCESS';
+export const WEIGHT_HISTORY_FAILURE = 'WEIGHT_HISTORY_FAILURE';
+
+export const REGISTER_WEIGHT_HISTORY_REQUEST = 'REGISTER_WEIGHT_HISTORY_REQUEST';
+export const REGISTER_WEIGHT_HISTORY_SUCCESS = 'REGISTER_WEIGHT_HISTORY_SUCCESS';
+export const REGISTER_WEIGHT_HISTORY_FAILURE = 'REGISTER_WEIGHT_HISTORY_FAILURE';
 
 const SET_MEETING_DETAIL_STATE = 'SET_MEETING_DETAIL_STATE'; // 미팅 상세보기 MODAL창 활성화 action
 export const setMeetingDetailState = state => ({
@@ -176,6 +192,33 @@ const reducer = (state = initialState, action) =>
       case NUTRITION_HISTORY_FAILURE:
         draft.nutritionHistoryLoading = false;
         draft.nutritionHistoryError = action.error;
+        break;
+      case WEIGHT_HISTORY_REQUEST:
+        draft.weightHistoryLoading = true;
+        draft.weightHistoryDone = false;
+        draft.weightHistoryError = null;
+        break;
+      case WEIGHT_HISTORY_SUCCESS:
+        draft.weightHistoryLoading = false;
+        draft.weightHistoryDone = true;
+        draft.weightHistoryList = action.data;
+        break;
+      case WEIGHT_HISTORY_FAILURE:
+        draft.weightHistoryLoading = false;
+        draft.weightHistoryError = action.error;
+        break;
+      case REGISTER_WEIGHT_HISTORY_REQUEST:
+        draft.registerweightHistoryLoading = true;
+        draft.registerweightHistoryError = null;
+        draft.registerweightHistoryDone = false;
+        break;
+      case REGISTER_WEIGHT_HISTORY_SUCCESS:
+        draft.registerweightHistoryLoading = false;
+        draft.registerweightHistoryDone = true;
+        break;
+      case REGISTER_WEIGHT_HISTORY_FAILURE:
+        draft.registerweightHistoryLoading = false;
+        draft.registerweightHistoryError = action.error;
         break;
       default:
         break;

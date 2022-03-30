@@ -35,7 +35,7 @@ public class WeightHistoryServiceImpl implements WeightHistoryService {
 
 		User user = new User();
 
-		LocalDate createAt = weightHistoryrRegisterReq.getCreatedAt();
+		LocalDate createAt = LocalDate.parse(weightHistoryrRegisterReq.getCreatedAt(), DateTimeFormatter.ISO_DATE);
 		String userId = weightHistoryrRegisterReq.getUserId();
 		int weight = weightHistoryrRegisterReq.getWeight();
 		int count = weightHistoryRepository.findByWeightHistoryCount(userId,createAt);

@@ -34,7 +34,7 @@ export default function Nutrition() {
     const dispatch = useDispatch();
     const { nutritionHistoryList } = useSelector(state => state.mypage);
     const { me } = useSelector(state => state.mypage);
-
+    console.log(nutritionHistoryList);
     const CarbohydrateList = [];
     const ProteinList = [];
     const FatList = [];
@@ -87,8 +87,8 @@ export default function Nutrition() {
         }
     }
 
-    console.log(totalCarbohydrate, totalProtein, totalFat);
-    console.log(">>>>>>>>>>>>>> user age : ", age);
+    // console.log(totalCarbohydrate, totalProtein, totalFat);
+    // console.log(">>>>>>>>>>>>>> user age : ", age);
 
     var bmr = 0;
     // 유저 기초대사량 구하기 (Mifflin-St Jeor Equation)
