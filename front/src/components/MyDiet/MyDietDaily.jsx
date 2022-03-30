@@ -55,8 +55,8 @@ export default function MyDietDaily() {
   const [open, setOpen] = useState(false);
   const [shareDescription, setShareDescription] = useState("");
   const handleOpen = (diaryNo) => {
+    // 공유 여부 체크
     setOpen(true);
-    // clickShareBtn(diaryNo);
   };
   const handleClose = () => setOpen(false);
 

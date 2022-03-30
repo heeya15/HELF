@@ -68,9 +68,14 @@ export default function Nutrition() {
     const year = now.getFullYear(); // 연도
     const month = now.getMonth();   // 월
     const day = now.getDate();      // 일
-    const userYear = me.birthday.substring(0, 4);
-    const userMonth = me.birthday.substring(5, 7);
-    const userDay = me.birthday.substring(9, 10);
+    var userYear = '';
+    var userMonth = '';
+    var userDay = '';
+    if(me.birthday !== null) {
+        userYear = me.birthday.substring(0, 4);
+        userMonth = me.birthday.substring(5, 7);
+        userDay = me.birthday.substring(9, 10);
+    }
 
     var age = 0;
 
