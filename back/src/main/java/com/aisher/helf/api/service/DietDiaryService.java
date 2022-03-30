@@ -33,6 +33,8 @@ public interface DietDiaryService {
     DietDiaryFindRes updateDietDiary(DietDiary dietDiary, DietDiaryRegisterReq dietDiaryRegisterReq, MultipartFile imagePath) throws Exception;
     /** 식단 일지 정보를 삭제하는 deleteDietDiary 입니다. **/
     void deleteDietDiary(DietDiary dietDiary);
+    /** 공유 시 또는 공유 해제 시, 해당 식단 일지 공유 상태 변경 **/
+    void updateDiaryShareStatus(int diaryNo);
     /** 음식을 인식하는 foodSegmentation **/
     DetectedObjects foodSegmentation(MultipartFile imagePath) throws IOException, ModelNotFoundException, MalformedModelException;
 
