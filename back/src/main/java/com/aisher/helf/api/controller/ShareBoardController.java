@@ -68,7 +68,7 @@ public class ShareBoardController {
             @ApiResponse(code = 404, message = "사용자 없음"),
             @ApiResponse(code = 500, message = "서버 오류")})
     @GetMapping("/findAll")
-    public ResponseEntity<Page<ShareBoardAllRes>> findAllShareBoard(@PageableDefault(page = 0, size =2, sort = "boardNo", direction = Sort.Direction.DESC) Pageable pageable, @ApiIgnore Authentication authentication){
+    public ResponseEntity<Page<ShareBoardAllRes>> findAllShareBoard(@PageableDefault(page = 0, size =8, sort = "boardNo", direction = Sort.Direction.DESC) Pageable pageable, @ApiIgnore Authentication authentication){
         UserDetails userDetails = (UserDetails) authentication.getDetails();
         String userId = userDetails.getUsername();
 
