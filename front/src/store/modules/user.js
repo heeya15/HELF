@@ -25,6 +25,9 @@ const initialState = {
   findPwLoading: false, // 비밀번호 시도중
   findPwDone: false,
   findPwError: null,
+  userAdditionalInfoLoading: false,   // 유저 추가 정보
+  userAdditionalInfoDone: false,
+  userAdditionalInfoError: null,
 };
 
 export const KAKAO_LOG_IN_REQUEST = 'KAKAO_LOG_IN_REQUEST';
@@ -68,6 +71,10 @@ export const ID_CHECK_RESET = 'ID_CHECK_RESET';
 export const FIND_PW_REQUEST = 'FIND_PW_REQUEST';
 export const FIND_PW_SUCCESS = 'FIND_PW_SUCCESS';
 export const FIND_PW_FAILURE = 'FIND_PW_FAILURE';
+
+export const USER_ADDITIONAL_INFO_REQUEST = 'USER_ADDITIONAL_INFO_REQUEST';
+export const USER_ADDITIONAL_INFO_SUCCESS = 'USER_ADDITIONAL_INFO_SUCCESS';
+export const USER_ADDITIONAL_INFO_FAILURE = 'USER_ADDITIONAL_INFO_FAILURE';
 
 export const SET_MENU = 'SET_MENU';
 
@@ -221,6 +228,19 @@ const reducer = (state = initialState, action) =>
       case FIND_PW_FAILURE:
         draft.findPwLoading = false;
         draft.findPwError = action.error;
+        break;
+      case USER_ADDITIONAL_INFO_REQUEST:
+        draft.userAdditionalInfoLoading = true;
+        draft.userAdditionalInfoDone = false;
+        draft.userAdditionalInfoError = null;
+        break;
+      case USER_ADDITIONAL_INFO_SUCCESS:
+        draft.userAdditionalInfoLoading = false;
+        draft.userAdditionalInfoDone = true;
+        break;
+      case USER_ADDITIONAL_INFO_FAILURE:
+        draft.userAdditionalInfoLoading = false;
+        draft.userAdditionalInfoError = action.error;
         break;
       case SET_MENU:
         draft.menu = action.data;

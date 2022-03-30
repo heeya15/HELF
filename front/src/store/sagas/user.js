@@ -12,6 +12,7 @@ import {
   IdCheckAPI,
   ResetPasswordAPI,
   SignUpAPI,
+  AdditionalUserInfoAPI,
 } from '../apis/user';
 import {
   KakaoLoginAPI,
@@ -49,6 +50,9 @@ import {
   EMAIL_CHECK_REQUEST,
   EMAIL_CHECK_FAILURE,
   EMAIL_CHECK_SUCCESS,
+  USER_ADDITIONAL_INFO_REQUEST,
+  USER_ADDITIONAL_INFO_SUCCESS,
+  USER_ADDITIONAL_INFO_FAILURE,
 } from '../modules/user';
 
 import { MY_PAGE_REQUEST } from '../modules/myPage';
@@ -157,7 +161,8 @@ function* loadKakaoSignUp(action) {
     console.log(result_info);
     yield put({ type: KAKAO_LOG_IN_SUCCESS, data: result_info }); // action dispatch
     sessionStorage.setItem('jwt', result_info.data.accessToken); // userToken 세션스토리지 저장
-    
+    yield put({ type: MY_PAGE_REQUEST, data: result.data.accessToken }); // mypage 정보 바로 조회
+
     swal('카카오 로그인 성공', '  ', 'success', {
       buttons: false,
       timer: 1800,
@@ -277,6 +282,34 @@ function* watchLoadFindPw() {
   yield takeLatest(FIND_PW_REQUEST, loadFindPw);
 }
 
+function* loadAdditionalUserInfo(action) {
+  try {
+    const result = yield call(AdditionalUserInfoAPI, action.data);
+    yield put({ type: USER_ADDITIONAL_INFO_SUCCESS, data: result});
+    swal(
+      '추가 정보 등록 완료!',
+      '서비스를 이용해보세요 :)',
+      'success',
+      {
+        timer: 1500,
+      }
+    );
+  } catch (err) {
+    swal(
+      '추가 정보 등록 중 오류 발생',
+      'error',
+      {
+        timer: 1500,
+      }
+    );
+    yield put({ type: USER_ADDITIONAL_INFO_FAILURE });
+  }
+}
+
+function* watchLoadAdditionalUserInfo() {
+  yield takeLatest(USER_ADDITIONAL_INFO_REQUEST, loadAdditionalUserInfo);
+}
+
 export default function* UserSaga() {
   yield all([
     fork(watchKakaoLoadSignUp),
@@ -289,5 +322,6 @@ export default function* UserSaga() {
     fork(watchLoadEmailCheck),
     fork(watchLoadIdCheck),
     fork(watchResetIdCheck),
+    fork(watchLoadAdditionalUserInfo),
   ]);
 }

@@ -54,3 +54,25 @@ export async function ResetPasswordAPI({ email, name, id }) {
   });
   return result;
 }
+
+// 추가 정보 입력
+export async function AdditionalUserInfoAPI({
+  birthday,
+  gender,
+  height,
+  weight,
+}) {
+  console.log(">>>>>>>>>>>> api : ", birthday, gender, height, weight);
+  const result = await axios.post(`${BASE_URL}user/register/AdditionalInfo`, {
+    birthday: birthday,
+    gender: gender,
+    height: height,
+    weight, weight,
+  },
+  {
+    headers: {
+      Authorization: 'Bearer ' + sessionStorage.getItem('jwt')
+    },
+  });
+  return result.data;
+}

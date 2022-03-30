@@ -86,10 +86,35 @@ const LoginContentRow = styled.div`
   }
 `;
 
+const StepperWrapper = styled.div`
+  width: 60%;
+  margin: 50px auto;
+`;
+
+const StepTitle = styled.div`
+  font-size: 30px;
+  font-weight: bold;
+  margin: 40px 0px;
+  color: #225424;
+`;
+
+const InputWrapper = styled.div`
+  width: 40%; 
+  margin: 50px auto;
+`;
+
+const Message = styled.span`
+  color: #e02828;
+`;
+
 export {
   LoginContentRow,
   LoginHeader,
   LoginContent,
   LoginBlock,
   LoginSignupBlock,
+  StepperWrapper,
+  InputWrapper,
+  StepTitle,
+  Message,
 };
