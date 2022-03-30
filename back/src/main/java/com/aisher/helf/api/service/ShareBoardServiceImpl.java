@@ -20,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+
 @Service("shareboardService")
 public class ShareBoardServiceImpl implements ShareBoardService {
     @Autowired
@@ -45,8 +46,7 @@ public class ShareBoardServiceImpl implements ShareBoardService {
         return shareBoard;
     }
 
-    /** 공유 게시글 하나의 정보를 가져오는(상세보기) findByBoardId 입니다.
-     * @return*/
+    /** 공유 게시글 하나의 정보를 가져오는(상세보기) findByBoardId 입니다. **/
     @Override
     public List<ShareBoardFindRes> findByShareBoardId(Long boardNo) {
         shareboardRepository.updateView(boardNo); // 상세 게시글 클릭시 조회수 1 증가.
@@ -59,6 +59,11 @@ public class ShareBoardServiceImpl implements ShareBoardService {
     public Page<ShareBoard> findAllShareBoard(Pageable pageable) {
         Page<ShareBoard> shareBoards = shareBoardRepositorySupport.findAllShareBoard(pageable);
         return shareBoards;
+    }
+
+    @Override
+    public void deleteShareBoard(Long boardNo) {
+        shareboardRepository.deleteById(boardNo);
     }
 
     @Override
