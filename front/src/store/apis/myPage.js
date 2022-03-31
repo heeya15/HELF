@@ -103,7 +103,7 @@ export async function SelectWeightHistoryRegisterAPI({ createdAt, weight }) {
     console.log("몸무게 히스토리 등록 시 뭐가 찍히는지 확인하자");
     console.log(createdAt);
     console.log(weight);
-    const result = await axios.post(`${LOCAL_URL}weight/history/select/register/weight`,
+    const result = await axios.post(`${BASE_URL}weight/history/select/register/weight`,
         { 
             createdAt: createdAt,
             weight: weight
