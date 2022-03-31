@@ -15,7 +15,6 @@ import {
   AdditionalUserInfoAPI,
 } from '../apis/user';
 import {
-  KakaoLoginAPI,
   getUserInfoAPI
 } from '../apis/kakaoUser';
 import {
@@ -94,23 +93,24 @@ var isSignUp = false;
 var data = {};
 function* kakaoloadLogin(action) {
   try { // 함수안에 yield 객체만 사용 가능.
-    yield call(KakaoLoginAPI); // 해당 동기 함수 호출
     console.log("카카오 로그인");
     const result = Kakao.Auth.getAccessToken();
-   
-    const res = yield call(getUserInfoAPI); // 해당 동기 함수 호출
-    const id = res.kakao_account.email.split('@');
+    console.log(result);
+    if (result !== null) {
+      const res = yield call(getUserInfoAPI); // 해당 동기 함수 호출
+      const id = res.kakao_account.email.split('@');
 
-    data= {
-      id: id[0], 
-      password: res.kakao_account.email, 
-      name: res.properties.nickname,
-      email: res.kakao_account.email,
+      data= {
+        id: id[0], 
+        password: res.kakao_account.email, 
+        name: res.properties.nickname,
+        email: res.kakao_account.email,
+      }
+    
+      yield put({ type: KAKAO_ID_CHECK_REQUEST, id:id[0] }); // id check 여부
+      console.log(data);
     }
-  
-    yield put({ type: KAKAO_ID_CHECK_REQUEST, id:id[0] }); // id check 여부
-    console.log(data);
-
+    
     } catch (err) {
     yield put({ type: KAKAO_LOG_IN_FAILURE });
   }

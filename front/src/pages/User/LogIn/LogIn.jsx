@@ -36,6 +36,8 @@ import kakaoimage from '../../../img/kakao_login_medium_narrow.png';
 const theme = createTheme();
 
 export default function LogIn() {
+  const CLIENT_ID = "596cd5eb9b29a6f68439ecb9a70599cf";
+  const REDIRECT_URI =  "http://localhost:3000/login";
   const dispatch = useDispatch(); // 해당 store에 함수에 해당하는 인자로 요청 가능.
   const { logInDone,kakaologInDone } = useSelector((state) => state.user);
   const { me } = useSelector(state => state.mypage);
@@ -90,17 +92,26 @@ export default function LogIn() {
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
-  
+  const { Kakao } = window;
+  const [ac, setAc] = useState('');
   const onSocialLogin = () => {
-    dispatch({
-      type: KAKAO_LOG_IN_REQUEST
-    });
+    Kakao.Auth.login({ // 카카오 로그인 화면 팝업으로 띄우고
+      success: function (authObj) { 
+        setAc(authObj.access_token);
+        let socialAC = `Bearer ${ac}`;
+        // console.log("hi");
+        // console.log(socialAC);
+        Kakao.Auth.setAccessToken(authObj.access_token);
+        dispatch({
+          type: KAKAO_LOG_IN_REQUEST
+        });
+      },
+      fail: function(err) {
+      },
+    })
+   
   };
 
-  // const kakaoLogoutHandler = () => {
-  //     dispatch(kakaoLogout(kakaoAT, localAT))
-  // };
-  
   useEffect(() => {
     if (logInDone || kakaologInDone) {
       if(me.weight === 0 && me.height === 0 && me.birthday === null) {
