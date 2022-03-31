@@ -1,0 +1,29 @@
+.detailBox {
+  
+  border-color: black;
+  border: solid;
+  margin: 5rem;
+  display: flex;
+  flex-direction: row;
+}
+.bigBox {
+  justify-content: center;
+  display: flex;
+  flex-direction: row;
+}
+
+.nutBox {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  border: 1px solid #444444;
+  border-collapse: collapse;
+
+}
+.commentBox {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+}
+
