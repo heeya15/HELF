@@ -1,27 +1,37 @@
-import React, { useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { MyPageContent, MyPageHeader, MyPageWrapper } from "./MyPage.style";
+import React from "react";
+import { MyPageContent, MyPageHeader } from "./MyPage.style";
 import { Block, Layout, Wrapper } from "../../style/variables";
 import MyPageProfile from "../../components/MyPage/MyPageProfile";
 import Nutrition from "../../components/MyPage/Statistics/Nutrition";
-import WeightHistory from '../../components/MyPage/Statistics/WeightHistory';
+import WeightHistory from "../../components/MyPage/Statistics/WeightHistory";
 import ExerciseHistory from "../../components/MyPage/Statistics/ExerciseHistory";
+import { Row, Col } from "react-bootstrap";
 
 export default function MyPage() {
   return (
     <Layout>
       <Wrapper>
         <Block>
-          <MyPageWrapper>
-            <MyPageHeader>
-              <MyPageProfile />
-            </MyPageHeader>
-            <MyPageContent>
-              <WeightHistory></WeightHistory> 
-              <Nutrition></Nutrition>
-              <ExerciseHistory></ExerciseHistory>
-            </MyPageContent>
-          </MyPageWrapper>
+          <MyPageHeader>
+            <MyPageProfile />
+          </MyPageHeader>
+          <MyPageContent>
+            <hr />
+            <Row>
+              <Col>
+                <WeightHistory></WeightHistory>
+              </Col>
+              <Col>
+                <Nutrition></Nutrition>
+              </Col>
+            </Row>
+            <hr />
+            <Row>
+              <Col>
+                <ExerciseHistory></ExerciseHistory>
+              </Col>
+            </Row>
+          </MyPageContent>
         </Block>
       </Wrapper>
     </Layout>

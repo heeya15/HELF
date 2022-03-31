@@ -5,20 +5,19 @@ const ReactTooltipStyled = styled(ReactTooltip)`
   &.place-right {
     background-color: white;
     color: black;
-    font-size: 8px;
+    font-size: 10px;
   }
 `;
 
 const ExerciseHistoryTotal = styled.div`
-  text-align: left;
-  margin-top: 10%;
+  margin-top: 5%;
   .line {
     display: block;
     font-size: 0;
   }
   .cell {
-    height: 10px;
-    width: 10px;
+    height: 15px;
+    width: 15px;
     border-radius: 2px;
     margin: 1px;
     font-size: 10px;
@@ -26,7 +25,8 @@ const ExerciseHistoryTotal = styled.div`
   }
   .months {
     font-size: 10px;
-    width: 620px;
+    width: 900px;
+    margin-right: 4%;
   }
   .fill-0 {
     background-color: #ebedf0;
