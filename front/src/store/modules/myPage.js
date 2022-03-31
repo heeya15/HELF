@@ -21,9 +21,11 @@ const initialState = {
   myPageLoading: false, // 마이페이지 정보
   myPageDone: false,
   myPageError: false,
+
   updateUserInfoLoading: false, // 회원수정
   updateUserInfoDone: false,
   updateUserInfoError: false,
+
   deleteUserInfoLoading: false, // 회원탈퇴
   deleteUserInfoDone: false,
   deleteUserInfoError: false,
@@ -34,13 +36,21 @@ const initialState = {
   nutritionHistoryDone: false,
   nutritionHistoryError: null,
 
-  weightHistoryLoading: false, // 운동 히스토리
+  weightHistoryLoading: false, // 몸무게 히스토리 읽기
   weightHistoryDone: false,
   weightHistoryError: null,
 
-  registerweightHistoryLoading: false, // 운동 히스토리
+  updateWeightHistoryInfoLoading: false, // 몸무게 히스토리 수정
+  updateWeightHistoryInfoDone: false,
+  updateWeightHistoryInfoError: false,
+
+  registerweightHistoryLoading: false, // 몸무게 히스토리 등록 히스토리
   registerweightHistoryDone: false,
   registerweightHistoryError: null,
+
+  deleteWeightHistoryInfoLoading: false, // 몸무게 히스토리 삭제
+  deleteWeightHistoryInfoDone: false,
+  deleteWeightHistoryInfoError: false,
 };
 
 export const MY_PAGE_REQUEST = 'MY_PAGE_REQUEST';
@@ -72,6 +82,16 @@ export const WEIGHT_HISTORY_FAILURE = 'WEIGHT_HISTORY_FAILURE';
 export const REGISTER_WEIGHT_HISTORY_REQUEST = 'REGISTER_WEIGHT_HISTORY_REQUEST';
 export const REGISTER_WEIGHT_HISTORY_SUCCESS = 'REGISTER_WEIGHT_HISTORY_SUCCESS';
 export const REGISTER_WEIGHT_HISTORY_FAILURE = 'REGISTER_WEIGHT_HISTORY_FAILURE';
+
+export const UPDATE_WEIGHT_HISTORY_REQUEST = 'UPDATE_WEIGHT_HISTORY_REQUEST';
+export const UPDATE_WEIGHT_HISTORY_SUCCESS = 'UPDATE_WEIGHT_HISTORY_SUCCESS';
+export const UPDATE_WEIGHT_HISTORY_FAILURE = 'UPDATE_WEIGHT_HISTORY_FAILURE';
+export const UPDATE_WEIGHT_HISTORY_RESET = 'UPDATE_WEIGHT_HISTORY_RESET';
+
+export const DELETE_WEIGHT_HISTORY_REQUEST = 'DELETE_WEIGHT_HISTORY_REQUEST';
+export const DELETE_WEIGHT_HISTORY_SUCCESS = 'DELETE_WEIGHT_HISTORY_SUCCESS';
+export const DELETE_WEIGHT_HISTORY_FAILURE = 'DELETE_WEIGHT_HISTORY_FAILURE';
+export const DELETE_WEIGHT_HISTORY_RESET = 'DELETE_WEIGHT_HISTORY_RESET';
 
 const SET_MEETING_DETAIL_STATE = 'SET_MEETING_DETAIL_STATE'; // 미팅 상세보기 MODAL창 활성화 action
 export const setMeetingDetailState = state => ({
@@ -219,6 +239,44 @@ const reducer = (state = initialState, action) =>
       case REGISTER_WEIGHT_HISTORY_FAILURE:
         draft.registerweightHistoryLoading = false;
         draft.registerweightHistoryError = action.error;
+        break;
+      
+      case UPDATE_WEIGHT_HISTORY_REQUEST :
+        draft.updateWeightHistoryInfoLoading = true;
+        draft.updateWeightHistoryInfoErrorr = null;
+        draft.updateWeightHistoryInfoDone = false;
+        break;
+      case UPDATE_WEIGHT_HISTORY_SUCCESS :
+        draft.updateWeightHistoryInfoLoading = false;
+        draft.updateWeightHistoryInfoDone = true;
+        break;
+      case UPDATE_WEIGHT_HISTORY_FAILURE :
+        draft.updateWeightHistoryInfoLoading = false;
+        draft.updateWeightHistoryInfoError = action.error;
+        break;
+      case UPDATE_WEIGHT_HISTORY_RESET :
+        draft.updateWeightHistoryInfoLoading = false;
+        draft.updateWeightHistoryInfoErrorr = null;
+        draft.updateWeightHistoryInfoDone = false;
+        break;
+      
+      case DELETE_WEIGHT_HISTORY_REQUEST :
+        draft.deleteWeightHistoryInfoLoading = true;
+        draft.deleteWeightHistoryInfoError = null;
+        draft.deleteWeightHistoryInfoDone = false;
+        break;
+      case DELETE_WEIGHT_HISTORY_SUCCESS :
+        draft.deleteWeightHistoryInfoLoading = false;
+        draft.deleteWeightHistoryInfoDone = true;
+        break;
+      case DELETE_WEIGHT_HISTORY_FAILURE :
+        draft.deleteWeightHistoryInfoLoading = false;
+        draft.deleteWeightHistoryInfoError = action.error;
+        break;
+      case DELETE_WEIGHT_HISTORY_RESET :
+        draft.deleteWeightHistoryInfoLoading = false;
+        draft.deleteWeightHistoryInfoError = null;
+        draft.deleteWeightHistoryInfoDone = false;
         break;
       default:
         break;

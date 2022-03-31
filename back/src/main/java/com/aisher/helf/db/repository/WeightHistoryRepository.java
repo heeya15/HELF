@@ -37,4 +37,12 @@ public interface WeightHistoryRepository extends JpaRepository<WeightHistory, Lo
              "order by h.created_at asc;"
             , nativeQuery = true)
     List<WeightHistoryTenRecordRes> findByTenWeightHistory(@Param("user_id") String user_id);
+
+    @Query(value="select *\n" +
+            "from weight_history\n" +
+            "where user_id = :user_id\n" +
+            "order by created_at desc\n" +
+            "limit 1;"
+            , nativeQuery = true)
+    WeightHistory findByTopWeightHistory(@Param("user_id") String user_id);
 }

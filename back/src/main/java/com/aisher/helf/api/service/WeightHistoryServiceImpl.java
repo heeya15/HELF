@@ -23,6 +23,8 @@ import java.util.Optional;
  */
 @Service("weightHistoryService")
 public class WeightHistoryServiceImpl implements WeightHistoryService {
+	@Autowired
+	UserRepositorySupport userRepositorySupport;
 
 	@Autowired
 	WeightHistoryRepository weightHistoryRepository;
@@ -77,8 +79,25 @@ public class WeightHistoryServiceImpl implements WeightHistoryService {
 	@Override
 	@Transactional
 	public boolean deleteByWeightHistory(WeightHistory weightHistory) {
-		weightHistoryRepository.delete(weightHistory);
-		return true;
+		// 현재 날짜 구하기 (시스템 시계, 시스템 타임존)
+		LocalDate now = LocalDate.now();
+		System.out.println("오늘 날짜 "+ now);
+		System.out.println(weightHistory.getWeightHistoryId().getCreatedAt());
+		if(weightHistory.getWeightHistoryId().getCreatedAt().equals(now)){ // 현재 날짜를 삭제하려 한다면
+			System.out.println("오늘 날짜 삭제하는경우 ");
+			String userId = weightHistory.getWeightHistoryId().getUserId().getUserId();
+			System.out.println("내아뒤는"+userId);
+			weightHistoryRepository.delete(weightHistory); // 먼저 해당 정보를 삭제하고
+			// 해당 유저 정보 찾고 가장 최근에 등록한 몸무게로 user 정보 몸무게 수정.
+			User user = userRepositorySupport.findUserByUserId(userId).get();
+			WeightHistory TopWeightHistory= weightHistoryRepository.findByTopWeightHistory(userId);
+			user.updateWeight(TopWeightHistory.getWeight());
+			return true;
+		}else {
+			System.out.println("오늘 날짜 삭제하는게 아닌경우");
+			weightHistoryRepository.delete(weightHistory);
+			return true;
+		}
 	}
 
 	@Override
