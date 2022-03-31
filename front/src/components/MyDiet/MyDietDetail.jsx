@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams, useHistory } from "react-router-dom";
 import {
+  setmyDietWeight,
   setMyDietDetailImagePath,
   setDietDetailMealTime,
   setDietDetailDiaryDate,
@@ -102,6 +103,8 @@ export default function MyDietDetail() {
   };
 
   const dietUpdateButton = () => {
+    console.log(myDietUpdate);
+    return;
     dispatch({
       type: MY_DIET_UPDATE_REQUEST,
       data: myDietUpdate,
@@ -174,6 +177,27 @@ export default function MyDietDetail() {
     );
   });
 
+  const { weights } = useSelector((state) => state.myDiet);
+  const WeightSelect = weights.map((weight, index) => {
+    return (
+      <option key={index} value={weight}>
+        {weight}g
+      </option>
+    );
+  });
+
+  const onWeightHandler = (e) => {
+    const pair = {
+      index: e.target.getAttribute("data-index"),
+      weight: e.target.value,
+    };
+    dispatch(setmyDietWeight(pair));
+  };
+
+  useEffect(() => {
+    dispatch(setDietDetailDietRegisterReqList(foodName));
+  }, [foodName]);
+
   return (
     <div>
       <Container>
@@ -200,7 +224,34 @@ export default function MyDietDetail() {
               {dietUpdate ? (
                 <RegisterReq>
                   <Titles>Food</Titles>
-                  {FoodList}
+                  <div
+                    style={{
+                      fontSize: "12px",
+                      color: "grey",
+                    }}
+                  >
+                    음식별 무게를 선택해주세요.
+                  </div>
+                  <div>
+                    {foodName.map((food, index) => (
+                      <div key={index}>
+                        {food.name}{" "}
+                        <select
+                          data-index={index}
+                          style={{
+                            marginTop: "1%",
+                            borderRadius: "4px",
+                            outline: "0 none",
+                            overBackgroundColor: "black",
+                            cursor: "pointer",
+                          }}
+                          onChange={onWeightHandler}
+                        >
+                          {WeightSelect}
+                        </select>
+                      </div>
+                    ))}
+                  </div>
                   <Titles>Meal Type</Titles>
                   <MealTypeButton style={{ display: "flex" }}>
                     {mealType.map((meal, index) => (
