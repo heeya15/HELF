@@ -64,6 +64,7 @@ export default function ExerciseHistory() {
 
   return (
     <ExerciseHistoryTotal>
+      <h5>운동 통계</h5>
       <div
         style={{
           display: "flex",
