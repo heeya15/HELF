@@ -3,6 +3,7 @@ package com.aisher.helf.api.controller;
 import com.aisher.helf.api.request.UserAdditionalInfoRegisterReq;
 import com.aisher.helf.api.request.UserRegisterReq;
 import com.aisher.helf.api.request.UserUpdateReq;
+import com.aisher.helf.api.response.UserLikeListRes;
 import com.aisher.helf.api.response.UserRes;
 import com.aisher.helf.api.service.UserService;
 import com.aisher.helf.common.auth.UserDetails;
@@ -19,6 +20,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 
 /**
@@ -194,5 +196,23 @@ public class UserController {
 		System.out.println("추가 정보 등록 성공");
 
 		return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
+	}
+
+	// 찜 목록 조회
+	@GetMapping("/likeList")
+	@ApiOperation(value = "찜 목록 조회(token)", notes = "마이 페이지에 표현할 <strong>찜 목록을 조회</strong> 한다.")
+	@ApiResponses({
+			@ApiResponse(code = 200, message = "성공"),
+			@ApiResponse(code = 401, message = "인증 실패"),
+			@ApiResponse(code = 404, message = "사용자 없음"),
+			@ApiResponse(code = 500, message = "서버 오류")
+	})
+	public ResponseEntity<List<UserLikeListRes>> findLikeListByUserId(
+			@ApiIgnore Authentication authentication
+	) {
+		UserDetails userDetails = (UserDetails) authentication.getDetails();
+		String userId = userDetails.getUsername();
+		List<UserLikeListRes> userLikeListResList = userService.findLikeListByUserId(userId);
+		return new ResponseEntity<List<UserLikeListRes>>(userLikeListResList, HttpStatus.OK);
 	}
 }
