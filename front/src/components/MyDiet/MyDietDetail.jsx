@@ -103,8 +103,6 @@ export default function MyDietDetail() {
   };
 
   const dietUpdateButton = () => {
-    console.log(myDietUpdate);
-    return;
     dispatch({
       type: MY_DIET_UPDATE_REQUEST,
       data: myDietUpdate,
