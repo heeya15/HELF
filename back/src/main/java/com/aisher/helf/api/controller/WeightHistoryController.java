@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 import com.aisher.helf.api.request.UserRegisterReq;
+import com.aisher.helf.api.request.UserUpdateReq;
 import com.aisher.helf.api.request.WeightHistoryrRegisterReq;
 import com.aisher.helf.api.response.WeightHistoryTenRecordRes;
 import com.aisher.helf.api.service.WeightHistoryService;
@@ -65,6 +66,27 @@ public class WeightHistoryController {
 
 		return new ResponseEntity<WeightHistory>(UserWeightHistory,HttpStatus.OK);
 	}
+	// 몸무게 history에 등록된 날짜와 몸무게를 입력하여 해당 몸무게 history 날짜의 몸무게를 수정.
+	@ApiOperation(value = "몸무게 history에 등록된 날짜와 몸무게를 입력하여 해당 몸무게 history 날짜의 몸무게를 수정(token)", notes = "해당 몸무게 history 정보 수정")
+	@PutMapping("/update")
+	public ResponseEntity<String> updateUser(
+					@ApiIgnore Authentication authentication,
+					@RequestBody @ApiParam(value="daily 몸무게 정보", required = true) WeightHistoryrRegisterReq registerInfo) throws Exception
+	{
+		UserDetails userDetails = (UserDetails)authentication.getDetails();
+		String userId = userDetails.getUsername();
+		registerInfo.setUserId(userId);
+		WeightHistory UserWeightHistory;
+		try {
+			LocalDate date = LocalDate.parse(registerInfo.getCreatedAt(), DateTimeFormatter.ISO_DATE);
+			UserWeightHistory = weighthistoryService.getUserByUserWeightHistory(userId,date );
+		}catch(NoSuchElementException E) {
+			return  ResponseEntity.status(500).body("해당 WeightHistory 정보가 없어서 정보 수정 실패");
+		}
+		weighthistoryService.updateWeightHistory(registerInfo);
+		System.out.println("해당 WeightHistory 정보 수정 성공");
+		return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+	}
 
 	@ApiOperation(value = "daily 몸무게 히스토리 정보 삭제(token)", notes = "daily 몸무게 히스토리 정보 삭제")
 	@ApiResponses({ @ApiResponse(code = 200, message = "성공"),
@@ -84,7 +106,7 @@ public class WeightHistoryController {
 			result = weighthistoryService.deleteByWeightHistory(weightHistory);
 		}catch(NoSuchElementException E) {
 			logger.debug("daily 몸무게 히스토리 정보 삭제 실패");
-			return  ResponseEntity.status(500).body("해당 정보 없어서 daily 몸무게 히스토리 정보 삭제 실패");
+			return  ResponseEntity.status(500).body("해당 WeightHistory 정보 없어서 daily 몸무게 히스토리 정보 삭제 실패");
 		}
 		logger.debug("daily 몸무게 히스토리 정보 삭제 성공");
 		return ResponseEntity.status(200).body("daily 몸무게 히스토리 정보 삭제 성공");
