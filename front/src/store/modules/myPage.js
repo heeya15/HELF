@@ -1,4 +1,3 @@
-import { ConstructionOutlined } from '@mui/icons-material';
 import produce from 'immer';
 const initialState = {
   me: {
@@ -13,10 +12,6 @@ const initialState = {
   },
   nutritionHistoryList: [],
   weightHistoryList: [],
-  mymenu: 1, // 1. 나의 팬미팅 2. 추억 보관함
-  meetingDetailState: false, // 이미지 상세보기 modal 버튼
-  meetingRepositoryState: false, // 추억보관함 상세보기 modal 버튼
-  nowId: 0, // 마이페이지 현재 선택 포스터 아이디
 
   myPageLoading: false, // 마이페이지 정보
   myPageDone: false,
@@ -29,9 +24,11 @@ const initialState = {
   deleteUserInfoLoading: false, // 회원탈퇴
   deleteUserInfoDone: false,
   deleteUserInfoError: false,
+
   passwordConfirmLoading: false, // 비밀번호 확인
   passwordConfirmDone: false,
   passwordConfirmError: false,
+  
   nutritionHistoryLoading: false, // 영양 성분
   nutritionHistoryDone: false,
   nutritionHistoryError: null,
@@ -93,23 +90,6 @@ export const DELETE_WEIGHT_HISTORY_SUCCESS = 'DELETE_WEIGHT_HISTORY_SUCCESS';
 export const DELETE_WEIGHT_HISTORY_FAILURE = 'DELETE_WEIGHT_HISTORY_FAILURE';
 export const DELETE_WEIGHT_HISTORY_RESET = 'DELETE_WEIGHT_HISTORY_RESET';
 
-const SET_MEETING_DETAIL_STATE = 'SET_MEETING_DETAIL_STATE'; // 미팅 상세보기 MODAL창 활성화 action
-export const setMeetingDetailState = state => ({
-  type: SET_MEETING_DETAIL_STATE,
-  state,
-});
-
-const SET_MEETING_REPOSITORY_STATE = 'SET_MEETING_REPOSITORY_STATE'; // 추억보관함 MODAL창 활성화 action
-export const setMeetingRepositoryState = state => ({
-  type: SET_MEETING_REPOSITORY_STATE,
-  state,
-});
-
-export const SET_MYMENU = 'SET_MYMENU';
-
-const SET_NOW_ID = 'SET_NOW_ID';
-export const setNowId = nowId => ({ type: SET_NOW_ID, nowId });
-
 const reducer = (state = initialState, action) =>
   produce(state, draft => {
     switch (action.type) {
@@ -160,18 +140,6 @@ const reducer = (state = initialState, action) =>
       case DELETE_MEMBER_FAILURE:
         draft.deleteMemberLoading = false;
         draft.deleteMemberError = action.error;
-        break;
-      case SET_MYMENU:
-        draft.mymenu = action.data; // 마이페이지 메뉴 변경
-        break;
-      case SET_NOW_ID:
-        draft.nowId = action.nowId; // 현재 선택 포스터
-        break;
-      case SET_MEETING_DETAIL_STATE:
-        draft.meetingDetailState = action.state;
-        break;
-      case SET_MEETING_REPOSITORY_STATE:
-        draft.meetingRepositoryState = action.state;
         break;
       case PASSWORD_CONFIRM_REQUEST:
         draft.passwordConfirmLoading = true;

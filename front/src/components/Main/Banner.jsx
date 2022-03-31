@@ -4,6 +4,11 @@ import Button from './Button';
 import Typography from './Typography';
 import BannerLayout from './BannerLayout';
 import bannerImg from '../../assets/images/banner.jpg';
+import {
+    fontNormal, 
+    fontBold,
+    mainButton,
+} from './Main.style';
 
 
 export default function Banner() {
@@ -26,13 +31,14 @@ export default function Banner() {
                 }}
                 src={bannerImg}
                 alt="increase priority"/>
-            <Typography color="inherit" align="center" variant="h2" marked="center">
+            <Typography color="inherit" align="center" variant="h2" marked="center" style={fontBold}>
                 START HEALTHY LIFE
             </Typography>
             <Typography
                 color="inherit"
                 align="center"
                 variant="h5"
+                style={ fontNormal }
                 sx={{
                     mb: 4,
                     mt: {
@@ -46,7 +52,7 @@ export default function Banner() {
                 variant="contained"
                 size="large"
                 component="a"
-                style={{ backgroundColor: '#225424', color: '#fff' }}
+                style={ mainButton }
                 sx={{
                     minWidth: 200
                 }}
@@ -57,6 +63,7 @@ export default function Banner() {
             <Typography
                 variant="body2"
                 color="inherit"
+                style={ fontNormal }
                 sx={{
                     mt: 2
                 }}>

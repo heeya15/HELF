@@ -8,13 +8,11 @@ import productCurvyLines from '../../assets/images/productCurvyLines.png';
 import productValues1 from '../../assets/images/productValues1.svg';
 import productValues2 from '../../assets/images/productValues2.svg';
 import productValues3 from '../../assets/images/productValues3.svg';
-
-const item = {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    px: 5
-};
+import {
+    fontNormal, 
+    fontBold,
+    item,
+} from './Main.style';
 
 export default function Function() {
     return (
@@ -53,12 +51,13 @@ export default function Function() {
                                 }}/>
                             <Typography
                                 variant="h6"
+                                style={ fontBold }
                                 sx={{
                                     my: 5
                                 }}>
                                 The best luxury hotels
                             </Typography>
-                            <Typography variant="h5">
+                            <Typography variant="h5" style={ fontNormal }>
                                 {'From the latest trendy boutique hotel to the iconic palace with XXL pool'}
 
                                 {', go for a mini-vacation just a few subway stops away from your home.'}
@@ -76,12 +75,13 @@ export default function Function() {
                                 }}/>
                             <Typography
                                 variant="h6"
+                                style={ fontBold }
                                 sx={{
                                     my: 5
                                 }}>
                                 New experiences
                             </Typography>
-                            <Typography variant="h5">
+                            <Typography variant="h5" style={ fontNormal }>
                                 {'Privatize a pool, take a Japanese bath or wake up in 900m2 of garden… '}
 
                                 {'your Sundays will not be alike.'}
@@ -99,12 +99,13 @@ export default function Function() {
                                 }}/>
                             <Typography
                                 variant="h6"
+                                style={ fontBold }
                                 sx={{
                                     my: 5
                                 }}>
                                 Exclusive rates
                             </Typography>
-                            <Typography variant="h5">
+                            <Typography variant="h5" style={ fontNormal }>
                                 {'By registering, you will access specially negotiated rates '}
                                 {'that you will not find anywhere else.'}
                             </Typography>

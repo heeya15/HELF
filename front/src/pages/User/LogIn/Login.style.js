@@ -107,6 +107,41 @@ const Message = styled.span`
   color: #e02828;
 `;
 
+const LogInButton = styled.button`
+  margin-top: 20px;
+  width: 100%;
+  height: 40px;
+  border: none;
+  border-radius: 5px;
+  color: #fff;
+  background-color: #2E7D32;
+`;
+
+const SignUpLink = styled.div`
+  margin-top: 10px;
+  cursor: pointer;
+  color: 	#414a4c;
+  font-family: KOTRA_GOTHIC;
+`;
+
+const subFunction = {
+  cursor: 'pointer',
+  textDecoration: 'underline',
+}
+
+const kakaoButton = {
+  marginTop: '40px',
+  cursor: 'pointer',
+}
+
+const inputTextField = {
+  backgroundColor: '#fff',
+}
+
+const horizontalCenter = {
+  margin: '0 auto',
+}
+
 export {
   LoginContentRow,
   LoginHeader,
@@ -117,4 +152,10 @@ export {
   InputWrapper,
   StepTitle,
   Message,
+  LogInButton,
+  kakaoButton,
+  SignUpLink,
+  subFunction,
+  inputTextField,
+  horizontalCenter,
 };

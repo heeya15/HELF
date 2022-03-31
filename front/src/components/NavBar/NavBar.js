@@ -12,23 +12,14 @@ import {
   SET_MENU,
 } from '../../store/modules/user';
 import {
-  NavbarWrapper,
-  CenterMenu,
-  NavbarMain,
-  LeftMenu,
-  RightMenu,
   DrawerListRow,
-  NavbarSubBlock,
-  SubMenu,
-  MenuBlock,
 } from './Navbar.style';
 import { useSelector, useDispatch } from 'react-redux';
 import { MY_PAGE_REQUEST } from '../../store/modules/myPage';
 export default function NavBar() {
   const dispatch = useDispatch();
-  const { logInDone, menu, kakaologInDone } = useSelector(state => state.user);
-  const { me } = useSelector(state => state.mypage); // 0: 비로그인, 4: 스타, 3:사용자, 2: 관계자 ,1:관리자
-  const [open, setOpen] = useState(false);
+  const { logInDone, kakaologInDone } = useSelector(state => state.user);
+  const { me } = useSelector(state => state.mypage);
 
   useEffect(() => {
     // 만약 토큰이 남아 있다면 or 새로고침 되었을 때 동작하도록 해야함

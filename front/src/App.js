@@ -1,12 +1,10 @@
-import logo from "./logo.png";
 import "./App.css";
 import React from "react";
-import Button from "react-bootstrap/Button";
-import Card from "react-bootstrap/Card";
-import { Route, Link } from "react-router-dom";
+import { Route } from "react-router-dom";
 
 // 컴포넌트 추가
 import NavBar from "./components/NavBar/NavBar";
+// import Footer from "./components/Footer/Footer";
 import SharedBoard from "./components/SharedBoard/SharedBoard";
 import ShareDetail from "./components/ShardDetail/SharedDetail";
 import Main from "./pages/Main/Main";
@@ -29,7 +27,6 @@ import AdditionalUserInfo from "./pages/User/LogIn/AdditionalUserInfo";
 function App() {
   return (
     <div className="App">
-      {/* NavBar */}
       <NavBar />
       <Route exact path="/" component={Main} />
       <Route path="/sharedboard" component={SharedBoard} />
@@ -46,6 +43,13 @@ function App() {
       <Route exact path="/sharedetail/:index" component={ShareDetail} />
       <Route path="/exercisehistory" component={ExerciseHistory} />
       <Route path="/additionalUserInfo" component={AdditionalUserInfo}/>
+      <Route
+            path="/privacy-policy"
+            component={() => {
+              window.location.replace('https://example.com/1234');
+              return null;
+            }}
+          />
     </div>
   );
 }

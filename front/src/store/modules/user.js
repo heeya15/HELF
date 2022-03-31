@@ -46,7 +46,7 @@ export const KAKAO_ID_CHECK_REQUEST = 'KAKAO_ID_CHECK_REQUEST';
 export const KAKAO_ID_CHECK_SUCCESS = 'KAKAO_ID_CHECK_SUCCESS';
 export const KAKAO_ID_CHECK_FAILURE = 'KAKAO_ID_CHECK_FAILURE';
 export const KAKAO_ID_CHECK_RESET = 'KAKAO_ID_CHECK_RESET';
-////////////////////////////////////////
+
 export const LOG_IN_REQUEST = 'LOG_IN_REQUEST';
 export const LOG_IN_SUCCESS = 'LOG_IN_SUCCESS';
 export const LOG_IN_FAILURE = 'LOG_IN_FAILURE';
