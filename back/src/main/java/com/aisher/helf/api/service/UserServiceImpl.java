@@ -7,9 +7,12 @@ import com.aisher.helf.api.request.UserUpdateReq;
 import com.aisher.helf.api.response.UserLikeListRes;
 import com.aisher.helf.db.entity.LikeList;
 import com.aisher.helf.db.entity.User;
+import com.aisher.helf.db.entity.WeightHistory;
+import com.aisher.helf.db.entity.WeightHistoryId;
 import com.aisher.helf.db.repository.LikeListRepositorySupport;
 import com.aisher.helf.db.repository.UserRepository;
 import com.aisher.helf.db.repository.UserRepositorySupport;
+import com.aisher.helf.db.repository.WeightHistoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -37,7 +40,10 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	LikeListRepositorySupport likeListRepositorySupport;
-	
+
+	@Autowired
+	WeightHistoryRepository weightHistoryRepository;
+
 	@Override
 	public User registerUser(UserRegisterReq userRegisterInfo) {
 		User user = new User();
@@ -118,10 +124,23 @@ public class UserServiceImpl implements UserService {
 	public User registerAdditionalUserInfo(UserAdditionalInfoRegisterReq userAdditionalInfoRegisterReq, String userId) {
 		User user = userRepositorySupport.findUserByUserId(userId).get();
 		LocalDate birthday = LocalDate.parse(userAdditionalInfoRegisterReq.getBirthday(), DateTimeFormatter.ISO_DATE);
+		// 추가 사항 정보 업데이트해 주고
 		user.updateAdditionalUserInfo(userAdditionalInfoRegisterReq.getWeight(),
 				   					  userAdditionalInfoRegisterReq.getHeight(),
 				  					  userAdditionalInfoRegisterReq.isGender(),
 									  birthday);
+		// 현재 날짜 구하기 (시스템 시계, 시스템 타임존)
+		LocalDate now = LocalDate.now();
+
+		WeightHistory weightHistory = new WeightHistory();
+		WeightHistoryId weightHistoryId = new WeightHistoryId();
+		user.setUserId(userId);
+		weightHistoryId.setCreatedAt(now); // 등록일
+		weightHistoryId.setUserId(user); // 사용자 아이디 등록
+
+		weightHistory.setWeightHistoryId(weightHistoryId);
+		weightHistory.setWeight(userAdditionalInfoRegisterReq.getWeight()); // 몸무게
+		weightHistoryRepository.save(weightHistory);
 		return null;
 	}
 

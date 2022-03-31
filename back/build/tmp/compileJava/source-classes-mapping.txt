@@ -174,14 +174,14 @@ com/aisher/helf/db/entity/BaseEntity.java
  com.aisher.helf.db.entity.BaseEntity
 com/aisher/helf/api/request/UserFindPasswordReq.java
  com.aisher.helf.api.request.UserFindPasswordReq
-com/aisher/helf/api/request/ShareBoardLikeReq.java
- com.aisher.helf.api.request.ShareBoardLikeReq
 com/aisher/helf/db/repository/ExerciseHistoryRepositorySupport.java
  com.aisher.helf.db.repository.ExerciseHistoryRepositorySupport
 com/aisher/helf/GroupCallApplication.java
  com.aisher.helf.GroupCallApplication
 com/aisher/helf/common/exception/handler/NotFoundHandler.java
  com.aisher.helf.common.exception.handler.NotFoundHandler
+com/aisher/helf/api/response/UserLikeListRes.java
+ com.aisher.helf.api.response.UserLikeListRes
 com/aisher/helf/db/repository/DietRepository.java
  com.aisher.helf.db.repository.DietRepository
 com/aisher/helf/config/WebMvcConfig.java
