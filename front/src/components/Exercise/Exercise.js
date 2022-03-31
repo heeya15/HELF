@@ -1,6 +1,8 @@
-import * as tf from '@tensorflow/tfjs';
+// import * as tf from '@tensorflow/tfjs';
 import * as tmPose from '@teachablemachine/pose';
 import React, { Component }  from 'react';
+import './Exercise.css';
+import $ from 'jquery';
 
 export default function Exercise() {
   // squat
@@ -24,7 +26,7 @@ export default function Exercise() {
     maxPredictions = model.getTotalClasses();
 
     // Convenience function to setup a webcam
-    const size = 200;
+    const size = 400;
     const flip = true; // whether to flip the webcam
     webcam = new tmPose.Webcam(size, size, flip); // width, height, flip
     await webcam.setup(); // request access to the webcam
@@ -48,7 +50,7 @@ export default function Exercise() {
     await predict();
     window.requestAnimationFrame(loop);
   }
-
+  var progress = 327        
   var status = "wait"
   var count = 0
   var soundurl = ''
@@ -59,17 +61,22 @@ export default function Exercise() {
     const { pose, posenetOutput } = await model.estimatePose(webcam.canvas);
     // Prediction 2: run input through teachable machine classification model
     const prediction = await model.predict(posenetOutput);
-
     
     if (prediction[0].probability.toFixed(2) > 0.80) {
       if (status == "action") {
-        count ++
-        soundurl = count%10 + '.mp3' 
+        count++        
+        soundurl = count%10 + '.mp3'
         var audio = new Audio(soundurl)
         audio.play().catch(error => {
           console.log(error)
         });
         console.log(status, count, soundurl)
+        progress = progress-32.7
+        if(progress <= 0) {
+            progress = 327-32.7
+        }
+        $('.progress').css('stroke-dashoffset', progress);
+        $('#counter').html(count);
       }
       status = "wait"
     } else if (prediction[1].probability.toFixed(2) > 0.80) {
@@ -101,10 +108,26 @@ export default function Exercise() {
   return (
     <div>
       <h2>컴포넌트 입니다</h2>
-      <div>Teachable Machine Pose Model</div>
-      <button type="button" onClick={init}>Start</button>
-      <div><canvas id="canvas"></canvas></div>
-      <div id="label-container"></div>
+      <div class="frame">
+            <div class="center">
+                <div class="headline">
+                    <div class="small">Test</div>Counter
+                </div>
+                <div class="circle-big">
+                    <div class="text">
+                        <span id="counter">0</span><div class="small">개</div>
+                    </div>
+                    <svg>
+                        <circle class="bg" cx="57" cy="57" r="52" />
+                        <circle class="progress" cx="57" cy="57" r="52" />
+                    </svg>
+                </div>
+            </div>
+        </div>
+        <h1>인공지능(AI) Fitness Trainer</h1>
+        <button class="btn btn-primary"type="button" onclick={init()}>Start</button>
+        <div><canvas id="canvas"></canvas></div>
+        <div id="label-container"></div>
     </div>
   ); 
 }
