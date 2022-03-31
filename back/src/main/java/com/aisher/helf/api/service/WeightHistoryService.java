@@ -15,4 +15,6 @@ public interface WeightHistoryService {
     boolean deleteByWeightHistory(WeightHistory user);
 
     List<WeightHistoryTenRecordRes> getTenWeightHistory(String userId);
+
+    void updateWeightHistory(WeightHistoryrRegisterReq registerInfo);
 }

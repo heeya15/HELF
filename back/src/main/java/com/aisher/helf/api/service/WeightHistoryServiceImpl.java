@@ -58,6 +58,15 @@ public class WeightHistoryServiceImpl implements WeightHistoryService {
 		return weightHistory;
 	}
 
+	@Transactional
+	@Override
+	public void updateWeightHistory(WeightHistoryrRegisterReq registerInfo) {
+		LocalDate createAt = LocalDate.parse(registerInfo.getCreatedAt(), DateTimeFormatter.ISO_DATE);
+		String userId = registerInfo.getUserId();
+		WeightHistory weightHistory= weightHistoryRepository.findByWeightHistory(userId,createAt);
+		weightHistory.updateWeightHistory(registerInfo);
+	}
+
 	@Override
 	public WeightHistory getUserByUserWeightHistory(String userId,LocalDate createAt) {
 		WeightHistory weightHistory= weightHistoryRepository.findByWeightHistory(userId,createAt);
