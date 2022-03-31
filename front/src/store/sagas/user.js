@@ -110,7 +110,7 @@ function* kakaoloadLogin(action) {
   
     yield put({ type: KAKAO_ID_CHECK_REQUEST, id:id[0] }); // id check 여부
     console.log(data);
- 
+
     } catch (err) {
     yield put({ type: KAKAO_LOG_IN_FAILURE });
   }

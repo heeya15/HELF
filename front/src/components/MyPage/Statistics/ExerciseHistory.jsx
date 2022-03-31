@@ -53,7 +53,7 @@ export default function ExerciseHistory() {
       const month = i < 10 ? "0" + i : i;
       const day = j < 10 ? "0" + j : j;
       MAP[r][c] = year + "-" + month + "-" + day;
-      if (r + 1 == 7) {
+      if (r + 1 === 7) {
         c++;
         r = 0;
       } else {
@@ -85,7 +85,7 @@ export default function ExerciseHistory() {
               <div
                 key={index}
                 className={
-                  each == 0
+                  each === 0
                     ? "cell"
                     : exerciseDateList.check(each) > 5
                     ? "cell fill-5"
@@ -111,7 +111,7 @@ export default function ExerciseHistory() {
                         >
                           {dataTip}
                         </div>
-                        {exerciseTypeList.check(dataTip) != 0 &&
+                        {exerciseTypeList.check(dataTip) !== 0 &&
                           exerciseTypeList.get(dataTip).map((item, index) => (
                             <div key={index}>
                               {item.name} : {item.count}

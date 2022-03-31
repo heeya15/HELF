@@ -10,25 +10,14 @@ import Typography from './Typography';
 import productHowItWorks1 from '../../assets/images/productHowItWorks1.svg';
 import productHowItWorks2 from '../../assets/images/productHowItWorks2.svg';
 import productHowItWorks3 from '../../assets/images/productHowItWorks3.svg';
-
-const item = {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    px: 5
-};
-
-const number = {
-    fontSize: 24,
-    fontFamily: 'default',
-    color: '#2b802f',
-    fontWeight: 'medium'
-};
-
-const image = {
-    height: 55,
-    my: 4
-};
+import {
+    fontNormal, 
+    fontBold,
+    mainButton,
+    item,
+    number,
+    image,
+} from './Main.style';
 
 export default function Effect() {
     const history = useHistory();
@@ -71,6 +60,7 @@ export default function Effect() {
                     variant="h4"
                     marked="center"
                     component="h2"
+                    style={ fontBold }
                     sx={{
                         mb: 14
                     }}>
@@ -86,7 +76,7 @@ export default function Effect() {
                                     src={productHowItWorks1}
                                     alt="suitcase"
                                     sx={image}/>
-                                <Typography variant="h5" align="center">
+                                <Typography variant="h5" align="center" style={ fontNormal }>
                                     Appointment every Wednesday 9am.
                                 </Typography>
                             </Box>
@@ -99,7 +89,7 @@ export default function Effect() {
                                     src={productHowItWorks2}
                                     alt="graph"
                                     sx={image}/>
-                                <Typography variant="h5" align="center">
+                                <Typography variant="h5" align="center" style={ fontNormal }>
                                     First come, first served. Our offers are in limited quantities, so be quick.
                                 </Typography>
                             </Box>
@@ -112,7 +102,7 @@ export default function Effect() {
                                     src={productHowItWorks3}
                                     alt="clock"
                                     sx={image}/>
-                                <Typography variant="h5" align="center">
+                                <Typography variant="h5" align="center" style={ fontNormal }>
                                     {'New offers every week. New experiences, new surprises. '}
                                     {'Your Sundays will no longer be alike.'}
                                 </Typography>
@@ -127,7 +117,7 @@ export default function Effect() {
                     sx={{
                         mt: 8
                     }}
-                    style={{ backgroundColor: '#225424' }}
+                    style={ mainButton }
                     onClick={ handleGetStarted }
                     >
                     Get started
