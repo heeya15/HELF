@@ -122,7 +122,7 @@ public class DietDiaryServiceImpl implements DietDiaryService{
 
         // 식단 table 에 등록
         List<DietRegisterReq> dietRegisterReqList = dietDiaryRegisterReq.getDietRegisterReqList();
-        for(int i=0; i<1; i++) {
+        for(int i=0; i<dietRegisterReqList.size(); i++) {
             int foodNo = foodRepository.findFoodName(dietRegisterReqList.get(i).getFoodName());
 //            int foodNo = foodRepository.findFoodName("토마토");
             dietRepository.save(dietRegisterReqList.get(i).toEntity(dietDiaryNo, foodNo));

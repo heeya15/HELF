@@ -1,5 +1,5 @@
-import styled from 'styled-components';
-import { blockColor, device } from '../../style/variables';
+import styled from "styled-components";
+import { blockColor, device } from "../../style/variables";
 
 const MyPageProfileImgDiv = styled.div`
   width: 15vh;
@@ -130,6 +130,5 @@ const MyPageContent = styled.div`
     padding: 0 10%;
   }
 `;
-
 
 export { MyPageWrapper, MyPageHeader, MyPageContent };

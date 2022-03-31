@@ -40,12 +40,9 @@ export default function ExerciseHistory() {
   }, [dispatch, year]);
 
   const MAP = [];
-  const temp = [];
-  for (let i = 0; i < 53; i++) temp.push(0);
-  MAP.push(temp);
-  for (let i = 0; i < 6; i++) {
+  for (let i = 0; i < 7; i++) {
     const temp = [];
-    for (let j = 0; j < 52; j++) temp.push(0);
+    for (let j = 0; j < 53; j++) temp.push(0);
     MAP.push(temp);
   }
 
@@ -67,11 +64,20 @@ export default function ExerciseHistory() {
 
   return (
     <ExerciseHistoryTotal>
-      <Row className="months">
-        {months.map((month, index) => (
-          <Col key={index}>{month}</Col>
-        ))}
-      </Row>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <Row className="months">
+          {months.map((month, index) => (
+            <Col key={index}>{month}</Col>
+          ))}
+        </Row>
+      </div>
+
       <Row>
         {MAP.map((maps, index) => (
           <div key={index} className="line">
@@ -79,7 +85,9 @@ export default function ExerciseHistory() {
               <div
                 key={index}
                 className={
-                  exerciseDateList.check(each) > 5
+                  each == 0
+                    ? "cell"
+                    : exerciseDateList.check(each) > 5
                     ? "cell fill-5"
                     : "cell fill-" + exerciseDateList.check(each)
                 }
@@ -96,7 +104,7 @@ export default function ExerciseHistory() {
                       <>
                         <div
                           style={{
-                            fontSize: "10px",
+                            fontSize: "13px",
                             fontWeight: "bold",
                             marginBottom: "10%",
                           }}
