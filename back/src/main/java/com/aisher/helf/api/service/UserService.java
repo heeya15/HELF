@@ -4,6 +4,7 @@ import com.aisher.helf.api.request.UserAdditionalInfoRegisterReq;
 import com.aisher.helf.api.request.UserFindPasswordReq;
 import com.aisher.helf.api.request.UserRegisterReq;
 import com.aisher.helf.api.request.UserUpdateReq;
+import com.aisher.helf.api.response.UserLikeListRes;
 import com.aisher.helf.db.entity.User;
 import org.springframework.stereotype.Service;
 
@@ -23,4 +24,5 @@ public interface UserService {
 	User getUser(UserFindPasswordReq userFindPasswordPostReq);
 	public List<User> findAll();
 	User registerAdditionalUserInfo(UserAdditionalInfoRegisterReq userAdditionalInfoRegisterReq, String userId);
+	List<UserLikeListRes> findLikeListByUserId(String userId);
 }

@@ -6,7 +6,8 @@ import {
   PasswordConfirmAPI,
   NutritionHistoryAPI,
   WeightHistoryAPI,
-  WeightHistoryUpdateAPI
+  WeightHistoryUpdateAPI,
+  SelectWeightHistoryUpdateAPI
 } from '../apis/myPage';
 import {
   MY_PAGE_REQUEST,
@@ -29,7 +30,10 @@ import {
   WEIGHT_HISTORY_FAILURE,
   REGISTER_WEIGHT_HISTORY_REQUEST,
   REGISTER_WEIGHT_HISTORY_SUCCESS,
-  REGISTER_WEIGHT_HISTORY_FAILURE
+  REGISTER_WEIGHT_HISTORY_FAILURE,
+  UPDATE_WEIGHT_HISTORY_REQUEST,
+  UPDATE_WEIGHT_HISTORY_SUCCESS,
+  UPDATE_WEIGHT_HISTORY_FAILURE
 } from '../modules/myPage';
 import swal from 'sweetalert';
 import moment from 'moment';
@@ -164,6 +168,10 @@ function* loadWeightHistory(action) {
     yield put({
       type: WEIGHT_HISTORY_FAILURE,
     });
+    swal('Weight History에 등록되지 않은 날짜를 수정하려했습니다.', '    ', 'success', {
+      buttons: false,
+      timer: 1800,
+    });
   }
 }
 
@@ -189,8 +197,41 @@ function* loadUpdateWeightHistory(action) {
 function* watchLoadUpdateWeightHistory() {
   yield takeLatest(REGISTER_WEIGHT_HISTORY_REQUEST, loadUpdateWeightHistory);
 }
+
+// 선택 날짜에 몸무게 수정시 수정한 몸무게 값을 WeightHistory에 수정
+function* loadSelectWeightHistoryUpdate(action) {
+  try {
+    console.log(action);
+    const result = yield call(SelectWeightHistoryUpdateAPI, action.data);
+    yield put({
+      type: UPDATE_WEIGHT_HISTORY_SUCCESS,
+      data: result,
+    });
+    swal('수정 성공', '  ', 'success', {
+      buttons: false,
+      timer: 1000,
+    });
+  } catch (err) {
+    yield put({
+      type: UPDATE_WEIGHT_HISTORY_FAILURE,
+    });
+    swal(
+      'WeightHistory 수정 실패',
+      '등록되지 않은 날짜를 수정하려 했습니다. 등록된 날짜를 수정 바랍니다.',
+      'error',
+      {
+        buttons: false,
+        timer: 1300,
+      })
+  }
+}
+function* watchLoadSelectWeightHistoryUpdate() {
+  yield takeLatest(UPDATE_WEIGHT_HISTORY_REQUEST , loadSelectWeightHistoryUpdate);
+}
+
 export default function* myPageSaga() {
   yield all([
+    fork(watchLoadSelectWeightHistoryUpdate),
     fork(watchLoadUpdateWeightHistory),
     fork(watchLoadWeightHistory),
     fork(watchLoadMyPage),
