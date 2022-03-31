@@ -113,3 +113,19 @@ export async function SelectWeightHistoryUpdateAPI({ createdAt, weight }) {
     console.log(result);
     return result;
 }
+
+// 입력한 날짜 정보 Weight 히스토리 테이블에 삭제
+export async function SelectWeightHistoryDeleteAPI({ createdAt }) {
+    console.log("몸무게 히스토리 삭제 시 뭐가 찍히는지 확인하자");
+    console.log(createdAt);
+    const result = await axios.delete(`${BASE_URL}weight/history/remove/weight`, {
+        headers: {
+            Authorization: 'Bearer ' + sessionStorage.getItem('jwt')
+        },
+        params: {
+            createAt: createdAt
+        }
+    });
+    console.log(result);
+    return result;
+}

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Chart as ChartJS } from 'chart.js/auto'
 import { Chart } from 'react-chartjs-2'
-import { WEIGHT_HISTORY_REQUEST } from '../../../store/modules/myPage';
 import { useDispatch, useSelector } from 'react-redux';
 import {
     Title,
@@ -13,8 +12,11 @@ import {
     CancelButton,
 } from '../MyPage.style';
 import {
+    WEIGHT_HISTORY_REQUEST,
     UPDATE_WEIGHT_HISTORY_REQUEST,
     UPDATE_WEIGHT_HISTORY_RESET,
+    DELETE_WEIGHT_HISTORY_REQUEST,
+    DELETE_WEIGHT_HISTORY_RESET,
     MY_PAGE_REQUEST
   } from '../../../store/modules/myPage';
 import Box from '@mui/material/Box';
@@ -48,7 +50,7 @@ export default function WeightHistory() {
           }
         ]
     };
-    const { updateWeightHistoryInfoDone } = useSelector(state => state.mypage);
+    const { updateWeightHistoryInfoDone, deleteWeightHistoryInfoDone } = useSelector(state => state.mypage);
     const { me } = useSelector(state => state.mypage);
     const [password, setPassword] = useState('');
     const [createdAt, setDay] = useState('');
@@ -81,7 +83,7 @@ export default function WeightHistory() {
     // 몸무게 히스토리 원하는 날짜 몸무게 삭제 요청.
     const handleWeightHistoryDeleteConfirm = () => {
         dispatch({
-          type: UPDATE_WEIGHT_HISTORY_REQUEST,
+          type: DELETE_WEIGHT_HISTORY_REQUEST,
             data: {
                 createdAt: createdAt,
             }
@@ -92,6 +94,7 @@ export default function WeightHistory() {
             handleWeightHistoryDeleteConfirm();
         }
     };
+
     const dispatch = useDispatch();
     const { weightHistoryList } = useSelector(state => state.mypage);
     const created_at = [];
@@ -108,8 +111,7 @@ export default function WeightHistory() {
     }
     
      // 유저 정보를 받아왓을때
-    useEffect(() => {
-        
+    useEffect(() => {   
         if (updateWeightHistoryInfoDone) {
             setOpen(false);
             dispatch({
@@ -127,6 +129,18 @@ export default function WeightHistory() {
         });
     }, []);
 
+    // history 정보를 삭제할 때
+    useEffect(() => {
+        if (deleteWeightHistoryInfoDone) {
+            setDeleteOpen(false);
+            dispatch({
+                type: DELETE_WEIGHT_HISTORY_RESET ,
+            });
+            dispatch({
+                type: MY_PAGE_REQUEST,
+            })
+        }
+        }, [ me, deleteWeightHistoryInfoDone]);
    
     return (
         <div>
@@ -214,7 +228,7 @@ export default function WeightHistory() {
                             <span>날짜 : </span>
                             <input
                                 type="input"
-                                id="password"
+                                id=""
                                 onChange={e => {
                                 setDay(e.target.value);
                                 }}
