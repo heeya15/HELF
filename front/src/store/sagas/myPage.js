@@ -7,7 +7,8 @@ import {
   NutritionHistoryAPI,
   WeightHistoryAPI,
   WeightHistoryUpdateAPI,
-  SelectWeightHistoryUpdateAPI
+  SelectWeightHistoryUpdateAPI,
+  SelectWeightHistoryDeleteAPI
 } from '../apis/myPage';
 import {
   MY_PAGE_REQUEST,
@@ -33,7 +34,10 @@ import {
   REGISTER_WEIGHT_HISTORY_FAILURE,
   UPDATE_WEIGHT_HISTORY_REQUEST,
   UPDATE_WEIGHT_HISTORY_SUCCESS,
-  UPDATE_WEIGHT_HISTORY_FAILURE
+  UPDATE_WEIGHT_HISTORY_FAILURE,
+  DELETE_WEIGHT_HISTORY_REQUEST,
+  DELETE_WEIGHT_HISTORY_SUCCESS,
+  DELETE_WEIGHT_HISTORY_FAILURE 
 } from '../modules/myPage';
 import swal from 'sweetalert';
 import moment from 'moment';
@@ -229,8 +233,39 @@ function* watchLoadSelectWeightHistoryUpdate() {
   yield takeLatest(UPDATE_WEIGHT_HISTORY_REQUEST , loadSelectWeightHistoryUpdate);
 }
 
+//  입력한 날짜 back에 삭제 요청시 WeightHistory에 해당 데이터 삭제
+function* loadSelectWeightHistoryDelete(action) {
+  try {
+    console.log(action);
+    const result = yield call(SelectWeightHistoryDeleteAPI, action.data);
+    yield put({
+      type: DELETE_WEIGHT_HISTORY_SUCCESS ,
+      data: result,
+    });
+    swal('삭제 성공', '  ', 'success', {
+      buttons: false,
+      timer: 1000,
+    });
+  } catch (err) {
+    yield put({
+      type: DELETE_WEIGHT_HISTORY_FAILURE ,
+    });
+    swal(
+      'WeightHistory 삭제 실패',
+      '등록되지 않은 날짜를 삭제하려 했습니다. 등록된 날짜를 입력 바랍니다.',
+      'error',
+      {
+        buttons: false,
+        timer: 1300,
+      })
+  }
+}
+function* watchLoadSelectWeightHistoryDelete() {
+  yield takeLatest(DELETE_WEIGHT_HISTORY_REQUEST , loadSelectWeightHistoryDelete);
+}
 export default function* myPageSaga() {
   yield all([
+    fork(watchLoadSelectWeightHistoryDelete),
     fork(watchLoadSelectWeightHistoryUpdate),
     fork(watchLoadUpdateWeightHistory),
     fork(watchLoadWeightHistory),
