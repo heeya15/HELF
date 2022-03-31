@@ -2,17 +2,16 @@ package com.aisher.helf.api.response;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
-@Data
+
 @Setter
 @Getter
+@NoArgsConstructor
+@AllArgsConstructor
 @ToString
 @ApiModel("DietDiaryFindRes")
 public class DietDiaryFindRes {
