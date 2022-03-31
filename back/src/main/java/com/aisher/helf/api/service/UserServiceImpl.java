@@ -4,7 +4,10 @@ import com.aisher.helf.api.request.UserAdditionalInfoRegisterReq;
 import com.aisher.helf.api.request.UserFindPasswordReq;
 import com.aisher.helf.api.request.UserRegisterReq;
 import com.aisher.helf.api.request.UserUpdateReq;
+import com.aisher.helf.api.response.UserLikeListRes;
+import com.aisher.helf.db.entity.LikeList;
 import com.aisher.helf.db.entity.User;
+import com.aisher.helf.db.repository.LikeListRepositorySupport;
 import com.aisher.helf.db.repository.UserRepository;
 import com.aisher.helf.db.repository.UserRepositorySupport;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +17,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,6 +34,9 @@ public class UserServiceImpl implements UserService {
 	
 	@Autowired
 	PasswordEncoder passwordEncoder;
+
+	@Autowired
+	LikeListRepositorySupport likeListRepositorySupport;
 	
 	@Override
 	public User registerUser(UserRegisterReq userRegisterInfo) {
@@ -116,5 +123,24 @@ public class UserServiceImpl implements UserService {
 				  					  userAdditionalInfoRegisterReq.isGender(),
 									  birthday);
 		return null;
+	}
+
+	@Override
+	public List<UserLikeListRes> findLikeListByUserId(String userId) {
+		List<LikeList> likeList = likeListRepositorySupport.findByUserId(userId);
+
+		List<UserLikeListRes> userLikeListResList = new ArrayList<UserLikeListRes>();
+		for(int i=0; i<likeList.size(); i++) {
+			UserLikeListRes userLikeListRes = new UserLikeListRes();
+
+			userLikeListRes.setLikeNo(likeList.get(i).getLikeNo());
+			userLikeListRes.setBoardNo(likeList.get(i).getShareBoard().getBoardNo());
+			userLikeListRes.setDiaryNo(likeList.get(i).getShareBoard().getDiaryNo().getDiaryNo());
+			userLikeListRes.setImagePath(likeList.get(i).getShareBoard().getDiaryNo().getImagePath());
+
+			userLikeListResList.add(userLikeListRes);
+		}
+
+		return userLikeListResList;
 	}
 }
