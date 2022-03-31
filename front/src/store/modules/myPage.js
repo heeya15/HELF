@@ -47,6 +47,10 @@ const initialState = {
   registerweightHistoryDone: false,
   registerweightHistoryError: null,
 
+  selectRegisterWeightHistoryInfoLoading: false, // 몸무게 히스토리 선택 등록
+  selectRegisterWeightHistoryInfoDone: false,
+  selectRegisterWeightHistoryInfoError: false,
+
   deleteWeightHistoryInfoLoading: false, // 몸무게 히스토리 삭제
   deleteWeightHistoryInfoDone: false,
   deleteWeightHistoryInfoError: false,
@@ -84,6 +88,11 @@ export const REGISTER_WEIGHT_HISTORY_SUCCESS =
   "REGISTER_WEIGHT_HISTORY_SUCCESS";
 export const REGISTER_WEIGHT_HISTORY_FAILURE =
   "REGISTER_WEIGHT_HISTORY_FAILURE";
+
+  export const SELECT_REGISTER_WEIGHT_HISTORY_REQUEST = 'SELECT_REGISTER_WEIGHT_HISTORY_REQUEST';
+export const SELECT_REGISTER_WEIGHT_HISTORY_SUCCESS = 'SELECT_REGISTER_WEIGHT_HISTORY_SUCCESS';
+export const SELECT_REGISTER_WEIGHT_HISTORY_FAILURE = 'SELECT_REGISTER_WEIGHT_HISTORY_FAILURE';
+export const SELECT_REGISTER_WEIGHT_HISTORY_RESET = 'SELECT_REGISTER_WEIGHT_HISTORY_RESET';
 
 export const UPDATE_WEIGHT_HISTORY_REQUEST = "UPDATE_WEIGHT_HISTORY_REQUEST";
 export const UPDATE_WEIGHT_HISTORY_SUCCESS = "UPDATE_WEIGHT_HISTORY_SUCCESS";
@@ -218,6 +227,25 @@ const reducer = (state = initialState, action) =>
         draft.registerweightHistoryError = action.error;
         break;
 
+      case SELECT_REGISTER_WEIGHT_HISTORY_REQUEST :
+        draft.selectRegisterWeightHistoryInfoLoading = true;
+        draft.selectRegisterWeightHistoryInfoError = null;
+        draft.selectRegisterWeightHistoryInfoDone = false;
+        break;
+      case SELECT_REGISTER_WEIGHT_HISTORY_SUCCESS :
+        draft.selectRegisterWeightHistoryInfoLoading = false;
+        draft.selectRegisterWeightHistoryInfoDone = true;
+        break;
+      case SELECT_REGISTER_WEIGHT_HISTORY_FAILURE :
+        draft.selectRegisterWeightHistoryInfoLoading = false;
+        draft.selectRegisterWeightHistoryInfoError = action.error;
+        break;
+      case SELECT_REGISTER_WEIGHT_HISTORY_RESET :
+        draft.selectRegisterWeightHistoryInfoLoading = false;
+        draft.selectRegisterWeightHistoryInfoError = null;
+        draft.selectRegisterWeightHistoryInfoDone = false;
+        break;
+      
       case UPDATE_WEIGHT_HISTORY_REQUEST:
         draft.updateWeightHistoryInfoLoading = true;
         draft.updateWeightHistoryInfoErrorr = null;

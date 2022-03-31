@@ -7,6 +7,7 @@ import {
   NutritionHistoryAPI,
   WeightHistoryAPI,
   WeightHistoryUpdateAPI,
+  SelectWeightHistoryRegisterAPI,
   SelectWeightHistoryUpdateAPI,
   SelectWeightHistoryDeleteAPI,
   MyPageLikeAPI,
@@ -33,6 +34,9 @@ import {
   REGISTER_WEIGHT_HISTORY_REQUEST,
   REGISTER_WEIGHT_HISTORY_SUCCESS,
   REGISTER_WEIGHT_HISTORY_FAILURE,
+  SELECT_REGISTER_WEIGHT_HISTORY_REQUEST,
+  SELECT_REGISTER_WEIGHT_HISTORY_SUCCESS,
+  SELECT_REGISTER_WEIGHT_HISTORY_FAILURE,
   UPDATE_WEIGHT_HISTORY_REQUEST,
   UPDATE_WEIGHT_HISTORY_SUCCESS,
   UPDATE_WEIGHT_HISTORY_FAILURE,
@@ -211,6 +215,38 @@ function* watchLoadUpdateWeightHistory() {
   yield takeLatest(REGISTER_WEIGHT_HISTORY_REQUEST, loadUpdateWeightHistory);
 }
 
+// 선택 날짜에 몸무게 등록시 수정한 몸무게 값을 WeightHistory에 수정
+function* loadSelectWeightHistoryRegister(action) {
+  try {
+    console.log(action);
+    const result = yield call(SelectWeightHistoryRegisterAPI, action.data);
+    yield put({
+      type: SELECT_REGISTER_WEIGHT_HISTORY_SUCCESS,
+      data: result,
+    });
+    swal('등록 성공', '  ', 'success', {
+      buttons: false,
+      timer: 1200,
+    });
+  } catch (err) {
+    yield put({
+      type: SELECT_REGISTER_WEIGHT_HISTORY_FAILURE,
+    });
+    swal(
+      'WeightHistory 등록 실패',
+      '이미 등록된 날짜를 등록하려 했습니다. 등록되지 않은 날짜로 등록 바랍니다.',
+      'error',
+      {
+        buttons: false,
+        timer: 1500,
+      })
+  }
+}
+
+function* watchLoadSelectWeightHistoryRegister() {
+  yield takeLatest(SELECT_REGISTER_WEIGHT_HISTORY_REQUEST , loadSelectWeightHistoryRegister);
+}
+
 // 선택 날짜에 몸무게 수정시 수정한 몸무게 값을 WeightHistory에 수정
 function* loadSelectWeightHistoryUpdate(action) {
   try {
@@ -222,7 +258,7 @@ function* loadSelectWeightHistoryUpdate(action) {
     });
     swal("수정 성공", "  ", "success", {
       buttons: false,
-      timer: 1000,
+      timer: 1200,
     });
   } catch (err) {
     yield put({
@@ -234,7 +270,7 @@ function* loadSelectWeightHistoryUpdate(action) {
       "error",
       {
         buttons: false,
-        timer: 1300,
+        timer: 1500,
       }
     );
   }
@@ -257,7 +293,7 @@ function* loadSelectWeightHistoryDelete(action) {
     });
     swal("삭제 성공", "  ", "success", {
       buttons: false,
-      timer: 1000,
+      timer: 1200,
     });
   } catch (err) {
     yield put({
@@ -269,7 +305,7 @@ function* loadSelectWeightHistoryDelete(action) {
       "error",
       {
         buttons: false,
-        timer: 1300,
+        timer: 1500,
       }
     );
   }
@@ -301,8 +337,9 @@ function* watchLoadMyPageLikeList() {
 
 export default function* myPageSaga() {
   yield all([
-    fork(watchLoadSelectWeightHistoryDelete),
+    fork(watchLoadSelectWeightHistoryRegister),
     fork(watchLoadSelectWeightHistoryUpdate),
+    fork(watchLoadSelectWeightHistoryDelete),
     fork(watchLoadUpdateWeightHistory),
     fork(watchLoadWeightHistory),
     fork(watchLoadMyPage),

@@ -17,4 +17,6 @@ public interface WeightHistoryService {
     List<WeightHistoryTenRecordRes> getTenWeightHistory(String userId);
 
     void updateWeightHistory(WeightHistoryrRegisterReq registerInfo);
+
+    WeightHistory selectRegisterWeightHistory(WeightHistoryrRegisterReq weightHistoryrRegisterReq);
 }
