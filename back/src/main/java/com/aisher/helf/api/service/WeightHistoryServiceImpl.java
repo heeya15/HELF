@@ -62,12 +62,42 @@ public class WeightHistoryServiceImpl implements WeightHistoryService {
 
 	@Transactional
 	@Override
+	public WeightHistory selectRegisterWeightHistory(WeightHistoryrRegisterReq weightHistoryrRegisterReq) {
+		WeightHistory weightHistory = null;
+		WeightHistoryId weightHistoryId = new WeightHistoryId();
+
+		User user = new User();
+
+		LocalDate createAt = LocalDate.parse(weightHistoryrRegisterReq.getCreatedAt(), DateTimeFormatter.ISO_DATE);
+		String userId = weightHistoryrRegisterReq.getUserId();
+		int weight = weightHistoryrRegisterReq.getWeight();
+		int count = weightHistoryRepository.findByWeightHistoryCount(userId,createAt);
+		System.out.println("현재 유저는 데일리 몸무게 등록했나여?" + count);
+		if(count==1){
+			System.out.println("등록되어 있어 여기에 옴 ");
+			return weightHistory;
+		}else {
+			weightHistory = new WeightHistory();
+			System.out.println("등록하지 않아 여기에 옴 ---> 추가");
+			user.setUserId(userId);
+			weightHistoryId.setCreatedAt(createAt); // 등록일
+			weightHistoryId.setUserId(user); // 사용자 아이디 등록
+
+			weightHistory.setWeightHistoryId(weightHistoryId);
+			weightHistory.setWeight(weight); // 몸무게
+			weightHistoryRepository.save(weightHistory);
+		}
+		return weightHistory;
+	}
+	@Transactional
+	@Override
 	public void updateWeightHistory(WeightHistoryrRegisterReq registerInfo) {
 		LocalDate createAt = LocalDate.parse(registerInfo.getCreatedAt(), DateTimeFormatter.ISO_DATE);
 		String userId = registerInfo.getUserId();
 		WeightHistory weightHistory= weightHistoryRepository.findByWeightHistory(userId,createAt);
 		weightHistory.updateWeightHistory(registerInfo);
 	}
+
 
 	@Override
 	public WeightHistory getUserByUserWeightHistory(String userId,LocalDate createAt) {

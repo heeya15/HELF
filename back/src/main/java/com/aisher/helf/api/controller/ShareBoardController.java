@@ -53,7 +53,7 @@ public class ShareBoardController {
 
         ShareBoard shareBoard = shareBoardService.registerShareBoard(shareBoardRegisterReq);
         if(shareBoard == null) {
-            ResponseEntity.status(400).body(BaseResponseBody.of(400, "Bad Request"));
+            return ResponseEntity.status(400).body(BaseResponseBody.of(400, "Bad Request"));
         }
 
         // 해당 식단 일지 공유 여부 상태 변경
