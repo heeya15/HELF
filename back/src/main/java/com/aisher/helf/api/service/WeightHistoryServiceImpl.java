@@ -67,6 +67,8 @@ public class WeightHistoryServiceImpl implements WeightHistoryService {
 		WeightHistoryId weightHistoryId = new WeightHistoryId();
 
 		User user = new User();
+		// 현재 날짜 구하기 (시스템 시계, 시스템 타임존)
+		LocalDate now = LocalDate.now();
 
 		LocalDate createAt = LocalDate.parse(weightHistoryrRegisterReq.getCreatedAt(), DateTimeFormatter.ISO_DATE);
 		String userId = weightHistoryrRegisterReq.getUserId();
@@ -77,6 +79,11 @@ public class WeightHistoryServiceImpl implements WeightHistoryService {
 			System.out.println("등록되어 있어 여기에 옴 ");
 			return weightHistory;
 		}else {
+			if(createAt.equals(now)){ // 오늘 날짜로 등록할 경우
+				// 해당 유저 정보 찾고 방금 등록한 몸무게로 user 정보 몸무게 수정.
+				User user1 = userRepositorySupport.findUserByUserId(userId).get();
+				user1.updateWeight(weight);
+			}
 			weightHistory = new WeightHistory();
 			System.out.println("등록하지 않아 여기에 옴 ---> 추가");
 			user.setUserId(userId);
@@ -86,6 +93,7 @@ public class WeightHistoryServiceImpl implements WeightHistoryService {
 			weightHistory.setWeightHistoryId(weightHistoryId);
 			weightHistory.setWeight(weight); // 몸무게
 			weightHistoryRepository.save(weightHistory);
+
 		}
 		return weightHistory;
 	}
