@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction";
-import styled from "styled-components";
 import "./MyDiet.css";
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -61,27 +60,27 @@ export default function MyDiet() {
 
   return (
     <div className="MyDiet">
-      <div>
-        <FullCalendar
-          // className="calendar"
-          headerToolbar={{
-            start: "today",
-            center: "title",
-            end: "prev,next",
-          }}
-          height="80vh"
-          plugins={[dayGridPlugin, interactionPlugin]}
-          initialView="dayGridMonth"
-          eventOrder="time"
-          // locale="ko"
-          events={diaryList}
-          selectable
-          // editable
-          dayMaxEvents
-          dateClick={clickDate}
-          eventClick={selectedEvent}
-        />
+      <div className="MenuTitle">
+        <span className="MenuTitleLight">MY 식단</span>
       </div>
+      <FullCalendar
+        // className="calendar"
+        headerToolbar={{
+          start: "title",
+          end: "today,prev,next",
+        }}
+        height="80vh"
+        plugins={[dayGridPlugin, interactionPlugin]}
+        initialView="dayGridMonth"
+        eventOrder="time"
+        // locale="ko"
+        events={diaryList}
+        selectable
+        // editable
+        dayMaxEvents
+        dateClick={clickDate}
+        eventClick={selectedEvent}
+      />
     </div>
   );
 }
