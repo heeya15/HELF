@@ -39,4 +39,7 @@ public interface ShareBoardService {
 
 	/** 내가 기록한 식단이 이미 공유 되어있는지 diaryNo 체크 **/
 	boolean checkDiaryNo(int diaryNo);
+
+	/** 해당 공유 게시글을 현재 로그인한 사용자가 좋아요 했는지 여부 체크  **/
+	boolean checkIsLike(Long boardNo, String userId);
 }

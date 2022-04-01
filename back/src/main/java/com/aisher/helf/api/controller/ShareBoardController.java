@@ -95,6 +95,21 @@ public class ShareBoardController {
         return new ResponseEntity<List<ShareBoardFindRes>>(shareboardInfo, HttpStatus.OK);
     }
 
+    @GetMapping("/find/isLike/{boardNo}")
+    @ApiOperation(value ="해당 게시글 좋아요 여부 조회(token)", notes ="해당 boardNo 공유 게시판 좋아요 여부 출력 <strong>찜 했을 경우 : true, 찜 안 했을 경우 false <strong>")
+    @ApiResponses({ @ApiResponse(code = 200, message = "성공"),
+            @ApiResponse(code = 401, message = "인증 실패"),
+            @ApiResponse(code = 404, message = "사용자 없음"),
+            @ApiResponse(code = 500, message = "서버 오류") })
+    public ResponseEntity<Boolean> findShareBoardInfo(@PathVariable Long boardNo, @ApiIgnore Authentication authentication ) {
+        UserDetails userDetails = (UserDetails) authentication.getDetails();
+        String userId = userDetails.getUsername();
+        boolean isLike = shareBoardService.checkIsLike(boardNo,userId);
+        if(isLike==true){ // 해당 게시글 로그인한 유저가 찜 했을 경우
+            return new ResponseEntity<Boolean>(isLike, HttpStatus.OK);
+        }
+        return new ResponseEntity<Boolean>(isLike, HttpStatus.OK);
+    }
     @GetMapping("/findAll/like")
     @ApiOperation(value ="공유 게시글중 좋아요 개수가 많은 5개 레코드 조회", notes ="공유 게시글중 좋아요 개수가 많은 5개 레코드 조회")
     @ApiResponses({ @ApiResponse(code = 200, message = "성공"),
