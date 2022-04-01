@@ -27,3 +27,16 @@
 
 }
 
+.commentDelete {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+  margin: auto;
+  padding: auto;
+}
+.commentButton {
+  display: flex;
+  align-items: center;
+  margin-top: 4%;
+}

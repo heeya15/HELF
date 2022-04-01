@@ -80,7 +80,7 @@ const CommentBoxBig = styled.div`
   resize: vertical;
   width: 100%;
   height : 20rem;
-  overflow: visible;
+  overflow: scroll;
   text-overflow: ellipsis;
   :focus {
     outline: none;

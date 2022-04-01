@@ -26,7 +26,23 @@ import {
 } from "./SharedDetail.style";
 
 
+// function UserComment({ user }, nowUser) {
+//   console.log(user)
+//   console.log(nowUser)
+//   return (
+//     <div >
+//             <div key={user.comment_no} >
+//               {
+//                 nowUser == user.user_id
+//                 ?<Titles>{user.user_id} : {user.comment} + 삭제버튼</Titles>
+//                 :<Titles>{user.user_id} : {user.comment}+ 삭제버튼</Titles>
 
+//               }
+//             </div>
+       
+//     </div>
+//   );
+// }
 
 
 
@@ -39,6 +55,7 @@ function Detail({ match }) {
 
     const [allData, setAlldata] = useState([]);
     const [commentData, setComment] = useState([]);
+    const [userData, setUser] = useState([]);
 
     useEffect(() => {
         axios.get(`${BASE_URL}shareboard/find/${index}`,
@@ -50,6 +67,8 @@ function Detail({ match }) {
             .then(response => {
               // 나중에 response.data 로 data 가져오기 가능
               setAlldata(response.data[0]); 
+              console.log(response) 
+
             });
     }, []);
     useEffect(() => {
@@ -61,11 +80,28 @@ function Detail({ match }) {
       }})
           .then(response => {
             // 나중에 response.data 로 data 가져오기 가능
-            setComment(response);
-            console.log(response) 
-
+            setComment(response.data);
+          }).catch(err => {
+          });
+  }, [commentData]);
+    
+  
+    useEffect(() => {
+      axios.get(`${BASE_URL}user/find/me`,
+      // `${LOCAL_URL}shareboard/findAll`, 
+      {
+      headers: { 
+        Authorization: `Bearer ${ token }`
+      }})
+          .then(response => {
+            // 나중에 response.data 로 data 가져오기 가능
+            setUser(response.data.userId) 
+            ;
+          }).catch(err => {
           });
   }, []);
+
+
     const history = useHistory();
 
     const goBack = () => {
@@ -80,68 +116,102 @@ function Detail({ match }) {
       { title: "단백질", value : Math.round(protein), color : '#000000' },
       { title: "지방", value : Math.round(fat), color : '#F6CB44' },
     ];
-    console.log(typeof(myData[0].y))
-    console.log(typeof(myData[1].y))
+    
+    //  댓글 관련
+
+    const [Comment, SetComment] = useState("");
+
+    const resetInputField = () => {
+      
+    };
+
+    const commentHandler  = ({ target: { value } }) => {
+      SetComment(value);
+    };
+
+    const submitHandler = (e) => {
+      e.preventDefault();
+      axios.post(`${BASE_URL}comment/register`,
+      {boardNo: index,
+      comment: Comment},
+        {
+          headers : { 
+            Authorization: `Bearer ${ token }`
+          }
+        }
+        )
+        .then((res => {
+          console.log(res)
+          SetComment("");
+        }))
+    };
+
   return (
       <div className="bigBox">
-        {/* <div className="detailBox">
-          <img src={`${IMAGE_URL}${allData.image_path}`} alt="" />
-          <div>
-            <h3>탄수화물 : {allData.carbohydrate}</h3>
-            <h3>지방 : {allData.fat}</h3>
-            <h3>단백질 : {allData.protein}</h3>
-            <h3>한마디 : {allData.description}</h3>
-            <h3>음식이름 : {allData.food_name}</h3>
-            <h3>이미지 경로 : {allData.image_path}</h3>
-            <h3>칼로리 : {allData.kcal}</h3>
-            <h3>무게 : {allData.weight}</h3>
-            <div className="buttons">
-              <Button>하이</Button>
-              <Button>바이</Button>
-              <Button>자이</Button>
-            </div>
-            
-          </div>
-        </div> */}
 
-<Container>
-        <TotalStyle>
-          <Row>
-            <Col>
-              <ImageThumbnail src={`${IMAGE_URL}${allData.image_path}`} alt="이미지"></ImageThumbnail>
-            </Col>
-            <Col>
-              <RegisterReq>
-                <Titles>님의 식단</Titles>
-                <Description
-                >{allData.description}</Description>
-                <Titles>{allData.food_name  }</Titles>
-                <div className="nutBox">
-                  <p className="line">칼로리 {allData.kcal}Kcal</p>
+        <Container>
+          <TotalStyle>
+            <Row>
+              <Col>
+                <ImageThumbnail src={`${IMAGE_URL}${allData.image_path}`} alt="이미지"></ImageThumbnail>
+              </Col>
+              <Col>
+                <RegisterReq>
+                  <Titles>{allData.user_id}님의 식단</Titles>
+                  <Description
+                  >{allData.description}</Description>
+                  <Titles>{allData.food_name  }</Titles>
+                  <div className="nutBox">
+                    <p className="line">칼로리 {allData.kcal}Kcal</p>
+                    
+                    <p className="line">지방 {allData.fat}g</p>
+                    
+                    <p className="line">탄수화물 {allData.carbohydrate}g</p>
+                    
+                    <p className="line">단백질 {allData.protein}g</p>
                   
-                  <p className="line">지방 {allData.fat}g</p>
-                  
-                  <p className="line">탄수화물 {allData.carbohydrate}g</p>
-                  
-                  <p className="line">단백질 {allData.protein}g</p>
-                
-                </div>
-                <Titles>댓글</Titles>
-                <CommentBoxBig >
-                  <div className="commentBox">
-                    <CommentBox placeholder= '댓글을 입력하세요.'></CommentBox>
-                    <SendButton>등록</SendButton>
-
                   </div>
-                </CommentBoxBig>
-              </RegisterReq>
-            </Col>
-          </Row>
-        </TotalStyle>
-        <ListButton>목록</ListButton>
-        <UpdatdButton>수정</UpdatdButton>
-        <BackButton onClick={goBack}>나가기</BackButton>
-      </Container>
+                  <Titles>댓글</Titles>
+                  <CommentBoxBig >
+                    <form className="commentBox" onSubmit={submitHandler}>
+                      <CommentBox placeholder= '댓글을 입력하세요.' value={Comment} onChange={commentHandler}></CommentBox>
+                      <SendButton type="submit" onClick={resetInputField}>등록</SendButton>
+                    </form>
+                    {/*  댓글 보이기 */}
+                    {commentData.map(user => (
+              
+                        <div key={user.comment_no} >
+                          {
+                            userData == user.user_id
+                            ?<div className="commentDelete">
+                              <Titles>{user.user_id} : {user.comment} </Titles>
+                              <div className="commentButton">                     
+                                <button>수정</button>
+                                <button>삭제</button>
+                              </div>
+         
+                              </div>
+                            :<div className="commentDelete"><Titles>{user.user_id} : {user.comment}</Titles></div>
+            
+                          }
+                        </div>
+                  
+               
+                    ))}
+                  </CommentBoxBig>
+                </RegisterReq>
+              </Col>
+            </Row>
+          </TotalStyle>
+          <ListButton>목록</ListButton>
+          {/* 작성자 == 조회자 이면 수정 버튼 활성화 */}
+          {
+              userData == allData.user_id
+              ? <UpdatdButton>수정</UpdatdButton>
+              : null
+            }
+          <BackButton onClick={goBack}>나가기</BackButton>
+          </Container>
       
       </div>
 
