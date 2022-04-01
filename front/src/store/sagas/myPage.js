@@ -11,6 +11,7 @@ import {
   SelectWeightHistoryUpdateAPI,
   SelectWeightHistoryDeleteAPI,
   MyPageLikeAPI,
+  MyPageLikeDeleteAPI,
 } from "../apis/myPage";
 import {
   MY_PAGE_REQUEST,
@@ -46,6 +47,9 @@ import {
   MY_PAGE_LIKE_REQUEST,
   MY_PAGE_LIKE_SUCCESS,
   MY_PAGE_LIKE_FAILURE,
+  MY_PAGE_LIKE_DELETE_REQUEST,
+  MY_PAGE_LIKE_DELETE_SUCCESS,
+  MY_PAGE_LIKE_DELETE_FAILURE,
 } from "../modules/myPage";
 import swal from "sweetalert";
 import moment from "moment";
@@ -224,7 +228,7 @@ function* loadSelectWeightHistoryRegister(action) {
       type: SELECT_REGISTER_WEIGHT_HISTORY_SUCCESS,
       data: result,
     });
-    swal('등록 성공', '  ', 'success', {
+    swal("등록 성공", "  ", "success", {
       buttons: false,
       timer: 1200,
     });
@@ -233,18 +237,22 @@ function* loadSelectWeightHistoryRegister(action) {
       type: SELECT_REGISTER_WEIGHT_HISTORY_FAILURE,
     });
     swal(
-      'WeightHistory 등록 실패',
-      '이미 등록된 날짜를 등록하려 했습니다. 등록되지 않은 날짜로 등록 바랍니다.',
-      'error',
+      "WeightHistory 등록 실패",
+      "이미 등록된 날짜를 등록하려 했습니다. 등록되지 않은 날짜로 등록 바랍니다.",
+      "error",
       {
         buttons: false,
         timer: 1500,
-      })
+      }
+    );
   }
 }
 
 function* watchLoadSelectWeightHistoryRegister() {
-  yield takeLatest(SELECT_REGISTER_WEIGHT_HISTORY_REQUEST , loadSelectWeightHistoryRegister);
+  yield takeLatest(
+    SELECT_REGISTER_WEIGHT_HISTORY_REQUEST,
+    loadSelectWeightHistoryRegister
+  );
 }
 
 // 선택 날짜에 몸무게 수정시 수정한 몸무게 값을 WeightHistory에 수정
@@ -335,6 +343,24 @@ function* watchLoadMyPageLikeList() {
   yield takeLatest(MY_PAGE_LIKE_REQUEST, loadMyPageLikeList);
 }
 
+// 찜목록 삭제
+function* loadMyPageLikeDelete(action) {
+  try {
+    const result = yield call(MyPageLikeDeleteAPI, action.data);
+    yield put({
+      type: MY_PAGE_LIKE_DELETE_SUCCESS,
+      data: result,
+    });
+  } catch (error) {
+    yield put({
+      type: MY_PAGE_LIKE_DELETE_FAILURE,
+    });
+  }
+}
+function* watchLoadMyPageLikeDelete() {
+  yield takeLatest(MY_PAGE_LIKE_DELETE_REQUEST, loadMyPageLikeDelete);
+}
+
 export default function* myPageSaga() {
   yield all([
     fork(watchLoadSelectWeightHistoryRegister),
@@ -348,5 +374,6 @@ export default function* myPageSaga() {
     fork(watchLoadPasswordConfirm),
     fork(watchLoadNutritionHistory),
     fork(watchLoadMyPageLikeList),
+    fork(watchLoadMyPageLikeDelete),
   ]);
 }

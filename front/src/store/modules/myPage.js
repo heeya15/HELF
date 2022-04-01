@@ -14,6 +14,7 @@ const initialState = {
   weightHistoryList: [],
 
   myPageLikeList: [],
+  likeDeleteState: false,
 
   myPageLoading: false, // 마이페이지 정보
   myPageDone: false,
@@ -89,10 +90,14 @@ export const REGISTER_WEIGHT_HISTORY_SUCCESS =
 export const REGISTER_WEIGHT_HISTORY_FAILURE =
   "REGISTER_WEIGHT_HISTORY_FAILURE";
 
-  export const SELECT_REGISTER_WEIGHT_HISTORY_REQUEST = 'SELECT_REGISTER_WEIGHT_HISTORY_REQUEST';
-export const SELECT_REGISTER_WEIGHT_HISTORY_SUCCESS = 'SELECT_REGISTER_WEIGHT_HISTORY_SUCCESS';
-export const SELECT_REGISTER_WEIGHT_HISTORY_FAILURE = 'SELECT_REGISTER_WEIGHT_HISTORY_FAILURE';
-export const SELECT_REGISTER_WEIGHT_HISTORY_RESET = 'SELECT_REGISTER_WEIGHT_HISTORY_RESET';
+export const SELECT_REGISTER_WEIGHT_HISTORY_REQUEST =
+  "SELECT_REGISTER_WEIGHT_HISTORY_REQUEST";
+export const SELECT_REGISTER_WEIGHT_HISTORY_SUCCESS =
+  "SELECT_REGISTER_WEIGHT_HISTORY_SUCCESS";
+export const SELECT_REGISTER_WEIGHT_HISTORY_FAILURE =
+  "SELECT_REGISTER_WEIGHT_HISTORY_FAILURE";
+export const SELECT_REGISTER_WEIGHT_HISTORY_RESET =
+  "SELECT_REGISTER_WEIGHT_HISTORY_RESET";
 
 export const UPDATE_WEIGHT_HISTORY_REQUEST = "UPDATE_WEIGHT_HISTORY_REQUEST";
 export const UPDATE_WEIGHT_HISTORY_SUCCESS = "UPDATE_WEIGHT_HISTORY_SUCCESS";
@@ -107,6 +112,10 @@ export const DELETE_WEIGHT_HISTORY_RESET = "DELETE_WEIGHT_HISTORY_RESET";
 export const MY_PAGE_LIKE_REQUEST = "MY_PAGE_LIKE_REQUEST";
 export const MY_PAGE_LIKE_SUCCESS = "MY_PAGE_LIKE_SUCCESS";
 export const MY_PAGE_LIKE_FAILURE = "MY_PAGE_LIKE_FAILURE";
+
+export const MY_PAGE_LIKE_DELETE_REQUEST = "MY_PAGE_LIKE_DELETE_REQUEST";
+export const MY_PAGE_LIKE_DELETE_SUCCESS = "MY_PAGE_LIKE_DELETE_SUCCESS";
+export const MY_PAGE_LIKE_DELETE_FAILURE = "MY_PAGE_LIKE_DELETE_FAILURE";
 
 const reducer = (state = initialState, action) =>
   produce(state, (draft) => {
@@ -227,25 +236,25 @@ const reducer = (state = initialState, action) =>
         draft.registerweightHistoryError = action.error;
         break;
 
-      case SELECT_REGISTER_WEIGHT_HISTORY_REQUEST :
+      case SELECT_REGISTER_WEIGHT_HISTORY_REQUEST:
         draft.selectRegisterWeightHistoryInfoLoading = true;
         draft.selectRegisterWeightHistoryInfoError = null;
         draft.selectRegisterWeightHistoryInfoDone = false;
         break;
-      case SELECT_REGISTER_WEIGHT_HISTORY_SUCCESS :
+      case SELECT_REGISTER_WEIGHT_HISTORY_SUCCESS:
         draft.selectRegisterWeightHistoryInfoLoading = false;
         draft.selectRegisterWeightHistoryInfoDone = true;
         break;
-      case SELECT_REGISTER_WEIGHT_HISTORY_FAILURE :
+      case SELECT_REGISTER_WEIGHT_HISTORY_FAILURE:
         draft.selectRegisterWeightHistoryInfoLoading = false;
         draft.selectRegisterWeightHistoryInfoError = action.error;
         break;
-      case SELECT_REGISTER_WEIGHT_HISTORY_RESET :
+      case SELECT_REGISTER_WEIGHT_HISTORY_RESET:
         draft.selectRegisterWeightHistoryInfoLoading = false;
         draft.selectRegisterWeightHistoryInfoError = null;
         draft.selectRegisterWeightHistoryInfoDone = false;
         break;
-      
+
       case UPDATE_WEIGHT_HISTORY_REQUEST:
         draft.updateWeightHistoryInfoLoading = true;
         draft.updateWeightHistoryInfoErrorr = null;
@@ -287,8 +296,16 @@ const reducer = (state = initialState, action) =>
         break;
       case MY_PAGE_LIKE_SUCCESS:
         draft.myPageLikeList = action.data.data;
+        draft.likeDeleteState = false;
         break;
       case MY_PAGE_LIKE_FAILURE:
+        break;
+      case MY_PAGE_LIKE_DELETE_REQUEST:
+        break;
+      case MY_PAGE_LIKE_DELETE_SUCCESS:
+        draft.likeDeleteState = true;
+        break;
+      case MY_PAGE_LIKE_DELETE_FAILURE:
         break;
       default:
         break;
