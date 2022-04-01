@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 const DietDiaryItemWrapper = styled.div`
     margin: 20px auto;
+    width: 70%;
 `;
 
 const AddButton = styled.button`
@@ -16,7 +17,7 @@ const ShareButton = styled.button`
     color: #fff;
     background-color: #3C86DD;
     border: none;
-    padding: 5px 10px;
+    padding: 5px 15px;
     border-radius: 20px;
     :hover {
         transform: scale(1.1);   
@@ -34,14 +35,14 @@ const DeleteButton = styled.button`
 const DietDiaryItem = styled.div`
     margin: 20px auto;
     padding: 30px 30px;
-    width: 70%;
-    border: 1px solid #bdbdbd;
+    background-color: #F8F8F8;
     border-radius: 20px;
-    box-shadow: 7px 7px #bdbdbd;
+    box-shadow: 7px 7px #E0E0E0;
 `;
 
 const TotalKcal = styled.div`
     font-size: 30px;
+    margin-top: 40px;
 `;
 
 const DiaryList = styled.div`
@@ -116,6 +117,11 @@ const DiaryImg = styled.img`
     height: 200px;
     curosr: pointer;
     border-radius: 20px;
+    @media (max-width: 767px) {
+        width: 200px;
+        height: 150px;
+        margin: 0 auto;
+    }
 `;
 
 const DiaryTitle = styled.p`
@@ -132,6 +138,20 @@ const DiaryKcal = styled.p`
 `;
 
 const DiaryDesc = styled.p`
+`;
+
+const fontNormal = {
+    fontFamily: 'KOTRA_GOTHIC',
+};
+
+const fontBold = {
+    fontFamily: 'KOTRA_BOLD-Bold',
+}
+
+const MenuTitle = styled.div`
+    fontSize: '50px',
+    margin: '10px 0',
+    fontFamily: 'KOTRA_BOLD-Bold',
 `;
 
 export { 
@@ -156,4 +176,7 @@ export {
     DiaryTime,
     DiaryKcal,
     DiaryDesc,
+    fontNormal,
+    fontBold,
+    MenuTitle,
 };

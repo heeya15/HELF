@@ -6,7 +6,7 @@ const BannerWrapper = styled.div`
 `;  
     
 const FunctionWrapper = styled.div`
-    background-color: #43a047;
+    background-color: #2E7D32;
     padding: 60px 0px;
 `;
     
@@ -43,8 +43,8 @@ const fontNormal = {
 
 const mainButton = {
     fontFamily: 'KOTRA_BOLD-Bold',
-    backgroundColor: '#225424', 
-    color: '#fff',    
+    backgroundColor: '#FFD984',
+    color: '#000',    
 }
 
 // Function Component
