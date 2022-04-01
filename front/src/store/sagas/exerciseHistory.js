@@ -1,11 +1,18 @@
 import { all, call, put, fork, takeLatest } from "redux-saga/effects";
-import { exerciseHistoryFindAllAPI } from "../apis/exerciseHistory";
+import {
+  exerciseHistoryFindAllAPI,
+  exerciseHistoryRegisterAPI,
+} from "../apis/exerciseHistory";
 import {
   EXERCISE_HISTORY_FINDALL_REQUEST,
   EXERCISE_HISTORY_FINDALL_SUCCESS,
   EXERCISE_HISTORY_FINDALL_FAILURE,
+  EXERCISE_HISTORY_REGISTER_REQUEST,
+  EXERCISE_HISTORY_REGISTER_SUCCESS,
+  EXERCISE_HISTORY_REGISTER_FAILURE,
 } from "../modules/exerciseHistory";
 
+// 운동 통계 조회
 function* loadExerciseHistoryFindAll(action) {
   try {
     const result = yield call(exerciseHistoryFindAllAPI, action.data);
@@ -22,6 +29,26 @@ function* watchLoadExerciseHistoryFindAll() {
   );
 }
 
+// 운동 통계 등록
+function* loadExerciseHistoryRegister(action) {
+  try {
+    const result = yield call(exerciseHistoryRegisterAPI, action.data);
+    yield put({ type: EXERCISE_HISTORY_REGISTER_SUCCESS, data: result });
+  } catch (error) {
+    yield put({ type: EXERCISE_HISTORY_REGISTER_FAILURE });
+  }
+}
+
+function* watchLoadExerciseHistoryRegister() {
+  yield takeLatest(
+    EXERCISE_HISTORY_REGISTER_REQUEST,
+    loadExerciseHistoryRegister
+  );
+}
+
 export default function* exerciseHistorySaga() {
-  yield all([fork(watchLoadExerciseHistoryFindAll)]);
+  yield all([
+    fork(watchLoadExerciseHistoryFindAll),
+    fork(watchLoadExerciseHistoryRegister),
+  ]);
 }

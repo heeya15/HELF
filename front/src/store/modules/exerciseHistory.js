@@ -43,6 +43,13 @@ export const EXERCISE_HISTORY_FINDALL_SUCCESS =
 export const EXERCISE_HISTORY_FINDALL_FAILURE =
   "EXERCISE_HISTORY_FINDALL_FAILURE";
 
+export const EXERCISE_HISTORY_REGISTER_REQUEST =
+  "EXERCISE_HISTORY_REGISTER_REQUEST";
+export const EXERCISE_HISTORY_REGISTER_SUCCESS =
+  "EXERCISE_HISTORY_REGISTER_SUCCESS";
+export const EXERCISE_HISTORY_REGISTER_FAILURE =
+  "EXERCISE_HISTORY_REGISTER_FAILURE";
+
 const SET_EXERCISE_TYPE = "SET_EXERCISE_TYPE";
 export const setExerciseType = (state) => ({
   type: SET_EXERCISE_TYPE,
@@ -100,6 +107,12 @@ const reducer = (state = initialState, action) =>
         }
         break;
       case EXERCISE_HISTORY_FINDALL_FAILURE:
+        break;
+      case EXERCISE_HISTORY_REGISTER_REQUEST:
+        break;
+      case EXERCISE_HISTORY_REGISTER_SUCCESS:
+        break;
+      case EXERCISE_HISTORY_REGISTER_FAILURE:
         break;
       case SET_EXERCISE_TYPE:
         draft.exercise.type = action.state;
