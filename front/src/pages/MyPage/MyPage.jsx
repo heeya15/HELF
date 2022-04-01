@@ -6,6 +6,7 @@ import Nutrition from "../../components/MyPage/Statistics/Nutrition";
 import WeightHistory from "../../components/MyPage/Statistics/WeightHistory";
 import ExerciseHistory from "../../components/MyPage/Statistics/ExerciseHistory";
 import { Row, Col } from "react-bootstrap";
+import MyPageLike from "../../components/MyPage/MyPageLike";
 
 export default function MyPage() {
   return (
@@ -16,6 +17,7 @@ export default function MyPage() {
             <MyPageProfile />
           </MyPageHeader>
           <MyPageContent>
+            <MyPageLike></MyPageLike>
             <hr />
             <Row>
               <Col>

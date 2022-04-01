@@ -1,5 +1,5 @@
-import styled from 'styled-components';
-import { blockColor, device, pointColor } from '../../style/variables';
+import styled from "styled-components";
+import { blockColor, device, pointColor } from "../../style/variables";
 
 const Container = styled.div`
   width: 90vw;
@@ -56,7 +56,7 @@ const MyPageProfileButton = styled.button`
   margin: 5px;
   padding: 5px 10px;
   font-size: 20px;
-  background-color: #2E7D32;
+  background-color: #2e7d32;
   border: none;
   border-radius: 5px;
   color: #fff;
@@ -78,20 +78,20 @@ const MyPageMenuWrapper = styled.div`
     float: left;
     padding-bottom: 4px;
     border-bottom: 2px solid
-      ${props => (props.check === 1 ? pointColor : 'none')};
+      ${(props) => (props.check === 1 ? pointColor : "none")};
     @media ${device.TabletPortrait} {
     }
   }
 `;
 
 const editBox = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
   width: 600,
-  bgcolor: 'background.paper',
-  border: '1px solid #000',
+  bgcolor: "background.paper",
+  border: "1px solid #000",
   boxShadow: 24,
   p: 4,
 };
@@ -107,18 +107,18 @@ const ButtonWrapper = styled.div`
 `;
 
 const ConfirmButton = styled.button`
-  background-color: #2E7D32;
+  background-color: #2e7d32;
   color: #fff;
-  border: 2px solid #2E7D32;
+  border: 2px solid #2e7d32;
   border-radius: 10px;
   padding: 5px 10px;
   margin-right: 5px;
 `;
-  
+
 const CancelButton = styled.button`
   background-color: #fff;
-  color: #2E7D32;
-  border: 2px solid #2E7D32;
+  color: #2e7d32;
+  border: 2px solid #2e7d32;
   border-radius: 10px;
   padding: 5px 10px;
 `;
@@ -141,8 +141,8 @@ const LackMessage = styled.button`
   border-radius: 10px;
   padding: 5px 10px;
   cursor: pointer;
-  `;
-  
+`;
+
 const NormalMessage = styled.button`
   background-color: #43a047;
   color: #fff;
@@ -151,8 +151,8 @@ const NormalMessage = styled.button`
   padding: 5px 10px;
   border-radius: 10px;
   cursor: pointer;
-  `;
-  
+`;
+
 const TooMuchMessage = styled.button`
   background-color: #c94c4c;
   color: #fff;
@@ -167,6 +167,32 @@ const Title = styled.div`
   font-weighit: bold;
   font-size: 28px;
   margin-bottom: 25px;
+`;
+
+const LikeListStyle = styled.div`
+  .total {
+    background-color: transparent;
+    border: transparent;
+    z-index: 2;
+    position: absolute;
+    text-align: left;
+    margin: 1% auto;
+    .icon {
+      color: red;
+      margin-left: 300%;
+      :hover {
+        transform: scale(1.3);
+        cursor: pointer;
+      }
+    }
+  }
+  img {
+    width: 200px;
+    height: 200px;
+    display: block;
+    margin: auto;
+    border-radius: 20px;
+  }
 `;
 
 export {
@@ -186,4 +212,5 @@ export {
   NormalMessage,
   TooMuchMessage,
   Title,
+  LikeListStyle,
 };

@@ -33,6 +33,40 @@ const BannerImage = styled.img`
     height: auto;
 `;
 
+const fontBold = {
+    fontFamily: 'KOTRA_BOLD-Bold',
+}
+
+const fontNormal = {
+    fontFamily: 'KOTRA_GOTHIC',
+}
+
+const mainButton = {
+    fontFamily: 'KOTRA_BOLD-Bold',
+    backgroundColor: '#225424', 
+    color: '#fff',    
+}
+
+// Function Component
+const item = {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    px: 5
+};
+
+// Effect Component
+const number = {
+    fontSize: 24,
+    color: '#2b802f',
+    fontWeight: 'medium'
+};
+
+const image = {
+    height: 55,
+    my: 4
+};
+
 export {
     BannerWrapper,
     FunctionWrapper,
@@ -40,4 +74,10 @@ export {
     SubTitle,
     SubGreenTitle,
     BannerImage,
+    fontBold,
+    fontNormal,
+    mainButton,
+    item,
+    number,
+    image,
 };

@@ -18,19 +18,16 @@ import {
   UPDATE_USER_INFO_RESET,
   MY_PAGE_REQUEST,
 } from '../../store/modules/myPage';
-import { MdStar, MdPerson, MdSettings } from 'react-icons/md';
+import { MdPerson } from 'react-icons/md';
 import { useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import Modal from '@mui/material/Modal';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
-import Input from '@mui/material/Input';
-import FilledInput from '@mui/material/FilledInput';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import InputLabel from '@mui/material/InputLabel';
 import InputAdornment from '@mui/material/InputAdornment';
-import FormHelperText from '@mui/material/FormHelperText';
 import FormControl from '@mui/material/FormControl';
 import TextField from '@mui/material/TextField';
 import Visibility from '@mui/icons-material/Visibility';
@@ -38,14 +35,12 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
-import FormLabel from '@mui/material/FormLabel';
-import { usePickerState } from '@mui/lab/internal/pickers/hooks/usePickerState';
 
 export default function MypageProfile() {
   const dispatch = useDispatch();
   const history = useHistory();
   
-  const { me, passwordConfirmDone, updateUserInfoDone,weightHistoryList } = useSelector(state => state.mypage);
+  const { me, passwordConfirmDone, updateUserInfoDone, weightHistoryList } = useSelector(state => state.mypage);
   const { kakaologInDone } = useSelector(state => state.user);
   const [ password, setPassword ] = useState('');
   const [ open, setOpen ] = useState(false);
@@ -62,10 +57,6 @@ export default function MypageProfile() {
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-
-  const [user_id, setUserId] = useState();
-  const [nickName, setNickName] = useState();
-  const [email, setEmail] = useState();
 
   const handlePasswordConfirm = () => {
     dispatch({
@@ -102,7 +93,6 @@ export default function MypageProfile() {
   };
 
   const handleEdit = () => {
-    console.log("수정할 데이터 : ", me.userId, newName, newPassword, newGender, newHeight, newWeight, newBirthday);
     dispatch({
       type: UPDATE_USER_INFO_REQUEST, 
       data: {

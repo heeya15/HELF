@@ -11,6 +11,7 @@ const ReactTooltipStyled = styled(ReactTooltip)`
 
 const ExerciseHistoryTotal = styled.div`
   margin-top: 5%;
+  margin-bottom: 5%;
   .line {
     display: block;
     font-size: 0;

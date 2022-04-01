@@ -11,13 +11,17 @@ const initialState = {
     isShared: false,
     dietFindResList: [],
   },
+  weights: [100, 150, 200, 250, 300],
   dietDetailThumbnail: null,
   dietThumbnail: null,
   imagePath: null,
   mealTime: "",
   diaryDate: "",
   description: "",
-  foodName: [],
+  foodName: [
+    { name: "토마토", weight: 100 },
+    { name: "닭가슴살", weight: 100 },
+  ],
   myDietDiaryList: [],
   myDietDiaryDailyInfo: [],
   myDietDiaryDailyInfoCopy: [],
@@ -25,25 +29,28 @@ const initialState = {
   myDietDiaryDeleteLoading: false,
   myDietDiaryDeleteDone: false,
   myDietDiaryDeleteError: null,
-  // 식단 일지 
+  // 식단 일지
   diaryShareLoading: false,
   diaryShareDone: false,
   diaryshareError: null,
 };
 
-export const MY_DIET_IMAGE_REQUEST = "MY_DIET_IMAGE_REQUEST";   
+export const MY_DIET_IMAGE_REQUEST = "MY_DIET_IMAGE_REQUEST";
 export const MY_DIET_IMAGE_SUCCESS = "MY_DIET_IMAGE_SUCCESS";
 export const MY_DIET_IMAGE_FAILURE = "MY_DIET_IMAGE_FAILURE";
-export const MY_DIET_REGISTER_REQUEST = "MY_DIET_REGISTER_REQUEST";  
+export const MY_DIET_REGISTER_REQUEST = "MY_DIET_REGISTER_REQUEST";
 export const MY_DIET_REGISTER_SUCCESS = "MY_DIET_REGISTER_SUCCESS";
 export const MY_DIET_REGISTER_FAILURE = "MY_DIET_REGISTER_FAILURE";
-export const MY_DIET_DIARY_LIST_REQUEST = "MY_DIET_DIARY_LIST_REQUEST";   
+export const MY_DIET_DIARY_LIST_REQUEST = "MY_DIET_DIARY_LIST_REQUEST";
 export const MY_DIET_DIARY_LIST_SUCCESS = "MY_DIET_DIARY_LIST_SUCCESS";
 export const MY_DIET_DIARY_LIST_FAILURE = "MY_DIET_DIARY_LIST_FAILURE";
-export const MY_DIET_DIARY_DAILY_INFO_REQUEST = "MY_DIET_DIARY_DAILY_INFO_REQUEST";   
-export const MY_DIET_DIARY_DAILY_INFO_SUCCESS = "MY_DIET_DIARY_DAILY_INFO_SUCCESS";
-export const MY_DIET_DIARY_DAILY_INFO_FAILURE = "MY_DIET_DIARY_DAILY_INFO_FAILURE";
-export const MY_DIET_DETAIL_REQUEST = "MY_DIET_DETAIL_REQUEST";  
+export const MY_DIET_DIARY_DAILY_INFO_REQUEST =
+  "MY_DIET_DIARY_DAILY_INFO_REQUEST";
+export const MY_DIET_DIARY_DAILY_INFO_SUCCESS =
+  "MY_DIET_DIARY_DAILY_INFO_SUCCESS";
+export const MY_DIET_DIARY_DAILY_INFO_FAILURE =
+  "MY_DIET_DIARY_DAILY_INFO_FAILURE";
+export const MY_DIET_DETAIL_REQUEST = "MY_DIET_DETAIL_REQUEST";
 export const MY_DIET_DETAIL_SUCCESS = "MY_DIET_DETAIL_SUCCESS";
 export const MY_DIET_DETAIL_FAILURE = "MY_DIET_DETAIL_FAILURE";
 export const MY_DIET_UPDATE_REQUEST = "MY_DIET_UPDATE_REQUEST";
@@ -56,6 +63,11 @@ export const MY_DIET_DIARY_SHARE_REQUEST = "MY_DIET_DIARY_SHARE_REQUEST";
 export const MY_DIET_DIARY_SHARE_SUCCESS = "MY_DIET_DIARY_SHARE_SUCCESS";
 export const MY_DIET_DIARY_SHARE_FAILURE = "MY_DIET_DIARY_SHARE_REQUEST";
 
+const SET_MY_DIET_WEIGHT = "SET_MY_DIET_WEIGHT";
+export const setmyDietWeight = (state) => ({
+  type: SET_MY_DIET_WEIGHT,
+  state,
+});
 
 const SET_MY_DIET_DETAIL_IMAGEPATH = "SET_MY_DIET_DETAIL_IMAGEPATH";
 export const setMyDietDetailImagePath = (state) => ({
@@ -155,6 +167,9 @@ const reducer = (state = initialState, action) =>
       case MY_DIET_DIARY_DELETE_FAILURE:
         draft.myDietDiaryDeleteLoading = false;
         draft.myDietDiaryDeleteError = action.error;
+        break;
+      case SET_MY_DIET_WEIGHT:
+        draft.foodName[action.state.index].weight = action.state.weight;
         break;
       case SET_MY_DIET_DETAIL_IMAGEPATH:
         draft.myDietDetail.imagePath = action.state;

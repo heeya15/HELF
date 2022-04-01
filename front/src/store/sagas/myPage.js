@@ -1,4 +1,4 @@
-import { all, fork, put, takeLatest, call } from 'redux-saga/effects';
+import { all, fork, put, takeLatest, call } from "redux-saga/effects";
 import {
   MemberDeleteAPI,
   UserModifyAPI,
@@ -6,8 +6,12 @@ import {
   PasswordConfirmAPI,
   NutritionHistoryAPI,
   WeightHistoryAPI,
-  WeightHistoryUpdateAPI
-} from '../apis/myPage';
+  WeightHistoryUpdateAPI,
+  SelectWeightHistoryRegisterAPI,
+  SelectWeightHistoryUpdateAPI,
+  SelectWeightHistoryDeleteAPI,
+  MyPageLikeAPI,
+} from "../apis/myPage";
 import {
   MY_PAGE_REQUEST,
   MY_PAGE_SUCCESS,
@@ -29,11 +33,23 @@ import {
   WEIGHT_HISTORY_FAILURE,
   REGISTER_WEIGHT_HISTORY_REQUEST,
   REGISTER_WEIGHT_HISTORY_SUCCESS,
-  REGISTER_WEIGHT_HISTORY_FAILURE
-} from '../modules/myPage';
-import swal from 'sweetalert';
-import moment from 'moment';
-import 'moment/locale/ko';
+  REGISTER_WEIGHT_HISTORY_FAILURE,
+  SELECT_REGISTER_WEIGHT_HISTORY_REQUEST,
+  SELECT_REGISTER_WEIGHT_HISTORY_SUCCESS,
+  SELECT_REGISTER_WEIGHT_HISTORY_FAILURE,
+  UPDATE_WEIGHT_HISTORY_REQUEST,
+  UPDATE_WEIGHT_HISTORY_SUCCESS,
+  UPDATE_WEIGHT_HISTORY_FAILURE,
+  DELETE_WEIGHT_HISTORY_REQUEST,
+  DELETE_WEIGHT_HISTORY_SUCCESS,
+  DELETE_WEIGHT_HISTORY_FAILURE,
+  MY_PAGE_LIKE_REQUEST,
+  MY_PAGE_LIKE_SUCCESS,
+  MY_PAGE_LIKE_FAILURE,
+} from "../modules/myPage";
+import swal from "sweetalert";
+import moment from "moment";
+import "moment/locale/ko";
 // 마이페이지 회원정보 조회
 function* loadMyPage(action) {
   try {
@@ -57,12 +73,12 @@ function* watchLoadMyPage() {
 function* loadUpdateUser(action) {
   try {
     const result = yield call(UserModifyAPI, action.data);
-    const nowTime = moment().format('YYYY-MM-DD'); // 현재 날짜 및 시간
-    
+    const nowTime = moment().format("YYYY-MM-DD"); // 현재 날짜 및 시간
+
     console.log(nowTime);
     const data1 = {
       createdAt: nowTime,
-      weight: action.data.weight
+      weight: action.data.weight,
     };
 
     yield put({
@@ -75,7 +91,7 @@ function* loadUpdateUser(action) {
       data: result,
     });
     yield put({ type: REGISTER_WEIGHT_HISTORY_REQUEST, data: data1 }); // mypage 정보 바로 조회
-    swal('수정이 완료되었습니다.', '    ', 'success', {
+    swal("수정이 완료되었습니다.", "    ", "success", {
       buttons: false,
       timer: 1800,
     });
@@ -98,9 +114,9 @@ function* loadDeleteUser(action) {
       type: DELETE_MEMBER_SUCCESS,
       data: result,
     });
-    alert('정상적으로 탈퇴 되었습니다.');
+    alert("정상적으로 탈퇴 되었습니다.");
     sessionStorage.clear(); // userToken 세션스토리지 삭제
-    document.location.href = '/'; // 로그아웃 처리하면 새로고침 해서 세션 사라진 걸 인식 해줘야함.
+    document.location.href = "/"; // 로그아웃 처리하면 새로고침 해서 세션 사라진 걸 인식 해줘야함.
   } catch (err) {
     yield put({
       type: DELETE_MEMBER_FAILURE,
@@ -120,12 +136,12 @@ function* loadPasswordConfirm(action) {
       type: PASSWORD_CONFIRM_SUCCESS,
       data: result,
     });
-    console.log('비밀번호 일치');
+    console.log("비밀번호 일치");
   } catch (err) {
     yield put({
       type: PASSWORD_CONFIRM_FAILURE,
     });
-    console.log('비밀번호 불일치');
+    console.log("비밀번호 불일치");
   }
 }
 
@@ -164,6 +180,15 @@ function* loadWeightHistory(action) {
     yield put({
       type: WEIGHT_HISTORY_FAILURE,
     });
+    swal(
+      "Weight History에 등록되지 않은 날짜를 수정하려했습니다.",
+      "    ",
+      "success",
+      {
+        buttons: false,
+        timer: 1800,
+      }
+    );
   }
 }
 
@@ -189,8 +214,132 @@ function* loadUpdateWeightHistory(action) {
 function* watchLoadUpdateWeightHistory() {
   yield takeLatest(REGISTER_WEIGHT_HISTORY_REQUEST, loadUpdateWeightHistory);
 }
+
+// 선택 날짜에 몸무게 등록시 수정한 몸무게 값을 WeightHistory에 수정
+function* loadSelectWeightHistoryRegister(action) {
+  try {
+    console.log(action);
+    const result = yield call(SelectWeightHistoryRegisterAPI, action.data);
+    yield put({
+      type: SELECT_REGISTER_WEIGHT_HISTORY_SUCCESS,
+      data: result,
+    });
+    swal('등록 성공', '  ', 'success', {
+      buttons: false,
+      timer: 1200,
+    });
+  } catch (err) {
+    yield put({
+      type: SELECT_REGISTER_WEIGHT_HISTORY_FAILURE,
+    });
+    swal(
+      'WeightHistory 등록 실패',
+      '이미 등록된 날짜를 등록하려 했습니다. 등록되지 않은 날짜로 등록 바랍니다.',
+      'error',
+      {
+        buttons: false,
+        timer: 1500,
+      })
+  }
+}
+
+function* watchLoadSelectWeightHistoryRegister() {
+  yield takeLatest(SELECT_REGISTER_WEIGHT_HISTORY_REQUEST , loadSelectWeightHistoryRegister);
+}
+
+// 선택 날짜에 몸무게 수정시 수정한 몸무게 값을 WeightHistory에 수정
+function* loadSelectWeightHistoryUpdate(action) {
+  try {
+    console.log(action);
+    const result = yield call(SelectWeightHistoryUpdateAPI, action.data);
+    yield put({
+      type: UPDATE_WEIGHT_HISTORY_SUCCESS,
+      data: result,
+    });
+    swal("수정 성공", "  ", "success", {
+      buttons: false,
+      timer: 1200,
+    });
+  } catch (err) {
+    yield put({
+      type: UPDATE_WEIGHT_HISTORY_FAILURE,
+    });
+    swal(
+      "WeightHistory 수정 실패",
+      "등록되지 않은 날짜를 수정하려 했습니다. 등록된 날짜를 수정 바랍니다.",
+      "error",
+      {
+        buttons: false,
+        timer: 1500,
+      }
+    );
+  }
+}
+function* watchLoadSelectWeightHistoryUpdate() {
+  yield takeLatest(
+    UPDATE_WEIGHT_HISTORY_REQUEST,
+    loadSelectWeightHistoryUpdate
+  );
+}
+
+//  입력한 날짜 back에 삭제 요청시 WeightHistory에 해당 데이터 삭제
+function* loadSelectWeightHistoryDelete(action) {
+  try {
+    console.log(action);
+    const result = yield call(SelectWeightHistoryDeleteAPI, action.data);
+    yield put({
+      type: DELETE_WEIGHT_HISTORY_SUCCESS,
+      data: result,
+    });
+    swal("삭제 성공", "  ", "success", {
+      buttons: false,
+      timer: 1200,
+    });
+  } catch (err) {
+    yield put({
+      type: DELETE_WEIGHT_HISTORY_FAILURE,
+    });
+    swal(
+      "WeightHistory 삭제 실패",
+      "등록되지 않은 날짜를 삭제하려 했습니다. 등록된 날짜를 입력 바랍니다.",
+      "error",
+      {
+        buttons: false,
+        timer: 1500,
+      }
+    );
+  }
+}
+function* watchLoadSelectWeightHistoryDelete() {
+  yield takeLatest(
+    DELETE_WEIGHT_HISTORY_REQUEST,
+    loadSelectWeightHistoryDelete
+  );
+}
+
+// 찜목록 조회
+function* loadMyPageLikeList() {
+  try {
+    const result = yield call(MyPageLikeAPI);
+    yield put({
+      type: MY_PAGE_LIKE_SUCCESS,
+      data: result,
+    });
+  } catch (error) {
+    yield put({
+      type: MY_PAGE_LIKE_FAILURE,
+    });
+  }
+}
+function* watchLoadMyPageLikeList() {
+  yield takeLatest(MY_PAGE_LIKE_REQUEST, loadMyPageLikeList);
+}
+
 export default function* myPageSaga() {
   yield all([
+    fork(watchLoadSelectWeightHistoryRegister),
+    fork(watchLoadSelectWeightHistoryUpdate),
+    fork(watchLoadSelectWeightHistoryDelete),
     fork(watchLoadUpdateWeightHistory),
     fork(watchLoadWeightHistory),
     fork(watchLoadMyPage),
@@ -198,5 +347,6 @@ export default function* myPageSaga() {
     fork(watchLoadDeleteUser),
     fork(watchLoadPasswordConfirm),
     fork(watchLoadNutritionHistory),
+    fork(watchLoadMyPageLikeList),
   ]);
 }

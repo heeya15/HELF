@@ -11,10 +11,9 @@
     text-align: center;
     font-size: large;
     padding: 0rem 1rem;
-    font-family: Arial, Helvetica, sans-serif;
 }
 .anc:hover {
-    color: blue;
+    color: #225424;
 }
 
 /* .navBar {

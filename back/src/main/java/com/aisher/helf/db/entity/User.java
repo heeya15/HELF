@@ -21,7 +21,6 @@ import java.util.List;
 /**
  * 유저 모델 정의.
  */
-@Data
 @Setter
 @Getter
 @Entity
@@ -80,5 +79,24 @@ public class User {
         this.height = height;
         this.gender = gender;
         this.birthday = birthday;
+    }
+
+    public void updateWeight(int weight) {
+        this.weight = weight;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "userId='" + userId + '\'' +
+                ", userPassword='" + userPassword + '\'' +
+                ", userName='" + userName + '\'' +
+                ", userEmail='" + userEmail + '\'' +
+                ", weight=" + weight +
+                ", height=" + height +
+                ", birthday=" + birthday +
+                ", gender=" + gender +
+                ", joinDate=" + joinDate +
+                '}';
     }
 }

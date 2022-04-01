@@ -1,53 +1,27 @@
 import * as React from 'react';
-import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Link from '@mui/material/Link';
 import Container from '@mui/material/Container';
 import Typography from '../Main/Typography';
-import TextField from '../Main/TextField';
-import appFooterFacebook from '../../assets/images/appFooterFacebook.png';
-import appFooterTwitter from '../../assets/images/appFooterTwitter.png';
-
-function Copyright() {
-    return (
-        <React.Fragment>
-            {'© '}
-            <Link color="inherit" href="https://mui.com/">
-                Your Website
-            </Link>{' '}
-            {new Date().getFullYear()}
-        </React.Fragment>
-    );
-}
-
-const iconStyle = {
-    width: 48,
-    height: 48,
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'warning.main',
-    mr: 1,
-    '&:hover': {
-        bgcolor: 'warning.dark'
-    }
-};
-
-const LANGUAGES = [
-    {
-        code: 'en-US',
-        name: 'English'
-    }, {
-        code: 'fr-FR',
-        name: 'Français'
-    }
-];
+import logo from '../../logo.png';
+import {
+    footerBackground,
+    regualrFontColor,
+    fontBold,
+    contributor,
+    contributors,
+    Copyright,
+    LogoImage,
+} from './Footer.style';
 
 export default function Footer() {
+    const handleLogo = () => {
+        window.scrollTo(0,0);
+    };
     return (
         <Typography
             component="footer"
-            style={{ backgroundColor : '#ebfceb' }}
+            style={ footerBackground }
             sx={{
                 display: 'flex',
             }}>
@@ -57,101 +31,47 @@ export default function Footer() {
                     display: 'flex'
                 }}>
                 <Grid container spacing={5}>
-                    <Grid item xs={6} sm={4} md={3}>
+                
+                    <Grid item xs={12} sm={3}>
+                    {/* <Grid item xs={6} sm={4} md={3}> */}
                         <Grid
                             container
                             direction="column"
-                            justifyContent="flex-end"
-                            spacing={2}
                             sx={{
-                                height: 120
+                                height: 100,
+                                width: 50
                             }}>
-                            <Grid
-                                item
-                                sx={{
-                                    display: 'flex'
-                                }}>
-                                <Box component="a" href="https://mui.com/" sx={iconStyle}>
-                                    <img src={appFooterFacebook} alt="Facebook"/>
-                                </Box>
-                                <Box component="a" href="https://twitter.com/MUI_hq" sx={iconStyle}>
-                                    <img src={appFooterTwitter} alt="Twitter"/>
-                                </Box>
+                            <LogoImage src={ logo } alt="system logo" onClick={ handleLogo } />
+                        </Grid>
+                    </Grid>
+                    <Grid item xs={12} sm={9} style={{ textAlign: 'left' }}>
+                        <Typography variant="h6" gutterBottom style={ regualrFontColor }>
+                            <span style={ fontBold}>Contributors</span>
+                        </Typography>
+                        <Grid container spacing={2} style={ contributors }>
+                            <Grid item xs={4}>
+                                <Link href="https://github.com/heeya15" style={contributor}>김광희</Link>
                             </Grid>
-                            <Grid item>
-                                <Copyright/>
+                            <Grid item xs={4}>
+                                <Link href="https://github.com/" style={contributor}>반형동</Link>
+                                </Grid>
+                            <Grid item xs={4}>
+                                <Link href="https://github.com/onegi95" style={contributor}>손한기</Link>
+                            </Grid>
+                            <Grid item xs={4}>
+                                <Link href="https://github.com/sorrow4468" style={contributor}>이정원</Link>
+                            </Grid>
+                            <Grid item xs={4}>
+                                <Link href="https://github.com/youngjin98" style={contributor}>최영진</Link>
+                                </Grid>
+                            <Grid item xs={4}>
+                                <Link href="https://github.com/ehhclaire" style={contributor}>한성희</Link>
                             </Grid>
                         </Grid>
                     </Grid>
-                    <Grid item xs={6} sm={4} md={2}>
-                        <Typography variant="h6" marked="left" gutterBottom>
-                            Legal
-                        </Typography>
-                        <Box
-                            component="ul"
-                            sx={{
-                                m: 0,
-                                listStyle: 'none',
-                                p: 0
-                            }}>
-                            <Box
-                                component="li"
-                                sx={{
-                                    py: 0.5
-                                }}>
-                                <Link href="/premium-themes/onepirate/terms/">Terms</Link>
-                            </Box>
-                            <Box
-                                component="li"
-                                sx={{
-                                    py: 0.5
-                                }}>
-                                <Link href="/premium-themes/onepirate/privacy/">Privacy</Link>
-                            </Box>
-                        </Box>
-                    </Grid>
-                    <Grid item xs={6} sm={8} md={4}>
-                        <Typography variant="h6" marked="left" gutterBottom>
-                            Language
-                        </Typography>
-                        <TextField
-                            select
-                            size="medium"
-                            variant="standard"
-                            SelectProps={{
-                                native: true
-                            }}
-                            sx={{
-                                mt: 1,
-                                width: 150
-                            }}>
-                            {
-                                LANGUAGES.map((language) => (
-                                    <option value={language.code} key={language.code}>
-                                        {language.name}
-                                    </option>
-                                ))
-                            }
-                        </TextField>
-                    </Grid>
-                    <Grid item>
+                    <Grid item xs={12}>
                         <Typography variant="caption">
-                            {'Icons made by '}
-                            <Link href="https://www.freepik.com" rel="sponsored" title="Freepik">
-                                Freepik
-                            </Link>
-                            {' from '}
-                            <Link href="https://www.flaticon.com" rel="sponsored" title="Flaticon">
-                                www.flaticon.com
-                            </Link>
-                            {' is licensed by '}
-                            <Link
-                                href="https://creativecommons.org/licenses/by/3.0/"
-                                title="Creative Commons BY 3.0"
-                                target="_blank"
-                                rel="noopener noreferrer">
-                                CC 3.0 BY
-                            </Link>
+                            { <Copyright>Copyright { ' © '} 2022 by HELF</Copyright>}
                         </Typography>
                     </Grid>
                 </Grid>

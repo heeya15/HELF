@@ -41,9 +41,9 @@ public class WeightHistoryController {
 	/** 사용자 daily 몸무게 등록 */
 	@PostMapping("/register/weight")
 	@ApiOperation(value = "사용자 daily 몸무게 history 등록 (token)", notes = "<strong> 사용자 daily 몸무게 history 등록-> 만약, daily 정보가 입력되어 있는경우 daily 정보 몸무게 정보 수정</strong>")
-	@ApiResponses({ @ApiResponse(code = 200, message = "성공"), 
+	@ApiResponses({ @ApiResponse(code = 200, message = "성공"),
 					@ApiResponse(code = 401, message = "인증 실패"),
-					@ApiResponse(code = 404, message = "사용자 없음"), 
+					@ApiResponse(code = 404, message = "사용자 없음"),
 					@ApiResponse(code = 500, message = "서버 오류")})
 	public ResponseEntity<WeightHistory> registerWeightHistory(
 			@ApiIgnore Authentication authentication,
@@ -63,8 +63,31 @@ public class WeightHistoryController {
 			e.printStackTrace();
 			return new ResponseEntity<WeightHistory>(UserWeightHistory,HttpStatus.EXPECTATION_FAILED);
 		}
-
 		return new ResponseEntity<WeightHistory>(UserWeightHistory,HttpStatus.OK);
+	}
+	/** 사용자가 까먹고 기록하지 못한 history 몸무게 등록 */
+	@PostMapping("/select/register/weight")
+	@ApiOperation(value = "사용자가 까먹고 기록하지 못한 history 몸무게 등록 (token)", notes = "<strong> 사용자가 까먹고 기록하지 못한 history 몸무게 등록</strong>")
+	@ApiResponses({ @ApiResponse(code = 200, message = "성공"),
+					@ApiResponse(code = 401, message = "인증 실패"),
+					@ApiResponse(code = 404, message = "사용자 없음"),
+					@ApiResponse(code = 500, message = "서버 오류")})
+	public ResponseEntity<? extends BaseResponseBody> selectRegisterWeightHistory(
+			@ApiIgnore Authentication authentication,
+			@RequestBody @ApiParam(value="daily 몸무게 정보", required = true) WeightHistoryrRegisterReq registerInfo
+	)
+	{
+		System.out.println(registerInfo.toString());
+		UserDetails userDetails = (UserDetails)authentication.getDetails();
+		String userId = userDetails.getUsername();
+		registerInfo.setUserId(userId);
+		System.out.println(userId);
+		System.out.println(registerInfo.toString());
+		WeightHistory UserWeightHistory = weighthistoryService.selectRegisterWeightHistory(registerInfo);
+		if(UserWeightHistory == null){
+			return ResponseEntity.status(400).body(BaseResponseBody.of(401, "Fail"));
+		}
+		return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
 	}
 	// 몸무게 history에 등록된 날짜와 몸무게를 입력하여 해당 몸무게 history 날짜의 몸무게를 수정.
 	@ApiOperation(value = "몸무게 history에 등록된 날짜와 몸무게를 입력하여 해당 몸무게 history 날짜의 몸무게를 수정(token)", notes = "해당 몸무게 history 정보 수정")

@@ -62,7 +62,6 @@ export async function AdditionalUserInfoAPI({
   height,
   weight,
 }) {
-  console.log(">>>>>>>>>>>> api : ", birthday, gender, height, weight);
   const result = await axios.post(`${BASE_URL}user/register/AdditionalInfo`, {
     birthday: birthday,
     gender: gender,

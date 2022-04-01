@@ -1,7 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import Box from "@mui/material/Box";
-
 import PieChart, {
     Legend,
     Export,
@@ -9,13 +7,8 @@ import PieChart, {
     Label,
     Font,
     Connector,
-    CommonAnnotationSettings,
-    Annotation
 } from 'devextreme-react/pie-chart';
 import { NUTRITION_HISTORY_REQUEST } from '../../../store/modules/myPage';
-import {
-    MY_PAGE_REQUEST,
-} from '../../../store/modules/myPage';
 import {
     MessageWrapper,
     LackMessage,
@@ -28,7 +21,6 @@ function customizeText(arg) {
     // return `${arg.argument} ${arg.valueText} (${arg.percentText})`;
     return `${arg.valueText} (${arg.percentText})`;
 }
-
 
 export default function Nutrition() {
     const dispatch = useDispatch();
@@ -79,9 +71,9 @@ export default function Nutrition() {
 
     var age = 0;
 
-    if(month < userYear) {
+    if(month < userMonth) {
         age = year - userYear - 1;
-    } else if(month == userYear) {
+    } else if(month === userYear) {
         if(day < userDay) {
         age = year - userYear - 1;
         }
