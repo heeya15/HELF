@@ -14,6 +14,56 @@ export default function Exercise() {
   // test : 왼 손 어깨 위
   // const URL = "https://teachablemachine.withgoogle.com/models/imAExih7D/";
   let model, webcam, ctx, labelContainer, maxPredictions;
+
+  async function setModel() {
+    switch (this.state.exerciseType) {
+      case 1: //BentOverRow
+        this.setState({
+          URL: 'https://teachablemachine.withgoogle.com/models/eqCo1kx3a/'
+        });
+        break;
+      case 2: // DumbbellCurl
+        this.setState({
+          URL: 'https://teachablemachine.withgoogle.com/models/qvMroKavg/'
+        });
+        break;
+      case 3: // FrontRaise
+        this.setState({
+          URL: 'https://teachablemachine.withgoogle.com/models/aKluCaORU/'
+        });
+        break;
+      case 4: // Lunge
+        this.setState({
+          URL: 'https://teachablemachine.withgoogle.com/models/7zoTQArlc/'
+        });
+        break;
+      case 5: // OverheadPress
+        this.setState({
+          URL: 'https://teachablemachine.withgoogle.com/models/QoQ4ty5qS/'
+        });
+        break;
+      case 6: // PushUp
+        this.setState({
+          URL: 'https://teachablemachine.withgoogle.com/models/R6Q1RWNar/'
+        });
+        break;
+      case 7: // SideLateralRaise
+        this.setState({
+          URL: 'https://teachablemachine.withgoogle.com/models/UuDtip_te/'
+        });
+        break;
+      case 8: // Squat
+        this.setState({
+          URL: 'https://teachablemachine.withgoogle.com/models/050JkD2Z0/'
+        });
+        break;
+      case 9: // StandingSideCrunch
+        this.setState({
+          URL: 'https://teachablemachine.withgoogle.com/models/S9Mpp7iGf/'
+        });
+        break;
+    }
+  };
   
   async function init() {
     const modelURL = URL + "model.json";
