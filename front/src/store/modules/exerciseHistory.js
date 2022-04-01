@@ -30,7 +30,7 @@ const initialState = {
   exerciseDateList: new HashMap(),
   exerciseTypeList: new HashMap(),
   exercise: {
-    type: "스쿼트",
+    type: 1,
     set: 0,
     time: 0,
   },

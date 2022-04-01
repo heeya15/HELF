@@ -8,22 +8,30 @@ import {
   setExerciseSet,
   setExerciseTime,
 } from "../../store/modules/exerciseHistory";
+import { ConstructionOutlined } from "@mui/icons-material";
 
 export default function ExerciseSetting() {
   const dispatch = useDispatch();
   const history = useHistory();
   const ExerciseTypeList = [
-    "스쿼트",
+    "벤트 오버 로우",
+    "덤벨컬",
+    "프론트 레이즈",
+    "런지",
+    "오버 헤드 프레스",
     "푸시업",
-    "풀업",
-    "사레레",
-    "윗몸일으키기",
-    "플랭크",
+    "사이드 레터럴 레이즈",
+    "스쿼트",
+    "스탠딩 사이드 크런치",
   ];
   const { exercise } = useSelector((state) => state.exerciseHistory);
 
   const TypeSelect = ExerciseTypeList.map((type, index) => {
-    return <option key={index}>{type}</option>;
+    return (
+      <option key={index} data-index={index}>
+        {type}
+      </option>
+    );
   });
 
   const exerciseSetting = (e) => {
@@ -37,7 +45,7 @@ export default function ExerciseSetting() {
   };
 
   const typeChange = (e) => {
-    dispatch(setExerciseType(e.target.value));
+    dispatch(setExerciseType(e.target.selectedIndex + 1));
   };
 
   const setChange = (e) => {
