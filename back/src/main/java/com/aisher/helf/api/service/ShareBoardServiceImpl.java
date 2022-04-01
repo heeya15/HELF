@@ -131,4 +131,13 @@ public class ShareBoardServiceImpl implements ShareBoardService {
     public boolean checkDiaryNo(int diaryNo) {
         return shareBoardRepositorySupport.findByDiaryNoEquals(diaryNo);
     }
+
+    @Override
+    public boolean checkIsLike(Long boardNo, String userId) {
+        LikeList likeList = likeListRepositorySupport.findLikeListByUserIdAndBoardNo(userId,boardNo).orElse(null);
+        boolean isLike;
+        if(likeList == null) isLike = false; // 찜 목록 리스트 값이 null이면
+        else isLike = true;
+        return isLike;
+    }
 }
