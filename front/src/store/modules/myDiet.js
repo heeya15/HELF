@@ -111,9 +111,10 @@ const reducer = (state = initialState, action) =>
       case MY_DIET_IMAGE_REQUEST:
         break;
       case MY_DIET_IMAGE_SUCCESS:
-        action.data.data.forEach((foods) => {
-          draft.foodName.push(foods);
-        });
+        // action.data.data.forEach((foods) => {
+        //   draft.foodName.push({name:foods,weight:100});
+        // });
+        console.log(action.data.data);
         break;
       case MY_DIET_IMAGE_FAILURE:
         break;

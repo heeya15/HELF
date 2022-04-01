@@ -29,6 +29,11 @@ const initialState = {
   exerciseHistoryList: [],
   exerciseDateList: new HashMap(),
   exerciseTypeList: new HashMap(),
+  exercise: {
+    type: "스쿼트",
+    set: 0,
+    time: 0,
+  },
 };
 
 export const EXERCISE_HISTORY_FINDALL_REQUEST =
@@ -37,6 +42,24 @@ export const EXERCISE_HISTORY_FINDALL_SUCCESS =
   "EXERCISE_HISTORY_FINDALL_SUCCESS";
 export const EXERCISE_HISTORY_FINDALL_FAILURE =
   "EXERCISE_HISTORY_FINDALL_FAILURE";
+
+const SET_EXERCISE_TYPE = "SET_EXERCISE_TYPE";
+export const setExerciseType = (state) => ({
+  type: SET_EXERCISE_TYPE,
+  state,
+});
+
+const SET_EXERCISE_SET = "SET_EXERCISE_SET";
+export const setExerciseSet = (state) => ({
+  type: SET_EXERCISE_SET,
+  state,
+});
+
+const SET_EXERCISE_TIME = "SET_EXERCISE_TIME";
+export const setExerciseTime = (state) => ({
+  type: SET_EXERCISE_TIME,
+  state,
+});
 
 const reducer = (state = initialState, action) =>
   produce(state, (draft) => {
@@ -77,6 +100,15 @@ const reducer = (state = initialState, action) =>
         }
         break;
       case EXERCISE_HISTORY_FINDALL_FAILURE:
+        break;
+      case SET_EXERCISE_TYPE:
+        draft.exercise.type = action.state;
+        break;
+      case SET_EXERCISE_SET:
+        draft.exercise.set = action.state;
+        break;
+      case SET_EXERCISE_TIME:
+        draft.exercise.time = action.state;
         break;
       default:
         break;
