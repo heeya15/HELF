@@ -97,11 +97,20 @@ public class WeightHistoryServiceImpl implements WeightHistoryService {
 		}
 		return weightHistory;
 	}
+	// 수정
 	@Transactional
 	@Override
 	public void updateWeightHistory(WeightHistoryrRegisterReq registerInfo) {
-		LocalDate createAt = LocalDate.parse(registerInfo.getCreatedAt(), DateTimeFormatter.ISO_DATE);
+
+		// 현재 날짜 구하기 (시스템 시계, 시스템 타임존)
+		LocalDate now = LocalDate.now();
 		String userId = registerInfo.getUserId();
+		LocalDate createAt = LocalDate.parse(registerInfo.getCreatedAt(), DateTimeFormatter.ISO_DATE);
+		if(createAt.equals(now)){ // 현재 날짜를 수정 요청 들어왔다면
+			// 해당 유저 정보 찾고 방금 등록한 몸무게로 user 정보 몸무게 수정.
+			User user = userRepositorySupport.findUserByUserId(userId).get();
+			user.updateWeight(registerInfo.getWeight());
+		}
 		WeightHistory weightHistory= weightHistoryRepository.findByWeightHistory(userId,createAt);
 		weightHistory.updateWeightHistory(registerInfo);
 	}

@@ -138,8 +138,11 @@ export default function WeightHistory() {
                 type: SELECT_REGISTER_WEIGHT_HISTORY_RESET ,
             });
             dispatch({
+                type: WEIGHT_HISTORY_REQUEST,
+            });
+            dispatch({
                 type: MY_PAGE_REQUEST,
-            })
+            });
         } 
     }, [me, selectRegisterWeightHistoryInfoDone]);
 
@@ -149,6 +152,9 @@ export default function WeightHistory() {
             setOpen(false);
             dispatch({
                 type: UPDATE_WEIGHT_HISTORY_RESET ,
+            });
+            dispatch({
+                type: WEIGHT_HISTORY_REQUEST,
             });
             dispatch({
                 type: MY_PAGE_REQUEST,
@@ -172,8 +178,11 @@ export default function WeightHistory() {
                 type: DELETE_WEIGHT_HISTORY_RESET ,
             });
             dispatch({
+                type: WEIGHT_HISTORY_REQUEST,
+            });
+            dispatch({
                 type: MY_PAGE_REQUEST,
-            })
+            });
         }
     }, [ me, deleteWeightHistoryInfoDone]);
    
