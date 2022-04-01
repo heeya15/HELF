@@ -17,3 +17,9 @@ export async function shareBoardRegisterAPI({
     });
     return result;
 }
+
+// BEST 식단 조회 -> 좋아요가 가장 많은 순으로 5개 레코드 조회
+export async function ShareBoardTopLikeAPI() {
+    const result = await axios.get(`${BASE_URL}shareboard/findAll/like`);
+    return result;
+}

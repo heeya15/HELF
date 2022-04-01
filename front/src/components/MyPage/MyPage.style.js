@@ -194,7 +194,31 @@ const LikeListStyle = styled.div`
     border-radius: 20px;
   }
 `;
-
+const ShareBoardLikeListStyle = styled.div`
+  .total {
+    background-color: transparent;
+    border: transparent;
+    z-index: 2;
+    position: absolute;
+    text-align: left;
+    margin: 1% auto;
+    .icon {
+      color: red;
+      margin-left: 50%;
+      :hover {
+        transform: scale(1.3);
+        cursor: pointer;
+      }
+    }
+  }
+  img {
+    width: 200px;
+    height: 200px;
+    display: block;
+    margin: auto;
+    border-radius: 20px;
+  }
+`;
 export {
   Container,
   MyPageMenuWrapper,
@@ -213,4 +237,5 @@ export {
   TooMuchMessage,
   Title,
   LikeListStyle,
+  ShareBoardLikeListStyle
 };

@@ -9,7 +9,7 @@ import { Link } from 'react-router-dom';
 import { BASE_URL } from "../../utils/https";
 import { LOCAL_URL } from "../../utils/https";
 import { IMAGE_URL } from "../../utils/https";
-
+import ShareBoardTopLike from "./ShareBoardTopLike";
 // 박스 내부 CSS
 const Label = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -70,8 +70,9 @@ function SharedBoard(props) {
     return(
       
       <div className="boxdiv"> 
-      <div className="shardbox"> 대충 제목이라는 뜻</div>
+      <div className="shardbox"> </div>
       <div>
+      <ShareBoardTopLike></ShareBoardTopLike>
       <Masonry columns={3} spacing={2}>
       {shardList.map(user => (
         <User user={user} />
