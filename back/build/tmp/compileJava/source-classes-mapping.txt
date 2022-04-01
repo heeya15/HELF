@@ -70,6 +70,8 @@ com/aisher/helf/api/service/ExerciseHistoryService.java
  com.aisher.helf.api.service.ExerciseHistoryService
 com/aisher/helf/db/repository/ShareBoardRepository.java
  com.aisher.helf.db.repository.ShareBoardRepository
+com/aisher/helf/api/service/ImageUtils.java
+ com.aisher.helf.api.service.ImageUtils
 com/aisher/helf/api/response/CommentFindAllRes.java
  com.aisher.helf.api.response.CommentFindAllRes
 com/aisher/helf/api/request/ExerciseHistoryRegisterReq.java
@@ -111,7 +113,6 @@ com/aisher/helf/db/entity/ShareBoard.java
  com.aisher.helf.db.entity.ShareBoard$ShareBoardBuilder
 com/aisher/helf/api/service/DietDiaryServiceImpl.java
  com.aisher.helf.api.service.DietDiaryServiceImpl
- com.aisher.helf.api.service.DietDiaryServiceImpl$MyTranslator
 com/aisher/helf/db/repository/UserRepositorySupport.java
  com.aisher.helf.db.repository.UserRepositorySupport
 com/aisher/helf/api/service/ExerciseServiceImpl.java
@@ -190,6 +191,8 @@ com/aisher/helf/api/response/NutritionHistoryRes.java
  com.aisher.helf.api.response.NutritionHistoryRes
 com/aisher/helf/db/repository/ExerciseRepositorySupport.java
  com.aisher.helf.db.repository.ExerciseRepositorySupport
+com/aisher/helf/api/response/ShareBoardFindTopLikeRes.java
+ com.aisher.helf.api.response.ShareBoardFindTopLikeRes
 com/aisher/helf/api/response/NutritionRes.java
  com.aisher.helf.api.response.NutritionRes
 com/aisher/helf/db/entity/ExerciseHistory.java

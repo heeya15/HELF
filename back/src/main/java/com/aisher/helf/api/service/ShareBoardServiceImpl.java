@@ -3,6 +3,7 @@ package com.aisher.helf.api.service;
 import com.aisher.helf.api.request.ShareBoardRegisterReq;
 import com.aisher.helf.api.response.ShareBoardAllRes;
 import com.aisher.helf.api.response.ShareBoardFindRes;
+import com.aisher.helf.api.response.ShareBoardFindTopLikeRes;
 import com.aisher.helf.db.entity.DietDiary;
 import com.aisher.helf.db.entity.LikeList;
 import com.aisher.helf.db.entity.ShareBoard;
@@ -51,6 +52,12 @@ public class ShareBoardServiceImpl implements ShareBoardService {
     public List<ShareBoardFindRes> findByShareBoardId(Long boardNo) {
         shareboardRepository.updateView(boardNo); // 상세 게시글 클릭시 조회수 1 증가.
         List<ShareBoardFindRes> shareboard = shareboardRepository.findShareBoard(boardNo);
+        return shareboard;
+    }
+
+    @Override
+    public List<ShareBoardFindTopLikeRes> findShareBoardByTopLike() {
+        List<ShareBoardFindTopLikeRes> shareboard = shareboardRepository.findShareBoardByTopLike();
         return shareboard;
     }
 
