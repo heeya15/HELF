@@ -11,3 +11,24 @@ export async function exerciseHistoryFindAllAPI(year) {
   );
   return result;
 }
+
+export async function exerciseHistoryRegisterAPI({ count, date, exerciseNo }) {
+  const exerciseHistoryRegisterReq = {
+    exerciseCount: count,
+    exerciseDate: date,
+    exerciseNo: exerciseNo,
+    historyNo: 0,
+  };
+  const token = sessionStorage.getItem("jwt");
+  const header = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+  const result = await axios.post(
+    `${BASE_URL}exerciseHistory/register`,
+    exerciseHistoryRegisterReq,
+    header
+  );
+  return result;
+}
