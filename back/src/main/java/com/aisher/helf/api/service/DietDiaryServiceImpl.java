@@ -1,16 +1,8 @@
 package com.aisher.helf.api.service;
 
-import ai.djl.Application;
+
 import ai.djl.MalformedModelException;
-import ai.djl.inference.Predictor;
-import ai.djl.modality.Classifications;
-import ai.djl.modality.cv.Image;
-import ai.djl.modality.cv.ImageFactory;
-import ai.djl.modality.cv.output.DetectedObjects;
-import ai.djl.repository.zoo.Criteria;
 import ai.djl.repository.zoo.ModelNotFoundException;
-import ai.djl.repository.zoo.ModelZoo;
-import ai.djl.repository.zoo.ZooModel;
 import ai.djl.translate.TranslateException;
 import com.aisher.helf.api.request.DietDiaryRegisterReq;
 import com.aisher.helf.api.request.DietRegisterReq;
@@ -26,7 +18,9 @@ import org.springframework.format.datetime.DateFormatter;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.imageio.ImageIO;
 import javax.transaction.Transactional;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.nio.file.Path;
@@ -39,28 +33,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 import java.util.*;
-import ai.djl.Application;
-import ai.djl.ModelException;
-import ai.djl.engine.Engine;
+
 import ai.djl.inference.Predictor;
 import ai.djl.modality.cv.Image;
 import ai.djl.modality.cv.ImageFactory;
-import ai.djl.modality.cv.output.BoundingBox;
 import ai.djl.modality.cv.output.DetectedObjects;
-import ai.djl.modality.cv.output.Rectangle;
-import ai.djl.modality.cv.util.NDImageUtils;
-import ai.djl.ndarray.NDArray;
-import ai.djl.ndarray.NDList;
-import ai.djl.ndarray.types.DataType;
+import ai.djl.modality.cv.transform.Resize;
+import ai.djl.modality.cv.transform.ToTensor;
+import ai.djl.modality.cv.translator.YoloV5Translator;
 import ai.djl.repository.zoo.Criteria;
 import ai.djl.repository.zoo.ModelZoo;
 import ai.djl.repository.zoo.ZooModel;
 import ai.djl.training.util.ProgressBar;
-import ai.djl.translate.Batchifier;
-import ai.djl.translate.TranslateException;
+import ai.djl.translate.Pipeline;
 import ai.djl.translate.Translator;
-import ai.djl.translate.TranslatorContext;
-import ai.djl.util.JsonUtils;
+import lombok.extern.slf4j.Slf4j;
+
 import com.google.gson.annotations.SerializedName;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -262,115 +250,66 @@ public class DietDiaryServiceImpl implements DietDiaryService{
 
     /** 음식을 인식하는 foodSegmentation 입니다. **/
     @Override
-    public DetectedObjects foodSegmentation(MultipartFile imagePath) throws IOException, ModelNotFoundException, MalformedModelException {
-        Image image = ImageFactory.getInstance().fromImage(imagePath);
+    public DetectedObjects foodSegmentation(MultipartFile imagePath) throws IOException, ModelNotFoundException, MalformedModelException, TranslateException, ModelNotFoundException, MalformedModelException, TranslateException {
+        int imageSize = 640;
 
-        Criteria<Image, DetectedObjects> criteria =
-                Criteria.builder()
-                        .optApplication(Application.CV.IMAGE_CLASSIFICATION)
-                        .setTypes(Image.class, DetectedObjects.class)
-                        .optTranslator(new MyTranslator())
-                        .optModelUrls("src/main/resources/dist/model")
-                        .optModelName("model-final")
-                        .build();
-        try (ZooModel<Image, DetectedObjects> model = ModelZoo.loadModel(criteria);
-             Predictor<Image, DetectedObjects> predictor = model.newPredictor()) {
-            DetectedObjects detection = predictor.predict(image);
-            saveBoundingBoxImage(image, detection);
-            return detection;
-        } catch (TranslateException e) {
-            e.printStackTrace();
+        Pipeline pipeline = new Pipeline();
+        pipeline.add(new Resize(imageSize));
+        pipeline.add(new ToTensor());
+
+        Translator<Image, DetectedObjects> translator =  YoloV5Translator
+                .builder()
+                .setPipeline(pipeline)
+                .optSynset(Arrays.asList("chickenbreast","tomato","salmon","steak","salad","egg","cucumber","milk","sweetpotato","rice","natto","tofu","broccoli"))
+                .optThreshold(0.5f)
+                .build();
+
+
+        Criteria<Image, DetectedObjects> criteria = Criteria.builder()
+                .setTypes(Image.class, DetectedObjects.class)
+                .optModelUrls("src/main/resources/dist/model")
+                .optModelName("best.torchscript")
+                .optTranslator(translator)
+                .optProgress(new ProgressBar())
+                .build();
+
+        ZooModel<Image,DetectedObjects> model = ModelZoo.loadModel(criteria);
+        BufferedImage image = ImageIO.read(imagePath.getInputStream());
+        Image img = ImageFactory.getInstance().fromImage(image);
+//        Image img = ImageFactory.getInstance().fromFile(Paths.get("src/main/resources/dist/img/test.jpg"));
+        Predictor<Image, DetectedObjects> predictor = model.newPredictor();
+
+        DetectedObjects results = predictor.predict(img);
+
+
+        Map<String, Boolean> foodsState = new HashMap<>();
+        //인식된 음식 이름
+        List<DetectedObjects.DetectedObject> list = results.items();
+        for (DetectedObjects.DetectedObject result : list) {
+            String className = result.getClassName();
+            System.out.println(className);
+            foodsState.put(className, true);
         }
-        return null;
-    }
-    // 인식 잘되는지 테스트용
-    private void saveBoundingBoxImage(Image image, DetectedObjects detection) throws IOException {
+        foodsState.forEach((key, value)->{
+            System.out.println( key );
+        });
+
+        System.out.println(results);
+
         Path outputDir = Paths.get("src/main/resources/dist/model/result");
         Files.createDirectories(outputDir);
-        Image newImage = image.duplicate();
-        newImage.drawBoundingBoxes(detection);
 
-        Path imagePath = outputDir.resolve("detected-test.png");
-        newImage.save(Files.newOutputStream(imagePath), "png");
-    }
-private static final class MyTranslator implements Translator<Image, DetectedObjects> {
 
-    private Map<Integer, String> classes;
-    private int maxBoxes;
-    private float threshold;
 
-    MyTranslator() {
-        maxBoxes = 10;
-        threshold = 0.7f;
-    }
+        ImageUtils.drawBoundingBoxes((BufferedImage) img.getWrappedImage(),results);
 
-    @Override
-    public NDList processInput(TranslatorContext ctx, Image input) {
-        NDArray array = input.toNDArray(ctx.getNDManager(), Image.Flag.COLOR);
-        array = NDImageUtils.resize(array, 224);
-        array = array.toType(DataType.UINT8, true);
-        array = array.expandDims(0);
-        return new NDList(array);
-    }
+        //인식된 결과 이미지 전송시 img 사용
 
-/*        @Override
-        public void prepare(NDManager manager, Model model) throws IOException {
-            if (classes == null) {
-                classes = loadSynset();
-            }
-        }*/
-
-    @Override
-    public DetectedObjects processOutput(TranslatorContext ctx, NDList list) {
-
-        int[] classIds = null;
-        float[] probabilities = null;
-        NDArray boundingBoxes = null;
-        for (NDArray array : list) {
-            if ("detection_boxes".equals(array.getName())) {
-                boundingBoxes = array.get(0);
-            } else if ("detection_scores".equals(array.getName())) {
-                probabilities = array.get(0).toFloatArray();
-            } else if ("detection_classes".equals(array.getName())) {
-                classIds = array.get(0).toType(DataType.INT32, true).toIntArray();
-            }
-        }
-        Objects.requireNonNull(classIds);
-        Objects.requireNonNull(probabilities);
-        Objects.requireNonNull(boundingBoxes);
-
-        List<String> retNames = new ArrayList<>();
-        List<Double> retProbs = new ArrayList<>();
-        List<BoundingBox> retBB = new ArrayList<>();
-
-        for (int i = 0; i < Math.min(classIds.length, maxBoxes); ++i) {
-            int classId = classIds[i];
-            double probability = probabilities[i];
-            if (classId > 0 && probability > threshold) {
-                String className = classes.getOrDefault(classId, "#" + classId);
-                float[] box = boundingBoxes.get(i).toFloatArray();
-                float yMin = box[0];
-                float xMin = box[1];
-                float yMax = box[2];
-                float xMax = box[3];
-                Rectangle rect = new Rectangle(xMin, yMin, xMax - xMin, yMax - yMin);
-                retNames.add(className);
-                retProbs.add(probability);
-                retBB.add(rect);
-            }
-        }
-
-        return new DetectedObjects(retNames, retProbs, retBB);
-    }
-
-    @Override
-    public Batchifier getBatchifier() {
+        Path SavePath = outputDir.resolve("detected-DSC00020_0.png");
+        // OpenJDK can't save jpg with alpha channel
+        img.save(Files.newOutputStream(SavePath), "png");
+        log.info("Detected objects image has been saved in: {}", imagePath);
         return null;
     }
 
-    @Override
-    public void prepare(TranslatorContext ctx) throws Exception {
-        Translator.super.prepare(ctx);
-    }
-}
 }
