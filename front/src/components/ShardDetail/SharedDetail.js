@@ -26,28 +26,6 @@ import {
 } from "./SharedDetail.style";
 
 
-// function UserComment({ user }, nowUser) {
-//   console.log(user)
-//   console.log(nowUser)
-//   return (
-//     <div >
-//             <div key={user.comment_no} >
-//               {
-//                 nowUser == user.user_id
-//                 ?<Titles>{user.user_id} : {user.comment} + 삭제버튼</Titles>
-//                 :<Titles>{user.user_id} : {user.comment}+ 삭제버튼</Titles>
-
-//               }
-//             </div>
-       
-//     </div>
-//   );
-// }
-
-
-
-
-
 // match 로 현재 게시물 주소에 대한 정보를 props 로 받아온다
 function Detail({ match }) {
   const index = match.params.index.substring(0);
@@ -107,16 +85,22 @@ function Detail({ match }) {
     const goBack = () => {
       history.push(`/sharedBoard`);
     };
-    const rate = 100/( allData.protein + allData.carbohydrate + allData.fat)
-    var protein = Number(rate * Number(allData.protein))
-    var carbohydrate = Number(rate * Number(allData.carbohydrate))
-    var fat = Number(rate * Number(allData.fat))
-    const myData = [
-      { title: "탄수화물", value : Math.round(carbohydrate), color : '#F6CB44' },
-      { title: "단백질", value : Math.round(protein), color : '#000000' },
-      { title: "지방", value : Math.round(fat), color : '#F6CB44' },
-    ];
-    
+
+    const boardDelete =() => {
+      axios.delete(`${BASE_URL}shareboard/remove?boardNo=${allData.board_no}&diaryNo=${allData.diary_no}`,
+        {
+          headers : { 
+            Authorization: `Bearer ${ token }`
+          }
+        }
+        )
+        .then((res => {
+          console.log(res)
+          history.push(`/sharedBoard`);
+        }))
+    }
+
+
     //  댓글 관련
 
     const [Comment, SetComment] = useState("");
@@ -145,6 +129,18 @@ function Detail({ match }) {
           SetComment("");
         }))
     };
+    const commentDeleteHandler = ({ target: { value } }) => {
+      axios.delete(`${BASE_URL}comment/remove/${value}`,
+        {
+          headers : { 
+            Authorization: `Bearer ${ token }`
+          }
+        }
+        )
+        .then((res => {
+          console.log(res)
+        }))
+    };
 
   return (
       <div className="bigBox">
@@ -160,7 +156,7 @@ function Detail({ match }) {
                   <Titles>{allData.user_id}님의 식단</Titles>
                   <Description
                   >{allData.description}</Description>
-                  <Titles>{allData.food_name  }</Titles>
+                  <Titles>{allData.food_name  } 100g</Titles>
                   <div className="nutBox">
                     <p className="line">칼로리 {allData.kcal}Kcal</p>
                     
@@ -186,8 +182,8 @@ function Detail({ match }) {
                             ?<div className="commentDelete">
                               <Titles>{user.user_id} : {user.comment} </Titles>
                               <div className="commentButton">                     
-                                <button>수정</button>
-                                <button>삭제</button>
+                                {/* <button>수정</button> */}
+                                <button value={user.comment_no} onClick={commentDeleteHandler}>삭제</button>
                               </div>
          
                               </div>
@@ -203,14 +199,14 @@ function Detail({ match }) {
               </Col>
             </Row>
           </TotalStyle>
-          <ListButton>목록</ListButton>
+          <ListButton onClick={goBack}>목록</ListButton>
           {/* 작성자 == 조회자 이면 수정 버튼 활성화 */}
           {
               userData == allData.user_id
               ? <UpdatdButton>수정</UpdatdButton>
               : null
             }
-          <BackButton onClick={goBack}>나가기</BackButton>
+          <BackButton onClick={boardDelete}>삭제</BackButton>
           </Container>
       
       </div>
