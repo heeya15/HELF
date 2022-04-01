@@ -2,6 +2,7 @@ package com.aisher.helf.db.repository;
 
 import com.aisher.helf.api.response.ShareBoardFindAllRes;
 import com.aisher.helf.api.response.ShareBoardFindRes;
+import com.aisher.helf.api.response.ShareBoardFindTopLikeRes;
 import com.aisher.helf.db.entity.ShareBoard;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -30,15 +31,21 @@ public interface ShareBoardRepository extends JpaRepository<ShareBoard, Long> { 
 	@Query(value ="update share_board set hit = hit + 1 where board_no = :boardNo", nativeQuery = true)
 	void updateView(@Param("boardNo") Long boardNo);
 
-	@Query(value="select fd.user_id,s.board_no, s.description,s.created_at, fd.diary_no, fd.image_path, d.weight, f.food_name, f.kcal, f.carbohydrate, f.protein, f.fat\n" +
-			"from share_board s \n" +
+	// 상세 조회
+	@Query(value="select fd.user_id,s.board_no, s.description,s.created_at, fd.diary_no, fd.image_path, d.weight, f.food_name, f.kcal, f.carbohydrate, f.protein, f.fat, l.count\n" +
+			"from share_board s\n" +
+			"join (select board_no, count(*) as count \n" +
+			  "\t  from like_list\n" +
+			  "    where board_no = :boardNo\n" +
+			"\t  group by board_no) l on (s.board_no = l.board_no)\n" +
 			"join diet_diary fd on (s.diary_no = fd.diary_no)\n" +
 			"join diet d on (fd.diary_no = d.diary_no)\n" +
 			"join food f on (f.food_no = d.food_no)\n" +
-			"where s.board_no = :boardNo "
+			"where s.board_no = :boardNo"
 			,nativeQuery = true)
 	List<ShareBoardFindRes> findShareBoard(@Param("boardNo") Long boardNo);
 
+	// 전체 조회
 	@Query(value="select s.board_no, s.hit, s.created_at, fd.image_path, s.description, s.reply_cnt\n" +
 			"from (select c.board_no, sb.hit, sb.created_at, sb.description, sb.diary_no, count(*) as reply_cnt\n" +
 			"\t  from comment c join share_board sb on (c.board_no = sb.board_no)\n" +
@@ -47,4 +54,15 @@ public interface ShareBoardRepository extends JpaRepository<ShareBoard, Long> { 
 			"\t join diet_diary fd on (s.diary_no = fd.diary_no)"
 			,nativeQuery = true)
 	List<ShareBoardFindAllRes>findAllShareBoard();
+
+	// 좋아요 수 많은 상위 5개 레코더 검색
+	@Query(value="select l.board_no, l.count, s.description, s.hit, s.diary_no, d.image_path \n" +
+			"from (select board_no, count(*) as count\n" +
+			"\t  from like_list\n" +
+			"\t  group by board_no\n" +
+			"\t  order by count desc, board_no asc \n" +
+			"\t  limit 0,5) l join share_board s  on (l.board_no = s.board_no)\n" +
+			"    join diet_diary d on (s.diary_no = d.diary_no)"
+			,nativeQuery = true)
+	List<ShareBoardFindTopLikeRes>findShareBoardByTopLike();
 }

@@ -3,6 +3,7 @@ package com.aisher.helf.api.service;
 import com.aisher.helf.api.request.ShareBoardRegisterReq;
 import com.aisher.helf.api.response.ShareBoardAllRes;
 import com.aisher.helf.api.response.ShareBoardFindRes;
+import com.aisher.helf.api.response.ShareBoardFindTopLikeRes;
 import com.aisher.helf.db.entity.ShareBoard;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -19,9 +20,11 @@ public interface ShareBoardService {
 	/** 공유 게시판에 게시글(식단 일지) 등록 **/
 	ShareBoard registerShareBoard(ShareBoardRegisterReq shareBoardRegisterReq);
 
-	/** 공유 게시글 하나의 정보를 가져오는(상세보기) findByBoardId 입니다.
-	 * @return*/
+	/** 공유 게시글 하나의 정보를 가져오는(상세보기) findByBoardId 입니다. **/
 	List<ShareBoardFindRes> findByShareBoardId(Long boardNo);
+
+	/** 공유 게시글중 좋아요가 가장 많은 순서대로 5개 레코드 가져져오는 함수 입니다. **/
+	List<ShareBoardFindTopLikeRes> findShareBoardByTopLike();
 
 	/** 모든 공유 게시글의 정보를 가져오는 findAllBoard 입니다. (목록 부분에 사용)*/
 	Page<ShareBoard> findAllShareBoard(Pageable pageable);

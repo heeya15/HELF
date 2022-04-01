@@ -4,6 +4,7 @@ package com.aisher.helf.api.controller;
 import com.aisher.helf.api.request.ShareBoardRegisterReq;
 import com.aisher.helf.api.response.ShareBoardAllRes;
 import com.aisher.helf.api.response.ShareBoardFindRes;
+import com.aisher.helf.api.response.ShareBoardFindTopLikeRes;
 import com.aisher.helf.api.service.DietDiaryService;
 import com.aisher.helf.api.service.ShareBoardService;
 import com.aisher.helf.common.auth.UserDetails;
@@ -92,6 +93,17 @@ public class ShareBoardController {
     public ResponseEntity<List<ShareBoardFindRes>> findShareBoardInfo(@PathVariable Long boardNo) {
         List<ShareBoardFindRes> shareboardInfo = shareBoardService.findByShareBoardId(boardNo);
         return new ResponseEntity<List<ShareBoardFindRes>>(shareboardInfo, HttpStatus.OK);
+    }
+
+    @GetMapping("/findAll/like")
+    @ApiOperation(value ="공유 게시글중 좋아요 개수가 많은 5개 레코드 조회", notes ="공유 게시글중 좋아요 개수가 많은 5개 레코드 조회")
+    @ApiResponses({ @ApiResponse(code = 200, message = "성공"),
+            @ApiResponse(code = 401, message = "인증 실패"),
+            @ApiResponse(code = 404, message = "사용자 없음"),
+            @ApiResponse(code = 500, message = "서버 오류") })
+    public ResponseEntity<List<ShareBoardFindTopLikeRes>> findShareBoardTopLike() {
+        List<ShareBoardFindTopLikeRes> shareboardInfo = shareBoardService.findShareBoardByTopLike();
+        return new ResponseEntity<List<ShareBoardFindTopLikeRes>>(shareboardInfo, HttpStatus.OK);
     }
 
     @PostMapping("/like/{boardNo}")
