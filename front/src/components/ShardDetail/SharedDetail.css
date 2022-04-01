@@ -38,5 +38,8 @@
 .commentButton {
   display: flex;
   align-items: center;
-  margin-top: 4%;
+    margin-top: 4%;
 }
+
+.line {
+  margin: 0.5rem 0rem;}
