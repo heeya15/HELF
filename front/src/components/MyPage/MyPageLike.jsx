@@ -1,7 +1,10 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { MY_PAGE_LIKE_REQUEST } from "../../store/modules/myPage";
+import {
+  MY_PAGE_LIKE_REQUEST,
+  MY_PAGE_LIKE_DELETE_REQUEST,
+} from "../../store/modules/myPage";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -19,6 +22,16 @@ export default function MyPageLike() {
   }, [dispatch]);
 
   const { myPageLikeList } = useSelector((state) => state.mypage);
+  const { likeDeleteState } = useSelector((state) => state.mypage);
+
+  useEffect(() => {
+    if (likeDeleteState) {
+      dispatch({
+        type: MY_PAGE_LIKE_REQUEST,
+      });
+    }
+  }, [likeDeleteState]);
+
   const settings = {
     dots: true,
     infinite: false,
@@ -28,12 +41,15 @@ export default function MyPageLike() {
   };
 
   const likeDelete = (boardNo, e) => {
-    console.log(boardNo);
+    dispatch({
+      type: MY_PAGE_LIKE_DELETE_REQUEST,
+      data: boardNo,
+    });
   };
 
   const goToShareDetail = (e) => {
     const boardNo = e.target.getAttribute("data");
-    // history.push(`/${boardNo}`);
+    history.push(`/sharedetail/${boardNo}`);
   };
 
   return (

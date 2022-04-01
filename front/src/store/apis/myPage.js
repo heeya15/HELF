@@ -100,22 +100,23 @@ export async function WeightHistoryUpdateAPI({ createdAt, weight }) {
 
 // 선택 날짜 몸무게 정보 등록시 몸무게 정보 히스토리 테이블에 수정된 내용 반영
 export async function SelectWeightHistoryRegisterAPI({ createdAt, weight }) {
-    console.log("몸무게 히스토리 등록 시 뭐가 찍히는지 확인하자");
-    console.log(createdAt);
-    console.log(weight);
-    const result = await axios.post(`${BASE_URL}weight/history/select/register/weight`,
-        { 
-            createdAt: createdAt,
-            weight: weight
-        },
-        {
-            headers: {
-                Authorization: 'Bearer ' + sessionStorage.getItem('jwt')
-            },
-        },
-    );
-    console.log(result);
-    return result;
+  console.log("몸무게 히스토리 등록 시 뭐가 찍히는지 확인하자");
+  console.log(createdAt);
+  console.log(weight);
+  const result = await axios.post(
+    `${BASE_URL}weight/history/select/register/weight`,
+    {
+      createdAt: createdAt,
+      weight: weight,
+    },
+    {
+      headers: {
+        Authorization: "Bearer " + sessionStorage.getItem("jwt"),
+      },
+    }
+  );
+  console.log(result);
+  return result;
 }
 
 // 선택 날짜 몸무게 정보 수정시 몸무게 정보 히스토리 테이블에 수정된 내용 반영
@@ -160,5 +161,16 @@ export async function MyPageLikeAPI() {
   const token = sessionStorage.getItem("jwt");
   const header = { headers: { Authorization: `Bearer ${token}` } };
   const result = await axios.get(`${BASE_URL}user/likeList`, header);
+  return result;
+}
+
+export async function MyPageLikeDeleteAPI(boardNo) {
+  const token = sessionStorage.getItem("jwt");
+  const header = { headers: { Authorization: `Bearer ${token}` } };
+  const result = await axios.post(
+    `${BASE_URL}shareboard/like/${boardNo}`,
+    null,
+    header
+  );
   return result;
 }
