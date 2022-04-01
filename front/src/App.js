@@ -21,6 +21,7 @@ import Nutrition from "./components/MyPage/Statistics/Nutrition";
 import withRoot from "./withRoot";
 import ExerciseHistory from "./components/MyPage/Statistics/ExerciseHistory";
 import AdditionalUserInfo from "./pages/User/LogIn/AdditionalUserInfo";
+import ExerciseSetting from "./components/Exercise/ExerciseSetting";
 
 // import Placeholder from 'react-bootstrap/Placeholder';
 
@@ -42,19 +43,18 @@ function App() {
       <Route path="/nutrition" component={Nutrition} />
       <Route exact path="/sharedetail/:index" component={ShareDetail} />
       <Route path="/exercisehistory" component={ExerciseHistory} />
-      <Route path="/additionalUserInfo" component={AdditionalUserInfo}/>
+      <Route path="/additionalUserInfo" component={AdditionalUserInfo} />
       <Route
-            path="/privacy-policy"
-            component={() => {
-              window.location.replace('https://example.com/1234');
-              return null;
-            }}
-          />
+        path="/privacy-policy"
+        component={() => {
+          window.location.replace("https://example.com/1234");
+          return null;
+        }}
+      />
+      <Route path="/exercisesetting" component={ExerciseSetting} />
     </div>
   );
 }
 
 // export default App;
 export default withRoot(App);
-
-
