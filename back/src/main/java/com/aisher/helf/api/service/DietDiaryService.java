@@ -4,6 +4,7 @@ import ai.djl.MalformedModelException;
 import ai.djl.modality.Classifications;
 import ai.djl.modality.cv.output.DetectedObjects;
 import ai.djl.repository.zoo.ModelNotFoundException;
+import ai.djl.translate.TranslateException;
 import com.aisher.helf.api.request.DietDiaryRegisterReq;
 import com.aisher.helf.api.response.DietDiaryAllRes;
 import com.aisher.helf.api.response.DietDiaryFindRes;
@@ -36,6 +37,6 @@ public interface DietDiaryService {
     /** 공유 시 또는 공유 해제 시, 해당 식단 일지 공유 상태 변경 **/
     void updateDiaryShareStatus(int diaryNo);
     /** 음식을 인식하는 foodSegmentation **/
-    DetectedObjects foodSegmentation(MultipartFile imagePath) throws IOException, ModelNotFoundException, MalformedModelException;
+    DetectedObjects foodSegmentation(MultipartFile imagePath) throws IOException, ModelNotFoundException, MalformedModelException, TranslateException;
 
 }
