@@ -7,6 +7,11 @@ import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import DeleteIcon from "@mui/icons-material/Delete";
 import IconButton from "@mui/material/IconButton";
+// import Switch from '@mui/material/Switch';
+import ArrowBackIosOutlinedIcon from '@mui/icons-material/ArrowBackIosOutlined';
+// import ShareIcon from '@mui/icons-material/Share';
+// import ShareOutlinedIcon from '@mui/icons-material/ShareOutlined';
+// import IosShareIcon from '@mui/icons-material/IosShare';
 import { TextareaAutosize } from "@mui/material";
 import { IMAGE_URL } from "../../utils/https";
 import {
@@ -20,10 +25,8 @@ import {
   DietDiaryItemWrapper,
   AddButton,
   ShareButton,
-  DiaryList,
   DietDiaryItem,
   TotalKcal,
-  DeleteButton,
   shareBox,
   descriptionArea,
   ButtonWrapper,
@@ -38,6 +41,9 @@ import {
   DiaryTime,
   DiaryKcal,
   DiaryDesc,
+  fontNormal,
+  fontBold,
+  MenuTitle,
 } from "./MyDiet.style";
 import { useHistory, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -54,6 +60,7 @@ export default function MyDietDaily() {
   const [open, setOpen] = useState(false);
   const [shareDiaryNo, setShareDiaryNo] = useState("");
   const [shareDescription, setShareDescription] = useState("");
+
   const handleOpen = (info) => {
     console.log("공유할 정보 : ", info);
     // 공유 여부 체크
@@ -65,6 +72,7 @@ export default function MyDietDaily() {
     }
   };
   const handleClose = () => setOpen(false);
+
 
   var kcals = 0;
   const kcalList = [];
@@ -117,7 +125,7 @@ export default function MyDietDaily() {
 
   // 유저 만 나이 구하기
   var age = 0;
-  if(month < userYear) {
+  if(month < userMonth) {
     age = year - userYear - 1;
   } else if(month == userYear) {
     if(day < userDay) {
@@ -191,47 +199,65 @@ export default function MyDietDaily() {
 
   return (
     <DietDiaryItemWrapper>
-      <h1>{date}</h1>
-      <Button
-        onClick={() => {
-          goBack();
-        }}
-      >
-        back
-      </Button>
-      <div>
-        <AddButton onClick={clickAddBtn}>
-          <AddIcon />
-        </AddButton>
-      </div>
+      <MenuTitle>{date}</MenuTitle>
+      <Grid container spacing={3}>
+        <Grid item xs={12} sm={6} style={{ textAlign: 'left' }}>
+          <Button
+            onClick={() => {
+              goBack();
+            }}
+          >
+          <ArrowBackIosOutlinedIcon/>
+          </Button>
+        </Grid>
+        <Grid item xs={12} sm={6} style={{ textAlign: 'right' }}>
+          <AddButton onClick={clickAddBtn}>
+            <AddIcon/>
+          </AddButton>
+        </Grid>
+      </Grid>
       <div>
         {diaryInfoList.map((info) => (
           <DietDiaryItem key={info.diaryNo}>
-            <Box sx={{
-                        marginTop: 1,
-                        display: 'flex',
-                        flexDirection: 'column',
-                        alignItems: 'center'
-                    }}>
+            <Box 
+              sx={{
+                marginTop: 1,
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center'
+              }}>
               <Grid container spacing={2}>
-                <Grid item xs={12} sm={6}>
+                <Grid item xs={12} sm={5} style={{ textAlign: 'left' }}>
                   <DiaryImg
                     src={info.imageFullPath}
                     alt="식단 이미지"
                     onClick={() => clickDietDiaryItem(info.diaryNo)}
                   ></DiaryImg>
                 </Grid>
-                <Grid item xs={12} sm={6}>
+                <Grid item xs={12} sm={7}>
                   <DiaryItemWrapper>
                     <DiaryItemLeftWrapper>
-                      <DiaryTitle>{info.mealTime}</DiaryTitle>
-                      <DiaryTime>{info.diaryTime}</DiaryTime>
-                      <DiaryKcal>{info.printKcal} kcal</DiaryKcal>
-                      <DiaryDesc>{info.description}</DiaryDesc>
+                      <Grid container spacing={2}>
+                        <Grid item xs={12} sm={6}>
+                          <DiaryTitle style={{ marginTop: '10px' }}>{info.mealTime}</DiaryTitle>
+                        </Grid>
+                        <Grid item xs={12} sm={6} style={{ textAlign: 'right', marginTop: '0' }}>
+                        <IconButton aria-label="delete" size="large">
+                          <DeleteIcon
+                            fontSize="inherit"
+                            onClick={() => clickDeleteBtn(info)}
+                          />
+                        </IconButton>
+                        </Grid>
+                      </Grid> 
+                      <DiaryTime style={fontNormal}>{info.diaryTime}</DiaryTime>
+                      <DiaryKcal style={fontNormal}>{info.printKcal} kcal</DiaryKcal>
+                      <DiaryDesc style={fontNormal}>{info.description}</DiaryDesc>
                   </DiaryItemLeftWrapper>
                   <DiaryItemRightWrapper>
                     <ShareButton onClick={() => handleOpen(info)}>
                       Share
+                      {/* <span style={{ marginTop: '10px' }}>Share </span><ShareOutlinedIcon/> */}
                     </ShareButton>
                     <Modal
                       open={open}
@@ -266,12 +292,7 @@ export default function MyDietDaily() {
                         </ButtonWrapper>
                       </Box>
                     </Modal>
-                    <IconButton aria-label="delete" size="large">
-                      <DeleteIcon
-                        fontSize="inherit"
-                        onClick={() => clickDeleteBtn(info)}
-                      />
-                    </IconButton>
+                    
                     </DiaryItemRightWrapper>
                   </DiaryItemWrapper>
                 </Grid>

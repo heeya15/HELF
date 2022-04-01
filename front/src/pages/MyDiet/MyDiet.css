@@ -2,9 +2,36 @@
     padding: 30px;
 }
 
+.MenuTitle {
+    font-size: 50px;
+    margin: 10px 0;
+    font-family: 'KOTRA_BOLD-Bold';
+}
+
+.MenuTitleLight {
+    /* background: linear-gradient(to top, 40%, transparent 40%); */
+}
+
+/** 캘린더 header **/
+th {
+    background-color: #F6EDD9;
+    height: 40px;
+    line-height: 40px;
+}
+
+tbody::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera*/
+}
+
+.fc {
+    width: 70%;
+    margin: 0 auto;
+}
+
 /*요일*/
 .fc-col-header-cell-cushion {
-    color: #000;
+    color: #100C0D;
+    text-decoration: none;
 }
 .fc-col-header-cell-cushion:hover {
     text-decoration: none;
@@ -56,6 +83,52 @@
     font-weight: bold !important;
 }
 
+/* 월 좌우 이동 버튼 */
+.fc .fc-button-group > .fc-button {
+    background-color: #9EB0A2;
+    border: 1px solid white;
+}
+
+/* 월 좌우 이동 버튼에 마우스 올리면 살짝 커지기*/
+.fc .fc-button-group > .fc-button:hover {
+    transform: scale(1.1);
+}
+
+/* today 버튼 */
+.fc-today-button {
+    background-color: #2D4E37 !important;
+    border: 1px solid white !important;
+    opacity: 1.0 !important;
+    cursor: pointer;
+}
+
+/* today 버튼에 마우스 올리면 살짝 커지기*/
+.fc-today-button:hover {
+    transform: scale(1.1);
+}
+
+/* 캘린더 날짜 칸에 마우스 올리면 마우스 포인터 변경*/
 .fc-daygrid-day-frame {
     cursor: pointer;
+}
+
+/* 토요일 날짜 파란색으로 표시 */
+.fc-day-sat .fc-daygrid-day-number{
+    color: #064789;
+}
+
+/* 일요일 날짜 빨간색으로 표시 */
+.fc-day-sun .fc-daygrid-day-number{
+    color: #e02828;
+}
+
+.fc-daygrid-day-number {
+    text-decoration: none;
+}
+
+@media all and (max-width: 767px) {
+    .fc .fc-button-group > .fc-button {
+        width: 80%;
+        height: 80%;
+    }
 }
