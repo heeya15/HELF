@@ -38,5 +38,6 @@ public interface DietDiaryService {
     void updateDiaryShareStatus(int diaryNo);
     /** 음식을 인식하는 foodSegmentation **/
     DetectedObjects foodSegmentation(MultipartFile imagePath) throws IOException, ModelNotFoundException, MalformedModelException, TranslateException;
-
+    /** 인식된 결과 반환 **/
+    List<String> detectedResult();
 }
