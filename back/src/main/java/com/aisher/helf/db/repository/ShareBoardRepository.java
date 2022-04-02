@@ -32,16 +32,12 @@ public interface ShareBoardRepository extends JpaRepository<ShareBoard, Long> { 
 	void updateView(@Param("boardNo") Long boardNo);
 
 	// 상세 조회
-	@Query(value="select fd.user_id,s.board_no, s.description,s.created_at, fd.diary_no, fd.image_path, d.weight, f.food_name, f.kcal, f.carbohydrate, f.protein, f.fat, l.count\n" +
-			"from share_board s\n" +
-			"join (select board_no, count(*) as count \n" +
-			  "\t  from like_list\n" +
-			  "    where board_no = :boardNo\n" +
-			"\t  group by board_no) l on (s.board_no = l.board_no)\n" +
-			"join diet_diary fd on (s.diary_no = fd.diary_no)\n" +
-			"join diet d on (fd.diary_no = d.diary_no)\n" +
-			"join food f on (f.food_no = d.food_no)\n" +
-			"where s.board_no = :boardNo"
+	@Query(value="select fd.user_id,s.board_no, s.description,s.created_at, fd.diary_no, fd.image_path, d.weight, f.food_name, f.kcal, f.carbohydrate, f.protein, f.fat\n" +
+			"\t\t\tfrom share_board  s\n" +
+			"\t\t\tjoin diet_diary fd on (s.diary_no = fd.diary_no)\n" +
+			"\t\t\tjoin diet d on (fd.diary_no = d.diary_no)\n" +
+			"\t\t\tjoin food f on (f.food_no = d.food_no)\n" +
+			"\t\t\twhere s.board_no =:boardNo"
 			,nativeQuery = true)
 	List<ShareBoardFindRes> findShareBoard(@Param("boardNo") Long boardNo);
 
@@ -65,4 +61,12 @@ public interface ShareBoardRepository extends JpaRepository<ShareBoard, Long> { 
 			"    join diet_diary d on (s.diary_no = d.diary_no)"
 			,nativeQuery = true)
 	List<ShareBoardFindTopLikeRes>findShareBoardByTopLike();
+
+	// 해당 게시글 총 좋아요 개수 출력.
+	@Query(value ="select count(*) as count\n" +
+					"\t\t\t\t  from like_list\n" +
+					"\t\t\t\t  where board_no = :boardNo\n" +
+					"\t\t\t\t  group by board_no"
+			,nativeQuery = true)
+	String findSelectLikeTotal(@Param("boardNo") Long boardNo);
 }
