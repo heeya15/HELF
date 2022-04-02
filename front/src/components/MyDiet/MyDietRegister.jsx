@@ -103,7 +103,7 @@ export default function MyDietRegister() {
   const onWeightHandler = (e) => {
     const pair = {
       index: e.target.getAttribute("data-index"),
-      weight: e.target.value,
+      weight: parseInt(e.target.value),
     };
     dispatch(setmyDietWeight(pair));
   };
@@ -137,7 +137,7 @@ export default function MyDietRegister() {
                 <div>
                   {foodName.map((food, index) => (
                     <div key={index}>
-                      {food.name}{" "}
+                      {food.foodName}{" "}
                       <select
                         data-index={index}
                         style={{
