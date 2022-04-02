@@ -20,5 +20,5 @@ public interface NutritionHistoryService {
     /** diaryNo에 해당하는 영양 성분 히스토리 정보를 조회하는 findNutritionHistoryByUserId 입니다. **/
     NutritionHistory findNutritionHistoryByDiaryNo(int diaryNo);
     /** 유저의 일별 모든 영양 성분 히스토리 정보를 조회하는 findAllNutritionHistoryByUserId 입니다. **/
-    List<NutritionHistoryFindRes> findAllNutritionHistoryByUserId(String userId);
+    List<NutritionHistoryFindRes> findAllNutritionHistoryByUserId(String userId, String createdAt);
 }

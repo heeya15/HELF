@@ -22,6 +22,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import springfox.documentation.annotations.ApiIgnore;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Api(value = "영양 정보 히스토리 API", tags = {"NutritionHistory"})
@@ -35,17 +37,17 @@ public class NutritionHistoryController {
     @Autowired
     NutritionHistoryService nutritionHistoryService;
 
-    @GetMapping("/find")
+    @GetMapping("/find/{createdAt}")
     @ApiOperation(value ="식단 일지 정보 조회(token)", notes = "유저의 <strong>일별 섭취 영양 성분 정보</strong>를 조회한다.")
     @ApiResponses({ @ApiResponse(code = 200, message = "성공"),
             @ApiResponse(code = 401, message = "인증 실패"),
             @ApiResponse(code = 404, message = "사용자 없음"),
             @ApiResponse(code = 500, message = "서버 오류") })
-    public ResponseEntity<List<NutritionHistoryFindRes>> findNutritionHistory(@ApiIgnore Authentication authentication) {
+    public ResponseEntity<List<NutritionHistoryFindRes>> findNutritionHistory(@PathVariable("createdAt") String createdAt, @ApiIgnore Authentication authentication) {
         UserDetails userDetails = (UserDetails) authentication.getDetails();
         String userId = userDetails.getUsername();
 
-        List<NutritionHistoryFindRes> nutritionHistoryList = nutritionHistoryService.findAllNutritionHistoryByUserId(userId);
+        List<NutritionHistoryFindRes> nutritionHistoryList = nutritionHistoryService.findAllNutritionHistoryByUserId(userId, createdAt);
         for(int i=0; i<nutritionHistoryList.size(); i++) {
             System.out.print(nutritionHistoryList.get(i) + " ");
         }
