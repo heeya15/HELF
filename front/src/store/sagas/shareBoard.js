@@ -7,7 +7,9 @@ import {
 } from 'redux-saga/effects';    
 import {
     shareBoardRegisterAPI,
-    ShareBoardTopLikeAPI
+    ShareBoardTopLikeAPI,
+    ShareBoardIsLikeAndTotalLikeCountAPI,
+    ShareBoardLikeAPI
 } from '../apis/shareBoard'
 import {
     SHARE_BOARD_REGISTER_REQUEST,
@@ -15,7 +17,13 @@ import {
     SHARE_BOARD_REGISTER_FAILURE,
     SHARE_BOARD_LIKE_REQUEST,
     SHARE_BOARD_LIKE_SUCCESS,
-    SHARE_BOARD_LIKE_FAILURE 
+    SHARE_BOARD_LIKE_FAILURE,
+    SHARE_BOARD_ISLIKECHECK_TOTALLIKECOUNT_REQUEST,
+    SHARE_BOARD_ISLIKECHECK_TOTALLIKECOUNT_SUCCESS,
+    SHARE_BOARD_ISLIKECHECK_TOTALLIKECOUNT_FAILURE,
+    SHARE_BOARD_LIKE_REGISTER_REQUEST,
+    SHARE_BOARD_LIKE_REGISTER_SUCCESS,
+    SHARE_BOARD_LIKE_REGISTER_FAILURE 
 } from '../modules/shareBoard';
 import swal from 'sweetalert'; // 예쁜 alert 창을 위해 사용
 
@@ -40,7 +48,7 @@ function* loadShareBoardRegister(action) {
 function* watchLoadShareBoardRegister() {
     yield takeLatest(SHARE_BOARD_REGISTER_REQUEST, loadShareBoardRegister);
 }
-
+// 상위 5개 좋아요 수 가진 리스트 조회
 function* loadShareBoardTopLikeList() {
     try {
         const result = yield call(ShareBoardTopLikeAPI);
@@ -60,9 +68,49 @@ function* loadShareBoardTopLikeList() {
 function* watchLoadShareBoardTopLike() {
     yield takeLatest(SHARE_BOARD_LIKE_REQUEST , loadShareBoardTopLikeList);
 }
+// 좋아요 수와, 해당 게시글 좋아요 여부 조회
+function* loadShareBoardIsLikeAndTotalLikeCount(action) {
+    try {   
+        const result = yield call(ShareBoardIsLikeAndTotalLikeCountAPI, action.data);
+        yield put({
+          type: SHARE_BOARD_ISLIKECHECK_TOTALLIKECOUNT_SUCCESS ,
+          data: result,
+        });
+      } catch (error) {
+        yield put({
+          type: SHARE_BOARD_ISLIKECHECK_TOTALLIKECOUNT_FAILURE,
+        });
+      }
+}
 
+function* watchLoadShareBoardIsLikeAndTotalLikeCount() {
+    yield takeLatest(SHARE_BOARD_ISLIKECHECK_TOTALLIKECOUNT_REQUEST , loadShareBoardIsLikeAndTotalLikeCount);
+}
+
+// 좋아요 등록
+function* loadShareBoardLike(action) {
+    try {   
+        console.log(action.data);
+        const result = yield call(ShareBoardLikeAPI, action.data); 
+        yield put({
+          type: SHARE_BOARD_LIKE_REGISTER_SUCCESS  ,
+          data: result,
+        });
+        yield put({ type: SHARE_BOARD_ISLIKECHECK_TOTALLIKECOUNT_REQUEST, data: action.data }); // mypage 정보 바로 조회
+      } catch (error) {
+        yield put({
+          type: SHARE_BOARD_LIKE_REGISTER_FAILURE ,
+        });
+      }
+}
+
+function* watchLoadShareBoardLike() {
+    yield takeLatest(SHARE_BOARD_LIKE_REGISTER_REQUEST  , loadShareBoardLike);
+}
 export default function* ShareBoardSaga() {
     yield all([
+        fork(watchLoadShareBoardLike),
+        fork(watchLoadShareBoardIsLikeAndTotalLikeCount),
         fork(watchLoadShareBoardRegister),
         fork(watchLoadShareBoardTopLike)
     ]);

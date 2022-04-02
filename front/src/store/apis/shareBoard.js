@@ -23,3 +23,27 @@ export async function ShareBoardTopLikeAPI() {
     const result = await axios.get(`${BASE_URL}shareboard/findAll/like`);
     return result;
 }
+
+// 해당 공유 게시글을 로그인한 user의 좋아요 여부 체크 및 해당 게시글 총 좋아요 개수
+export async function ShareBoardIsLikeAndTotalLikeCountAPI(boardNo) {
+    const token = sessionStorage.getItem("jwt");
+    const result = await axios.get(`${BASE_URL}shareboard/find/isLike/${boardNo}`, {
+            headers: { 
+              Authorization: `Bearer ${ token }`
+            }
+    });
+    return result.data;
+}
+
+
+// 해당 공유 게시글을 좋아요
+export async function ShareBoardLikeAPI(boardNo) {
+    const token = sessionStorage.getItem("jwt");
+    const header = { headers: { Authorization: `Bearer ${token}` } };
+    const result = await axios.post(
+        `${BASE_URL}shareboard/like/${boardNo}`,
+        null,
+        header
+    );
+    return result;
+}
