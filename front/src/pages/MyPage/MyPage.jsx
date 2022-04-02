@@ -1,17 +1,17 @@
-import React from "react";
+import React from 'react';
 import { 
   MyPageWrapper,
   MyPageContent, 
   MyPageHeader,
   BlockWrapper,
   Title,
-} from "./MyPage.style";
-import MyPageProfile from "../../components/MyPage/MyPageProfile";
-import Nutrition from "../../components/MyPage/Statistics/Nutrition";
-import WeightHistory from "../../components/MyPage/Statistics/WeightHistory";
-import ExerciseHistory from "../../components/MyPage/Statistics/ExerciseHistory";
-import { Row, Col } from "react-bootstrap";
-import MyPageLike from "../../components/MyPage/MyPageLike";
+} from './MyPage.style';
+import MyPageProfile from '../../components/MyPage/MyPageProfile';
+import Nutrition from '../../components/MyPage/Statistics/Nutrition';
+import WeightHistory from '../../components/MyPage/Statistics/WeightHistory';
+import ExerciseHistory from '../../components/MyPage/Statistics/ExerciseHistory';
+import { Row, Col } from 'react-bootstrap';
+import MyPageLike from '../../components/MyPage/MyPageLike';
 
 export default function MyPage() {
   return (
@@ -23,12 +23,12 @@ export default function MyPage() {
         <MyPageContent>
           <MyPageLike/>
           <Row >
-            <Col md="6" style={{ marginBottom: '20px' }}>
+            <Col md='6' style={{ marginBottom: '20px' }}>
               <BlockWrapper>
                 <WeightHistory/>
               </BlockWrapper>
             </Col>
-            <Col md="6" style={{ marginBottom: '20px' }}>
+            <Col md='6' style={{ marginBottom: '20px' }}>
               <BlockWrapper>
                 <Nutrition/>
               </BlockWrapper>

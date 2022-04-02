@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
+import React, { useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import {
   MyPageIconBlock,
   MyPageProfileWrapper,
@@ -20,37 +20,37 @@ import {
   modalTitle,
   modalBody,
   editInput,
-} from "./MyPage.style";
+} from './MyPage.style';
 import {
   PASSWORD_CONFIRM_REQUEST,
   PASSWORD_CONFIRM_RESET,
   UPDATE_USER_INFO_REQUEST,
   UPDATE_USER_INFO_RESET,
   MY_PAGE_REQUEST,
-} from "../../store/modules/myPage";
+} from '../../store/modules/myPage';
 import Grid from '@mui/material/Grid';
-import { MdPerson } from "react-icons/md";
-import { useHistory } from "react-router-dom";
-import { useSelector } from "react-redux";
-import Modal from "@mui/material/Modal";
-import Typography from "@mui/material/Typography";
-import Box from "@mui/material/Box";
-import IconButton from "@mui/material/IconButton";
-import OutlinedInput from "@mui/material/OutlinedInput";
-import InputLabel from "@mui/material/InputLabel";
-import InputAdornment from "@mui/material/InputAdornment";
-import FormControl from "@mui/material/FormControl";
-import TextField from "@mui/material/TextField";
-import Visibility from "@mui/icons-material/Visibility";
-import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import Radio from "@mui/material/Radio";
-import RadioGroup from "@mui/material/RadioGroup";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import { Row, Col } from "react-bootstrap";
-import profile1 from "../../assets/images/profile1.jpg";
-import profile2 from "../../assets/images/profile2.jpg";
-import profile3 from "../../assets/images/profile3.jpg";
-import profile4 from "../../assets/images/profile4.jpg";
+import { MdPerson } from 'react-icons/md';
+import { useHistory } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import Modal from '@mui/material/Modal';
+import Typography from '@mui/material/Typography';
+import Box from '@mui/material/Box';
+import IconButton from '@mui/material/IconButton';
+import OutlinedInput from '@mui/material/OutlinedInput';
+import InputLabel from '@mui/material/InputLabel';
+import InputAdornment from '@mui/material/InputAdornment';
+import FormControl from '@mui/material/FormControl';
+import TextField from '@mui/material/TextField';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import Radio from '@mui/material/Radio';
+import RadioGroup from '@mui/material/RadioGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import { Row, Col } from 'react-bootstrap';
+import profile1 from '../../assets/images/profile1.jpg';
+import profile2 from '../../assets/images/profile2.jpg';
+import profile3 from '../../assets/images/profile3.jpg';
+import profile4 from '../../assets/images/profile4.jpg';
 
 export default function MypageProfile() {
   const dispatch = useDispatch();
@@ -62,23 +62,23 @@ export default function MypageProfile() {
     updateUserInfoDone,
   } = useSelector((state) => state.mypage);
   const { kakaologInDone } = useSelector((state) => state.user);
-  const [password, setPassword] = useState("");
+  const [password, setPassword] = useState('');
   const [open, setOpen] = useState(false);
-  const [gender, setGender] = useState("");
+  const [gender, setGender] = useState('');
 
   // 수정 데이터
-  const [newName, setNewName] = useState("");
-  const [newPassword, setNewPassword] = useState("");
+  const [newName, setNewName] = useState('');
+  const [newPassword, setNewPassword] = useState('');
   const [newGender, setNewGender] = useState(false);
   const [newHeight, setNewHeight] = useState(0);
   const [newWeight, setNewWeight] = useState(0);
-  const [newBirthday, setNewBirthday] = useState("");
+  const [newBirthday, setNewBirthday] = useState('');
   const [showPassword, setShowPassword] = useState(true);
 
   // 오류메시지 상태 저장
-  const [passwordMessage, setPasswordMessage] = useState("");
-  const [heightMessage, setHeightMessage] = useState("");
-  const [weightMessage, setWeightMessage] = useState("");
+  const [passwordMessage, setPasswordMessage] = useState('');
+  const [heightMessage, setHeightMessage] = useState('');
+  const [weightMessage, setWeightMessage] = useState('');
   
   // 유효성 검사
   const [isPassword, setIsPassword] = useState(true);
@@ -95,8 +95,6 @@ export default function MypageProfile() {
 
   const [ profileImg, setProfileImg ] = useState('');
   
-  
-  console.log("🍟🍟🍟🍟🍟🍟", profileImg);
   // 모달창 open/close
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -110,7 +108,7 @@ export default function MypageProfile() {
   };
 
   const handlePasswordConfirmKeyPress = (e) => {
-    if (e.key === "Enter") {
+    if (e.key === 'Enter') {
       handlePasswordConfirm();
     }
   };
@@ -129,14 +127,14 @@ export default function MypageProfile() {
 
   const handleEdit = (event) => {
     if (
-      newName === "" ||
-      newPassword === "" ||
-      newHeight === "" ||
-      newWeight === "" ||
-      newBirthday === "" ||
+      newName === '' ||
+      newPassword === '' ||
+      newHeight === '' ||
+      newWeight === '' ||
+      newBirthday === '' ||
       !newBirthday
     ) {
-      alert("모든 정보를 입력해주세요.");
+      alert('모든 정보를 입력해주세요.');
       event.preventDefault();
     } else if (!isPassword) {
       alert(passwordMessage);
@@ -177,15 +175,15 @@ export default function MypageProfile() {
     setNewPassword(event.target.value);
     const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/;
     if (event.target.value.length < 8 || event.target.value.length > 12) {
-      setPasswordMessage("비밀번호를 8글자 이상 12글자 이하로 입력해주세요.");
+      setPasswordMessage('비밀번호를 8글자 이상 12글자 이하로 입력해주세요.');
       setIsPassword(false);
     } else if (!passwordRegex.test(event.target.value)) {
       setPasswordMessage(
-        "비밀번호를 숫자, 영문자, 특수문자 조합으로 입력해주세요."
+        '비밀번호를 숫자, 영문자, 특수문자 조합으로 입력해주세요.'
       );
       setIsPassword(false);
     } else {
-      setPasswordMessage("");
+      setPasswordMessage('');
       setIsPassword(true);
     }
   };
@@ -199,7 +197,7 @@ export default function MypageProfile() {
     const heightRegex = /^[0-9]+$/;
     if (!heightRegex.test(event.target.value)) {
       setIsHeight(false);
-      setHeightMessage("키는 숫자만 입력가능합니다.");
+      setHeightMessage('키는 숫자만 입력가능합니다.');
     } else {
       setIsHeight(true);
     }
@@ -210,7 +208,7 @@ export default function MypageProfile() {
     const weightRegex = /^[0-9]+$/;
     if (!weightRegex.test(event.target.value)) {
       setIsWeight(false);
-      setWeightMessage("몸무게는 숫자만 입력가능합니다.");
+      setWeightMessage('몸무게는 숫자만 입력가능합니다.');
     } else {
       setIsWeight(true);
     }
@@ -218,14 +216,14 @@ export default function MypageProfile() {
 
   const handleNewBirthday = (event) => {
     event.target.value = event.target.value
-      .replace(/[^0-9]/g, "")
-      .replace(/^(\d{0,4})(\d{0,2})(\d{0,2})$/g, "$1-$2-$3")
-      .replace(/(\-{1,2})$/g, "");
+      .replace(/[^0-9]/g, '')
+      .replace(/^(\d{0,4})(\d{0,2})(\d{0,2})$/g, '$1-$2-$3')
+      .replace(/(\-{1,2})$/g, '');
     setNewBirthday(event.target.value);
   };
 
   const handleEditKeyPress = (event) => {
-    if (event.key === "Enter") {
+    if (event.key === 'Enter') {
       handleEdit();
     }
   };
@@ -233,9 +231,9 @@ export default function MypageProfile() {
   // 유저 정보를 받아왓을때
   useEffect(() => {
     if (me.gender) {
-      setGender("여");
+      setGender('여');
     } else {
-      setGender("남");
+      setGender('남');
     }
 
     if (passwordConfirmDone) {
@@ -274,12 +272,12 @@ export default function MypageProfile() {
       <Row
         style={center}
       >
-        <Col md="6"> 
+        <Col md='6'> 
           <ProfileImage src={profile1} />
         </Col>
         {!passwordConfirmDone ? (
           // 기본 마이페이지 유저 profile
-        <Col md="6">
+        <Col md='6'>
           <UserInfo>
             <NameInfo>{me.userName}</NameInfo>
             <BirthdayInfo>🍰 {me.birthday}</BirthdayInfo>
@@ -293,19 +291,19 @@ export default function MypageProfile() {
             <Modal
               open={open}
               onClose={handleClose}
-              aria-labelledby="modal-modal-title"
-              aria-describedby="modal-modal-description"
+              aria-labelledby='modal-modal-title'
+              aria-describedby='modal-modal-description'
             >
               {kakaologInDone ? (
                 <Box sx={editBox}>
                   <Typography
-                    id="modal-modal-title"
+                    id='modal-modal-title'
                     style={modalTitle}
                   >
                     이메일 확인
                   </Typography>
                   <hr />
-                  <Typography id="modal-modal-description" sx={{ mt: 1 }}>
+                  <Typography id='modal-modal-description' sx={{ mt: 1 }}>
                     회원 정보 수정을 위해서는 이메일 확인이 필요합니다.
                   </Typography>
                   <ModalBodyWrapper
@@ -314,7 +312,7 @@ export default function MypageProfile() {
                   >
                     <span>이메일 : </span>
                     <input
-                      id="password"
+                      id='password'
                       onChange={(e) => {
                         setPassword(e.target.value);
                       }}
@@ -331,14 +329,14 @@ export default function MypageProfile() {
               ) : (
                 <Box sx={editBox}>
                   <Typography
-                    id="modal-modal-title"
+                    id='modal-modal-title'
                     style={modalTitle}
                   >
                     비밀번호 확인
                   </Typography>
                   <hr />
                   <Typography 
-                    id="modal-modal-description" 
+                    id='modal-modal-description' 
                     sx={{ mt: 1 }}
                     style={modalBody}>
                     회원 정보 수정을 위해서는 비밀번호 확인이 필요합니다.
@@ -349,8 +347,8 @@ export default function MypageProfile() {
                   >
                     <span>비밀번호 : </span>
                     <input
-                      type="password"
-                      id="password"
+                      type='password'
+                      id='password'
                       onChange={(e) => {
                         setPassword(e.target.value);
                       }}
@@ -371,22 +369,22 @@ export default function MypageProfile() {
         ) : (
           // 유저 profile 수정
         // <Box onKeyPress={handleEditKeyPress}>
-          <Col md="6" style={{textAlign: 'left'}}>
+          <Col md='6' style={{textAlign: 'left'}}>
             <Row style={{marginTop: '10px'}}>
-              <Col md="6">
+              <Col md='6'>
                 <TextField
                   style={editInput}
-                  label="Name"
-                  id="outlined-size-normal"
+                  label='Name'
+                  id='outlined-size-normal'
                   defaultValue={me.userName}
                   onChange={handleNewName}
                   />
               </Col>
-              <Col md="6">
+              <Col md='6'>
                 <TextField
                   style={editInput}
-                  label="Birthday"
-                  id="outlined-size-normal"
+                  label='Birthday'
+                  id='outlined-size-normal'
                   defaultValue={me.birthday}
                   onChange={handleNewBirthday}
                 />
@@ -394,80 +392,80 @@ export default function MypageProfile() {
             </Row>
             <Row style={{marginTop: '10px'}}>
               {kakaologInDone === false && (
-              <Col md="6">
+              <Col md='6'>
                 <FormControl
-                  variant="outlined"
+                  variant='outlined'
                 >
-                  <InputLabel htmlFor="outlined-adornment-password">
+                  <InputLabel htmlFor='outlined-adornment-password'>
                     Password
                   </InputLabel>
                   <OutlinedInput
                     style={editInput}
-                    id="outlined-adornment-password"
+                    id='outlined-adornment-password'
                     defaultValue={password}
-                    type={showPassword ? "password" : "text"}
+                    type={showPassword ? 'password' : 'text'}
                     onChange={handleNewPassword}
                     endAdornment={
-                      <InputAdornment position="end">
+                      <InputAdornment position='end'>
                         <IconButton
-                          aria-label="toggle password visibility"
+                          aria-label='toggle password visibility'
                           onClick={handleClickShowPassword}
                           onMouseDown={handleMouseDownPassword}
-                          edge="end"
+                          edge='end'
                         >
                           {showPassword ? <VisibilityOff /> : <Visibility />}
                         </IconButton>
                       </InputAdornment>
                     }
-                    label="Password"
+                    label='Password'
                   />
                 </FormControl>
               </Col>
               )}
-              <Col md="6">
+              <Col md='6'>
                 <FormControl>
                   <RadioGroup
                     row
-                    aria-labelledby="demo-row-radio-buttons-group-label"
-                    name="row-radio-buttons-group"
+                    aria-labelledby='demo-row-radio-buttons-group-label'
+                    name='row-radio-buttons-group'
                     defaultValue={me.gender}
                     onClick={handleNewGender}
                   >
                     <FormControlLabel
-                      value="false"
+                      value='false'
                       control={<Radio />}
-                      label="남자"
+                      label='남자'
                     />
                     <FormControlLabel
-                      value="true"
+                      value='true'
                       control={<Radio />}
-                      label="여자"
+                      label='여자'
                     />
                   </RadioGroup>
                 </FormControl>
               </Col>
             </Row>
             <Row style={{marginTop: '10px'}}>
-              <Col md="6">
+              <Col md='6'>
               <TextField
                 style={editInput}
-                label="Height"
-                id="outlined-size-normal"
+                label='Height'
+                id='outlined-size-normal'
                 defaultValue={me.height}
                 onChange={handleNewHeight}
               />
               </Col>
-              <Col md="6">
+              <Col md='6'>
               <TextField
                 style={editInput}  
-                label="Weight"
-                id="outlined-size-normal"
+                label='Weight'
+                id='outlined-size-normal'
                 defaultValue={me.weight}
                 onChange={handleNewWeight}
               />
               </Col>
             </Row>
-            <Row className="justify-content-center" 
+            <Row className='justify-content-center' 
               style={{marginTop: '10px'}}>
               <ConfirmButton onClick={handleEdit}>수정</ConfirmButton>
               <CancelButton onClick={handleEditCancel}>취소</CancelButton>

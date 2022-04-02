@@ -140,7 +140,7 @@ const MyPageContent = styled.div`
 
 const BlockWrapper = styled.div`
   height: 100%;
-  padding: 60px 20px 10px 20px;
+  padding: 60px 20px 20px 20px;
   align-items: center;
   background-color: #f2f7f4;
   border-radius: 10px;

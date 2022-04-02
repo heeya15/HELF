@@ -1,11 +1,11 @@
-import axios from "axios";
-import { BASE_URL, LOCAL_URL } from "../../utils/https";
+import axios from 'axios';
+import { BASE_URL, LOCAL_URL } from '../../utils/https';
 
 // 자신의 정보 조회
 export async function MypageAPI() {
   const result = await axios.get(`${BASE_URL}user/find/me`, {
     headers: {
-      Authorization: "Bearer " + sessionStorage.getItem("jwt"),
+      Authorization: 'Bearer ' + sessionStorage.getItem('jwt'),
     },
   });
   console.log(result);
@@ -45,7 +45,7 @@ export async function PasswordConfirmAPI(password) {
   // const result = await axios.post(`${BASE_URL}user/checkPassword`, {
   const result = await axios.post(`${BASE_URL}user/checkPassword`, null, {
     headers: {
-      Authorization: "Bearer " + sessionStorage.getItem("jwt"),
+      Authorization: 'Bearer ' + sessionStorage.getItem('jwt'),
     },
     params: {
       userPassword: password,
@@ -55,10 +55,10 @@ export async function PasswordConfirmAPI(password) {
 }
 
 // 영양 성분 조회
-export async function NutritionHistoryAPI() {
-  const result = await axios.get(`${BASE_URL}nutritionhistory/find`, {
+export async function NutritionHistoryAPI(createdAt) {
+  const result = await axios.get(`${BASE_URL}nutritionhistory/find/${createdAt}`, {
     headers: {
-      Authorization: "Bearer " + sessionStorage.getItem("jwt"),
+      Authorization: 'Bearer ' + sessionStorage.getItem('jwt'),
     },
   });
   return result.data;
@@ -70,7 +70,7 @@ export async function WeightHistoryAPI() {
     `${BASE_URL}weight/history/search/ten/weight`,
     {
       headers: {
-        Authorization: "Bearer " + sessionStorage.getItem("jwt"),
+        Authorization: 'Bearer ' + sessionStorage.getItem('jwt'),
       },
     }
   );
@@ -79,7 +79,7 @@ export async function WeightHistoryAPI() {
 
 // 회원 정보 수정시 몸무게 정보 히스토리 테이블에 추가
 export async function WeightHistoryUpdateAPI({ createdAt, weight }) {
-  console.log("몸무게 히스토리 등록 시 뭐가 찍히는지 확인하자");
+  console.log('몸무게 히스토리 등록 시 뭐가 찍히는지 확인하자');
   console.log(createdAt);
   console.log(weight);
   const result = await axios.post(
@@ -90,7 +90,7 @@ export async function WeightHistoryUpdateAPI({ createdAt, weight }) {
     },
     {
       headers: {
-        Authorization: "Bearer " + sessionStorage.getItem("jwt"),
+        Authorization: 'Bearer ' + sessionStorage.getItem('jwt'),
       },
     }
   );
@@ -100,7 +100,7 @@ export async function WeightHistoryUpdateAPI({ createdAt, weight }) {
 
 // 선택 날짜 몸무게 정보 등록시 몸무게 정보 히스토리 테이블에 수정된 내용 반영
 export async function SelectWeightHistoryRegisterAPI({ createdAt, weight }) {
-  console.log("몸무게 히스토리 등록 시 뭐가 찍히는지 확인하자");
+  console.log('몸무게 히스토리 등록 시 뭐가 찍히는지 확인하자');
   console.log(createdAt);
   console.log(weight);
   const result = await axios.post(
@@ -111,7 +111,7 @@ export async function SelectWeightHistoryRegisterAPI({ createdAt, weight }) {
     },
     {
       headers: {
-        Authorization: "Bearer " + sessionStorage.getItem("jwt"),
+        Authorization: 'Bearer ' + sessionStorage.getItem('jwt'),
       },
     }
   );
@@ -121,7 +121,7 @@ export async function SelectWeightHistoryRegisterAPI({ createdAt, weight }) {
 
 // 선택 날짜 몸무게 정보 수정시 몸무게 정보 히스토리 테이블에 수정된 내용 반영
 export async function SelectWeightHistoryUpdateAPI({ createdAt, weight }) {
-  console.log("몸무게 히스토리 수정 시 뭐가 찍히는지 확인하자");
+  console.log('몸무게 히스토리 수정 시 뭐가 찍히는지 확인하자');
   console.log(createdAt);
   console.log(weight);
   const result = await axios.put(
@@ -132,7 +132,7 @@ export async function SelectWeightHistoryUpdateAPI({ createdAt, weight }) {
     },
     {
       headers: {
-        Authorization: "Bearer " + sessionStorage.getItem("jwt"),
+        Authorization: 'Bearer ' + sessionStorage.getItem('jwt'),
       },
     }
   );
@@ -142,11 +142,11 @@ export async function SelectWeightHistoryUpdateAPI({ createdAt, weight }) {
 
 // 입력한 날짜 정보 Weight 히스토리 테이블에 삭제
 export async function SelectWeightHistoryDeleteAPI({ createdAt }) {
-  console.log("몸무게 히스토리 삭제 시 뭐가 찍히는지 확인하자");
+  console.log('몸무게 히스토리 삭제 시 뭐가 찍히는지 확인하자');
   console.log(createdAt);
   const result = await axios.delete(`${BASE_URL}weight/history/remove/weight`, {
     headers: {
-      Authorization: "Bearer " + sessionStorage.getItem("jwt"),
+      Authorization: 'Bearer ' + sessionStorage.getItem('jwt'),
     },
     params: {
       createAt: createdAt,
@@ -158,14 +158,14 @@ export async function SelectWeightHistoryDeleteAPI({ createdAt }) {
 
 // 찜목록 조회
 export async function MyPageLikeAPI() {
-  const token = sessionStorage.getItem("jwt");
+  const token = sessionStorage.getItem('jwt');
   const header = { headers: { Authorization: `Bearer ${token}` } };
   const result = await axios.get(`${BASE_URL}user/likeList`, header);
   return result;
 }
 
 export async function MyPageLikeDeleteAPI(boardNo) {
-  const token = sessionStorage.getItem("jwt");
+  const token = sessionStorage.getItem('jwt');
   const header = { headers: { Authorization: `Bearer ${token}` } };
   const result = await axios.post(
     `${BASE_URL}shareboard/like/${boardNo}`,

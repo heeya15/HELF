@@ -174,7 +174,7 @@ public class  DietDiaryController {
             E.printStackTrace();
             ResponseEntity.status(400).body(BaseResponseBody.of(500, "DB Transaction Failed"));
         }
-        return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
+        return ResponseEntity.status(200).body(BaseResponseBody.of(200, dietDiaryService.detectedResult(),"Success"));
     }
 
  

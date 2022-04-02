@@ -7,6 +7,8 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 /**
  * 서버 요청에대한 기본 응답값(바디) 정의.
  */
@@ -18,7 +20,9 @@ public class BaseResponseBody {
 	String message = null;
 	@ApiModelProperty(name="응답 코드", example = "200")
 	Integer statusCode = null;
-	
+	@ApiModelProperty(name="응답 코드", example = "200")
+	List<String> resultList = null;
+
 	public BaseResponseBody() {}
 	
 	public BaseResponseBody(Integer statusCode){
@@ -32,6 +36,13 @@ public class BaseResponseBody {
 	
 	public static BaseResponseBody of(Integer statusCode, String message) {
 		BaseResponseBody body = new BaseResponseBody();
+		body.message = message;
+		body.statusCode = statusCode;
+		return body;
+	}
+	public static BaseResponseBody of(Integer statusCode, List<String> result, String message) {
+		BaseResponseBody body = new BaseResponseBody();
+		body.resultList = result;
 		body.message = message;
 		body.statusCode = statusCode;
 		return body;
