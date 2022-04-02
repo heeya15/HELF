@@ -15,6 +15,9 @@ import {
     NormalMessage,
     TooMuchMessage,
     Title,
+    fontNormal,
+    NutritionStatus,
+    EmptyText,
 } from '../MyPage.style';
 
 function customizeText(arg) {
@@ -142,23 +145,37 @@ export default function Nutrition() {
     }, []);
 
     return (
-        <div>
+        <div style={{ height: '100%'}}>
+            <Title>영양 성분 통계</Title>
             {
                 nutritionHistoryList.length === 0 && 
                 <>
-                    <Title>일별 영양 성분</Title>
-                    <div>섭취한 영양성분을 확인하기위해서는 식단을 등록해주세요.</div>
+                    <EmptyText>섭취한 영양성분을 확인하기위해서는 식단을 등록해주세요.</EmptyText>
                 </>
             }
             {
                 nutritionHistoryList.length !==0 &&
                 <>
+                <MessageWrapper>
+                    { carbohydrateCheck === 0 && <LackMessage onClick={ handleLackMessage }>탄수화물</LackMessage> }
+                    { carbohydrateCheck === 1 && <NormalMessage onClick={ handleNormalMessage }>탄수화물</NormalMessage> }
+                    { carbohydrateCheck === 2 && <TooMuchMessage onClick={ handleTooMuchMessage }>탄수화물</TooMuchMessage> }
+                    { proteinCheck === 0 && <LackMessage onClick={ handleLackMessage }>단백질</LackMessage> }
+                    { proteinCheck === 1 && <NormalMessage onClick={ handleNormalMessage }>단백질</NormalMessage> }
+                    { proteinCheck === 2 && <TooMuchMessage onClick={ handleTooMuchMessage }>단백질</TooMuchMessage> }
+                    { fatCheck === 0 && <LackMessage onClick={ handleLackMessage }>지방</LackMessage> }
+                    { fatCheck === 1 && <NormalMessage onClick={ handleNormalMessage }>지방</NormalMessage> }
+                    { fatCheck === 2 && <TooMuchMessage onClick={ handleTooMuchMessage }>지방</TooMuchMessage> }
+                </MessageWrapper>
+                <NutritionStatus>
+                    *오늘 영양소 섭취량을 표시하는 것으로,<br/>
+                    노란색은 부족, 초록색은 적정, 빨간색은 과다를 뜻합니다.
+                </NutritionStatus>
                 <PieChart
                     id="pie"
-                    palette="Bright"
+                    palette="Material"
                     dataSource={dataSource}
-                    size={bmr}
-                    title="일별 영양 성분">
+                    >
                     <Legend
                         orientation="horizontal"
                         itemTextPosition="right"
@@ -184,17 +201,7 @@ export default function Nutrition() {
                     </Annotation> */}
                     {/* ))} */}
                 </PieChart>
-                <MessageWrapper>
-                    { carbohydrateCheck === 0 && <LackMessage onClick={ handleLackMessage }>탄수화물</LackMessage> }
-                    { carbohydrateCheck === 1 && <NormalMessage onClick={ handleNormalMessage }>탄수화물</NormalMessage> }
-                    { carbohydrateCheck === 2 && <TooMuchMessage onClick={ handleTooMuchMessage }>탄수화물</TooMuchMessage> }
-                    { proteinCheck === 0 && <LackMessage onClick={ handleLackMessage }>단백질</LackMessage> }
-                    { proteinCheck === 1 && <NormalMessage onClick={ handleNormalMessage }>단백질</NormalMessage> }
-                    { proteinCheck === 2 && <TooMuchMessage onClick={ handleTooMuchMessage }>단백질</TooMuchMessage> }
-                    { fatCheck === 0 && <LackMessage onClick={ handleLackMessage }>지방</LackMessage> }
-                    { fatCheck === 1 && <NormalMessage onClick={ handleNormalMessage }>지방</NormalMessage> }
-                    { fatCheck === 2 && <TooMuchMessage onClick={ handleTooMuchMessage }>지방</TooMuchMessage> }
-                </MessageWrapper>
+                
                 </>
             }
     </div>

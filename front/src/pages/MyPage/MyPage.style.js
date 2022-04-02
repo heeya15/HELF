@@ -107,13 +107,20 @@ const InFormBlock = styled.div`
   }
 `;
 
+// const MyPageWrapper = styled.div`
+//   height: 100%;
+//   margin: 0 10px;
+//   overflow-y: auto;
+//   @media ${device.TabletPortrait} {
+//     margin: 0;
+//   }
+// `;
+
 const MyPageWrapper = styled.div`
+  width: 70%; 
   height: 100%;
-  margin: 0 10px;
-  overflow-y: auto;
-  @media ${device.TabletPortrait} {
-    margin: 0;
-  }
+  margin: 40px auto;
+  align-items: center;
 `;
 
 const MyPageHeader = styled.div`
@@ -131,4 +138,24 @@ const MyPageContent = styled.div`
   }
 `;
 
-export { MyPageWrapper, MyPageHeader, MyPageContent };
+const BlockWrapper = styled.div`
+  height: 100%;
+  padding: 60px 20px 10px 20px;
+  align-items: center;
+  background-color: #f2f7f4;
+  border-radius: 10px;
+  box-shadow: 4px 4px 4px 2px rgba(0, 0, 0, 0.25);
+`;
+
+const Title = styled.div`
+  font-size: 50px;
+  margin: 10px 0;
+`;
+
+export { 
+  MyPageWrapper, 
+  MyPageHeader, 
+  MyPageContent,
+  BlockWrapper,
+  Title,
+};

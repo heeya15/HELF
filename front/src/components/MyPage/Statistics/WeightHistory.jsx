@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Chart as ChartJS } from 'chart.js/auto'
+import { Chart as ChartJS } from 'chart.js/auto';
 import { Chart } from 'react-chartjs-2'
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -10,6 +10,13 @@ import {
     ButtonWrapper,
     ConfirmButton,
     CancelButton,
+    DeleteButton,
+    ButtonGroup,
+    WeightButton,
+    EmptyText,
+    modalTitle,
+    modalBody,
+    fontBold,
 } from '../MyPage.style';
 import {
     WEIGHT_HISTORY_REQUEST,
@@ -20,42 +27,43 @@ import {
     DELETE_WEIGHT_HISTORY_REQUEST,
     DELETE_WEIGHT_HISTORY_RESET,
     MY_PAGE_REQUEST
-  } from '../../../store/modules/myPage';
+} from '../../../store/modules/myPage';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
+
 export default function WeightHistory() {
     var temp = [];
     const datas = {
         labels: [],
         datasets: [
-          {
-            label: '체중(kg)',
-            fill: false,
-            lineTension: 0.1,
-            backgroundColor: 'rgba(75,192,192,0.4)',
-            borderColor: 'rgba(75,192,192,1)',
-            borderCapStyle: 'butt',
-            borderDash: [],
-            borderDashOffset: 0.0,
-            borderJoinStyle: 'miter',
-            pointBorderColor: 'rgba(75,192,192,1)',
-            pointBackgroundColor: '#fff',
-            pointBorderWidth: 3,
-            pointHoverRadius: 4,
-            pointHoverBackgroundColor: 'rgba(75,192,192,1)',
-            pointHoverBorderColor: 'rgba(220,220,220,1)',
-            pointHoverBorderWidth: 2,
-            pointRadius: 4,
-            pointHitRadius: 10,
-            data: temp
-          }
+            {
+                label: '체중(kg)',
+                fill: false,
+                lineTension: 0.1,
+                backgroundColor: 'rgba(75,192,192,0.4)',
+                borderColor: 'rgba(75,192,192,1)',
+                borderCapStyle: 'butt',
+                borderDash: [],
+                borderDashOffset: 0.0,
+                borderJoinStyle: 'miter',
+                pointBorderColor: 'rgba(75,192,192,1)',
+                pointBackgroundColor: '#fff',
+                pointBorderWidth: 3,
+                pointHoverRadius: 4,
+                pointHoverBackgroundColor: 'rgba(75,192,192,1)',
+                pointHoverBorderColor: 'rgba(220,220,220,1)',
+                pointHoverBorderWidth: 2,
+                pointRadius: 4,
+                pointHitRadius: 10,
+                data: temp,
+            }
         ]
     };
     const { selectRegisterWeightHistoryInfoDone,updateWeightHistoryInfoDone, deleteWeightHistoryInfoDone } = useSelector(state => state.mypage);
     const { me } = useSelector(state => state.mypage);
     const [createdAt, setDay] = useState('');
-    const [Weight, setWeight] = useState('');
+    const [weight, setWeight] = useState('');
     
     const RegisterhandleOpen = () => setRegisterOpen(true);
     const RegisterhandleClose = () => setRegisterOpen(false);
@@ -72,10 +80,10 @@ export default function WeightHistory() {
     //몸무게 히스토리 원하는 날짜 몸무게 등록 요청.
     const handleWeightHistoryRegisterConfirm = () => {
         dispatch({
-          type: SELECT_REGISTER_WEIGHT_HISTORY_REQUEST,
+            type: SELECT_REGISTER_WEIGHT_HISTORY_REQUEST,
             data: {
                 createdAt: createdAt,
-                weight : Weight
+                weight : weight
             }
         });
     };
@@ -87,10 +95,10 @@ export default function WeightHistory() {
     // 몸무게 히스토리 원하는 날짜 몸무게 수정 요청.
     const handleWeightHistoryUpdateConfirm = () => {
         dispatch({
-          type: UPDATE_WEIGHT_HISTORY_REQUEST,
+        type: UPDATE_WEIGHT_HISTORY_REQUEST,
             data: {
                 createdAt: createdAt,
-                weight : Weight
+                weight : weight
             }
         });
     };
@@ -103,7 +111,7 @@ export default function WeightHistory() {
     // 몸무게 히스토리 원하는 날짜 몸무게 삭제 요청.
     const handleWeightHistoryDeleteConfirm = () => {
         dispatch({
-          type: DELETE_WEIGHT_HISTORY_REQUEST,
+        type: DELETE_WEIGHT_HISTORY_REQUEST,
             data: {
                 createdAt: createdAt,
             }
@@ -118,15 +126,15 @@ export default function WeightHistory() {
     const dispatch = useDispatch();
     const { weightHistoryList } = useSelector(state => state.mypage);
     const created_at = [];
-    const weight = [];
+    const weightList = [];
     if (weightHistoryList.length !== 0) {
         for(let i=0; i<weightHistoryList.length; i++) {
             created_at.push(weightHistoryList[i].created_at);
-            weight.push(weightHistoryList[i].weight);
+            weightList.push(weightHistoryList[i].weight);
         }
         for(let i=0; i<weightHistoryList.length; i++) {
             datas.labels.push(created_at[i]);  
-            temp.push(weight[i]);
+            temp.push(weightList[i]);
         }
     }
     
@@ -185,166 +193,187 @@ export default function WeightHistory() {
             });
         }
     }, [ me, deleteWeightHistoryInfoDone]);
-   
+
     return (
         <div>
-        {
-            weightHistoryList.length === 0 && 
-            <>
-                <Title>가장 최근에 몸무게를 기록한 정보 상위 10개 History</Title>
-                <div>나의 가장 최근 몸무게 History 차트를 보려면 몸무게 정보를 등록해주세요.</div>
-            </>
-        }
-        {
-            weightHistoryList.length !==0 &&
-            <>
-                    <Title>가장 최근 몸무게를 기록한 정보 상위 10개 History</Title>
-                    <MyPageProfileButton
+            <Title>체중 기록</Title>
+            {
+                weightHistoryList.length === 0 && 
+                <>
+                    <EmptyText>지난 체중 통계를 확인하기위해서는 체중을 등록해주세요.</EmptyText>
+                </>
+            }
+            {
+                weightHistoryList.length !==0 &&
+                <>
+                <Chart type="line" data={datas} style={{ marginTop: '100px'}}/>
+                <ButtonGroup>
+                    <WeightButton
                         onClick={ RegisterhandleOpen }
-                    >몸무게 History 등록</MyPageProfileButton>
+                        >등록</WeightButton>
                     <Modal
                         open={ Registereopen }
                         onClose={ RegisterhandleClose }
                         aria-labelledby="modal-modal-title"
                         aria-describedby="modal-modal-description"
                     >
-                      <Box sx={ editBox }>
-                        <Typography id="modal-modal-title" variant="h4" component="h2">
-                             몸무게 History 등록
-                        </Typography>
-                        <hr/>
-                        <Typography id="modal-modal-description" sx={{ mt: 1 }}>
-                                몸무게 History 등록을 위해서는<br/>
-                                해당 날짜와, 등록할 몸무게 값이 필요합니다.<br />                     
-                        </Typography>
-                        <ModalBodyWrapper onKeyPress={ handleWeightHistoryRegisterConfirmKeyPress }>
-                            <span>날짜 : </span>
-                            <input
-                                type="input"
-                                id="password"
-                                onChange={e => {
-                                setDay(e.target.value);
-                                }}
-                            ></input>
-                            <span> ex) 2022-03-30</span>
-                        </ModalBodyWrapper>
-                        <ModalBodyWrapper onKeyPress={ handleWeightHistoryRegisterConfirmKeyPress }>
-                            <span>몸무게 : </span>
-                            <input
-                                type="number"
-                                id="password"
-                                onChange={e => {
-                                setWeight(e.target.value);
-                                }} 
-                            ></input>
-                            <span> ex) 55</span>
-                        </ModalBodyWrapper>
-                        <hr/>
-                        <ButtonWrapper>
-                            <ConfirmButton onClick={ handleWeightHistoryRegisterConfirm }>
-                            등록
-                            </ConfirmButton>
-                            <CancelButton onClick={ RegisterhandleClose }>
-                            닫기
-                            </CancelButton>
-                        </ButtonWrapper>
-                      </Box>  
+                        <Box sx={ editBox }>
+                            <Typography 
+                                id="modal-modal-title"
+                                style={modalTitle}>
+                                체중 등록
+                            </Typography>
+                            <hr/>
+                            <Typography 
+                                id="modal-modal-description" 
+                                sx={{ mt: 1 }}
+                                style={modalBody}>
+                                    등록하려는 날짜와 체중 값을 입력해주세요.<br />                     
+                            </Typography>
+                            <ModalBodyWrapper 
+                                style={modalBody}
+                                onKeyPress={ handleWeightHistoryRegisterConfirmKeyPress }>
+                                <div style={{ marginBottom : '10px' }}>
+                                    <span style={fontBold}>날짜 : </span>
+                                    <input
+                                        type="input"
+                                        id="createdAt"
+                                        onChange={e => {
+                                        setDay(e.target.value);
+                                        }}
+                                    ></input>
+                                    <span> ex. 2022-03-30</span>
+                                </div>
+                                <div>
+                                    <span style={fontBold}>몸무게 : </span>
+                                    <input
+                                        type="number"
+                                        id="weight"
+                                        onChange={e => {
+                                        setWeight(e.target.value);
+                                        }} 
+                                    ></input>
+                                    <span> ex. 55</span>
+                                </div>
+                            </ModalBodyWrapper>
+                            <hr/>
+                            <ButtonWrapper>
+                                <ConfirmButton onClick={ handleWeightHistoryRegisterConfirm }>
+                                등록
+                                </ConfirmButton>
+                                <CancelButton onClick={ RegisterhandleClose }>
+                                닫기
+                                </CancelButton>
+                            </ButtonWrapper>
+                        </Box>  
                     </Modal>
 
-                    <MyPageProfileButton
+                    <WeightButton
                         onClick={ handleOpen }
-                    >몸무게 History 수정</MyPageProfileButton>
+                    >수정</WeightButton>
                     <Modal
                         open={ open }
                         onClose={ handleClose }
                         aria-labelledby="modal-modal-title"
                         aria-describedby="modal-modal-description"
                     >
-                      <Box sx={ editBox }>
-                        <Typography id="modal-modal-title" variant="h4" component="h2">
-                             몸무게 History 수정
-                        </Typography>
-                        <hr/>
-                        <Typography id="modal-modal-description" sx={{ mt: 1 }}>
-                                몸무게 History 수정을 위해서는<br/>
-                                해당 날짜와, 수정할 몸무게 값이 필요합니다.
-                        </Typography>
-                        <ModalBodyWrapper onKeyPress={ handleWeightHistoryUpdateConfirmKeyPress }>
-                            <span>날짜 : </span>
-                            <input
-                                type="input"
-                                id="password"
-                                onChange={e => {
-                                setDay(e.target.value);
-                                }}
-                            ></input>
-                            <span> ex) 2022-03-30</span>
-                        </ModalBodyWrapper>
-                        <ModalBodyWrapper onKeyPress={ handleWeightHistoryUpdateConfirmKeyPress }>
-                            <span>몸무게 : </span>
-                            <input
-                                type="number"
-                                id="password"
-                                onChange={e => {
-                                setWeight(e.target.value);
-                                }} 
-                            ></input>
-                            <span> ex) 55</span>
-                        </ModalBodyWrapper>
-                        <hr/>
-                        <ButtonWrapper>
-                            <ConfirmButton onClick={ handleWeightHistoryUpdateConfirm }>
-                            수정
-                            </ConfirmButton>
-                            <CancelButton onClick={ handleClose }>
-                            닫기
-                            </CancelButton>
-                        </ButtonWrapper>
-                      </Box>  
+                        <Box sx={ editBox }>
+                            <Typography 
+                                id="modal-modal-title" 
+                                style={modalTitle}>
+                                체중 수정
+                            </Typography>
+                            <hr/>
+                            <Typography 
+                                style={modalBody}
+                                id="modal-modal-description" 
+                                sx={{ mt: 1 }}>
+                                    수정하려는 체중 기록의 날짜와 체중 값을 입력해주세요.
+                            </Typography>
+                            <ModalBodyWrapper 
+                                style={modalBody}
+                                onKeyPress={ handleWeightHistoryUpdateConfirmKeyPress }>
+                                <div style={{ marginBottom : '10px' }}> 
+                                    <span style={fontBold}>날짜 : </span>
+                                    <input
+                                        type="input"
+                                        id="createdAt"
+                                        onChange={e => {
+                                        setDay(e.target.value);
+                                        }}
+                                    ></input>
+                                    <span> ex. 2022-03-30</span>
+                                </div>
+                                <div>
+                                    <span style={fontBold}>몸무게 : </span>
+                                    <input
+                                        type="number"
+                                        id="weight"
+                                        onChange={e => {
+                                        setWeight(e.target.value);
+                                        }} 
+                                    ></input>
+                                    <span> ex. 55</span>
+                                </div>
+                            </ModalBodyWrapper>
+                            <hr/>
+                            <ButtonWrapper>
+                                <ConfirmButton onClick={ handleWeightHistoryUpdateConfirm }>
+                                수정
+                                </ConfirmButton>
+                                <CancelButton onClick={ handleClose }>
+                                닫기
+                                </CancelButton>
+                            </ButtonWrapper>
+                        </Box>  
                     </Modal>
 
-                    <MyPageProfileButton
+                    <DeleteButton
                         onClick={ DeletehandleOpen  }
-                    >몸무게 History 삭제</MyPageProfileButton>
+                    >삭제</DeleteButton>
                     <Modal
                         open={ Deleteopen }
                         onClose={ DeletehandleClose  }
                         aria-labelledby="modal-modal-title"
                         aria-describedby="modal-modal-description"
                     >
-                      <Box sx={ editBox }>
-                        <Typography id="modal-modal-title" variant="h4" component="h2">
-                            몸무게 History 삭제
-                        </Typography>
-                        <hr/>
-                        <Typography id="modal-modal-description" sx={{ mt: 1 }}>
-                            몸무게 History 삭제를 위해서는 해당 날짜의 값이 필요합니다. 
-                        </Typography>
-                        <ModalBodyWrapper onKeyPress={ handleWeightHistoryDeleteConfirmKeyPress }>
-                            <span>날짜 : </span>
-                            <input
-                                type="input"
-                                id=""
-                                onChange={e => {
-                                setDay(e.target.value);
-                                }}
-                            ></input>
-                            <span> ex) 2022-03-30</span>
-                        </ModalBodyWrapper>
-                        <hr/>
-                        <ButtonWrapper>
-                            <ConfirmButton onClick={ handleWeightHistoryDeleteConfirm }>
-                            삭제
-                            </ConfirmButton>
-                            <CancelButton onClick={ DeletehandleClose }>
-                            닫기
-                            </CancelButton>
-                        </ButtonWrapper>
-                      </Box>  
+                        <Box sx={ editBox }>
+                            <Typography 
+                                id="modal-modal-title" 
+                                style={modalTitle}>
+                                체중 삭제
+                            </Typography>
+                            <hr/>
+                            <Typography id="modal-modal-description" sx={{ mt: 1 }}>
+                                삭제하려는 체중 기록의 날짜를 입력해주세요.
+                            </Typography>
+                            <ModalBodyWrapper 
+                                style={modalBody}
+                                onKeyPress={ handleWeightHistoryDeleteConfirmKeyPress }>
+                                <span>날짜 : </span>
+                                <input
+                                    type="input"
+                                    id="birthday"
+                                    onChange={e => {
+                                    setDay(e.target.value);
+                                    }}
+                                ></input>
+                                <span> ex. 2022-03-30</span>
+                            </ModalBodyWrapper>
+                            <hr/>
+                            <ButtonWrapper>
+                                <ConfirmButton onClick={ handleWeightHistoryDeleteConfirm }>
+                                삭제
+                                </ConfirmButton>
+                                <CancelButton onClick={ DeletehandleClose }>
+                                닫기
+                                </CancelButton>
+                            </ButtonWrapper>
+                        </Box>  
                     </Modal> 
-                <Chart type="line" data={datas} />
+            </ButtonGroup>
             </>
-        }
+            }
         </div>
-     );
+    );
 }

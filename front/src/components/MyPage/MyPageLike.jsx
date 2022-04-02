@@ -10,7 +10,10 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { IMAGE_URL } from "../../utils/https";
 import { AiFillHeart } from "react-icons/ai";
-import { LikeListStyle } from "./MyPage.style";
+import { 
+  LikeListStyle,
+  Title, 
+} from "./MyPage.style";
 
 export default function MyPageLike() {
   const dispatch = useDispatch();
@@ -54,7 +57,7 @@ export default function MyPageLike() {
 
   return (
     <div style={{ margin: "5% auto", width: "80%" }}>
-      <h5>찜목록</h5>
+      <Title>찜목록</Title>
       {myPageLikeList.length == 0 ? (
         <div>찜한 게시글이 없습니다.</div>
       ) : (
