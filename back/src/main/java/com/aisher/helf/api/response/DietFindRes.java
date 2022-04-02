@@ -4,11 +4,11 @@ import io.swagger.annotations.ApiModel;
 
 @ApiModel("DietFindRes")
 public interface DietFindRes {
-    int getDiet_no();
+    int getDietNo();
     int getWeight();
-    int getDiary_no();
-    int getFood_no();
-    String getFood_name();
+    int getDiaryNo();
+    int getFoodNo();
+    String getFoodName();
     Double getKcal();
     Double getCarbohydrate();
     Double getProtein();
