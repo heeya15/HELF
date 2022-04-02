@@ -22,7 +22,7 @@ export default function ExerciseSetting() {
     "푸시업",
     "사이드 레터럴 레이즈",
     "스쿼트",
-    "스탠딩 사이드 크런치",
+    // "스탠딩 사이드 크런치",
   ];
   const { exercise } = useSelector((state) => state.exerciseHistory);
 

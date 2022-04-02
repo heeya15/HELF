@@ -43,9 +43,9 @@ export default function Exercise() {
       case 8: // Squat
         setURL("https://teachablemachine.withgoogle.com/models/050JkD2Z0/");
         break;
-      case 9: // StandingSideCrunch
-        setURL("https://teachablemachine.withgoogle.com/models/S9Mpp7iGf/");
-        break;
+      // case 9: // StandingSideCrunch
+      //   setURL("https://teachablemachine.withgoogle.com/models/S9Mpp7iGf/");
+      //   break;
     }
   }, []);
 
