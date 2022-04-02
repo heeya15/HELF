@@ -74,14 +74,12 @@ function SharedBoard(props) {
       <div>
       <ShareBoardTopLike></ShareBoardTopLike>
       <Masonry columns={3} spacing={2}>
-      {shardList.map(user => (
-        <User user={user} />
+      {shardList.map((user,index) => (
+        <User user={user} key={index} />
       ))}
       </Masonry>
 
-    </div>
-
-          
+    </div>        
     </div>
     
       );}; 

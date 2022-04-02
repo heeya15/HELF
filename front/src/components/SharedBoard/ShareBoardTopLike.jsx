@@ -2,18 +2,13 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import {
-  MY_PAGE_LIKE_REQUEST,
-  MY_PAGE_LIKE_DELETE_REQUEST,
-} from "../../store/modules/myPage";
-import {
   SHARE_BOARD_LIKE_REQUEST
 } from "../../store/modules/shareBoard";
-import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { IMAGE_URL } from "../../utils/https";
-import { AiFillHeart } from "react-icons/ai";
-import { Container, Row, Col } from "react-bootstrap";
+// import { AiFillHeart } from "react-icons/ai";
+import { Row, Col } from "react-bootstrap";
 import { ShareBoardLikeListStyle } from "../MyPage/MyPage.style";
 
 export default function MyPageLike() {
@@ -64,10 +59,9 @@ export default function MyPageLike() {
         <div>찜한 게시글이 없습니다.</div>
       ) : (
         <Row>
-         
             {shareBoardTopLikeList.map((likes, index) => (
-              <Col>
-                <ShareBoardLikeListStyle key={index}>
+              <Col key={index}>
+                <ShareBoardLikeListStyle>
                   
                   <img
                     src={`${IMAGE_URL}${likes.image_path}`}
@@ -79,8 +73,7 @@ export default function MyPageLike() {
               </Col>
             ))}
       </Row>
-      )}
-            
+      )}       
     </div>
   );
 }
