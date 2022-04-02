@@ -19,8 +19,8 @@ const initialState = {
   diaryDate: "",
   description: "",
   foodName: [
-    { name: "토마토", weight: 100 },
-    { name: "닭가슴살", weight: 100 },
+    { foodName: "토마토", weight: 100 },
+    { foodName: "닭가슴살", weight: 100 },
   ],
   myDietDiaryList: [],
   myDietDiaryDailyInfo: [],
@@ -112,7 +112,7 @@ const reducer = (state = initialState, action) =>
         break;
       case MY_DIET_IMAGE_SUCCESS:
         // action.data.data.forEach((foods) => {
-        //   draft.foodName.push({name:foods,weight:100});
+        //   draft.foodName.push({foodName:foods,weight:100});
         // });
         console.log(action.data.data);
         break;
