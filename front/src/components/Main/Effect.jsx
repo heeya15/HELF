@@ -1,47 +1,33 @@
 import * as React from 'react';
-import { useHistory } from 'react-router-dom';
-import { useSelector } from 'react-redux';
 
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Container from '@mui/material/Container';
-import Button from './Button';
 import Typography from './Typography';
-import productHowItWorks1 from '../../assets/images/productHowItWorks1.svg';
-import productHowItWorks2 from '../../assets/images/productHowItWorks2.svg';
-import productHowItWorks3 from '../../assets/images/productHowItWorks3.svg';
+import productCurvyLines from '../../assets/images/productCurvyLines.png';
+import effect1 from '../../assets/images/effect1.svg';
+import effect2 from '../../assets/images/effect2.svg';
+import effect3 from '../../assets/images/effect3.svg';
 import {
     fontNormal, 
     fontBold,
-    mainButton,
     item,
-    number,
-    image,
+    content,
 } from './Main.style';
 
 export default function Effect() {
-    const history = useHistory();
-    const { logInDone, kakaologInDone } = useSelector(state => state.user);
-
-    const handleGetStarted = () => {
-        if(logInDone || kakaologInDone) {
-            history.push('/mydiet');
-        } else {
-            history.push('/login');
-        }
-    }
-
     return (
         <Box
-            component="section"
+            style={{ backgroundColor : '#ebfceb' }}
+            // component="section"
             sx={{
                 display: 'flex',
-                overflow: 'hidden'
+                overflow: 'hidden',
             }}>
             <Container
                 sx={{
-                    mt: 10,
-                    mb: 15,
+                    mt: 15,
+                    mb: 20,
                     position: 'relative',
                     display: 'flex',
                     flexDirection: 'column',
@@ -49,6 +35,7 @@ export default function Effect() {
                 }}>
                 <Box
                     component="img"
+                    src={productCurvyLines}
                     alt="curvy lines"
                     sx={{
                         pointerEvents: 'none',
@@ -64,64 +51,80 @@ export default function Effect() {
                     sx={{
                         mb: 14
                     }}>
-                    How it works
+                    What We Expect
                 </Typography>
                 <div>
-                    <Grid container spacing={5}>
-                        <Grid item xs={12} md={4}>
-                            <Box sx={item}>
-                                <Box sx={number}>1.</Box>
-                                <Box
-                                    component="img"
-                                    src={productHowItWorks1}
-                                    alt="suitcase"
-                                    sx={image}/>
-                                <Typography variant="h5" align="center" style={ fontNormal }>
-                                    Appointment every Wednesday 9am.
-                                </Typography>
-                            </Box>
-                        </Grid>
-                        <Grid item xs={12} md={4}>
-                            <Box sx={item}>
-                                <Box sx={number}>2.</Box>
-                                <Box
-                                    component="img"
-                                    src={productHowItWorks2}
-                                    alt="graph"
-                                    sx={image}/>
-                                <Typography variant="h5" align="center" style={ fontNormal }>
-                                    First come, first served. Our offers are in limited quantities, so be quick.
-                                </Typography>
-                            </Box>
-                        </Grid>
-                        <Grid item xs={12} md={4}>
-                            <Box sx={item}>
-                                <Box sx={number}>3.</Box>
-                                <Box
-                                    component="img"
-                                    src={productHowItWorks3}
-                                    alt="clock"
-                                    sx={image}/>
-                                <Typography variant="h5" align="center" style={ fontNormal }>
-                                    {'New offers every week. New experiences, new surprises. '}
-                                    {'Your Sundays will no longer be alike.'}
-                                </Typography>
-                            </Box>
-                        </Grid>
+                <Grid container spacing={5}>
+                    <Grid item xs={12} md={4}>
+                        <Box sx={item}>
+                            <Box
+                                component="img"
+                                src={effect1}
+                                alt="suitcase"
+                                sx={{
+                                    height: 55
+                                }}/>
+                            <Typography
+                                variant="h6"
+                                style={ fontBold }
+                                sx={{
+                                    my: 5
+                                }}>
+                                안전<br/>(Virus-Free)
+                            </Typography>
+                            <Typography variant="h5" style={ fontNormal }>
+                                팬데믹 시대에 집에서도 코로나19로부터 안전하게 운동을 할 수 있습니다.
+                            </Typography>
+                        </Box>
                     </Grid>
+                    <Grid item xs={12} md={4}>
+                        <Box sx={item}>
+                            <Box
+                                component="img"
+                                src={effect2}
+                                alt="graph"
+                                sx={{
+                                    height: 55
+                                }}/>
+                            <Typography
+                                variant="h6"
+                                style={ fontBold }
+                                sx={{
+                                    my: 5
+                                }}>
+                                운동 보조<br/>(Exercise Assistant)
+                            </Typography>
+                            <Typography variant="h5" style={ fontNormal }>
+                                운동 자세를 인식하여 개수를 자동으로 세어주어 운동에만 집중할 수 있습니다.
+                            </Typography>
+                        </Box>
+                    </Grid>
+                    <Grid item xs={12} md={4}>
+                        <Box sx={item}>
+                            <Box
+                                component="img"
+                                src={effect3}
+                                alt="clock"
+                                sx={{
+                                    height: 55
+                                }}/>
+                            <Typography
+                                variant="h6"
+                                style={ fontBold }
+                                sx={{
+                                    my: 5
+                                }}>
+                                건강<br/>(Health)
+                            </Typography>
+                            <Typography 
+                                variant="h5" 
+                                style={ content }>
+                                간편하게 식단을 기록하고 섭취 영양성분과 체중변화 기록을 체크하여 건강을 지킬 수 있습니다.
+                            </Typography>
+                        </Box>
+                    </Grid>
+                </Grid>
                 </div>
-                <Button
-                    size="large"
-                    variant="contained"
-                    component="a"
-                    sx={{
-                        mt: 8
-                    }}
-                    style={ mainButton }
-                    onClick={ handleGetStarted }
-                    >
-                    Get started
-                </Button>
             </Container>
         </Box>
     );
