@@ -97,7 +97,13 @@ const Title = styled.div`
 `;
 
 const EmptyText = styled.div`
-  margin-bottom: 40px;
+  padding: 100px 0px;
+`;
+
+const Description = styled.div`
+  font-size: 13px;
+  margin-top: 10px;
+  font-family: 'KOTRA_GOTHIC';
 `;
 
 const fontNormal = {
@@ -279,12 +285,6 @@ const WeightButton = styled.button`
 
 
 /* 영양 성분 통계 */
-const NutritionStatus = styled.div`
-  font-size: 10px;
-  margin-top: 15px;
-  font-family: 'KOTRA_GOTHIC';
-`;
-
 const MessageWrapper = styled.div`
   // margin: 0 auto;
   padding: 5px 0px;
@@ -419,7 +419,6 @@ export {
   DeleteButton,
   ButtonGroup,
   fontNormal,
-  NutritionStatus,
   ExerciseHistoryTotal,
   ShareBoardLikeListStyle ,
   ReactTooltipStyled,
@@ -429,6 +428,7 @@ export {
   EmailInfo,
   PhysicalInfo,
   EmptyText,
+  Description,
   ProfileImage,
   center,
   modalTitle,
