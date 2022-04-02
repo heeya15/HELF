@@ -25,6 +25,6 @@ public interface NutritionHistoryRepository extends JpaRepository<NutritionHisto
 
     @Query(value= "select * \n" +
             "from nutrition_history \n" +
-            "where user_id = :userId and created_at = date(now()) ", nativeQuery = true)
-    List<NutritionHistoryFindRes> findAllNutritionHistoryByUserId(@Param("userId") String userId);
+            "where user_id = :userId and created_at = date(:createdAt) ", nativeQuery = true)
+    List<NutritionHistoryFindRes> findAllNutritionHistoryByUserId(@Param("userId") String userId, @Param("createdAt") LocalDate createdAt);
 }
