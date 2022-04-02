@@ -17,6 +17,7 @@ import {
     modalTitle,
     modalBody,
     fontBold,
+    Description,
 } from '../MyPage.style';
 import {
     WEIGHT_HISTORY_REQUEST,
@@ -206,7 +207,7 @@ export default function WeightHistory() {
             {
                 weightHistoryList.length !==0 &&
                 <>
-                <Chart type="line" data={datas} style={{ marginTop: '100px'}}/>
+                <Chart type='line' data={datas} style={{ marginTop: '100px'}}/>
                 <ButtonGroup>
                     <WeightButton
                         onClick={ RegisterhandleOpen }
@@ -214,18 +215,18 @@ export default function WeightHistory() {
                     <Modal
                         open={ Registereopen }
                         onClose={ RegisterhandleClose }
-                        aria-labelledby="modal-modal-title"
-                        aria-describedby="modal-modal-description"
+                        aria-labelledby='modal-modal-title'
+                        aria-describedby='modal-modal-description'
                     >
                         <Box sx={ editBox }>
                             <Typography 
-                                id="modal-modal-title"
+                                id='modal-modal-title'
                                 style={modalTitle}>
                                 체중 등록
                             </Typography>
                             <hr/>
                             <Typography 
-                                id="modal-modal-description" 
+                                id='modal-modal-description' 
                                 sx={{ mt: 1 }}
                                 style={modalBody}>
                                     등록하려는 날짜와 체중 값을 입력해주세요.<br />                     
@@ -236,8 +237,8 @@ export default function WeightHistory() {
                                 <div style={{ marginBottom : '10px' }}>
                                     <span style={fontBold}>날짜 : </span>
                                     <input
-                                        type="input"
-                                        id="createdAt"
+                                        type='input'
+                                        id='createdAt'
                                         onChange={e => {
                                         setDay(e.target.value);
                                         }}
@@ -247,8 +248,8 @@ export default function WeightHistory() {
                                 <div>
                                     <span style={fontBold}>몸무게 : </span>
                                     <input
-                                        type="number"
-                                        id="weight"
+                                        type='number'
+                                        id='weight'
                                         onChange={e => {
                                         setWeight(e.target.value);
                                         }} 
@@ -274,19 +275,19 @@ export default function WeightHistory() {
                     <Modal
                         open={ open }
                         onClose={ handleClose }
-                        aria-labelledby="modal-modal-title"
-                        aria-describedby="modal-modal-description"
+                        aria-labelledby='modal-modal-title'
+                        aria-describedby='modal-modal-description'
                     >
                         <Box sx={ editBox }>
                             <Typography 
-                                id="modal-modal-title" 
+                                id='modal-modal-title' 
                                 style={modalTitle}>
                                 체중 수정
                             </Typography>
                             <hr/>
                             <Typography 
                                 style={modalBody}
-                                id="modal-modal-description" 
+                                id='modal-modal-description' 
                                 sx={{ mt: 1 }}>
                                     수정하려는 체중 기록의 날짜와 체중 값을 입력해주세요.
                             </Typography>
@@ -296,8 +297,8 @@ export default function WeightHistory() {
                                 <div style={{ marginBottom : '10px' }}> 
                                     <span style={fontBold}>날짜 : </span>
                                     <input
-                                        type="input"
-                                        id="createdAt"
+                                        type='input'
+                                        id='createdAt'
                                         onChange={e => {
                                         setDay(e.target.value);
                                         }}
@@ -307,8 +308,8 @@ export default function WeightHistory() {
                                 <div>
                                     <span style={fontBold}>몸무게 : </span>
                                     <input
-                                        type="number"
-                                        id="weight"
+                                        type='number'
+                                        id='weight'
                                         onChange={e => {
                                         setWeight(e.target.value);
                                         }} 
@@ -334,17 +335,17 @@ export default function WeightHistory() {
                     <Modal
                         open={ Deleteopen }
                         onClose={ DeletehandleClose  }
-                        aria-labelledby="modal-modal-title"
-                        aria-describedby="modal-modal-description"
+                        aria-labelledby='modal-modal-title'
+                        aria-describedby='modal-modal-description'
                     >
                         <Box sx={ editBox }>
                             <Typography 
-                                id="modal-modal-title" 
+                                id='modal-modal-title' 
                                 style={modalTitle}>
                                 체중 삭제
                             </Typography>
                             <hr/>
-                            <Typography id="modal-modal-description" sx={{ mt: 1 }}>
+                            <Typography id='modal-modal-description' sx={{ mt: 1 }}>
                                 삭제하려는 체중 기록의 날짜를 입력해주세요.
                             </Typography>
                             <ModalBodyWrapper 
@@ -352,8 +353,8 @@ export default function WeightHistory() {
                                 onKeyPress={ handleWeightHistoryDeleteConfirmKeyPress }>
                                 <span>날짜 : </span>
                                 <input
-                                    type="input"
-                                    id="birthday"
+                                    type='input'
+                                    id='birthday'
                                     onChange={e => {
                                     setDay(e.target.value);
                                     }}

@@ -1,4 +1,4 @@
-import { all, fork, put, takeLatest, call } from "redux-saga/effects";
+import { all, fork, put, takeLatest, call } from 'redux-saga/effects';
 import {
   MemberDeleteAPI,
   UserModifyAPI,
@@ -12,7 +12,7 @@ import {
   SelectWeightHistoryDeleteAPI,
   MyPageLikeAPI,
   MyPageLikeDeleteAPI,
-} from "../apis/myPage";
+} from '../apis/myPage';
 import {
   MY_PAGE_REQUEST,
   MY_PAGE_SUCCESS,
@@ -50,10 +50,10 @@ import {
   MY_PAGE_LIKE_DELETE_REQUEST,
   MY_PAGE_LIKE_DELETE_SUCCESS,
   MY_PAGE_LIKE_DELETE_FAILURE,
-} from "../modules/myPage";
-import swal from "sweetalert";
-import moment from "moment";
-import "moment/locale/ko";
+} from '../modules/myPage';
+import swal from 'sweetalert';
+import moment from 'moment';
+import 'moment/locale/ko';
 // 마이페이지 회원정보 조회
 function* loadMyPage(action) {
   try {
@@ -77,7 +77,7 @@ function* watchLoadMyPage() {
 function* loadUpdateUser(action) {
   try {
     const result = yield call(UserModifyAPI, action.data);
-    const nowTime = moment().format("YYYY-MM-DD"); // 현재 날짜 및 시간
+    const nowTime = moment().format('YYYY-MM-DD'); // 현재 날짜 및 시간
 
     console.log(nowTime);
     const data1 = {
@@ -95,7 +95,7 @@ function* loadUpdateUser(action) {
       data: result,
     });
     yield put({ type: REGISTER_WEIGHT_HISTORY_REQUEST, data: data1 }); // mypage 정보 바로 조회
-    swal("수정이 완료되었습니다.", "    ", "success", {
+    swal('수정이 완료되었습니다.', '    ', 'success', {
       buttons: false,
       timer: 1800,
     });
@@ -118,9 +118,9 @@ function* loadDeleteUser(action) {
       type: DELETE_MEMBER_SUCCESS,
       data: result,
     });
-    alert("정상적으로 탈퇴 되었습니다.");
+    alert('정상적으로 탈퇴 되었습니다.');
     sessionStorage.clear(); // userToken 세션스토리지 삭제
-    document.location.href = "/"; // 로그아웃 처리하면 새로고침 해서 세션 사라진 걸 인식 해줘야함.
+    document.location.href = '/'; // 로그아웃 처리하면 새로고침 해서 세션 사라진 걸 인식 해줘야함.
   } catch (err) {
     yield put({
       type: DELETE_MEMBER_FAILURE,
@@ -155,7 +155,7 @@ function* watchLoadPasswordConfirm() {
 // 영양 성분 조회
 function* loadNutritionHistory(action) {
   try {
-    const result = yield call(NutritionHistoryAPI, action.data);
+    const result = yield call(NutritionHistoryAPI, action.data.createdAt);
     yield put({
       type: NUTRITION_HISTORY_SUCCESS,
       data: result,
@@ -184,9 +184,9 @@ function* loadWeightHistory(action) {
       type: WEIGHT_HISTORY_FAILURE,
     });
     swal(
-      "Weight History에 등록되지 않은 날짜를 수정하려했습니다.",
-      "    ",
-      "success",
+      'Weight History에 등록되지 않은 날짜를 수정하려했습니다.',
+      '    ',
+      'success',
       {
         buttons: false,
         timer: 1800,
@@ -227,7 +227,7 @@ function* loadSelectWeightHistoryRegister(action) {
       type: SELECT_REGISTER_WEIGHT_HISTORY_SUCCESS,
       data: result,
     });
-    swal("등록 성공", "  ", "success", {
+    swal('등록 성공', '  ', 'success', {
       buttons: false,
       timer: 1200,
     });
@@ -236,9 +236,9 @@ function* loadSelectWeightHistoryRegister(action) {
       type: SELECT_REGISTER_WEIGHT_HISTORY_FAILURE,
     });
     swal(
-      "WeightHistory 등록 실패",
-      "이미 등록된 날짜를 등록하려 했습니다. 등록되지 않은 날짜로 등록 바랍니다.",
-      "error",
+      'WeightHistory 등록 실패',
+      '이미 등록된 날짜를 등록하려 했습니다. 등록되지 않은 날짜로 등록 바랍니다.',
+      'error',
       {
         buttons: false,
         timer: 1500,
@@ -263,7 +263,7 @@ function* loadSelectWeightHistoryUpdate(action) {
       type: UPDATE_WEIGHT_HISTORY_SUCCESS,
       data: result,
     });
-    swal("수정 성공", "  ", "success", {
+    swal('수정 성공', '  ', 'success', {
       buttons: false,
       timer: 1200,
     });
@@ -272,9 +272,9 @@ function* loadSelectWeightHistoryUpdate(action) {
       type: UPDATE_WEIGHT_HISTORY_FAILURE,
     });
     swal(
-      "WeightHistory 수정 실패",
-      "등록되지 않은 날짜를 수정하려 했습니다. 등록된 날짜를 수정 바랍니다.",
-      "error",
+      'WeightHistory 수정 실패',
+      '등록되지 않은 날짜를 수정하려 했습니다. 등록된 날짜를 수정 바랍니다.',
+      'error',
       {
         buttons: false,
         timer: 1500,
@@ -298,7 +298,7 @@ function* loadSelectWeightHistoryDelete(action) {
       type: DELETE_WEIGHT_HISTORY_SUCCESS,
       data: result,
     });
-    swal("삭제 성공", "  ", "success", {
+    swal('삭제 성공', '  ', 'success', {
       buttons: false,
       timer: 1200,
     });
@@ -307,9 +307,9 @@ function* loadSelectWeightHistoryDelete(action) {
       type: DELETE_WEIGHT_HISTORY_FAILURE,
     });
     swal(
-      "WeightHistory 삭제 실패",
-      "등록되지 않은 날짜를 삭제하려 했습니다. 등록된 날짜를 입력 바랍니다.",
-      "error",
+      'WeightHistory 삭제 실패',
+      '등록되지 않은 날짜를 삭제하려 했습니다. 등록된 날짜를 입력 바랍니다.',
+      'error',
       {
         buttons: false,
         timer: 1500,
