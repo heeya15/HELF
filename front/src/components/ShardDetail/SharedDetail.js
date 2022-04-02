@@ -1,15 +1,10 @@
 import React, { Component , useState, useEffect  } from "react";
 import axios from 'axios';
-import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams, useHistory } from "react-router-dom";
 import { BASE_URL, IMAGE_URL } from "../../utils/https";
-import { LOCAL_URL } from "../../utils/https";
-import { div } from "@tensorflow/tfjs";
 import { Button } from "react-bootstrap";
 import './SharedDetail.css'
 import { Container, Row, Col } from "react-bootstrap";
-import { VictoryPie } from "victory-pie";
-import { PieChart } from "react-minimal-pie-chart";
 import {
   TotalStyle,
   RegisterReq,
@@ -188,11 +183,8 @@ function Detail({ match }) {
          
                               </div>
                             :<div className="commentDelete"><Titles>{user.user_id} : {user.comment}</Titles></div>
-            
                           }
-                        </div>
-                  
-               
+                        </div>      
                     ))}
                   </CommentBoxBig>
                 </RegisterReq>
