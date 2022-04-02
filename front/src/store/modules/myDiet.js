@@ -105,12 +105,19 @@ export const setDietDetailThumbnail = (state) => ({
   state,
 });
 
+const SET_FOOD_NAME = "SET_FOOD_NAME";
+export const setFoodName = (state) => ({
+  type: SET_FOOD_NAME,
+  state,
+});
+
 const reducer = (state = initialState, action) =>
   produce(state, (draft) => {
     switch (action.type) {
       case MY_DIET_IMAGE_REQUEST:
         break;
       case MY_DIET_IMAGE_SUCCESS:
+        // draft.foodName = [];
         // action.data.data.forEach((foods) => {
         //   draft.foodName.push({foodName:foods,weight:100});
         // });
@@ -154,6 +161,13 @@ const reducer = (state = initialState, action) =>
       case MY_DIET_UPDATE_REQUEST:
         break;
       case MY_DIET_UPDATE_SUCCESS:
+        draft.myDietDetail.description = action.data.data.description;
+        draft.myDietDetail.diaryDate = action.data.data.diaryDate;
+        draft.myDietDetail.diaryNo = action.data.data.diaryNo;
+        draft.myDietDetail.imagePath = action.data.data.imagePath;
+        draft.myDietDetail.mealTime = action.data.data.mealTime;
+        draft.myDietDetail.dietFindResList = action.data.data.dietFindResList;
+        draft.dietDetailThumbnail = `${IMAGE_URL}${action.data.data.imagePath}`;
         break;
       case MY_DIET_UPDATE_FAILURE:
         break;
@@ -189,6 +203,12 @@ const reducer = (state = initialState, action) =>
         break;
       case SET_MY_DIET_DETAIL_THUMBNAIL:
         draft.dietDetailThumbnail = action.state;
+        break;
+      case SET_FOOD_NAME:
+        draft.foodName = [];
+        action.state.forEach((food) => {
+          draft.foodName.push({ foodName: food.foodName, weight: 100 });
+        });
         break;
       case MY_DIET_DIARY_SHARE_REQUEST:
         draft.diaryShareLoading = true;

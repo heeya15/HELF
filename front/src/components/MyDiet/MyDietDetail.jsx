@@ -9,6 +9,7 @@ import {
   setDietDetailDescription,
   setDietDetailDietRegisterReqList,
   setDietDetailThumbnail,
+  setFoodName,
   MY_DIET_DETAIL_REQUEST,
   MY_DIET_UPDATE_REQUEST,
 } from "../../store/modules/myDiet";
@@ -75,11 +76,11 @@ export default function MyDietDetail() {
       const file = e.target.files[0];
       dispatch(setDietDetailThumbnail(URL.createObjectURL(file)));
       dispatch(setMyDietDetailImagePath(file));
-      // dispatch({
-      //   type: MY_DIET_IMAGE_REQUEST,
-      //   data: { imagePath: file },
-      // });
-      dispatch(setDietDetailDietRegisterReqList(foodName));
+      dispatch({
+        type: MY_DIET_IMAGE_REQUEST,
+        data: { imagePath: file },
+      });
+      // dispatch(setDietDetailDietRegisterReqList(foodName));
     }
   };
 
@@ -98,7 +99,7 @@ export default function MyDietDetail() {
   };
 
   const dietUpdateStateButton = () => {
-    dispatch(setDietDetailDietRegisterReqList([]));
+    dispatch(setFoodName(myDietDetail.dietFindResList));
     setDietUpdate(true);
   };
 
@@ -118,7 +119,7 @@ export default function MyDietDetail() {
     return (
       <div key={index}>
         <FoodTableTitle>
-          {food.food_name} {food.weight}g
+          {food.foodName} {food.weight}g
         </FoodTableTitle>
         <TableContainer>
           <Table>
@@ -155,17 +156,21 @@ export default function MyDietDetail() {
               </TableRow>
               <TableRow>
                 <TableCell style={{ width: "25%" }} align="center">
-                  {Math.round((food.weight / 100) * food.kcal * 100) / 100}
+                  {food.kcal &&
+                    Math.round((food.weight / 100) * food.kcal * 100) / 100}
                 </TableCell>
                 <TableCell style={{ width: "25%" }} align="center">
-                  {Math.round((food.weight / 100) * food.carbohydrate * 100) /
-                    100}
+                  {food.carbohydrate &&
+                    Math.round((food.weight / 100) * food.carbohydrate * 100) /
+                      100}
                 </TableCell>
                 <TableCell style={{ width: "25%" }} align="center">
-                  {Math.round((food.weight / 100) * food.protein * 100) / 100}
+                  {food.protein &&
+                    Math.round((food.weight / 100) * food.protein * 100) / 100}
                 </TableCell>
                 <TableCell style={{ width: "25%" }} align="center">
-                  {Math.round((food.weight / 100) * food.fat * 100) / 100}
+                  {food.fat &&
+                    Math.round((food.weight / 100) * food.fat * 100) / 100}
                 </TableCell>
               </TableRow>
             </TableBody>
@@ -233,7 +238,7 @@ export default function MyDietDetail() {
                   <div>
                     {foodName.map((food, index) => (
                       <div key={index}>
-                        {food.name}{" "}
+                        {food.foodName}{" "}
                         <select
                           data-index={index}
                           style={{
@@ -287,7 +292,7 @@ export default function MyDietDetail() {
                   <MealTimeDetail>{myDietDetail.mealTime}식단</MealTimeDetail>
                   <p>{myDietDetail.diaryDate.substr(0, 16)}</p>
                   <Titles>Food</Titles>
-                  {FoodList}
+                  {myDietDetail.dietFindResList.length != 0 && FoodList}
                   <Titles>Description</Titles>
                   <Description
                     rows="8"
