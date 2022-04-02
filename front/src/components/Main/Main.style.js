@@ -47,6 +47,11 @@ const mainButton = {
     color: '#000',    
 }
 
+const content = {
+    fontFamily: 'KOTRA_GOTHIC',
+    wordBreak: 'break-all',
+}
+
 // Function Component
 const item = {
     display: 'flex',
@@ -80,4 +85,5 @@ export {
     item,
     number,
     image,
+    content,
 };
