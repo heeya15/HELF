@@ -87,6 +87,8 @@ public class DietDiaryServiceImpl implements DietDiaryService{
     @Autowired
     NutritionHistoryService nutritionHistoryService;
 
+    public List<String> foodList = new ArrayList<>();
+
     /** 식단 일지 정보를 생성하는 registerDietDiary 입니다. **/
     @Override
     @Transactional
@@ -290,8 +292,24 @@ public class DietDiaryServiceImpl implements DietDiaryService{
             System.out.println(className);
             foodsState.put(className, true);
         }
+        Map<String, String> foodKname = new HashMap<String, String>() {{
+            put("chickenbreast","닭가슴살");
+            put("tomato","토마토");
+            put("salmon","연어");
+            put("steak","안심스테이크");
+            put("salad","야채샐러드");
+            put("egg","계란");
+            put("cucumber","오이");
+            put("milk","우유");
+            put("sweetpotato","고구마");
+            put("rice","밥");
+            put("natto","낫또");
+            put("tofu","두부");
+            put("broccoli","브로콜리");
+        }};
+
         foodsState.forEach((key, value)->{
-            System.out.println( key );
+            System.out.println( foodKname.get(key) );
         });
 
         System.out.println(results);
@@ -310,6 +328,11 @@ public class DietDiaryServiceImpl implements DietDiaryService{
         img.save(Files.newOutputStream(SavePath), "png");
         log.info("Detected objects image has been saved in: {}", imagePath);
         return null;
+    }
+
+    @Override
+    public List<String> detectedResult() {
+        return foodList;
     }
 
 }
