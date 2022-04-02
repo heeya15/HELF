@@ -10,6 +10,7 @@ const initialState = {
     weight: 0,
     birthday: "",
   },
+  meStateDone: false,
   nutritionHistoryList: [],
   weightHistoryList: [],
 
@@ -137,6 +138,7 @@ const reducer = (state = initialState, action) =>
         draft.me.weight = action.data.weight;
         draft.me.birthday = action.data.birthday;
         draft.me.isLogin = action.data.isLogin;
+        draft.meStateDone = true;
         break;
       case MY_PAGE_FAILURE:
         draft.myPageLoading = false;
