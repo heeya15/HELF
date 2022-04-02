@@ -3,7 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   ExerciseHistoryTotal,
   ReactTooltipStyled,
-} from "./ExerciseHistory.style";
+  Title,
+} from "../MyPage.style";
 import { Container, Row, Col } from "react-bootstrap";
 import ReactTooltip from "react-tooltip";
 import { EXERCISE_HISTORY_FINDALL_REQUEST } from "../../../store/modules/exerciseHistory";
@@ -64,7 +65,7 @@ export default function ExerciseHistory() {
 
   return (
     <ExerciseHistoryTotal>
-      <h5>운동 통계</h5>
+      <Title>운동 기록</Title>
       <div
         style={{
           display: "flex",

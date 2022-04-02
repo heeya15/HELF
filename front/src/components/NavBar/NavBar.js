@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import { Link } from "react-router-dom";
-import logo from "../../logo.png";
+import logo from "../../assets/images/logo.png";
 import "./NavBar.css";
 
 // 컴포넌트 import import SharedBoard from '../SharedBoard/SharedBoard'
@@ -73,21 +73,21 @@ export default function NavBar2() {
       className="navBar"
       variant="dark"
     >
-      <Container>
+      <Container fluid>
         <Link to="/">
           <img className="logo" src={logo} alt="logo image" />
         </Link>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="me-auto">
-            <Nav.Link onClick={handleShareBoard} className="anc">
-              게시판
-            </Nav.Link>
             <Nav.Link onClick={handleMyDiet} className="anc">
               MY식단
             </Nav.Link>
             <Nav.Link onClick={handleMyExercise} className="anc">
               MY운동
+            </Nav.Link>
+            <Nav.Link onClick={handleShareBoard} className="anc">
+              게시판
             </Nav.Link>
           </Nav>
           <Nav>

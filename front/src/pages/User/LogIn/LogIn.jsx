@@ -31,7 +31,7 @@ import {
   horizontalCenter,
 } from './Login.style';
 import { useHistory } from 'react-router';
-import kakaoimage from '../../../img/kakao_login_medium_narrow.png';
+import kakaoimage from '../../../assets/images/kakao_login_medium_narrow.png';
 
 const theme = createTheme();
 
@@ -64,7 +64,7 @@ export default function LogIn() {
     }
     if(!logInDone && !kakaologInDone) {
       event.preventDefault();
-    }
+    } 
   };
   
   const handleKeyPress = (e) => {
@@ -109,20 +109,18 @@ export default function LogIn() {
       fail: function(err) {
       },
     })
-   
   };
 
   useEffect(() => {
     if (logInDone || kakaologInDone) {
-      if(me.weight === 0 && me.height === 0 && me.birthday === null) {
+      if(me.weight === 0 && me.height === 0 && me.birthday === "") {
         history.push('/additionalUserInfo');
       } else {
         history.push('/');
       }
     }
   }, [ me, kakaologInDone, logInDone ]);
-  
-  
+    
   return (
     <AppForm>
         <ThemeProvider theme={theme}>

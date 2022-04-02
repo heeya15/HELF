@@ -3,7 +3,7 @@ import Grid from '@mui/material/Grid';
 import Link from '@mui/material/Link';
 import Container from '@mui/material/Container';
 import Typography from '../Main/Typography';
-import logo from '../../logo.png';
+import logo from '../../assets/images/logo.png';
 import {
     footerBackground,
     regualrFontColor,

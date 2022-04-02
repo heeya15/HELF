@@ -1,25 +1,12 @@
 import styled from "styled-components";
+import ReactTooltip from "react-tooltip";
 import { blockColor, device, pointColor } from "../../style/variables";
 
 const Container = styled.div`
   width: 90vw;
   max-width: 900px;
 `;
-const MyPageProfileWrapper = styled.div`
-  background-color: white;
-  border-radius: 8px;
-  border: 1px solid gray;
-  max-width: 800px;
-  width: 80%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  text-align: center;
-  padding: 20px;
-  @media ${device.TabletPortrait} {
-    padding: 10px;
-  }
-`;
+
 
 const MyPageProfileBlock = styled.div`
   display: flex;
@@ -52,18 +39,36 @@ const MyPageIconBlock = styled.div`
   border-radius: 50%;
   background-color: ${blockColor};
 `;
+
 const MyPageProfileButton = styled.button`
-  margin: 5px;
+  margin-top: 25px;
   padding: 5px 10px;
-  font-size: 20px;
+  font-size: 17px;
   background-color: #2e7d32;
-  border: none;
+  border: 3px solid #2e7d32;
   border-radius: 5px;
   color: #fff;
   :hover {
     transform: scale(1.1);
   }
 `;
+
+const DeleteButton = styled.button`
+  margin-top: 80px;
+  margin-left: 2px;
+  margin-right: 2px;
+  padding: 4px 12px;
+  font-size: 15px;
+  background-color: #fff;
+  border: 3px solid #1E2F23;
+  border-radius: 5px;
+  color: #1E2F23;
+  :hover {
+    transform: scale(1.1);
+  }
+`;
+
+
 const MyPageMenuWrapper = styled.div`
   height: 50px;
   display: flex;
@@ -84,6 +89,78 @@ const MyPageMenuWrapper = styled.div`
   }
 `;
 
+/** custom css start */
+const Title = styled.div`
+  font-weighit: bold;
+  font-size: 28px;
+  margin-bottom: 25px;
+`;
+
+const EmptyText = styled.div`
+  margin-bottom: 40px;
+`;
+
+const fontNormal = {
+fontFamily: 'KOTRA_GOTHIC',
+}
+
+/** 마이페이지 상단 프로필 */
+const MyPageProfileWrapper = styled.div`
+  background-color: #f2f7f4;
+  border-radius: 8px;
+  width: 100%;
+  height: 100%;
+  padding: 20px;
+  box-shadow: 4px 4px 4px 2px rgba(0, 0, 0, 0.25);
+  @media screen and (max-width: 768px) {
+    width: 100%;
+  }
+  @media screen and (max-width: 480px) {
+    width: 100%;
+  }
+`;
+
+const center = {
+  display: 'flex', 
+  justifyContent: 'center', 
+  alignItems: 'center',
+}
+
+
+const ProfileImage = styled.img`
+  border-radius: 20px;
+  width: 60%;
+  height: 60%;
+  @media screen and (max-width: 768px) {
+    width: 90%;
+    height: 90%;
+  }
+`;
+
+const UserInfo = styled.div`
+  margin-left: 15px;
+  text-align: left;
+`;
+
+const NameInfo = styled.div`
+  font-size: 40px;
+`;
+
+const BirthdayInfo = styled.div`
+  font-size: 25px;
+  margin-top: 20px;
+`;
+
+const EmailInfo = styled.div`
+  font-size: 25px;
+`;
+
+const PhysicalInfo = styled.div`
+  font-size: 20px;
+  margin-top: 10px;
+`;
+
+
 const editBox = {
   position: "absolute",
   top: "50%",
@@ -91,10 +168,32 @@ const editBox = {
   transform: "translate(-50%, -50%)",
   width: 600,
   bgcolor: "background.paper",
-  border: "1px solid #000",
+  border: "none",
+  borderRadius: "10px",
   boxShadow: 24,
   p: 4,
 };
+
+const editInput = {
+  backgroundColor: '#fff',
+}
+
+
+/** Modal */
+const modalTitle = {
+  fontFamily: 'KOTRA_BOLD-Bold',
+  fontSize: '36px',
+};
+
+const modalBody = {
+  fontFamily: 'KOTRA_GOTHIC',
+  fontSize: '16px',
+};
+
+const fontBold = {
+  fontFamily: 'KOTRA_BOLD-Bold',
+}
+
 
 const ModalBodyWrapper = styled.div`
   margin-top: 15px;
@@ -104,18 +203,24 @@ const ModalBodyWrapper = styled.div`
 const ButtonWrapper = styled.div`
   margin-top: 20px;
   text-align: right;
+  font-family: KOTRA_BOLD-Bold;
 `;
 
 const ConfirmButton = styled.button`
+  width: 70px;
   background-color: #2e7d32;
   color: #fff;
   border: 2px solid #2e7d32;
   border-radius: 10px;
   padding: 5px 10px;
   margin-right: 5px;
-`;
-
-const CancelButton = styled.button`
+  :hover {
+    transform: scale(1.1);
+  }
+  `;
+  
+  const CancelButton = styled.button`
+  width: 70px;
   background-color: #fff;
   color: #2e7d32;
   border: 2px solid #2e7d32;
@@ -123,52 +228,8 @@ const CancelButton = styled.button`
   padding: 5px 10px;
 `;
 
-const MessageWrapper = styled.div`
-  display: flex;
-  justify-content: space-around;
-  width: 40%;
-  margin: 30px auto;
-  padding: 5px 0px;
-  // border-radius: 5px;
-  // background-color: #fff;
-`;
 
-const LackMessage = styled.button`
-  background-color: #f0df00;
-  color: #fff;
-  font-weight: bold;
-  border: none;
-  border-radius: 10px;
-  padding: 5px 10px;
-  cursor: pointer;
-`;
-
-const NormalMessage = styled.button`
-  background-color: #43a047;
-  color: #fff;
-  font-weight: bold;
-  border: none;
-  padding: 5px 10px;
-  border-radius: 10px;
-  cursor: pointer;
-`;
-
-const TooMuchMessage = styled.button`
-  background-color: #c94c4c;
-  color: #fff;
-  font-weight: bold;
-  border: none;
-  padding: 5px 10px;
-  border-radius: 10px;
-  cursor: pointer;
-`;
-
-const Title = styled.div`
-  font-weighit: bold;
-  font-size: 28px;
-  margin-bottom: 25px;
-`;
-
+/** 찜 목록 */
 const LikeListStyle = styled.div`
   .total {
     background-color: transparent;
@@ -194,6 +255,122 @@ const LikeListStyle = styled.div`
     border-radius: 20px;
   }
 `;
+
+/** 체중 기록 */
+const ButtonGroup = styled.div`
+  margin-top: 40px;
+  margin-bottom: 80px;
+`;
+
+const WeightButton = styled.button`
+  margin-top: 20px;
+  margin-left: 2px;
+  margin-right: 2px;
+  padding: 2px 10px;
+  font-size: 15px;
+  background-color: #1E2F23;
+  border: 3px solid #1E2F23;
+  border-radius: 5px;
+  color: #fff;
+  :hover {
+    transform: scale(1.1);
+  }
+`;
+
+
+/* 영양 성분 통계 */
+const NutritionStatus = styled.div`
+  font-size: 10px;
+  margin-top: 15px;
+  font-family: 'KOTRA_GOTHIC';
+`;
+
+const MessageWrapper = styled.div`
+  // margin: 0 auto;
+  padding: 5px 0px;
+`;
+
+const LackMessage = styled.button`
+  margin: 30px 2px 0px 2px;
+  background-color: #f0df00;
+  color: #fff;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+  padding: 5px 10px;
+  cursor: pointer;
+`;
+  
+const NormalMessage = styled.button`
+  margin: 30px 2px 0px 2px;
+  background-color: #43a047;
+  color: #fff;
+  font-weight: bold;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+`;
+  
+const TooMuchMessage = styled.button`
+  margin: 30px 2px 0px 2px;
+  background-color: #c94c4c;
+  color: #fff;
+  font-weight: bold;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+`;
+
+/* 운동 기록 */
+const ReactTooltipStyled = styled(ReactTooltip)`
+  &.place-right {
+    background-color: white;
+    color: black;
+    font-size: 10px;
+  }
+`;
+
+const ExerciseHistoryTotal = styled.div`
+  margin-bottom: 5%;
+  .line {
+    display: block;
+    font-size: 0;
+  }
+  .cell {
+    height: 15px;
+    width: 15px;
+    border-radius: 2px;
+    margin: 1px;
+    font-size: 10px;
+    display: inline-grid;
+  }
+  .months {
+    font-size: 10px;
+    width: 900px;
+    margin-right: 4%;
+  }
+  .fill-0 {
+    background-color: #ebedf0;
+  }
+  .fill-1 {
+    background-color: #aae68a;
+  }
+  .fill-2 {
+    background-color: rgb(113, 197, 131);
+  }
+  .fill-3 {
+    background-color: rgb(15, 126, 61);
+  }
+  .fill-4 {
+    background-color: rgb(10, 88, 42);
+  }
+  .fill-5 {
+    background-color: rgb(7, 63, 29);
+  }
+`;
+
 const ShareBoardLikeListStyle = styled.div`
   .total {
     background-color: transparent;
@@ -219,6 +396,7 @@ const ShareBoardLikeListStyle = styled.div`
     border-radius: 20px;
   }
 `;
+
 export {
   Container,
   MyPageMenuWrapper,
@@ -226,6 +404,7 @@ export {
   MyPageIconBlock,
   MyPageProfileBlock,
   MyPageProfileButton,
+  WeightButton,
   editBox,
   ModalBodyWrapper,
   ButtonWrapper,
@@ -237,5 +416,23 @@ export {
   TooMuchMessage,
   Title,
   LikeListStyle,
-  ShareBoardLikeListStyle
+  DeleteButton,
+  ButtonGroup,
+  fontNormal,
+  NutritionStatus,
+  ExerciseHistoryTotal,
+  ShareBoardLikeListStyle ,
+  ReactTooltipStyled,
+  UserInfo,
+  NameInfo,
+  BirthdayInfo,
+  EmailInfo,
+  PhysicalInfo,
+  EmptyText,
+  ProfileImage,
+  center,
+  modalTitle,
+  modalBody,
+  editInput,
+  fontBold,
 };

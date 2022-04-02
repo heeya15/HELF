@@ -140,12 +140,11 @@ function* loadPasswordConfirm(action) {
       type: PASSWORD_CONFIRM_SUCCESS,
       data: result,
     });
-    console.log("비밀번호 일치");
   } catch (err) {
     yield put({
       type: PASSWORD_CONFIRM_FAILURE,
     });
-    console.log("비밀번호 불일치");
+    alert('잘못된 정보입니다. 다시 입력하세요.');
   }
 }
 
