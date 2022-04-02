@@ -5,6 +5,7 @@ import com.aisher.helf.api.request.ShareBoardRegisterReq;
 import com.aisher.helf.api.response.ShareBoardAllRes;
 import com.aisher.helf.api.response.ShareBoardFindRes;
 import com.aisher.helf.api.response.ShareBoardFindTopLikeRes;
+import com.aisher.helf.api.response.ShareBoardSelectLikeCountRes;
 import com.aisher.helf.api.service.DietDiaryService;
 import com.aisher.helf.api.service.ShareBoardService;
 import com.aisher.helf.common.auth.UserDetails;
@@ -96,19 +97,17 @@ public class ShareBoardController {
     }
 
     @GetMapping("/find/isLike/{boardNo}")
-    @ApiOperation(value ="해당 게시글 좋아요 여부 조회(token)", notes ="해당 boardNo 공유 게시판 좋아요 여부 출력 <strong>찜 했을 경우 : true, 찜 안 했을 경우 false <strong>")
+    @ApiOperation(value ="해당 게시글 좋아요 여부 조회 및 총 좋아요 개수 조회(token)", notes ="해당 boardNo 공유 게시판 좋아요 여부 출력 <strong>찜 했을 경우 : true, 찜 안 했을 경우 false <strong>")
     @ApiResponses({ @ApiResponse(code = 200, message = "성공"),
             @ApiResponse(code = 401, message = "인증 실패"),
             @ApiResponse(code = 404, message = "사용자 없음"),
             @ApiResponse(code = 500, message = "서버 오류") })
-    public ResponseEntity<Boolean> findShareBoardInfo(@PathVariable Long boardNo, @ApiIgnore Authentication authentication ) {
+    public ResponseEntity<ShareBoardSelectLikeCountRes> findShareBoardInfo(@PathVariable Long boardNo, @ApiIgnore Authentication authentication ) {
         UserDetails userDetails = (UserDetails) authentication.getDetails();
         String userId = userDetails.getUsername();
-        boolean isLike = shareBoardService.checkIsLike(boardNo,userId);
-        if(isLike==true){ // 해당 게시글 로그인한 유저가 찜 했을 경우
-            return new ResponseEntity<Boolean>(isLike, HttpStatus.OK);
-        }
-        return new ResponseEntity<Boolean>(isLike, HttpStatus.OK);
+        ShareBoardSelectLikeCountRes isLike = shareBoardService.checkIsLikeAndTotalLikeCount(boardNo,userId);
+
+        return new ResponseEntity<ShareBoardSelectLikeCountRes>(isLike, HttpStatus.OK);
     }
     @GetMapping("/findAll/like")
     @ApiOperation(value ="공유 게시글중 좋아요 개수가 많은 5개 레코드 조회", notes ="공유 게시글중 좋아요 개수가 많은 5개 레코드 조회")

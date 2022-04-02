@@ -4,6 +4,7 @@ import com.aisher.helf.api.request.ShareBoardRegisterReq;
 import com.aisher.helf.api.response.ShareBoardAllRes;
 import com.aisher.helf.api.response.ShareBoardFindRes;
 import com.aisher.helf.api.response.ShareBoardFindTopLikeRes;
+import com.aisher.helf.api.response.ShareBoardSelectLikeCountRes;
 import com.aisher.helf.db.entity.ShareBoard;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -40,6 +41,6 @@ public interface ShareBoardService {
 	/** 내가 기록한 식단이 이미 공유 되어있는지 diaryNo 체크 **/
 	boolean checkDiaryNo(int diaryNo);
 
-	/** 해당 공유 게시글을 현재 로그인한 사용자가 좋아요 했는지 여부 체크  **/
-	boolean checkIsLike(Long boardNo, String userId);
+	/** 해당 공유 게시글을 현재 로그인한 사용자가 좋아요 했는지 여부 체크 및 해당 게시글 총 좋아요 개수 반환 **/
+	ShareBoardSelectLikeCountRes checkIsLikeAndTotalLikeCount(Long boardNo, String userId);
 }

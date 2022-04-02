@@ -4,6 +4,7 @@ import com.aisher.helf.api.request.ShareBoardRegisterReq;
 import com.aisher.helf.api.response.ShareBoardAllRes;
 import com.aisher.helf.api.response.ShareBoardFindRes;
 import com.aisher.helf.api.response.ShareBoardFindTopLikeRes;
+import com.aisher.helf.api.response.ShareBoardSelectLikeCountRes;
 import com.aisher.helf.db.entity.DietDiary;
 import com.aisher.helf.db.entity.LikeList;
 import com.aisher.helf.db.entity.ShareBoard;
@@ -12,6 +13,7 @@ import com.aisher.helf.db.repository.LikeListRepository;
 import com.aisher.helf.db.repository.LikeListRepositorySupport;
 import com.aisher.helf.db.repository.ShareBoardRepository;
 import com.aisher.helf.db.repository.ShareBoardRepositorySupport;
+import com.querydsl.core.Tuple;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -133,11 +135,21 @@ public class ShareBoardServiceImpl implements ShareBoardService {
     }
 
     @Override
-    public boolean checkIsLike(Long boardNo, String userId) {
+    public ShareBoardSelectLikeCountRes checkIsLikeAndTotalLikeCount(Long boardNo, String userId) {
+        ShareBoardSelectLikeCountRes res = new ShareBoardSelectLikeCountRes();
         LikeList likeList = likeListRepositorySupport.findLikeListByUserIdAndBoardNo(userId,boardNo).orElse(null);
         boolean isLike;
         if(likeList == null) isLike = false; // 찜 목록 리스트 값이 null이면
         else isLike = true;
-        return isLike;
+        res.setLike(isLike);
+        // 총 좋아요 개수
+        String count = shareboardRepository.findSelectLikeTotal(boardNo);
+        System.out.println(count);
+        if(count == null ) res.setTotalLikeCount(0);
+        else {
+            res.setTotalLikeCount(Integer.parseInt(count));
+            System.out.println(count);
+        }
+        return res;
     }
 }

@@ -13,6 +13,8 @@ com/aisher/helf/config/SecurityConfig.java
  com.aisher.helf.config.SecurityConfig
 com/aisher/helf/config/AmazonS3Config.java
  com.aisher.helf.config.AmazonS3Config
+com/aisher/helf/api/response/ShareBoardSelectLikeCountRes.java
+ com.aisher.helf.api.response.ShareBoardSelectLikeCountRes
 com/aisher/helf/db/entity/User.java
  com.aisher.helf.db.entity.User
 com/aisher/helf/api/service/ExerciseService.java
