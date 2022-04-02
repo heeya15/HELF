@@ -14,7 +14,7 @@ import java.util.List;
 @Repository
 public interface DietRepository extends JpaRepository<Diet, Integer> {
 
-    @Query(value = "select diet_no, weight, diary_no, d.food_no, food_name, kcal, carbohydrate, protein, fat \n" +
+    @Query(value = "select diet_no as dietNo, weight, diary_no as diaryNo, d.food_no as foodNo, food_name as foodName, kcal, carbohydrate, protein, fat \n" +
             "from diet d join food f \n" +
             "on d.food_no = f.food_no \n" +
             "where diary_no = :diaryNo ", nativeQuery = true)
