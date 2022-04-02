@@ -16,7 +16,10 @@ export default function Exercise() {
 
   useEffect(() => {
     switch (exercise.type) {
-      case 1: //BentOverRow
+      case 1: // BentOverRow
+        // test : 왼 손 들기
+        // setURL("https://teachablemachine.withgoogle.com/models/tNxgspb7K/");
+        
         setURL("https://teachablemachine.withgoogle.com/models/eqCo1kx3a/");
         break;
       case 2: // DumbbellCurl
@@ -150,7 +153,8 @@ export default function Exercise() {
     await predict();
     window.requestAnimationFrame(loop);
   }
-  var progress = 327;
+  var angle = Math.floor((360/(exercise.time))*10) / 10;
+  var progress = 360;
   var status = "wait";
   var count = 0;
   var soundurl = "";
@@ -171,12 +175,13 @@ export default function Exercise() {
           console.log(error);
         });
         console.log(status, count, soundurl);
-        progress = progress - 32.7;
-        if (progress <= 0) {
-          progress = 327 - 32.7;
+        progress = progress - angle;
+        if (progress < 0) {
+          progress = 360 - angle;
         }
         $(".progress").css("stroke-dashoffset", progress);
         $("#counter").html(count);
+        console.log(progress, angle)
       }
       status = "wait";
     } else if (prediction[1].probability.toFixed(2) > 0.8) {
@@ -211,7 +216,8 @@ export default function Exercise() {
       <div class="frame">
         <div class="center">
           <div class="headline">
-            <div class="small">Test</div>Counter
+            {/* <div class="small">Test</div> */}
+            Counter
           </div>
           <div class="circle-big">
             <div class="text">
