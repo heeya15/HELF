@@ -1,10 +1,11 @@
 import React, { Component , useState, useEffect  } from "react";
 import axios from 'axios';
 import { Link, useParams, useHistory } from "react-router-dom";
-import { BASE_URL, IMAGE_URL } from "../../utils/https";
+import { BASE_URL, IMAGE_URL, LOCAL_URL } from "../../utils/https";
 import { Button } from "react-bootstrap";
 import './SharedDetail.css'
 import { Container, Row, Col } from "react-bootstrap";
+import { useDispatch, useSelector } from "react-redux";
 import {
   TotalStyle,
   RegisterReq,
@@ -19,31 +20,67 @@ import {
   CommentBoxBig,
   SendButton
 } from "./SharedDetail.style";
-
-
+import { 
+  LikeListStyle,
+} from "../MyPage/MyPage.style";
+import { AiFillHeart,AiOutlineHeart } from "react-icons/ai";
+import {
+  MY_PAGE_LIKE_REQUEST,
+  MY_PAGE_LIKE_DELETE_REQUEST,
+} from "../../store/modules/myPage";
+import {
+  SHARE_BOARD_ISLIKECHECK_TOTALLIKECOUNT_REQUEST,
+  SHARE_BOARD_LIKE_REGISTER_REQUEST 
+} from "../../store/modules/shareBoard";
 // match 로 현재 게시물 주소에 대한 정보를 props 로 받아온다
 function Detail({ match }) {
-  const index = match.params.index.substring(0);
-  const token = sessionStorage.getItem("jwt");
+
+    const dispatch = useDispatch();
+    const history = useHistory();
+    const index = match.params.index.substring(0);
+    const token = sessionStorage.getItem("jwt");
 
     const [allData, setAlldata] = useState([]);
     const [commentData, setComment] = useState([]);
     const [userData, setUser] = useState([]);
+    const [LikeCount, setTotalLikeCount] = useState(0);
+    const { isLike,totalLikeCount } = useSelector((state) => state.shareBoard);
+  
+   const likeDelete = (boardNo, e) => {
+      dispatch({
+        type: SHARE_BOARD_LIKE_REGISTER_REQUEST,
+        data: boardNo,
+      });
+  };
+  const likeRegister = (boardNo, e) => {
+    dispatch({
+      type: SHARE_BOARD_LIKE_REGISTER_REQUEST,
+      data: boardNo,
+    });
+  };
 
-    useEffect(() => {
-        axios.get(`${BASE_URL}shareboard/find/${index}`,
-        // `${LOCAL_URL}shareboard/findAll`, 
-        {
-        headers: { 
-          Authorization: `Bearer ${ token }`
-        }})
-            .then(response => {
-              // 나중에 response.data 로 data 가져오기 가능
-              setAlldata(response.data[0]); 
-              console.log(response) 
+  useEffect(() => {
+    // 좋아요 여부와 좋아요 개수 들고옴.
+      dispatch({
+        type: SHARE_BOARD_ISLIKECHECK_TOTALLIKECOUNT_REQUEST,
+        data:index
+      });
+      setTotalLikeCount(totalLikeCount); 
+    
+      axios.get(`${LOCAL_URL}shareboard/find/${index}`,
+      // `${LOCAL_URL}shareboard/findAll`, 
+      {
+      headers: { 
+        Authorization: `Bearer ${ token }`
+      }})
+          .then(response => {
+            // 나중에 response.data 로 data 가져오기 가능
+            setAlldata(response.data[0]); 
+            console.log("hi");
+            console.log(response) 
 
-            });
-    }, []);
+          });
+  }, [totalLikeCount, isLike]);
     useEffect(() => {
       axios.get(`${BASE_URL}comment/findAll/${index}`,
       // `${LOCAL_URL}shareboard/findAll`, 
@@ -75,7 +112,7 @@ function Detail({ match }) {
   }, []);
 
 
-    const history = useHistory();
+  
 
     const goBack = () => {
       history.push(`/sharedBoard`);
@@ -145,9 +182,36 @@ function Detail({ match }) {
             <Row>
               <Col>
                 <ImageThumbnail src={`${IMAGE_URL}${allData.image_path}`} alt="이미지"></ImageThumbnail>
+              {isLike ? (
+                <LikeListStyle >
+                    <div className="total">
+                    <AiFillHeart
+                      size="50"
+                      className="icon"
+                      onClick={(e) => {
+                        likeDelete(index, e);
+                      }} 
+                    />
+                  </div>
+                  {LikeCount}
+                </LikeListStyle>
+              ) : (
+                <LikeListStyle >
+                  <div className="total">
+                  <AiOutlineHeart
+                    size="50"
+                    className="icon"
+                    onClick={(e) => {
+                      likeRegister(index, e);
+                    }}
+                    />
+                    </div>
+                    {LikeCount}  
+                </LikeListStyle>
+                )}            
               </Col>
               <Col>
-                <RegisterReq>
+              <RegisterReq>
                   <Titles>{allData.user_id}님의 식단</Titles>
                   <Description
                   >{allData.description}</Description>

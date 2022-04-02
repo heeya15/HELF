@@ -21,5 +21,4 @@ public interface ShareBoardFindRes {
 	Double getCarbohydrate();      // 탄수화물
 	Double getProtein();           // 단백질
 	Double getFat();               // 지방
-	int getCount();                // 좋아요 수
 }
