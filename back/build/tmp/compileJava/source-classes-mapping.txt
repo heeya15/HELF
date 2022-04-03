@@ -115,6 +115,7 @@ com/aisher/helf/db/entity/ShareBoard.java
  com.aisher.helf.db.entity.ShareBoard$ShareBoardBuilder
 com/aisher/helf/api/service/DietDiaryServiceImpl.java
  com.aisher.helf.api.service.DietDiaryServiceImpl
+ com.aisher.helf.api.service.DietDiaryServiceImpl$1
 com/aisher/helf/db/repository/UserRepositorySupport.java
  com.aisher.helf.db.repository.UserRepositorySupport
 com/aisher/helf/api/service/ExerciseServiceImpl.java
