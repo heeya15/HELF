@@ -309,7 +309,7 @@ public class DietDiaryServiceImpl implements DietDiaryService{
         }};
 
         foodsState.forEach((key, value)->{
-            System.out.println( foodKname.get(key) );
+            foodList.add(foodKname.get(key));
         });
 
         System.out.println(results);
