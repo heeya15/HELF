@@ -7,6 +7,7 @@ import {
   setmyDietWeight,
   MY_DIET_IMAGE_REQUEST,
   MY_DIET_REGISTER_REQUEST,
+  FOOD_LIST_REQUEST,
 } from "../../store/modules/myDiet";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
@@ -55,6 +56,10 @@ export default function MyDietRegister() {
     description: description,
     dietRegisterReqList: foodName,
   };
+
+  useEffect(() => {
+    dispatch({ type: FOOD_LIST_REQUEST });
+  }, [dispatch]);
 
   const onImageHandler = (e) => {
     if (e.target.files && e.target.files.length > 0) {
@@ -172,7 +177,9 @@ export default function MyDietRegister() {
           <Row>
             <Col>
               <ImageThumbnail src={dietThumbnail} alt="이미지"></ImageThumbnail>
-              <label htmlFor="input-file">이미지 선택</label>
+              <label className="imageSelect" htmlFor="input-file">
+                이미지 선택
+              </label>
               <input
                 onChange={onImageHandler}
                 type="file"

@@ -4,6 +4,15 @@ const TotalStyle = styled.div`
   margin-top: 5%;
   border-radius: 10px;
   box-shadow: 7px 7px #e0e0e0;
+  .imageSelect {
+    margin-top: 2%;
+    background-color: #e0e0e0;
+    border-radius: 7px;
+    width: 18%;
+    :hover {
+      cursor: pointer;
+    }
+  }
 `;
 
 const ImageThumbnail = styled.img`
@@ -84,7 +93,7 @@ const Titles = styled.div`
 const FoodCheckButton = styled.button`
   font-size: 12px;
   float: right;
-  border: 2px solid grey;
+  border: 1px solid grey;
   border-radius: 3px;
   background-color: #9eb0a2;
   :hover {
