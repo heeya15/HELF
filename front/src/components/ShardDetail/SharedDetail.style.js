@@ -125,6 +125,16 @@ const BackButton = styled.button`
   width: 10%;
   margin-left: 2%;
 `;
+const CommentDeleteBtn = styled.button`
+  margin-top: 1.35%;
+  margin-left: 1rem;
+  color: #fff;
+  background-color: #db2525;
+  font-size: 10px;
+  border: none;
+  border-radius: 30px;
+  height: 10%;
+`;
 
 const Titles = styled.div`
   font-size: 17px;
@@ -132,6 +142,13 @@ const Titles = styled.div`
   text-align: left;
   margin-bottom: 1%;
   margin-top: 4%;
+`;
+const CommentTitles = styled.div`
+  font-size: 17px;
+  font-weight: bold;
+  text-align: left;
+  margin-bottom: 1%;
+  margin-top: 1%;
 `;
 
 export {
@@ -146,5 +163,7 @@ export {
   ImageThumbnail,
   CommentBox,
   CommentBoxBig,
-  SendButton
+  SendButton,
+  CommentDeleteBtn,
+  CommentTitles
 };

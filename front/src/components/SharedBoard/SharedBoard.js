@@ -54,7 +54,7 @@ function SharedBoard(props) {
   const token = sessionStorage.getItem("jwt");
   const [shardList, setShardlist] = useState([]);
   const [page, setPage] = useState(1); 
-  const perPage = 4; // 한 페이지에 보여줄 공유 게시글 수
+  const perPage = 6; // 한 페이지에 보여줄 공유 게시글 수
   const [totalpage, setTotalPage] = useState(1);
   const handlePageChange = (page) => {
     setPage(page);
