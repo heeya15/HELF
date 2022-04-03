@@ -21,7 +21,8 @@ import {
   CommentBoxBig,
   SendButton,
   CommentDeleteBtn,
-  CommentTitles
+  CommentTitles,
+  CommentUpdatdButton
 } from "./SharedDetail.style";
 import { 
   LikeListStyle,
@@ -293,8 +294,14 @@ function Detail({ match }) {
                             userData == user.user_id
                             ?<div className="commentDelete">
                               <CommentTitles className="newText">{user.user_id} : {user.comment} </CommentTitles>
+ 
+                              {/* 삭제파트 */}
+                              <CommentDeleteBtn  className="newText2" onClick={(e) => {
+                                  commentDeleteHandler(user.comment_no);
+                                }}>삭제</CommentDeleteBtn>
+                              
                               {/*  수정파트 */}
-                              <span className="newText2" onClick={(e) => {
+                              <CommentUpdatdButton className="newText2" onClick={(e) => {
                                   handleClick(user.comment_no , user.comment);
                                       }} >
                                         {input ?( user.comment_no === CommentNoinput
@@ -302,13 +309,7 @@ function Detail({ match }) {
                                               /> 
                                             : `수정`
                                           ): `수정`}
-                              </span>
-                              {/* 삭제파트 */}
-                              <CommentDeleteBtn  onClick={(e) => {
-                                  commentDeleteHandler(user.comment_no);
-                                }}>삭제</CommentDeleteBtn>
-                              
-                              
+                              </CommentUpdatdButton>
                               </div>
                             :<div className="commentDelete"><CommentTitles>{user.user_id} : {user.comment}</CommentTitles></div>
                           }

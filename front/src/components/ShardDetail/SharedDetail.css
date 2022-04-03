@@ -44,6 +44,7 @@
   cursor: pointer;
 }
 
+
 .commentDelete {
   display: flex;
   flex-direction: row;
@@ -69,6 +70,10 @@
   margin-left: 0.8rem;
   margin-top: 1%;
   
+}
+.newText2:hover {
+  margin-top: 1%;
+  cursor: pointer;
 }
 .line {
   margin: 0.5rem 0rem;}
