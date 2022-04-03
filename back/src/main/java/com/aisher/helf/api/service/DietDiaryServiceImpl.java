@@ -87,7 +87,7 @@ public class DietDiaryServiceImpl implements DietDiaryService{
     @Autowired
     NutritionHistoryService nutritionHistoryService;
 
-    public List<String> foodList = new ArrayList<>();
+    public List<String> foodList = null;
 
     /** 식단 일지 정보를 생성하는 registerDietDiary 입니다. **/
     @Override
@@ -254,7 +254,7 @@ public class DietDiaryServiceImpl implements DietDiaryService{
     @Override
     public DetectedObjects foodSegmentation(MultipartFile imagePath) throws IOException, ModelNotFoundException, MalformedModelException, TranslateException, ModelNotFoundException, MalformedModelException, TranslateException {
         int imageSize = 640;
-
+        foodList = new ArrayList<>();
         Pipeline pipeline = new Pipeline();
         pipeline.add(new Resize(imageSize));
         pipeline.add(new ToTensor());
