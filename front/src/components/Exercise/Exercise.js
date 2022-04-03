@@ -6,13 +6,37 @@ import $ from "jquery";
 import { useDispatch, useSelector } from "react-redux";
 import { EXERCISE_HISTORY_REGISTER_REQUEST } from "../../store/modules/exerciseHistory";
 import dayjs from "dayjs";
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import Modal from '@mui/material/Modal';
+
+const style = {
+  position: 'absolute',
+  textAlign: 'center',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 300,
+  height: 300,
+  bgcolor: 'background.paper',
+  boxShadow: 24,
+  borderRadius: '20px',
+  p: 4,
+};
 
 export default function Exercise() {
   const dispatch = useDispatch();
   const { exercise } = useSelector((state) => state.exerciseHistory);
   const now = new Date(); // 현재 날짜 및 시간
 
-  const [URL, setURL] = useState("");
+  const [ URL, setURL ] = useState("");
+  const [ currentSet, setCurrentSet ] = useState(1);
+
+  // 모달창 관리 
+  const [ open, setOpen ] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+  const [ timer, setTimer ] = useState(0);
 
   let modelURL = URL + "model.json";
   let metadataURL = URL + "metadata.json";
@@ -151,6 +175,9 @@ export default function Exercise() {
     }
   }
 
+  // async function stopVideo() {
+  // }
+
   async function loop(timestamp) {
     // console.log("test")
     webcam.update(); // update the webcam frame
@@ -160,7 +187,9 @@ export default function Exercise() {
   var angle = Math.floor((360 / exercise.time) * 10) / 10;
   var progress = 360;
   var status = "wait";
-  var count = 0;
+  var countTime = 0;
+  var countTotalTime = 0;
+  var countSet = 1;
   var soundurl = "";
 
   async function predict() {
@@ -172,34 +201,62 @@ export default function Exercise() {
 
     if (prediction[0].probability.toFixed(2) > 0.8) {
       if (status == "action") {
-        count++;
-        soundurl = (count % 10) + ".mp3";
+        countTime++;
+        countTotalTime++;
+        soundurl = (countTime % 10) + ".mp3";
         var audio = new Audio(soundurl);
         audio.play().catch((error) => {
           console.log(error);
         });
-        console.log(status, count, soundurl);
+        console.log(status, countTime, soundurl);
         progress = progress - angle;
         if (progress < 0) {
           progress = 360 - angle;
         }
         $(".progress").css("stroke-dashoffset", progress);
-        $("#counter").html(count);
+        $("#counter").html(countTime);
         console.log(progress, angle);
-        if (count == exercise.time) {
-          setTimeout(() => {
-            alert("운동이 끝났습니다!");
-          }, 500);
+
+        if (countTotalTime == exercise.set * exercise.time) {
+          // setTimeout(() => {
+          //   alert("운동이 끝났습니다!");w
+          // }, 500);
           // alert("운동이 끝났습니다!", 3000)
           dispatch({
             type: EXERCISE_HISTORY_REGISTER_REQUEST,
             data: {
-              count: count,
+              count: countTotalTime,
               date: dayjs(now).format("YYYY-MM-DD HH:mm:ss"),
               exerciseNo: exercise.type,
             },
           });
         }
+
+        // 1세트가 끝난 경우
+        if (countTime.toString() === exercise.time && countTotalTime < exercise.set * exercise.time) {
+          // 세트 수 증가
+          countSet++;
+          setCurrentSet(countSet);
+          
+          // 세트 당 카운트 수 reset
+          countTime = 0;
+
+          // breaktimer 가동
+          var timer = 4;
+          setTimer(timer);
+          setTimeout(() => { webcam.pause() }, 500)   // 화면 정지
+          handleOpen(); // 모달창 on
+
+          var timerInterval = setInterval(() => {
+            if(timer==0) clearInterval(timerInterval);
+            timer--;
+            setTimer(timer);
+          }, 1000);
+          setTimeout(() => { handleClose() }, 4000)       // 모달 close     
+          setTimeout(() => { webcam.play() }, 4000)          
+        }
+
+        
       }
       status = "wait";
     } else if (prediction[1].probability.toFixed(2) > 0.8) {
@@ -231,6 +288,24 @@ export default function Exercise() {
   return (
     <div>
       <h2>컴포넌트 입니다</h2>
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+          <Typography id="modal-modal-title" variant="h6" component="h2">
+            쉬는 시간 종료까지
+          </Typography> 
+          <Typography 
+            style={{ fontSize: '70px', marginTop: '30px'}}
+            id="modal-modal-description" 
+            sx={{ mt: 2 }}>
+            { timer }
+          </Typography>
+        </Box>
+      </Modal>
       <div class="frame">
         <div class="center">
           <div class="headline">
@@ -250,6 +325,7 @@ export default function Exercise() {
         </div>
       </div>
       <h1>인공지능(AI) Fitness Trainer</h1>
+      <div>{ currentSet }</div>
       {/* <button class="btn btn-primary" type="button" onclick={init()}>
         Start
       </button> */}
