@@ -81,6 +81,31 @@ const Titles = styled.div`
   margin-top: 4%;
 `;
 
+const FoodCheckButton = styled.button`
+  font-size: 12px;
+  float: right;
+  border: 2px solid grey;
+  border-radius: 3px;
+  background-color: #9eb0a2;
+  :hover {
+    transform: scale(1.1);
+    cursor: pointer;
+  }
+`;
+
+const foodcheckBox = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 400,
+  bgcolor: "background.paper",
+  border: "1px solid #000",
+  boxShadow: 24,
+  p: 4,
+  borderRadius: "20px",
+};
+
 export {
   TotalStyle,
   RegisterReq,
@@ -90,4 +115,6 @@ export {
   Titles,
   Description,
   ImageThumbnail,
+  FoodCheckButton,
+  foodcheckBox,
 };
