@@ -9,16 +9,20 @@ const DetailReq = styled.div`
 
 const UpdateButton = styled.button`
   margin-top: 2%;
+  margin-bottom: 3%;
+  padding: 5px 0px;
   color: #fff;
   background-color: #dbc925;
   font-size: 18px;
   border: none;
   border-radius: 30px;
   width: 10%;
-`;
-
-const BackButton = styled.button`
+  `;
+  
+  const BackButton = styled.button`
   margin-top: 2%;
+  margin-bottom: 3%;
+  padding: 5px 0px;
   color: #fff;
   background-color: #db2525;
   font-size: 18px;

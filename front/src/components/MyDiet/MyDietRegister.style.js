@@ -3,10 +3,11 @@ import styled from "styled-components";
 const TotalStyle = styled.div`
   margin-top: 5%;
   border-radius: 10px;
-  box-shadow: 7px 7px #e0e0e0;
+  box-shadow: 4px 4px 4px 2px rgba(0, 0, 0, 0.25);
   .imageSelect {
     margin-top: 2%;
     background-color: #e0e0e0;
+    padding: 3px;
     border-radius: 7px;
     width: 18%;
     :hover {
@@ -19,6 +20,7 @@ const ImageThumbnail = styled.img`
   width: 80%;
   height: 80%;
   display: block;
+  border-radius: 20px;
   margin-top: 5%;
   margin-left: auto;
   margin-right: auto;
@@ -49,13 +51,17 @@ const MealTypeButton = styled.div`
 
 const Description = styled.textarea`
   color: #272727;
-  background-color: #b3dfa8;
+  // background-color: #b3dfa8;
+  background-color: #f2f7f4;
+  box-shadow: 4px 4px 4px 2px rgba(0, 0, 0, 0.25);
   border: none;
   border-radius: 10px;
   resize: vertical;
   width: 100%;
   overflow: visible;
   text-overflow: ellipsis;
+  padding: 10px;
+  font-family: 'KOTRA_GOTHIC';
   :focus {
     outline: none;
   }
@@ -63,16 +69,20 @@ const Description = styled.textarea`
 
 const RegisterButton = styled.button`
   margin-top: 2%;
+  margin-bottom: 3%;
+  padding: 5px 0px;
   color: #fff;
   background-color: #56a75f;
   font-size: 18px;
   border: none;
   border-radius: 30px;
   width: 10%;
-`;
-
-const BackButton = styled.button`
+  `;
+  
+  const BackButton = styled.button`
   margin-top: 2%;
+  margin-bottom: 3%;
+  padding: 5px 0px;
   color: #fff;
   background-color: #db2525;
   font-size: 18px;
@@ -95,6 +105,7 @@ const FoodCheckButton = styled.button`
   float: right;
   border: 1px solid grey;
   border-radius: 3px;
+  padding: 3px 5px;
   background-color: #9eb0a2;
   :hover {
     transform: scale(1.1);
@@ -115,6 +126,10 @@ const foodcheckBox = {
   borderRadius: "20px",
 };
 
+const ButtonGroup = {
+  marginBottom: '30px',
+}
+
 export {
   TotalStyle,
   RegisterReq,
@@ -126,4 +141,5 @@ export {
   ImageThumbnail,
   FoodCheckButton,
   foodcheckBox,
+  ButtonGroup,
 };

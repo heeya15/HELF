@@ -44,6 +44,8 @@ import {
   fontNormal,
   fontBold,
   MenuTitle,
+  SharedButton,
+  modalTitle,
 } from "./MyDiet.style";
 import { useHistory, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -62,7 +64,6 @@ export default function MyDietDaily() {
   const [shareDescription, setShareDescription] = useState("");
 
   const handleOpen = (info) => {
-    console.log("공유할 정보 : ", info);
     // 공유 여부 체크
     if(info.isShared) {    // 이미 공유 된 게시글이라면
       alert('이미 공유한 식단 일지 입니다.');
@@ -159,7 +160,6 @@ export default function MyDietDaily() {
   };
 
   const handleShareDietDiary = () => {
-    console.log("공유된 식단 일지 번호 : ", shareDiaryNo);
     dispatch({
       type: SHARE_BOARD_REGISTER_REQUEST,
       data: {
@@ -255,10 +255,16 @@ export default function MyDietDaily() {
                       <DiaryDesc style={fontNormal}>{info.description}</DiaryDesc>
                   </DiaryItemLeftWrapper>
                   <DiaryItemRightWrapper>
-                    <ShareButton onClick={() => handleOpen(info)}>
-                      Share
-                      {/* <span style={{ marginTop: '10px' }}>Share </span><ShareOutlinedIcon/> */}
-                    </ShareButton>
+                    { info.isShared ? 
+                      (
+                        <SharedButton>Shared</SharedButton>
+                      ) : (
+                      <ShareButton onClick={() => handleOpen(info)}>
+                        Share
+                        {/* <span style={{ marginTop: '10px' }}>Share </span><ShareOutlinedIcon/> */}
+                      </ShareButton>
+                      )
+                    }
                     <Modal
                       open={open}
                       onClose={handleClose}
@@ -266,18 +272,24 @@ export default function MyDietDaily() {
                       aria-describedby="modal-modal-description"
                     >
                       <Box sx={shareBox}>
-                        <Typography id="modal-modal-title" variant="h4" component="h2">
+                        <Typography 
+                          id="modal-modal-title" 
+                          component="h2"
+                          style={ modalTitle }>
                           식단 공유
                         </Typography>
                         <hr />
-                        <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+                        <Typography 
+                          id="modal-modal-description" 
+                          sx={{ mt: 2 }}
+                          style={fontNormal}>
                           식단 공유와 함께 추가 설명을 적어주세요.
                         </Typography>
                         <TextareaAutosize
                           maxRows={4}
                           aria-label="maximum height"
                           placeholder="this is description..."
-                          style={descriptionArea}
+                          style={ descriptionArea }
                           onChange={(event) => {
                             setShareDescription(event.target.value);
                           }}

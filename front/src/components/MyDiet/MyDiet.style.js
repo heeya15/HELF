@@ -24,6 +24,14 @@ const ShareButton = styled.button`
     }
 `;
 
+const SharedButton = styled.button`
+    color: #fff;
+    background-color: #808080;
+    border: none;
+    padding: 5px 15px;
+    border-radius: 20px;
+`;
+
 const DeleteButton = styled.button`
     color: #fff;
     background-color: #B22222;
@@ -72,6 +80,7 @@ const descriptionArea = {
     border: '1px solid #ccc',
     borderRadius: '10px',
     boxShadow: '3px 3px #bdbdbd',
+    fontFamily: 'KOTRA_GOTHIC',
 };
 
 const ButtonWrapper = styled.div`
@@ -152,12 +161,18 @@ const MenuTitle = styled.div`
     fontSize: '50px',
     margin: '10px 0',
     fontFamily: 'KOTRA_BOLD-Bold',
-`;
+    `;
+    
+const modalTitle = {
+    fontSize: '40px',
+    fontFamily: 'KOTRA_BOLD-Bold',
+}
 
 export { 
     DietDiaryItemWrapper,
     AddButton,
     ShareButton,
+    SharedButton,
     DiaryList,
     DietDiaryItem,
     TotalKcal,
@@ -179,4 +194,5 @@ export {
     fontNormal,
     fontBold,
     MenuTitle,
+    modalTitle,
 };
