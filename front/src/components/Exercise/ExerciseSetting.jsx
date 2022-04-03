@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { Container, Row, Col } from "react-bootstrap";
@@ -15,7 +15,6 @@ import {
 import CloseIcon from '@mui/icons-material/Close';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 
 export default function ExerciseSetting() {
@@ -33,6 +32,7 @@ export default function ExerciseSetting() {
     // "스탠딩 사이드 크런치",
   ];
   const { exercise } = useSelector((state) => state.exerciseHistory);
+  const [ breakTime, setBreakTime ] = useState(0);
 
   const TypeSelect = ExerciseTypeList.map((type, index) => {
     return (
@@ -48,7 +48,7 @@ export default function ExerciseSetting() {
     } else if (exercise.time === 0) {
       alert("세트별 횟수를 정해주세요.");
     } else {
-      history.push(`exercise`);
+      history.push(`exercise/${breakTime}`);
     }
   };
 
@@ -74,6 +74,10 @@ export default function ExerciseSetting() {
     }
   };
 
+  const breakTimeChange = (e) => {
+    setBreakTime(e.target.value);
+  }
+
   const style = {
     position: 'absolute',
     top: '50%',
@@ -86,7 +90,7 @@ export default function ExerciseSetting() {
     p: 4,
   };
 
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
@@ -118,22 +122,28 @@ export default function ExerciseSetting() {
             </Row>
             <TotalStyle>
               <Container>
-                <Row style={{ padding: "6% 0" }}>
+                <Row style={{ padding: "3% 0" }}>
                   <Col>운동</Col>
                   <Col>
                     <select onChange={typeChange}>{TypeSelect}</select>
                   </Col>
                 </Row>
-                <Row style={{ padding: "1% 0" }}>
+                <Row style={{ padding: "3% 0" }}>
                   <Col>목표 세트</Col>
                   <Col>
                     <input type="number" placeholder="0" onChange={setChange}></input>
                   </Col>
                 </Row>
-                <Row style={{ padding: "6% 0" }}>
+                <Row style={{ padding: "3% 0" }}>
                   <Col>세트별 횟수(세트별 시간)</Col>
                   <Col>
                     <input type="number" placeholder="0" onChange={timeChange}></input>
+                  </Col>
+                </Row>
+                <Row style={{ padding: "3% 0" }}>
+                  <Col>휴식 시간(초)</Col>
+                  <Col>
+                    <input type="number" placeholder="0" onChange={breakTimeChange}></input>
                   </Col>
                 </Row>
               </Container>

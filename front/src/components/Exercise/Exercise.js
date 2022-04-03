@@ -1,14 +1,17 @@
 // import * as tf from '@tensorflow/tfjs';
 import * as tmPose from "@teachablemachine/pose";
-import React, { Component, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import "./Exercise.css";
 import $ from "jquery";
 import { useDispatch, useSelector } from "react-redux";
 import { EXERCISE_HISTORY_REGISTER_REQUEST } from "../../store/modules/exerciseHistory";
 import dayjs from "dayjs";
 import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
+import { Row, Col } from 'react-bootstrap';
+import { useParams } from "react-router-dom";
 
 const style = {
   position: 'absolute',
@@ -16,7 +19,7 @@ const style = {
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  width: 300,
+  width: 350,
   height: 300,
   bgcolor: 'background.paper',
   boxShadow: 24,
@@ -26,8 +29,21 @@ const style = {
 
 export default function Exercise() {
   const dispatch = useDispatch();
+  const { breakTime } = useParams();
   const { exercise } = useSelector((state) => state.exerciseHistory);
   const now = new Date(); // 현재 날짜 및 시간
+
+  const ExerciseTypeList = [
+    "벤트 오버 로우",
+    "덤벨컬",
+    "프론트 레이즈",
+    "런지",
+    "오버 헤드 프레스",
+    "푸시업",
+    "사이드 레터럴 레이즈",
+    "스쿼트",
+    // "스탠딩 사이드 크런치",
+  ];
 
   const [ URL, setURL ] = useState("");
   const [ currentSet, setCurrentSet ] = useState(1);
@@ -156,7 +172,7 @@ export default function Exercise() {
     model = await tmPose.load(modelURL, metadataURL);
     maxPredictions = model.getTotalClasses();
     // Convenience function to setup a webcam
-    const size = 400;
+    const size = 500;
     const flip = true; // whether to flip the webcam
     webcam = new tmPose.Webcam(size, size, flip); // width, height, flip
     await webcam.setup(); // request access to the webcam
@@ -168,11 +184,11 @@ export default function Exercise() {
     canvas.width = size;
     canvas.height = size;
     ctx = canvas.getContext("2d");
-    labelContainer = document.getElementById("label-container");
-    for (let i = 0; i < maxPredictions; i++) {
-      // and class labels
-      labelContainer.appendChild(document.createElement("div"));
-    }
+    // labelContainer = document.getElementById("label-container");
+    // for (let i = 0; i < maxPredictions; i++) {
+    //   // and class labels
+    //   labelContainer.appendChild(document.createElement("div"));
+    // }
   }
 
   // async function stopVideo() {
@@ -191,6 +207,18 @@ export default function Exercise() {
   var countTotalTime = 0;
   var countSet = 1;
   var soundurl = "";
+
+  const handleExercise = () => {
+    console.log(countTotalTime);
+    dispatch({
+      type: EXERCISE_HISTORY_REGISTER_REQUEST,
+      data: {
+        count: countTotalTime,
+        date: dayjs(now).format("YYYY-MM-DD HH:mm:ss"),
+        exerciseNo: exercise.type,
+      },
+    });
+  }
 
   async function predict() {
     // Prediction #1: run input through posenet
@@ -222,14 +250,7 @@ export default function Exercise() {
           //   alert("운동이 끝났습니다!");w
           // }, 500);
           // alert("운동이 끝났습니다!", 3000)
-          dispatch({
-            type: EXERCISE_HISTORY_REGISTER_REQUEST,
-            data: {
-              count: countTotalTime,
-              date: dayjs(now).format("YYYY-MM-DD HH:mm:ss"),
-              exerciseNo: exercise.type,
-            },
-          });
+          handleExercise();
         }
 
         // 1세트가 끝난 경우
@@ -242,18 +263,20 @@ export default function Exercise() {
           countTime = 0;
 
           // breaktimer 가동
-          var timer = 4;
-          setTimer(timer);
-          setTimeout(() => { webcam.pause() }, 500)   // 화면 정지
-          handleOpen(); // 모달창 on
-
-          var timerInterval = setInterval(() => {
-            if(timer==0) clearInterval(timerInterval);
-            timer--;
+          if(breakTime>0) {
+            var timer = breakTime;
             setTimer(timer);
-          }, 1000);
-          setTimeout(() => { handleClose() }, 4000)       // 모달 close     
-          setTimeout(() => { webcam.play() }, 4000)          
+            setTimeout(() => { webcam.pause() }, 500)   // 화면 정지
+            handleOpen(); // 모달창 on
+
+            var timerInterval = setInterval(() => {
+              if(timer==0) clearInterval(timerInterval);
+              timer--;
+              setTimer(timer);
+            }, 1000);
+            setTimeout(() => { handleClose() }, breakTime*1000)       // 모달 close     
+            setTimeout(() => { webcam.play() }, breakTime*1000)          
+          }
         }
 
         
@@ -263,11 +286,11 @@ export default function Exercise() {
       status = "action";
     }
 
-    for (let i = 0; i < maxPredictions; i++) {
-      const classPrediction =
-        prediction[i].className + ": " + prediction[i].probability.toFixed(2);
-      labelContainer.childNodes[i].innerHTML = classPrediction;
-    }
+    // for (let i = 0; i < maxPredictions; i++) {
+    //   const classPrediction =
+    //     prediction[i].className + ": " + prediction[i].probability.toFixed(2);
+    //   labelContainer.childNodes[i].innerHTML = classPrediction;
+    // }
 
     // finally draw the poses
     drawPose(pose);
@@ -286,8 +309,51 @@ export default function Exercise() {
   }
 
   return (
-    <div>
-      <h2>컴포넌트 입니다</h2>
+    <div className="myExercise">
+      <div className="menuTitle">MY운동</div>
+      <Row class="boxWrapper">
+        <Col md="2"></Col>
+        <Col md="5"
+          class="leftBox">
+          <div class="leftBox">
+            <canvas id="canvas"></canvas>
+          </div>
+        </Col>
+        <Col md="2">
+          <div class="exerciseInfo fontBold">
+            <div class="exerciseName">{ ExerciseTypeList[exercise.type-1] }</div>
+            <div>총 세트 : <span class="fontNormal">{ exercise.set }</span></div>
+            <div>세트당 횟수 : <span class="fontNormal">{ exercise.time }</span></div>
+          </div>
+          <div class="timeInfo">
+            <div class="frame">
+              <div class="center">
+                <div class="headline fontBold">
+                  Counter
+                </div>
+                <div class="currentSet fontNormal">
+                  { currentSet } 세트
+                </div>
+                <div class="circle-big">
+                  <div class="text">
+                    <span id="counter">0</span>
+                    <div class="small">개</div>
+                  </div>
+                  <svg>
+                    <circle class="bg" cx="57" cy="57" r="52" />
+                    <circle class="progress" cx="57" cy="57" r="52" />
+                  </svg>
+                </div>
+              </div>
+            </div>  
+          </div>
+        </Col>
+      </Row> 
+      <div class="buttonWrapper">
+        <Button class="exitButton" onClick={ handleExercise }>종료</Button>
+      </div>
+
+      {/* <div id="label-container"></div> */}
       <Modal
         open={open}
         onClose={handleClose}
@@ -295,44 +361,23 @@ export default function Exercise() {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <Typography id="modal-modal-title" variant="h6" component="h2">
+          <Typography 
+            class="fontNormal"
+            style={{ marginTop: '20px' }}
+            id="modal-modal-title" 
+            variant="h6" 
+            component="h2">
             쉬는 시간 종료까지
           </Typography> 
           <Typography 
+            class="fontBold"
             style={{ fontSize: '70px', marginTop: '30px'}}
             id="modal-modal-description" 
             sx={{ mt: 2 }}>
-            { timer }
+            { timer } <span class="fontNormal" style={{ fontSize: '20px' }}>초</span>
           </Typography>
         </Box>
       </Modal>
-      <div class="frame">
-        <div class="center">
-          <div class="headline">
-            {/* <div class="small">Test</div> */}
-            Counter
-          </div>
-          <div class="circle-big">
-            <div class="text">
-              <span id="counter">0</span>
-              <div class="small">개</div>
-            </div>
-            <svg>
-              <circle class="bg" cx="57" cy="57" r="52" />
-              <circle class="progress" cx="57" cy="57" r="52" />
-            </svg>
-          </div>
-        </div>
-      </div>
-      <h1>인공지능(AI) Fitness Trainer</h1>
-      <div>{ currentSet }</div>
-      {/* <button class="btn btn-primary" type="button" onclick={init()}>
-        Start
-      </button> */}
-      <div>
-        <canvas id="canvas"></canvas>
-      </div>
-      <div id="label-container"></div>
     </div>
   );
 }
