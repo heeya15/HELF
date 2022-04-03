@@ -49,11 +49,21 @@ export default function ExerciseSetting() {
   };
 
   const setChange = (e) => {
-    dispatch(setExerciseSet(e.target.value));
+    if (e.target.value < 1) {
+      alert("세트 수가 너무 적습니다.")
+      e.target.value = 0
+    } else {
+      dispatch(setExerciseSet(e.target.value));
+    }
   };
 
   const timeChange = (e) => {
+    if (e.target.value < 1) {      
+      alert("세트별 횟수가 너무 적습니다.")
+      e.target.value = 0
+    } else {
     dispatch(setExerciseTime(e.target.value));
+    }
   };
 
   return (
@@ -69,13 +79,13 @@ export default function ExerciseSetting() {
           <Row style={{ padding: "1% 0" }}>
             <Col>목표 세트</Col>
             <Col>
-              <input type="number" onChange={setChange}></input>
+              <input type="number" placeholder="0" onChange={setChange}></input>
             </Col>
           </Row>
           <Row style={{ padding: "6% 0" }}>
             <Col>세트별 횟수(세트별 시간)</Col>
             <Col>
-              <input type="number" onChange={timeChange}></input>
+              <input type="number" placeholder="0" onChange={timeChange}></input>
             </Col>
           </Row>
         </Container>
