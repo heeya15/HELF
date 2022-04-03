@@ -78,6 +78,15 @@ export default function WeightHistory() {
     const DeletehandleClose = () => setDeleteOpen(false);
     const [Deleteopen, setDeleteOpen] = useState(false);
 
+    const handleDate = (event) => {
+        event.target.value = event.target.value
+            .replace(/[^0-9]/g, '')
+            .replace(/^(\d{0,4})(\d{0,2})(\d{0,2})$/g, '$1-$2-$3')
+            .replace(/(\-{1,2})$/g, '');
+            setDay(event.target.value);
+    };
+    
+
     //몸무게 히스토리 원하는 날짜 몸무게 등록 요청.
     const handleWeightHistoryRegisterConfirm = () => {
         dispatch({
@@ -239,9 +248,7 @@ export default function WeightHistory() {
                                     <input
                                         type='input'
                                         id='createdAt'
-                                        onChange={e => {
-                                        setDay(e.target.value);
-                                        }}
+                                        onChange={ handleDate }
                                     ></input>
                                     <span> ex. 2022-03-30</span>
                                 </div>
@@ -299,9 +306,7 @@ export default function WeightHistory() {
                                     <input
                                         type='input'
                                         id='createdAt'
-                                        onChange={e => {
-                                        setDay(e.target.value);
-                                        }}
+                                        onChange={ handleDate }
                                     ></input>
                                     <span> ex. 2022-03-30</span>
                                 </div>
@@ -355,10 +360,8 @@ export default function WeightHistory() {
                                 <input
                                     type='input'
                                     id='birthday'
-                                    onChange={e => {
-                                    setDay(e.target.value);
-                                    }}
-                                ></input>
+                                    onChange={ handleDate }
+                                    ></input>
                                 <span> ex. 2022-03-30</span>
                             </ModalBodyWrapper>
                             <hr/>
