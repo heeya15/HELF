@@ -158,9 +158,11 @@ export default function MyDietRegister() {
 
   useEffect(() => {
     setCheckedInputs([]);
-    for (let i = 0; i < foodName.length; i++) {
-      setCheckedInputs([...checkedInputs, foodName[i].foodName]);
-    }
+    const temp = [];
+    foodName.forEach((food) => {
+      temp.push(food.foodName);
+    });
+    setCheckedInputs(temp);
   }, [foodName]);
 
   return (
