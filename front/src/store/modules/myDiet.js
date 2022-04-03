@@ -12,22 +12,7 @@ const initialState = {
     dietFindResList: [],
   },
   weights: [100, 150, 200, 250, 300],
-  foods: [
-    "닭가슴살",
-    "토마토",
-    "연어",
-    "안심스테이크",
-    "야채샐러드(드레싱없이)",
-    "계란",
-    "연어구이",
-    "오이",
-    "우유",
-    "고구마",
-    "밥",
-    "낫또",
-    "두부",
-    "브로콜리",
-  ],
+  foods: [],
   dietDetailThumbnail: null,
   dietThumbnail: null,
   imagePath: null,
@@ -75,6 +60,9 @@ export const MY_DIET_DIARY_DELETE_FAILURE = "MY_DIET_DIARY_DELETE_FAILURE";
 export const MY_DIET_DIARY_SHARE_REQUEST = "MY_DIET_DIARY_SHARE_REQUEST";
 export const MY_DIET_DIARY_SHARE_SUCCESS = "MY_DIET_DIARY_SHARE_SUCCESS";
 export const MY_DIET_DIARY_SHARE_FAILURE = "MY_DIET_DIARY_SHARE_REQUEST";
+export const FOOD_LIST_REQUEST = "FOOD_LIST_REQUEST";
+export const FOOD_LIST_SUCCESS = "FOOD_LIST_SUCCESS";
+export const FOOD_LIST_FAILURE = "FOOD_LIST_FAILURE";
 
 const SET_MY_DIET_WEIGHT = "SET_MY_DIET_WEIGHT";
 export const setmyDietWeight = (state) => ({
@@ -247,6 +235,16 @@ const reducer = (state = initialState, action) =>
       case MY_DIET_DIARY_SHARE_FAILURE:
         draft.diaryShareLoading = false;
         draft.diaryShareError = action.error;
+        break;
+      case FOOD_LIST_REQUEST:
+        break;
+      case FOOD_LIST_SUCCESS:
+        draft.foods = [];
+        action.data.data.forEach((food) => {
+          draft.foods.push(food.foodName);
+        });
+        break;
+      case FOOD_LIST_FAILURE:
         break;
       default:
         break;

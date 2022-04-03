@@ -136,3 +136,8 @@ export async function myDietUpdateAPI({
   );
   return result;
 }
+
+export async function foodListAPI() {
+  const result = await axios.get(`${BASE_URL}food/findAll`);
+  return result;
+}

@@ -7,6 +7,7 @@ import {
   myDietUpdateAPI,
   myDietDetailAPI,
   myDietDiaryItemDeleteAPI,
+  foodListAPI,
 } from "../apis/myDiet";
 import {
   MY_DIET_IMAGE_REQUEST,
@@ -30,6 +31,9 @@ import {
   MY_DIET_DIARY_DELETE_REQUEST,
   MY_DIET_DIARY_DELETE_SUCCESS,
   MY_DIET_DIARY_DELETE_FAILURE,
+  FOOD_LIST_REQUEST,
+  FOOD_LIST_SUCCESS,
+  FOOD_LIST_FAILURE,
 } from "../modules/myDiet";
 
 import swal from "sweetalert"; // 예쁜 alert 창을 위해 사용
@@ -144,6 +148,19 @@ function* watchMyDietDiaryItemDelete() {
   yield takeLatest(MY_DIET_DIARY_DELETE_REQUEST, loadMyDietDiaryItemDelete);
 }
 
+function* loadFoodList() {
+  try {
+    const result = yield call(foodListAPI);
+    yield put({ type: FOOD_LIST_SUCCESS, data: result });
+  } catch (error) {
+    yield put({ type: FOOD_LIST_FAILURE });
+  }
+}
+
+function* watchLoadFoodList() {
+  yield takeLatest(FOOD_LIST_REQUEST, loadFoodList);
+}
+
 export default function* myDietSaga() {
   yield all([
     fork(watchLoadMyDietImage),
@@ -153,5 +170,6 @@ export default function* myDietSaga() {
     fork(watchLoadMyDietDetail),
     fork(watchLoadMyDietUpdate),
     fork(watchMyDietDiaryItemDelete),
+    fork(watchLoadFoodList),
   ]);
 }
