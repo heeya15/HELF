@@ -68,6 +68,8 @@ com/aisher/helf/db/entity/DietDiary.java
  com.aisher.helf.db.entity.DietDiary$DietDiaryBuilder
 com/aisher/helf/api/response/DietFindRes.java
  com.aisher.helf.api.response.DietFindRes
+com/aisher/helf/api/request/ShareBoardUpdateReq.java
+ com.aisher.helf.api.request.ShareBoardUpdateReq
 com/aisher/helf/api/service/ExerciseHistoryService.java
  com.aisher.helf.api.service.ExerciseHistoryService
 com/aisher/helf/db/repository/ShareBoardRepository.java

@@ -10,6 +10,8 @@ import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -49,6 +51,9 @@ public class ShareBoard {
     @OnDelete(action = OnDeleteAction.CASCADE)
     DietDiary diaryNo;
 
+    public void updateDescription(String description) {
+        this.description = description;
+    }
     @Override
     public String toString() {
         return "ShareBoard{" +

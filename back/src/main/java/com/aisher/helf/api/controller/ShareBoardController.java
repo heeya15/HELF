@@ -2,6 +2,8 @@ package com.aisher.helf.api.controller;
 
 
 import com.aisher.helf.api.request.ShareBoardRegisterReq;
+import com.aisher.helf.api.request.ShareBoardUpdateReq;
+import com.aisher.helf.api.request.UserUpdateReq;
 import com.aisher.helf.api.response.ShareBoardAllRes;
 import com.aisher.helf.api.response.ShareBoardFindRes;
 import com.aisher.helf.api.response.ShareBoardFindTopLikeRes;
@@ -11,6 +13,7 @@ import com.aisher.helf.api.service.ShareBoardService;
 import com.aisher.helf.common.auth.UserDetails;
 import com.aisher.helf.common.model.response.BaseResponseBody;
 import com.aisher.helf.db.entity.ShareBoard;
+import com.aisher.helf.db.entity.User;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -24,6 +27,7 @@ import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 /**
  * 스터디 모집 게시판 관련 API 요청 처리를 위한 컨트롤러 정의.
@@ -102,7 +106,7 @@ public class ShareBoardController {
             @ApiResponse(code = 401, message = "인증 실패"),
             @ApiResponse(code = 404, message = "사용자 없음"),
             @ApiResponse(code = 500, message = "서버 오류") })
-    public ResponseEntity<ShareBoardSelectLikeCountRes> findShareBoardInfo(@PathVariable Long boardNo, @ApiIgnore Authentication authentication ) {
+    public ResponseEntity<ShareBoardSelectLikeCountRes> findShareBoardIsLikeAndTotalLikeCount(@PathVariable Long boardNo, @ApiIgnore Authentication authentication ) {
         UserDetails userDetails = (UserDetails) authentication.getDetails();
         String userId = userDetails.getUsername();
         ShareBoardSelectLikeCountRes isLike = shareBoardService.checkIsLikeAndTotalLikeCount(boardNo,userId);
@@ -130,6 +134,22 @@ public class ShareBoardController {
         String userId = userDetails.getUsername();
         shareBoardService.setLikeList(userId, boardNo);
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, "SUCCESS"));
+    }
+
+    // 공유 게시글중 해당 게시글 description 수정
+    @ApiOperation(value = "해당 게시글 description 수정 ", notes = "해당 게시글 description 수정 ")
+    @PutMapping("/update/description")
+    public ResponseEntity<String> updateShareBoardDescription(@RequestBody ShareBoardUpdateReq shareBoardUpdateReq) throws Exception {
+        ShareBoard shareBoard;
+        try {
+            shareBoard = shareBoardService.getShareBoard(shareBoardUpdateReq.getBoardNo());
+        }catch(NoSuchElementException E) {
+            System.out.println("공유 게시글중 해당 게시글 description 수정 실패");
+            return  ResponseEntity.status(500).body("공유 게시글중 해당 게시글 description 수정 실패");
+        }
+        ShareBoard updateShareBoard = shareBoardService.updateShareBoardDescription(shareBoard,shareBoardUpdateReq);
+        System.out.println("공유 게시글중 해당 게시글 description 수정 성공");
+        return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
     }
 
     // 게시글 삭제
