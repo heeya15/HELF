@@ -2,13 +2,17 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { Container, Row, Col } from "react-bootstrap";
-import { TotalStyle, StartButton } from "./ExerciseSetting.style";
+import { 
+  TotalStyle, 
+  StartButton,
+  modalTitle,
+} from "./ExerciseSetting.style";
 import {
   setExerciseType,
   setExerciseSet,
   setExerciseTime,
 } from "../../store/modules/exerciseHistory";
-import { ConstructionOutlined } from "@mui/icons-material";
+import CloseIcon from '@mui/icons-material/Close';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
@@ -77,7 +81,7 @@ export default function ExerciseSetting() {
     transform: 'translate(-50%, -50%)',
     width: '60%',
     bgcolor: 'background.paper',
-    border: '2px solid #000',
+    // border: '2px solid #000',
     boxShadow: 24,
     p: 4,
   };
@@ -97,6 +101,21 @@ export default function ExerciseSetting() {
           aria-describedby="modal-modal-description"
         >
           <Box sx={style}>  
+            <Row style={{ height: '50px' }}>
+              <Col md="4"></Col>
+              <Col md="4"
+                style={ modalTitle }
+              >
+                MY운동 세팅
+              </Col>
+              <Col md="4"
+                style={{ textAlign: 'right' }}>
+                <CloseIcon
+                  style={{ width: '20%', height: '100%', cursor: 'pointer' }}
+                  onClick={handleClose}
+                />
+              </Col>
+            </Row>
             <TotalStyle>
               <Container>
                 <Row style={{ padding: "6% 0" }}>
@@ -119,8 +138,9 @@ export default function ExerciseSetting() {
                 </Row>
               </Container>
             </TotalStyle>
-            <StartButton onClick={exerciseSetting}>START</StartButton>
-
+            <div style={{ textAlign: 'center' }}>
+              <StartButton onClick={exerciseSetting}>START</StartButton>
+            </div>
           </Box>
         </Modal>
       </div>

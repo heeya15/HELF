@@ -1,9 +1,12 @@
 import styled from "styled-components";
 
 const TotalStyle = styled.div`
+  font-family: 'KOTRA_BOLD-Bold';
   box-shadow: 5px 5px #e0e0e0;
-  width: 50%;
+  padding: 0 20px;
+  width: 100%;
   margin: 5% auto;
+  text-align: center;
   background-color: #a3cca3;
   font-size: 20px;
   border-radius: 30px;
@@ -33,6 +36,19 @@ const StartButton = styled.button`
   border-radius: 10px;
   color: #fff;
   background-color: #56a75f;
+  padding: 5px 20px;
+  font-family: 'KOTRA_BOLD-Bold';
 `;
 
-export { TotalStyle, StartButton };
+const modalTitle = {
+  textAlign: 'center', 
+  lineHeight: '55px', 
+  fontSize: '30px',
+  fontFamily: 'KOTRA_BOLD-Bold',
+}
+
+export { 
+  TotalStyle, 
+  StartButton,
+  modalTitle,
+};
