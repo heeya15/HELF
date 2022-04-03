@@ -269,7 +269,7 @@ export default function MyDietDetail() {
               ></ImageThumbnail>
               {dietUpdate && (
                 <div>
-                  <label htmlFor="input-file">이미지</label>
+                  <label htmlFor="input-file">이미지 선택</label>
                   <input
                     onChange={onImageHandler}
                     type="file"

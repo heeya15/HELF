@@ -3,7 +3,7 @@ import styled from "styled-components";
 const TotalStyle = styled.div`
   margin-top: 5%;
   border-radius: 10px;
-  box-shadow: 1px 1px 1px 1px gray;
+  box-shadow: 7px 7px #e0e0e0;
 `;
 
 const ImageThumbnail = styled.img`
