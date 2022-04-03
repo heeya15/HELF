@@ -9,6 +9,10 @@ import {
   setExerciseTime,
 } from "../../store/modules/exerciseHistory";
 import { ConstructionOutlined } from "@mui/icons-material";
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
+import Modal from '@mui/material/Modal';
 
 export default function ExerciseSetting() {
   const dispatch = useDispatch();
@@ -66,31 +70,62 @@ export default function ExerciseSetting() {
     }
   };
 
+  const style = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: '60%',
+    bgcolor: 'background.paper',
+    border: '2px solid #000',
+    boxShadow: 24,
+    p: 4,
+  };
+
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
   return (
     <>
-      <TotalStyle>
-        <Container>
-          <Row style={{ padding: "6% 0" }}>
-            <Col>운동</Col>
-            <Col>
-              <select onChange={typeChange}>{TypeSelect}</select>
-            </Col>
-          </Row>
-          <Row style={{ padding: "1% 0" }}>
-            <Col>목표 세트</Col>
-            <Col>
-              <input type="number" placeholder="0" onChange={setChange}></input>
-            </Col>
-          </Row>
-          <Row style={{ padding: "6% 0" }}>
-            <Col>세트별 횟수(세트별 시간)</Col>
-            <Col>
-              <input type="number" placeholder="0" onChange={timeChange}></input>
-            </Col>
-          </Row>
-        </Container>
-      </TotalStyle>
-      <StartButton onClick={exerciseSetting}>START</StartButton>
+      <div>
+        <Button onClick={handleOpen}>Open modal</Button>
+        <Modal
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+        >
+          <Box sx={style}>  
+            <TotalStyle>
+              <Container>
+                <Row style={{ padding: "6% 0" }}>
+                  <Col>운동</Col>
+                  <Col>
+                    <select onChange={typeChange}>{TypeSelect}</select>
+                  </Col>
+                </Row>
+                <Row style={{ padding: "1% 0" }}>
+                  <Col>목표 세트</Col>
+                  <Col>
+                    <input type="number" placeholder="0" onChange={setChange}></input>
+                  </Col>
+                </Row>
+                <Row style={{ padding: "6% 0" }}>
+                  <Col>세트별 횟수(세트별 시간)</Col>
+                  <Col>
+                    <input type="number" placeholder="0" onChange={timeChange}></input>
+                  </Col>
+                </Row>
+              </Container>
+            </TotalStyle>
+            <StartButton onClick={exerciseSetting}>START</StartButton>
+
+          </Box>
+        </Modal>
+      </div>
+
+      
     </>
   );
 }
