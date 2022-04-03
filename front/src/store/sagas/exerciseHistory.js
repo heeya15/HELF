@@ -12,6 +12,8 @@ import {
   EXERCISE_HISTORY_REGISTER_FAILURE,
 } from "../modules/exerciseHistory";
 
+import swal from "sweetalert"; // 예쁜 alert 창을 위해 사용
+
 // 운동 통계 조회
 function* loadExerciseHistoryFindAll(action) {
   try {
@@ -34,6 +36,11 @@ function* loadExerciseHistoryRegister(action) {
   try {
     const result = yield call(exerciseHistoryRegisterAPI, action.data);
     yield put({ type: EXERCISE_HISTORY_REGISTER_SUCCESS, data: result });
+    swal("운동 완료", "  ", "success", {
+      buttons: false,
+      timer: 1800,
+    });
+    document.location.href = "/exercisesetting";
   } catch (error) {
     yield put({ type: EXERCISE_HISTORY_REGISTER_FAILURE });
   }
