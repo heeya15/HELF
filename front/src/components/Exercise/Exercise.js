@@ -18,9 +18,9 @@ export default function Exercise() {
     switch (exercise.type) {
       case 1: // BentOverRow
         // test : 왼 손 들기
-        // setURL("https://teachablemachine.withgoogle.com/models/tNxgspb7K/");
+        setURL("https://teachablemachine.withgoogle.com/models/tNxgspb7K/");
         
-        setURL("https://teachablemachine.withgoogle.com/models/eqCo1kx3a/");
+        // setURL("https://teachablemachine.withgoogle.com/models/eqCo1kx3a/");
         break;
       case 2: // DumbbellCurl
         setURL("https://teachablemachine.withgoogle.com/models/qvMroKavg/");
@@ -181,7 +181,11 @@ export default function Exercise() {
         }
         $(".progress").css("stroke-dashoffset", progress);
         $("#counter").html(count);
-        console.log(progress, angle)
+        console.log(progress, angle)    
+        if (count == exercise.time) {
+          setTimeout(() => { alert("운동이 끝났습니다!") }, 500)
+          // alert("운동이 끝났습니다!", 3000)
+        }    
       }
       status = "wait";
     } else if (prediction[1].probability.toFixed(2) > 0.8) {
@@ -193,6 +197,8 @@ export default function Exercise() {
         prediction[i].className + ": " + prediction[i].probability.toFixed(2);
       labelContainer.childNodes[i].innerHTML = classPrediction;
     }
+
+    
 
     // finally draw the poses
     drawPose(pose);
