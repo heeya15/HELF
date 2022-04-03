@@ -1,4 +1,4 @@
-import React, { Component , useState, useEffect  } from "react";
+import React, { Component , useState, useEffect,useRef  } from "react";
 import axios from 'axios';
 import { Link, useParams, useHistory } from "react-router-dom";
 import { BASE_URL, IMAGE_URL, LOCAL_URL } from "../../utils/https";
@@ -6,6 +6,7 @@ import { Button } from "react-bootstrap";
 import './SharedDetail.css'
 import { Container, Row, Col } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
+import deleteBtn from "./deletebutton_87299.png";
 import {
   TotalStyle,
   RegisterReq,
@@ -18,7 +19,10 @@ import {
   ImageThumbnail,
   CommentBox,
   CommentBoxBig,
-  SendButton
+  SendButton,
+  CommentDeleteBtn,
+  CommentTitles,
+  CommentUpdatdButton
 } from "./SharedDetail.style";
 import { 
   LikeListStyle,
@@ -32,6 +36,9 @@ import {
   SHARE_BOARD_ISLIKECHECK_TOTALLIKECOUNT_REQUEST,
   SHARE_BOARD_LIKE_REGISTER_REQUEST 
 } from "../../store/modules/shareBoard";
+import { style } from "@mui/system";
+
+
 // match 로 현재 게시물 주소에 대한 정보를 props 로 받아온다
 function Detail({ match }) {
 
@@ -161,8 +168,9 @@ function Detail({ match }) {
           SetComment("");
         }))
     };
-    const commentDeleteHandler = ({ target: { value } }) => {
-      axios.delete(`${BASE_URL}comment/remove/${value}`,
+    const commentDeleteHandler = ( commentNo, e ) => {
+      console.log(commentNo); // 뭐임?
+      axios.delete(`${BASE_URL}comment/remove/${commentNo}`,
         {
           headers : { 
             Authorization: `Bearer ${ token }`
@@ -172,7 +180,45 @@ function Detail({ match }) {
         .then((res => {
           console.log(res)
         }))
-    };
+      };
+      //  댓글 수정
+    let [input, setInput] = useState('')
+    let [CommentNoinput, setCommentNoinput] = useState('')
+
+    const handleClick= async ( commentNo, commentText, e )=>{
+        setInput(commentText)
+        await setCommentNoinput(commentNo)
+
+    }
+
+    const handleChange=(e)=>{
+      console.log(`진입함`)
+      if (e.target.value === ''){ setInput(' ')}
+      else{
+      setInput(e.target.value)}
+    }   
+    const handleKeydown=(e)=>{
+      if(e.key==='Enter'){
+          console.log(`엔터키 눌러짐`)
+          setInput(e.target.value)
+          console.log(e.value)
+          axios.put(`${BASE_URL}comment/update`,
+            {commentNo: CommentNoinput,
+            comment: input},
+              {
+                headers : { 
+                  Authorization: `Bearer ${ token }`
+                }
+              }
+              )
+              .then((res => {
+                console.log(res)
+                setInput("");
+                setCommentNoinput("");
+              }))
+          };
+      }
+  
 
   return (
       <div className="bigBox">
@@ -182,37 +228,12 @@ function Detail({ match }) {
             <Row>
               <Col>
                 <ImageThumbnail src={`${IMAGE_URL}${allData.image_path}`} alt="이미지"></ImageThumbnail>
-              {isLike ? (
-                <LikeListStyle >
-                    <div className="total">
-                    <AiFillHeart
-                      size="50"
-                      className="icon"
-                      onClick={(e) => {
-                        likeDelete(index, e);
-                      }} 
-                    />
-                  </div>
-                  {LikeCount}
-                </LikeListStyle>
-              ) : (
-                <LikeListStyle >
-                  <div className="total">
-                  <AiOutlineHeart
-                    size="50"
-                    className="icon"
-                    onClick={(e) => {
-                      likeRegister(index, e);
-                    }}
-                    />
-                    </div>
-                    {LikeCount}  
-                </LikeListStyle>
-                )}            
+              
               </Col>
               <Col>
               <RegisterReq>
-                  <Titles>{allData.user_id}님의 식단</Titles>
+                  <Titles>{allData.user_id}님의 식단.
+                </Titles>
                   <Description
                   >{allData.description}</Description>
                   <Titles>{allData.food_name  } 100g</Titles>
@@ -226,7 +247,40 @@ function Detail({ match }) {
                     <p className="line">단백질 {allData.protein}g</p>
                   
                   </div>
-                  <Titles>댓글</Titles>
+
+                </RegisterReq>
+                {isLike ? (
+                <LikeListStyle >
+                    <div className="total">
+                      <AiFillHeart
+                        size="20"
+                        className="iconMargin"
+                        onClick={(e) => {
+                          likeDelete(index, e);
+                        } } 
+                      />
+                      <Titles>{LikeCount}명이 좋아합니다.</Titles>
+                  </div>
+                  
+                </LikeListStyle>
+              ) : (
+                <LikeListStyle >
+                  <div className="total">
+                  <AiOutlineHeart
+                    size="20"
+                    className="iconMargin"
+                    onClick={(e) => {
+                      likeRegister(index, e);
+                    } }
+                    />
+                    <Titles>{LikeCount}명이 좋아합니다.</Titles>
+                    </div>
+                    
+                </LikeListStyle>
+                )} 
+              </Col>
+                <div className="newCommentBox">
+                <Titles className="newText">  댓글</Titles>
                   <CommentBoxBig >
                     <form className="commentBox" onSubmit={submitHandler}>
                       <CommentBox placeholder= '댓글을 입력하세요.' value={Comment} onChange={commentHandler}></CommentBox>
@@ -239,20 +293,30 @@ function Detail({ match }) {
                           {
                             userData == user.user_id
                             ?<div className="commentDelete">
-                              <Titles>{user.user_id} : {user.comment} </Titles>
-                              <div className="commentButton">                     
-                                {/* <button>수정</button> */}
-                                <button value={user.comment_no} onClick={commentDeleteHandler}>삭제</button>
+                              <CommentTitles className="newText">{user.user_id} : {user.comment} </CommentTitles>
+ 
+                              {/* 삭제파트 */}
+                              <CommentDeleteBtn  className="newText2" onClick={(e) => {
+                                  commentDeleteHandler(user.comment_no);
+                                }}>삭제</CommentDeleteBtn>
+                              
+                              {/*  수정파트 */}
+                              <CommentUpdatdButton className="newText2" onClick={(e) => {
+                                  handleClick(user.comment_no , user.comment);
+                                      }} >
+                                        {input ?( user.comment_no === CommentNoinput
+                                                  ? <input type="text" value={input} onChange={handleChange} onKeyDown= {handleKeydown}
+                                              /> 
+                                            : `수정`
+                                          ): `수정`}
+                              </CommentUpdatdButton>
                               </div>
-         
-                              </div>
-                            :<div className="commentDelete"><Titles>{user.user_id} : {user.comment}</Titles></div>
+                            :<div className="commentDelete"><CommentTitles>{user.user_id} : {user.comment}</CommentTitles></div>
                           }
                         </div>      
                     ))}
                   </CommentBoxBig>
-                </RegisterReq>
-              </Col>
+                  </div>
             </Row>
           </TotalStyle>
           <ListButton onClick={goBack}>목록</ListButton>

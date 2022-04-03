@@ -25,12 +25,18 @@ const Label = styled(Paper)(({ theme }) => ({
 
 function User({ user }) {
   return (
-    <div>
-      <Link  to={`/sharedetail/${user.boardNo}`}  state={{ data: user.boardNo}} className='anc'>
+    <div className="shardboxMargin">
+      <Link  to={`/sharedetail/${user.boardNo}`}  state={{ data: user.boardNo}} className='anc ' >
             <div key={user.boardNo} >
               {/* 이름 적는 곳( 유저 닉네임 적을 것) */}
-              <Label>{user.boardNo}</Label>
+              <Label style={{
+                  borderBottomLeftRadius: 4,
+                  borderBottomRightRadius: 4,
+                  display: 'block',
+                  width: '200px',
+                }}>{user.boardNo}</Label>
               <img
+              
                 src={`${IMAGE_URL}${user.imagePath}`}
                 // srcSet={`${item.img}?w=162&auto=format&dpr=2 2x`}
                 alt={user.boardNo}
@@ -39,11 +45,20 @@ function User({ user }) {
                   borderBottomLeftRadius: 4,
                   borderBottomRightRadius: 4,
                   display: 'block',
-                  width: '100%',
+                  width: '200px',
+                  height: '200px',
                 }}
-              />
+                >
+                  
+                </img>
+              
               {/* 좋아요 기능 넣는곳 */}
-              <Label>{user.boardNo}</Label>
+              <Label style={{
+                  borderBottomLeftRadius: 4,
+                  borderBottomRightRadius: 4,
+                  display: 'block',
+                  width: '200px',
+                }}>{user.boardNo}</Label>
             </div>
             </Link>
     </div>
@@ -54,7 +69,7 @@ function SharedBoard(props) {
   const token = sessionStorage.getItem("jwt");
   const [shardList, setShardlist] = useState([]);
   const [page, setPage] = useState(1); 
-  const perPage = 4; // 한 페이지에 보여줄 공유 게시글 수
+  const perPage = 8; // 한 페이지에 보여줄 공유 게시글 수
   const [totalpage, setTotalPage] = useState(1);
   const handlePageChange = (page) => {
     setPage(page);
@@ -81,9 +96,9 @@ function SharedBoard(props) {
       <div className="shardbox"> </div>
         <div>
         <ShareBoardTopLike></ShareBoardTopLike>
-        <Masonry columns={3} spacing={2}>
+        <Masonry columns={4} spacing={2} >
         {shardList.map((user,index) => (
-          <User user={user} key={index} />
+          <User user={user} key={index}/>
         ))}
         </Masonry>
 
