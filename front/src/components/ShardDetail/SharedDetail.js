@@ -67,7 +67,7 @@ function Detail({ match }) {
       });
       setTotalLikeCount(totalLikeCount); 
     
-      axios.get(`${LOCAL_URL}shareboard/find/${index}`,
+      axios.get(`${BASE_URL}shareboard/find/${index}`,
       // `${LOCAL_URL}shareboard/findAll`, 
       {
       headers: { 
