@@ -11,7 +11,7 @@ const TotalStyle = styled.div`
     border-radius: 10px;
     border: none;
     text-align: center;
-    width: 60%;
+    width: 100%;
     :focus {
       outline: none;
     }
@@ -21,7 +21,7 @@ const TotalStyle = styled.div`
     outline: 0 none;
     cursor: pointer;
     border: none;
-    width: 60%;
+    width: 100%;
     text-align: center;
   }
 `;
