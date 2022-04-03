@@ -4,9 +4,13 @@ import React, { Component, useState, useEffect } from "react";
 import "./Exercise.css";
 import $ from "jquery";
 import { useDispatch, useSelector } from "react-redux";
+import { EXERCISE_HISTORY_REGISTER_REQUEST } from "../../store/modules/exerciseHistory";
+import dayjs from "dayjs";
 
 export default function Exercise() {
+  const dispatch = useDispatch();
   const { exercise } = useSelector((state) => state.exerciseHistory);
+  const now = new Date(); // 현재 날짜 및 시간
 
   const [URL, setURL] = useState("");
 
@@ -19,7 +23,7 @@ export default function Exercise() {
       case 1: // BentOverRow
         // test : 왼 손 들기
         setURL("https://teachablemachine.withgoogle.com/models/tNxgspb7K/");
-        
+
         // setURL("https://teachablemachine.withgoogle.com/models/eqCo1kx3a/");
         break;
       case 2: // DumbbellCurl
@@ -153,7 +157,7 @@ export default function Exercise() {
     await predict();
     window.requestAnimationFrame(loop);
   }
-  var angle = Math.floor((360/(exercise.time))*10) / 10;
+  var angle = Math.floor((360 / exercise.time) * 10) / 10;
   var progress = 360;
   var status = "wait";
   var count = 0;
@@ -181,11 +185,21 @@ export default function Exercise() {
         }
         $(".progress").css("stroke-dashoffset", progress);
         $("#counter").html(count);
-        console.log(progress, angle)    
+        console.log(progress, angle);
         if (count == exercise.time) {
-          setTimeout(() => { alert("운동이 끝났습니다!") }, 500)
+          setTimeout(() => {
+            alert("운동이 끝났습니다!");
+          }, 500);
           // alert("운동이 끝났습니다!", 3000)
-        }    
+          dispatch({
+            type: EXERCISE_HISTORY_REGISTER_REQUEST,
+            data: {
+              count: count,
+              date: dayjs(now).format("YYYY-MM-DD HH:mm:ss"),
+              exerciseNo: exercise.type,
+            },
+          });
+        }
       }
       status = "wait";
     } else if (prediction[1].probability.toFixed(2) > 0.8) {
@@ -197,8 +211,6 @@ export default function Exercise() {
         prediction[i].className + ": " + prediction[i].probability.toFixed(2);
       labelContainer.childNodes[i].innerHTML = classPrediction;
     }
-
-    
 
     // finally draw the poses
     drawPose(pose);
