@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import {
-  MyPageIconBlock,
   MyPageProfileWrapper,
-  MyPageProfileBlock,
   MyPageProfileButton,
   editBox,
   ModalBodyWrapper,
@@ -28,9 +26,6 @@ import {
   UPDATE_USER_INFO_RESET,
   MY_PAGE_REQUEST,
 } from '../../store/modules/myPage';
-import Grid from '@mui/material/Grid';
-import { MdPerson } from 'react-icons/md';
-import { useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import Modal from '@mui/material/Modal';
 import Typography from '@mui/material/Typography';
@@ -54,7 +49,6 @@ import profile4 from '../../assets/images/profile4.jpg';
 
 export default function MypageProfile() {
   const dispatch = useDispatch();
-  const history = useHistory();
 
   const {
     me,

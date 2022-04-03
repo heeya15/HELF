@@ -160,6 +160,7 @@ export default function Nutrition() {
         <div style={{ height: '100%'}}>
             <Title>영양 성분 통계</Title>
             <DatePicker 
+                locale='ko'
                 selected={startDate} 
                 onChange={
                     (date) => setStartDate(date)
