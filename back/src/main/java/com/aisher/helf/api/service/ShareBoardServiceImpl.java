@@ -1,6 +1,7 @@
 package com.aisher.helf.api.service;
 
 import com.aisher.helf.api.request.ShareBoardRegisterReq;
+import com.aisher.helf.api.request.ShareBoardUpdateReq;
 import com.aisher.helf.api.response.ShareBoardAllRes;
 import com.aisher.helf.api.response.ShareBoardFindRes;
 import com.aisher.helf.api.response.ShareBoardFindTopLikeRes;
@@ -101,6 +102,13 @@ public class ShareBoardServiceImpl implements ShareBoardService {
 
         Page<ShareBoardAllRes> res = new PageImpl<ShareBoardAllRes>(temp,pageable,total);
         return res;
+    }
+//    공유 게시글중 해당 게시글 description 수정 성공
+    @Transactional
+    @Override
+    public ShareBoard updateShareBoardDescription(ShareBoard shareBoard,ShareBoardUpdateReq shareBoardUpdateReq) {
+        shareBoard.updateDescription(shareBoardUpdateReq.getDescription());
+        return shareBoard;
     }
 
     /** 해당 공유 게시글 번호에 대한 [ 게시글 정보 들고와서 ] 반환 하는 메서드**/

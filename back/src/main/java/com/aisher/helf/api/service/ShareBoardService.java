@@ -1,6 +1,8 @@
 package com.aisher.helf.api.service;
 
 import com.aisher.helf.api.request.ShareBoardRegisterReq;
+import com.aisher.helf.api.request.ShareBoardUpdateReq;
+import com.aisher.helf.api.request.UserUpdateReq;
 import com.aisher.helf.api.response.ShareBoardAllRes;
 import com.aisher.helf.api.response.ShareBoardFindRes;
 import com.aisher.helf.api.response.ShareBoardFindTopLikeRes;
@@ -30,6 +32,8 @@ public interface ShareBoardService {
 	/** 모든 공유 게시글의 정보를 가져오는 findAllBoard 입니다. (목록 부분에 사용)*/
 	Page<ShareBoard> findAllShareBoard(Pageable pageable);
 	Page<ShareBoardAllRes> findInfoShareBoard(Page<ShareBoard> shareBoards, String userId);
+
+	ShareBoard updateShareBoardDescription(ShareBoard shareBoard,ShareBoardUpdateReq shareBoardUpdateReq);
 
 	/** 공유 게시글을 삭제하는 deleteShareBoard 입니다. **/
 	void deleteShareBoard(Long boardNo);
