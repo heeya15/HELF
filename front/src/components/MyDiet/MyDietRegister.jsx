@@ -30,6 +30,7 @@ import {
   ImageThumbnail,
   FoodCheckButton,
   foodcheckBox,
+  ButtonGroup,
 } from "./MyDietRegister.style";
 import { ButtonWrapper, ConfirmButton, CancelButton } from "./MyDiet.style";
 
@@ -220,8 +221,9 @@ export default function MyDietRegister() {
                 </Modal>
                 <div
                   style={{
-                    fontSize: "12px",
+                    fontSize: "15px",
                     color: "grey",
+                    fontFamily: 'KOTRA_GOTHIC',
                   }}
                 >
                   음식별 무게를 선택해주세요.
@@ -280,8 +282,8 @@ export default function MyDietRegister() {
             </Col>
           </Row>
         </TotalStyle>
-        <RegisterButton onClick={registerMyDietButton}>등록</RegisterButton>
-        <BackButton onClick={goBack}>나가기</BackButton>
+          <RegisterButton onClick={registerMyDietButton}>등록</RegisterButton>
+          <BackButton onClick={goBack}>나가기</BackButton>
       </Container>
     </div>
   );
