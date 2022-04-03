@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams, useHistory } from "react-router-dom";
 import { IMAGE_URL } from "../../utils/https";
@@ -155,6 +155,13 @@ export default function MyDietRegister() {
     dispatch(setFoodCheckBox(checkedInputs));
     handleClose();
   };
+
+  useEffect(() => {
+    setCheckedInputs([]);
+    for (let i = 0; i < foodName.length; i++) {
+      setCheckedInputs([...checkedInputs, foodName[i].foodName]);
+    }
+  }, [foodName]);
 
   return (
     <div>

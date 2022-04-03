@@ -32,6 +32,8 @@ import {
   MY_DIET_DIARY_DELETE_FAILURE,
 } from "../modules/myDiet";
 
+import swal from "sweetalert"; // 예쁜 alert 창을 위해 사용
+
 function* loadMyDietImage(action) {
   try {
     const result = yield call(myDietImageAPI, action.data);
@@ -50,6 +52,10 @@ function* loadMyDietRegister(action) {
     console.log(action.data);
     const result = yield call(myDietRegisterAPI, action.data);
     yield put({ type: MY_DIET_REGISTER_SUCCESS, data: result });
+    swal("식단 등록 완료", "  ", "success", {
+      buttons: false,
+      timer: 1800,
+    });
     document.location.href = "/mydiet";
   } catch (error) {
     yield put({ type: MY_DIET_REGISTER_FAILURE });
@@ -106,6 +112,10 @@ function* loadMyDietUpdate(action) {
   try {
     const result = yield call(myDietUpdateAPI, action.data);
     yield put({ type: MY_DIET_UPDATE_SUCCESS, data: result });
+    swal("식단 수정 완료", "  ", "success", {
+      buttons: false,
+      timer: 1800,
+    });
   } catch (error) {
     yield put({ type: MY_DIET_UPDATE_FAILURE });
   }
