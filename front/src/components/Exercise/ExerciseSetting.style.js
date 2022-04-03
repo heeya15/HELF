@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 const TotalStyle = styled.div`
+  box-shadow: 5px 5px #e0e0e0;
   width: 50%;
   margin: 5% auto;
   background-color: #a3cca3;
@@ -26,6 +27,7 @@ const TotalStyle = styled.div`
 `;
 
 const StartButton = styled.button`
+  box-shadow: 3px 3px #e0e0e0;
   font-size: 25px;
   border: none;
   border-radius: 10px;
