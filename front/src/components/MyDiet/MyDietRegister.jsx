@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams, useHistory } from "react-router-dom";
 import { IMAGE_URL } from "../../utils/https";
 import {
+  setFoodCheckBox,
   setmyDietWeight,
   MY_DIET_IMAGE_REQUEST,
   MY_DIET_REGISTER_REQUEST,
@@ -12,7 +13,11 @@ import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import TimePicker from "@mui/lab/TimePicker";
 import dayjs from "dayjs";
 import TextField from "@mui/material/TextField";
+import { FormGroup, FormControlLabel, Checkbox } from "@mui/material";
 import { Container, Row, Col } from "react-bootstrap";
+import Typography from "@mui/material/Typography";
+import Modal from "@mui/material/Modal";
+import Box from "@mui/material/Box";
 import {
   TotalStyle,
   RegisterReq,
@@ -22,7 +27,10 @@ import {
   Titles,
   Description,
   ImageThumbnail,
+  FoodCheckButton,
+  foodcheckBox,
 } from "./MyDietRegister.style";
+import { ButtonWrapper, ConfirmButton, CancelButton } from "./MyDiet.style";
 
 export default function MyDietRegister() {
   const dispatch = useDispatch();
@@ -37,7 +45,7 @@ export default function MyDietRegister() {
   const [mealTime, setMealTime] = useState("");
   const [description, setDescription] = useState("");
 
-  const { foodName } = useSelector((state) => state.myDiet);
+  const { foodName, foods } = useSelector((state) => state.myDiet);
   const mealType = ["아침", "점심", "저녁", "간식"];
 
   const myDietRegister = {
@@ -79,6 +87,8 @@ export default function MyDietRegister() {
     else if (myDietRegister.diaryDate === "") alert("시간을 등록해주세요.");
     else if (myDietRegister.mealTime === "") alert("시간대를 선택해주세요.");
     else if (myDietRegister.description === "") alert("설명을 입력해주세요.");
+    else if (myDietRegister.dietRegisterReqList.length === 0)
+      alert("이미지를 변경하거나 직접선택을 통해 음식을 선택해주세요.");
     else {
       dispatch({
         type: MY_DIET_REGISTER_REQUEST,
@@ -108,6 +118,44 @@ export default function MyDietRegister() {
     dispatch(setmyDietWeight(pair));
   };
 
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => {
+    setOpen(true);
+  };
+  const handleClose = () => setOpen(false);
+
+  const [checkedInputs, setCheckedInputs] = useState([]);
+  const changeHandler = (checked, id) => {
+    if (checked) {
+      setCheckedInputs([...checkedInputs, id]);
+    } else {
+      setCheckedInputs(checkedInputs.filter((el) => el !== id));
+    }
+  };
+
+  const FoodCheckBox = foods.map((food, index) => {
+    return (
+      <FormControlLabel
+        key={index}
+        control={
+          <Checkbox
+            id={food}
+            onChange={(e) => {
+              changeHandler(e.currentTarget.checked, food);
+            }}
+            checked={checkedInputs.includes(food) ? true : false}
+          />
+        }
+        label={food}
+      ></FormControlLabel>
+    );
+  });
+
+  const foodCheckDone = () => {
+    dispatch(setFoodCheckBox(checkedInputs));
+    handleClose();
+  };
+
   return (
     <div>
       <Container>
@@ -126,6 +174,34 @@ export default function MyDietRegister() {
             <Col>
               <RegisterReq>
                 <Titles>Food</Titles>
+                <FoodCheckButton onClick={handleOpen}>직접선택</FoodCheckButton>
+                <Modal
+                  open={open}
+                  onClose={handleClose}
+                  aria-labelledby="modal-modal-title"
+                  aria-describedby="modal-modal-description"
+                >
+                  <Box sx={foodcheckBox}>
+                    <Typography
+                      id="modal-modal-title"
+                      variant="h4"
+                      component="h2"
+                    >
+                      음식 선택
+                    </Typography>
+                    <hr />
+                    <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+                      해당하는 음식 종류를 선택해주세요.
+                    </Typography>
+                    <FormGroup>{FoodCheckBox}</FormGroup>
+                    <ButtonWrapper>
+                      <ConfirmButton onClick={foodCheckDone}>
+                        완료
+                      </ConfirmButton>
+                      <CancelButton onClick={handleClose}>닫기</CancelButton>
+                    </ButtonWrapper>
+                  </Box>
+                </Modal>
                 <div
                   style={{
                     fontSize: "12px",

@@ -12,16 +12,29 @@ const initialState = {
     dietFindResList: [],
   },
   weights: [100, 150, 200, 250, 300],
+  foods: [
+    "닭가슴살",
+    "토마토",
+    "연어",
+    "안심스테이크",
+    "야채샐러드(드레싱없이)",
+    "계란",
+    "연어구이",
+    "오이",
+    "우유",
+    "고구마",
+    "밥",
+    "낫또",
+    "두부",
+    "브로콜리",
+  ],
   dietDetailThumbnail: null,
   dietThumbnail: null,
   imagePath: null,
   mealTime: "",
   diaryDate: "",
   description: "",
-  foodName: [
-    { foodName: "토마토", weight: 100 },
-    { foodName: "닭가슴살", weight: 100 },
-  ],
+  foodName: [],
   myDietDiaryList: [],
   myDietDiaryDailyInfo: [],
   myDietDiaryDailyInfoCopy: [],
@@ -111,23 +124,29 @@ export const setFoodName = (state) => ({
   state,
 });
 
+const SET_FOOD_CHECK_BOX = "SET_FOOD_CHECK_BOX";
+export const setFoodCheckBox = (state) => ({
+  type: SET_FOOD_CHECK_BOX,
+  state,
+});
+
 const reducer = (state = initialState, action) =>
   produce(state, (draft) => {
     switch (action.type) {
       case MY_DIET_IMAGE_REQUEST:
         break;
       case MY_DIET_IMAGE_SUCCESS:
-        // draft.foodName = [];
-        // action.data.data.forEach((foods) => {
-        //   draft.foodName.push({foodName:foods,weight:100});
-        // });
-        console.log(action.data.data);
+        draft.foodName = [];
+        action.data.data.resultList.forEach((foods) => {
+          draft.foodName.push({ foodName: foods, weight: 100 });
+        });
         break;
       case MY_DIET_IMAGE_FAILURE:
         break;
       case MY_DIET_REGISTER_REQUEST:
         break;
       case MY_DIET_REGISTER_SUCCESS:
+        draft.foodName = [];
         break;
       case MY_DIET_REGISTER_FAILURE:
         break;
@@ -208,6 +227,12 @@ const reducer = (state = initialState, action) =>
         draft.foodName = [];
         action.state.forEach((food) => {
           draft.foodName.push({ foodName: food.foodName, weight: 100 });
+        });
+        break;
+      case SET_FOOD_CHECK_BOX:
+        draft.foodName = [];
+        action.state.forEach((food) => {
+          draft.foodName.push({ foodName: food, weight: 100 });
         });
         break;
       case MY_DIET_DIARY_SHARE_REQUEST:
