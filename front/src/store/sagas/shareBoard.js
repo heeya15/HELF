@@ -104,7 +104,7 @@ function* loadShareBoardLike(action) {
         type: SHARE_BOARD_LIKE_REGISTER_SUCCESS  ,
         data: result,
       });
-      yield put({ type: SHARE_BOARD_ISLIKECHECK_TOTALLIKECOUNT_REQUEST, data: action.data }); // mypage 정보 바로 조회
+      yield put({ type: SHARE_BOARD_ISLIKECHECK_TOTALLIKECOUNT_REQUEST, data: action.data }); 
     } catch (error) {
       yield put({
         type: SHARE_BOARD_LIKE_REGISTER_FAILURE ,
@@ -125,6 +125,7 @@ try {
       type: SHARE_BOARD_UPDATE_SUCCESS,
       data: result,
     });
+    yield put({ type: SHARE_BOARD_DETAIL_SELECT_REQUEST, data: action.data.boardNo });
   } catch (error) {
     yield put({
       type: SHARE_BOARD_UPDATE_FAILURE,
@@ -139,9 +140,9 @@ function* watchLoadShareBoardUpdateDiscription() {
 // 해당 공유 게시글 상세 조회
 function* loadShareBoardDetailSelect(action) {
   try {   
-      const result = yield call(ShareBoardDetailSelectAPI, action.data); 
-      console.log("상세 조회 들어옴")
-      console.log(result.data);
+      console.log(action);
+    const result = yield call(ShareBoardDetailSelectAPI, action.data); 
+    console.log(result);
       console.log("hi")
       yield put({
         type: SHARE_BOARD_DETAIL_SELECT_SUCCESS ,

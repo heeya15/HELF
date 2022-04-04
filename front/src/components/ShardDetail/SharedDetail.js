@@ -42,11 +42,9 @@ import TableContainer from "@mui/material/TableContainer";
 import TableRow from "@mui/material/TableRow";
 
 import {
-  DetailReq,
-  UpdateButton,
-  MealTimeDetail,
   FoodTableTitle,
 } from "../MyDiet/MyDietDetail.style";
+import { set } from 'date-fns';
 // match 로 현재 게시물 주소에 대한 정보를 props 로 받아온다
 function Detail({ match }) {
   const [updateForm, setUpdateForm] = useState(false);
@@ -59,11 +57,11 @@ function Detail({ match }) {
   const [commentData, setComment] = useState([]);
   const [userData, setUser] = useState([]);
   const [LikeCount, setTotalLikeCount] = useState(0);
-  const { isLike, totalLikeCount, shareBoardDetailList } = useSelector(
-    (state) => state.shareBoard
-  );
+  const [imagePath, setImagePath] = useState('');
+  const { isLike, totalLikeCount, shareBoardDetailList,detailimagePath, detaildescription, shareUserId } = useSelector((state) => state.shareBoard);
+  const {me} = useSelector((state) => state.mypage);
 
-  var [inputDiscription, setInputDiscription] = useState("");
+  var [inputDiscription, setInputDescription] = useState("");
   const likeDelete = (boardNo, e) => {
     dispatch({
       type: SHARE_BOARD_LIKE_REGISTER_REQUEST,
@@ -76,7 +74,6 @@ function Detail({ match }) {
       data: boardNo,
     });
   };
-
   const updateDescriptionHandler = (e) => {
     setUpdateForm(true);
     console.log(updateForm);
@@ -92,20 +89,27 @@ function Detail({ match }) {
       },
     });
     setUpdateForm(false);
+    dispatch({
+      type: SHARE_BOARD_DETAIL_SELECT_REQUEST,
+      data: index,
+    });
   };
 
   const DescriptionhandleChange = (e) => {
-    setInputDiscription(e.target.value);
+    setInputDescription(e.target.value);
   };
+  
   useEffect(() => {
     dispatch({
       type: SHARE_BOARD_DETAIL_SELECT_REQUEST,
       data: index,
     });
+    dispatch({
+      type: SHARE_BOARD_ISLIKECHECK_TOTALLIKECOUNT_REQUEST,
+      data: index,
+    });
   }, []);
-  console.log("최초 한번 요청 상세 정보");
-  console.log(shareBoardDetailList);
-  console.log(">>>>>>>>>>>>>>>>>>>>>end");
+ 
   useEffect(() => {
     // 좋아요 여부와 좋아요 개수 들고옴.
     dispatch({
@@ -114,29 +118,13 @@ function Detail({ match }) {
     });
     setTotalLikeCount(totalLikeCount);
 
-    // 해당 공유 게시글 상세 조회
     dispatch({
       type: SHARE_BOARD_DETAIL_SELECT_REQUEST,
       data: index,
     });
-    axios
-      .get(
-        `${BASE_URL}shareboard/find/${index}`,
-        // `${LOCAL_URL}shareboard/findAll`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      )
-      .then((response) => {
-        // 나중에 response.data 로 data 가져오기 가능
-        setAlldata(response.data[0]);
-        console.log("end");
-        setInputDiscription(response.data[0].description);
-        console.log(response);
-      });
-  }, [totalLikeCount, isLike]);
+    setInputDescription(detaildescription);
+  }, [totalLikeCount, isLike, detaildescription]);
+  
   //  댓글 가져오기
   useEffect(() => {
     axios.get(`${BASE_URL}comment/findAll/${index}`,
@@ -151,24 +139,8 @@ function Detail({ match }) {
         }).catch(err => {
           history.push(`/sharedBoard`);
         });
-}, [commentData]);
-  useEffect(() => {
-    axios
-      .get(
-        `${BASE_URL}user/find/me`,
-        // `${LOCAL_URL}shareboard/findAll`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      )
-      .then((response) => {
-        // 나중에 response.data 로 data 가져오기 가능
-        setUser(response.data.userId);
-      })
-      .catch((err) => {});
-  }, []);
+  }, [commentData]);
+
 
   const goBack = () => {
     history.push(`/sharedBoard`);
@@ -340,14 +312,14 @@ function Detail({ match }) {
         <TotalStyle>
           <Row>
             <Col>
-            <ImageThumbnail src={`${IMAGE_URL}${allData.image_path}`} alt="이미지" style={{maxHeight:500}}></ImageThumbnail>
+            <ImageThumbnail src={`${IMAGE_URL}${detailimagePath}`} alt="이미지" style={{maxHeight:500}}></ImageThumbnail>
 
             </Col>
             <Col>
               <RegisterReq>
-                <Titles>{allData.user_id}님의 식단.</Titles>
+                <Titles>{shareUserId}님의 식단.</Titles>
                 {updateForm === false ? (
-                  <Description>{allData.description} </Description>
+                  <Description>{detaildescription} </Description>
                 ) : (
                   <Description>
                     <textarea
@@ -459,7 +431,7 @@ function Detail({ match }) {
         </TotalStyle>
         <ListButton onClick={goBack}>목록</ListButton>
         {/* 작성자 == 조회자 이면 수정 버튼 활성화 */}
-        {userData === allData.user_id && updateForm === false ? (
+        {me.userId === shareUserId && updateForm === false ? (
           <UpdatdButton
             onClick={(e) => {
               updateDescriptionHandler(e);
@@ -480,7 +452,7 @@ function Detail({ match }) {
           </UpdatdButton>
         ) : null}
 
-        {userData === allData.user_id && updateForm === false ? (
+        {me.userId === shareUserId && updateForm === false ? (
           <BackButton onClick={boardDelete}>삭제</BackButton>
         ) : null}
       </Container>
