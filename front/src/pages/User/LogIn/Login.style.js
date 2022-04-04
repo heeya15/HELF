@@ -87,21 +87,37 @@ const LoginContentRow = styled.div`
 `;
 
 const StepperWrapper = styled.div`
-  width: 60%;
-  margin: 50px auto;
+  width: 70%;
+  height: 70%;
+  margin: 70px auto;
+  padding: 50px 100px;
+  border-radius: 20px;
+  background-color: #f2f7f4;
+  box-shadow: 4px 4px 4px 2px rgba(0, 0, 0, 0.25);
+`;
+
+const Title = styled.div`
+  font-size: 40px;
+  margin-bottom: 50px;
+  color: #225424;
 `;
 
 const StepTitle = styled.div`
-  font-size: 30px;
-  font-weight: bold;
-  margin: 40px 0px;
-  color: #225424;
+  font-size: 25px;
+  margin: 70px 0px 90px 0px;
+  color: #000;
+  font-family: KOTRA_GOTHIC;
 `;
 
 const InputWrapper = styled.div`
   width: 40%; 
   margin: 50px auto;
 `;
+
+const inputBox = {
+  width: '80%',
+  backgroundColor: '#fff', 
+}
 
 const Message = styled.span`
   color: #e02828;
@@ -151,6 +167,7 @@ export {
   StepperWrapper,
   InputWrapper,
   StepTitle,
+  Title,
   Message,
   LogInButton,
   kakaoButton,
@@ -158,4 +175,5 @@ export {
   subFunction,
   inputTextField,
   horizontalCenter,
+  inputBox,
 };
