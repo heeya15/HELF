@@ -87,7 +87,7 @@ export default function FindPassword() {
                         alignItems: 'center'
                     }}>
                     <Typography variant="h3" gutterBottom marked="center" align="center" style={{ fontFamily: 'KOTRA_BOLD-Bold' }}>
-                        FIND PASSWORD
+                        FIND<br/>PASSWORD
                     </Typography>
                     <Typography variant="body2" align="center"></Typography>
                     <Box
@@ -151,7 +151,7 @@ export default function FindPassword() {
                             item xs={12}
                             style={subFunction}
                             onClick={ handleLogIn }>
-                            Go Back
+                            돌아가기
                           </Grid>
                         </Grid>
                     </Box>
