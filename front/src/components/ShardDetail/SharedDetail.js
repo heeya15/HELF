@@ -141,6 +141,20 @@ function Detail({ match }) {
         });
   }, [commentData]);
 
+  useEffect(() => {
+    axios.get(`${BASE_URL}user/find/me`,
+    // `${LOCAL_URL}shareboard/findAll`, 
+    {
+    headers: { 
+      Authorization: `Bearer ${ token }`
+    }})
+        .then(response => {
+          // 나중에 response.data 로 data 가져오기 가능
+          setUser(response.data.userId) 
+          ;
+        }).catch(err => {
+        });
+}, []);
 
   const goBack = () => {
     history.push(`/sharedBoard`);
