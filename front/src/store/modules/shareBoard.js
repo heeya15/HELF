@@ -6,6 +6,17 @@ const initialState = {
     shareBoardRegisterDone: false,
     shareBoardRegisterError: null,
 
+    
+    //  해당 공유 게시글 상세 조회
+    shareBoardDetailSelectLoading: false, 
+    shareBoardDetailSelectDone: false,
+    shareBoardDetailSelectError: false,
+
+    //  해당 공유 게시판 description 수정
+    shareBoardUpdateLoading: false, 
+    shareBoardUpdateDone: false,
+    shareBoardUpdateError: false,
+
     // 베스트 식단 조회
     shareBoardTopLikeLoading: false, 
     shareBoardTopLikeDone: false,
@@ -34,6 +45,7 @@ export const SHARE_BOARD_LIKE_REQUEST = "SHARE_BOARD_LIKE_REQUEST";
 export const SHARE_BOARD_LIKE_SUCCESS = "SHARE_BOARD_LIKE_SUCCESS";
 export const SHARE_BOARD_LIKE_FAILURE = "SHARE_BOARD_LIKE_FAILURE";
 export const SHARE_BOARD_LIKE_RESET = "SHARE_BOARD_LIKE_RESET";
+
 // 총 좋아요 개수와, 로그인 USER가 해당 공유 게시글 좋아요 여부 체크
 export const SHARE_BOARD_ISLIKECHECK_TOTALLIKECOUNT_REQUEST = "SHARE_BOARD_ISLIKECHECK_TOTALLIKECOUNT_REQUEST";
 export const SHARE_BOARD_ISLIKECHECK_TOTALLIKECOUNT_SUCCESS = "SHARE_BOARD_ISLIKECHECK_TOTALLIKECOUNT_SUCCESS";
@@ -47,6 +59,18 @@ export const SHARE_BOARD_LIKE_REGISTER_FAILURE = "SHARE_BOARD_LIKE_REGISTER_FAIL
 export const SHARE_BOARD_LIKE_REGISTER_RESET = "SHARE_BOARD_LIKE_REGISTER_RESET";
 
 
+// 해당 게시글 discription 수정
+export const SHARE_BOARD_UPDATE_REQUEST = "SHARE_BOARD_UPDATE_REQUEST";
+export const SHARE_BOARD_UPDATE_SUCCESS = "SHARE_BOARD_UPDATE_SUCCESS";
+export const SHARE_BOARD_UPDATE_FAILURE = "SHARE_BOARD_UPDATE_FAILURE";
+export const SHARE_BOARD_UPDATE_RESET = "SHARE_BOARD_UPDATE_RESET";
+
+
+// 해당 게시글 상세 조회
+export const SHARE_BOARD_DETAIL_SELECT_REQUEST = "SHARE_BOARD_DETAIL_SELECT_REQUEST";
+export const SHARE_BOARD_DETAIL_SELECT_SUCCESS = "SHARE_BOARD_DETAIL_SELECT_SUCCESS";
+export const SHARE_BOARD_DETAIL_SELECT_FAILURE = "SHARE_BOARD_DETAIL_SELECT_FAILURE";
+export const SHARE_BOARD_DETAIL_SELECT_RESET = "SHARE_BOARD_DETAIL_SELECT_RESET";
 const reducer = (state = initialState, action) => 
     produce(state, draft => {
         switch(action.type) {
@@ -62,6 +86,44 @@ const reducer = (state = initialState, action) =>
             case SHARE_BOARD_REGISTER_FAILURE:
                 draft.shareBoardRegisterLoading = false;
                 draft.shareBoardRegisterError = action.error;
+                break;
+            
+            case SHARE_BOARD_DETAIL_SELECT_REQUEST :
+                draft.shareBoardDetailSelectLoading = true;
+                draft.shareBoardDetailSelectError = null;
+                draft.shareBoardDetailSelectDone = false;
+                break;
+            case SHARE_BOARD_DETAIL_SELECT_SUCCESS :
+                draft.shareBoardDetailSelectLoading = false;
+                draft.shareBoardDetailSelectDone = true;
+                break;
+            case SHARE_BOARD_DETAIL_SELECT_FAILURE :
+                draft.shareBoardDetailSelectLoading = false;
+                draft.shareBoardDetailSelectError = action.error;
+                break;
+            case SHARE_BOARD_DETAIL_SELECT_RESET :
+                draft.shareBoardDetailSelectLoading = false;
+                draft.shareBoardDetailSelectError = null;
+                draft.shareBoardDetailSelectDone = false;
+                break;
+                
+            case SHARE_BOARD_UPDATE_REQUEST :
+                draft.shareBoardUpdateLoading = true;
+                draft.shareBoardUpdateError = null;
+                draft.shareBoardUpdateDone = false;
+                break;
+            case SHARE_BOARD_UPDATE_SUCCESS :
+                draft.shareBoardUpdateLoading = false;
+                draft.shareBoardUpdateDone = true;
+                break;
+            case SHARE_BOARD_UPDATE_FAILURE :
+                draft.shareBoardUpdateLoading = false;
+                draft.shareBoardUpdateError = action.error;
+                break;
+            case SHARE_BOARD_UPDATE_RESET  :
+                draft.shareBoardUpdateLoading = false;
+                draft.shareBoardUpdateError = null;
+                draft.shareBoardUpdateDone = false;
                 break;
             
             case SHARE_BOARD_LIKE_REQUEST:

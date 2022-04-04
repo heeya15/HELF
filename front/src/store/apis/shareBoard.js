@@ -47,3 +47,25 @@ export async function ShareBoardLikeAPI(boardNo) {
     );
     return result;
 }
+
+// 해당 공유 게시글 상세 조회
+export async function ShareBoardDetailSelectAPI(boardNo) {
+    const token = sessionStorage.getItem("jwt");
+    const header = { headers: { Authorization: `Bearer ${token}` } };
+    const result = await axios.get(`${BASE_URL}shareboard/find/${boardNo}`,
+        header
+    );
+    return result;
+}
+
+// 해당 공유 게시글을 discription 수정
+export async function ShareBoardUpdateDiscriptionAPI({boardNo,description}) {
+    const result = await axios.put(
+        `${BASE_URL}shareboard/update/description`,
+        {
+            boardNo: boardNo,
+            description: description,
+        }   
+    );
+    return result;
+}

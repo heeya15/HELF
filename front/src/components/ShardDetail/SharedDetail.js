@@ -28,20 +28,19 @@ import {
   LikeListStyle,
 } from "../MyPage/MyPage.style";
 import { AiFillHeart,AiOutlineHeart } from "react-icons/ai";
-import {
-  MY_PAGE_LIKE_REQUEST,
-  MY_PAGE_LIKE_DELETE_REQUEST,
-} from "../../store/modules/myPage";
+
 import {
   SHARE_BOARD_ISLIKECHECK_TOTALLIKECOUNT_REQUEST,
-  SHARE_BOARD_LIKE_REGISTER_REQUEST 
+  SHARE_BOARD_LIKE_REGISTER_REQUEST,
+  SHARE_BOARD_UPDATE_REQUEST,
+  SHARE_BOARD_DETAIL_SELECT_REQUEST 
 } from "../../store/modules/shareBoard";
 import { style } from "@mui/system";
 
 
 // match 로 현재 게시물 주소에 대한 정보를 props 로 받아온다
 function Detail({ match }) {
-
+    const [updateForm, setUpdateForm] = useState(false);
     const dispatch = useDispatch();
     const history = useHistory();
     const index = match.params.index.substring(0);
@@ -53,55 +52,75 @@ function Detail({ match }) {
     const [LikeCount, setTotalLikeCount] = useState(0);
     const { isLike,totalLikeCount } = useSelector((state) => state.shareBoard);
   
-   const likeDelete = (boardNo, e) => {
+    var [inputDiscription, setInputDiscription] = useState('');
+    const likeDelete = (boardNo, e) => {
+        dispatch({
+          type: SHARE_BOARD_LIKE_REGISTER_REQUEST,
+          data: boardNo,
+        });
+      };
+      const likeRegister = (boardNo, e) => {
+        dispatch({
+          type: SHARE_BOARD_LIKE_REGISTER_REQUEST,
+          data: boardNo,
+        });
+      };
+  
+    const updateDescriptionHandler = (e) => {  
+      setUpdateForm(true);
+      console.log(updateForm);
+     };
+     // 해당 공유 게시글 discription  수정
+    const updateDescription = (discription,e) => {  
+      console.log(discription);
       dispatch({
-        type: SHARE_BOARD_LIKE_REGISTER_REQUEST,
-        data: boardNo,
+        type: SHARE_BOARD_UPDATE_REQUEST,
+        data: {
+          boardNo : index,
+          description:discription,
+        },
       });
-  };
-  const likeRegister = (boardNo, e) => {
-    dispatch({
-      type: SHARE_BOARD_LIKE_REGISTER_REQUEST,
-      data: boardNo,
-    });
-  };
+      setUpdateForm(false);
+    };
+  
+    const DescriptionhandleChange=(e)=>{
+      setInputDiscription(e.target.value);
+    }   
+    useEffect(() => {
+      dispatch({
+        type: SHARE_BOARD_DETAIL_SELECT_REQUEST,
+        data: index
+      });
+    }, []);
 
-  useEffect(() => {
+    useEffect(() => {
     // 좋아요 여부와 좋아요 개수 들고옴.
       dispatch({
         type: SHARE_BOARD_ISLIKECHECK_TOTALLIKECOUNT_REQUEST,
         data:index
       });
       setTotalLikeCount(totalLikeCount); 
-    
-      axios.get(`${BASE_URL}shareboard/find/${index}`,
-      // `${LOCAL_URL}shareboard/findAll`, 
-      {
-      headers: { 
-        Authorization: `Bearer ${ token }`
-      }})
-          .then(response => {
-            // 나중에 response.data 로 data 가져오기 가능
-            setAlldata(response.data[0]); 
-            console.log("hi");
-            console.log(response) 
 
-          });
-  }, [totalLikeCount, isLike]);
-    useEffect(() => {
-      axios.get(`${BASE_URL}comment/findAll/${index}`,
-      // `${LOCAL_URL}shareboard/findAll`, 
-      {
-      headers: { 
-        Authorization: `Bearer ${ token }`
-      }})
-          .then(response => {
-            // 나중에 response.data 로 data 가져오기 가능
-            setComment(response.data);
-          }).catch(err => {
-          });
-  }, [commentData]);
-    
+    // 해당 공유 게시글 상세 조회
+      dispatch({
+        type: SHARE_BOARD_DETAIL_SELECT_REQUEST ,
+        data:index
+      });
+      axios.get(`${BASE_URL}shareboard/find/${index}`,
+        // `${LOCAL_URL}shareboard/findAll`, 
+        {
+        headers: { 
+          Authorization: `Bearer ${ token }`
+        }})
+        .then(response => {
+              // 나중에 response.data 로 data 가져오기 가능
+              setAlldata(response.data[0]); 
+              console.log("end")
+              setInputDiscription(response.data[0].description);
+              console.log(response) 
+
+        });
+    }, [totalLikeCount, isLike]);
   
     useEffect(() => {
       axios.get(`${BASE_URL}user/find/me`,
@@ -117,9 +136,6 @@ function Detail({ match }) {
           }).catch(err => {
           });
   }, []);
-
-
-  
 
     const goBack = () => {
       history.push(`/sharedBoard`);
@@ -182,7 +198,7 @@ function Detail({ match }) {
         }))
       };
       //  댓글 수정
-    let [input, setInput] = useState('')
+    let [input, setInput] = useState('');
     let [CommentNoinput, setCommentNoinput] = useState('')
 
     const handleClick= async ( commentNo, commentText, e )=>{
@@ -227,15 +243,17 @@ function Detail({ match }) {
           <TotalStyle>
             <Row>
               <Col>
-                <ImageThumbnail src={`${IMAGE_URL}${allData.image_path}`} alt="이미지"></ImageThumbnail>
-              
+                <ImageThumbnail src={`${IMAGE_URL}${allData.image_path}`} alt="이미지"></ImageThumbnail>    
               </Col>
               <Col>
               <RegisterReq>
                   <Titles>{allData.user_id}님의 식단.
                 </Titles>
-                  <Description
-                  >{allData.description}</Description>
+                {updateForm === false ? (
+                  <Description>{allData.description} </Description>
+                ) : (
+                  <Description><input type ="text"  value={inputDiscription} onChange={DescriptionhandleChange} size="50"></input></Description>
+                )}
                   <Titles>{allData.food_name  } 100g</Titles>
                   <div className="nutBox">
                     <p className="line">칼로리 {allData.kcal}Kcal</p>
@@ -287,12 +305,11 @@ function Detail({ match }) {
                       <SendButton type="submit" onClick={resetInputField}>등록</SendButton>
                     </form>
                     {/*  댓글 보이기 */}
-                    {commentData.map(user => (
-              
+                {commentData.map(user => (
                         <div key={user.comment_no} >
                           {
-                            userData == user.user_id
-                            ?<div className="commentDelete">
+                          userData == user.user_id ?
+                            <div className="commentDelete">
                               <CommentTitles className="newText">{user.user_id} : {user.comment} </CommentTitles>
  
                               {/* 삭제파트 */}
@@ -301,10 +318,12 @@ function Detail({ match }) {
                                 }}>삭제</CommentDeleteBtn>
                               
                               {/*  수정파트 */}
-                              <CommentUpdatdButton className="newText2" onClick={(e) => {
-                                  handleClick(user.comment_no , user.comment);
-                                      }} >
-                                        {input ?( user.comment_no === CommentNoinput
+                             <CommentUpdatdButton className="newText2"
+                                  onClick={(e) => {
+                                          handleClick(user.comment_no , user.comment);
+                                   }}
+                            >
+                              {input ?( user.comment_no === CommentNoinput
                                                   ? <input type="text" value={input} onChange={handleChange} onKeyDown= {handleKeydown}
                                               /> 
                                             : `수정`
@@ -314,19 +333,33 @@ function Detail({ match }) {
                             :<div className="commentDelete"><CommentTitles>{user.user_id} : {user.comment}</CommentTitles></div>
                           }
                         </div>      
-                    ))}
+                    ))
+                }
                   </CommentBoxBig>
                   </div>
             </Row>
           </TotalStyle>
           <ListButton onClick={goBack}>목록</ListButton>
           {/* 작성자 == 조회자 이면 수정 버튼 활성화 */}
-          {
-              userData == allData.user_id
-              ? <UpdatdButton>수정</UpdatdButton>
-              : null
-            }
-          <BackButton onClick={boardDelete}>삭제</BackButton>
+          { userData === allData.user_id && updateForm === false
+            ? (
+            <UpdatdButton onClick={(e) => {
+              updateDescriptionHandler(e);
+            }}
+            > 수정</UpdatdButton>
+          ) : (null)}
+        
+          {updateForm === true ? (
+          <UpdatdButton onClick={(discription,e) => {
+            updateDescription(inputDiscription,e);
+            }}
+          >수정하기</UpdatdButton>
+          ) : (null)}
+        
+         {
+          userData === allData.user_id && updateForm === false ? (
+            <BackButton onClick={boardDelete}>삭제</BackButton>
+          ) : (null)}
           </Container>
       
       </div>
