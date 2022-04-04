@@ -10,6 +10,8 @@ import { IMAGE_URL } from "../../utils/https";
 // import { AiFillHeart } from "react-icons/ai";
 import { Row, Col } from "react-bootstrap";
 import { ShareBoardLikeListStyle } from "../MyPage/MyPage.style";
+import './ShardBoardTopLike.css'
+import { Title } from "../MyPage/MyPage.style";
 
 export default function MyPageLike() {
   const dispatch = useDispatch();
@@ -25,13 +27,6 @@ export default function MyPageLike() {
       type: SHARE_BOARD_LIKE_REQUEST,
     });
   }, []);
-  // useEffect(() => {
-  //   if (likeDeleteState) {
-  //     dispatch({
-  //       type: MY_PAGE_LIKE_REQUEST,
-  //     });
-  //   }
-  // }, [likeDeleteState]);
 
   const settings = {
     dots: true,
@@ -41,12 +36,7 @@ export default function MyPageLike() {
     slidesToScroll: 3,
   };
 
-  // const likeDelete = (boardNo, e) => {
-  //   dispatch({
-  //     type: MY_PAGE_LIKE_DELETE_REQUEST,
-  //     data: boardNo,
-  //   });
-  // };
+
   const goToShareDetail = (e) => {
     const boardNo = e.target.getAttribute("data");
     history.push(`/sharedetail/${boardNo}`);
@@ -54,16 +44,16 @@ export default function MyPageLike() {
 
   return (
     <div style={{ margin: "5% auto", width: "100%" }}>
-      <h5>BEST 식단</h5>
+      <Title>BEST 식단</Title>
       {shareBoardTopLikeList.length == 0 ? (
         <div>찜한 게시글이 없습니다.</div>
       ) : (
-        <Row>
+        <Row className="grid-container">
             {shareBoardTopLikeList.map((likes, index) => (
               <Col key={index}>
                 <ShareBoardLikeListStyle>
-                  
                   <img
+                    className="box"
                     src={`${IMAGE_URL}${likes.image_path}`}
                     alt="좋아요한 공유 이미지"
                     data={likes.board_no}
