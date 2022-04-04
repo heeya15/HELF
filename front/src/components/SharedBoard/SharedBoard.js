@@ -12,6 +12,7 @@ import { IMAGE_URL } from "../../utils/https";
 import ShareBoardTopLike from "./ShareBoardTopLike";
 import Pagination from "react-js-pagination";
 import './Pagenation.css'
+import { useMediaQuery } from 'react-responsive'
 // 박스 내부 CSS
 const Label = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -24,6 +25,23 @@ const Label = styled(Paper)(({ theme }) => ({
 }));
 
 function User({ user }) {
+  const token = sessionStorage.getItem("jwt");
+  const [UserIDCH, setUserIdCh] = useState([]);
+  useEffect(() => {
+    axios.get(`${BASE_URL}shareboard/find/${user.boardNo}`,
+    // `${LOCAL_URL}shareboard/findAll`, 
+    {
+    headers: { 
+      Authorization: `Bearer ${ token }`
+    }})
+        .then(response => {
+          // 나중에 response.data 로 data 가져오기 가능
+          setUserIdCh(response.data[0].user_id);
+          console.log(response.data)
+        }).catch(err => {
+          console.log('뭔가 잘못됨')
+        });
+    }, []);
   return (
     <div className="shardboxMargin">
       <Link  to={`/sharedetail/${user.boardNo}`}  state={{ data: user.boardNo}} className='anc ' >
@@ -34,7 +52,7 @@ function User({ user }) {
                   borderBottomRightRadius: 4,
                   display: 'block',
                   width: '200px',
-                }}>{user.boardNo}</Label>
+                }}>{UserIDCH}</Label>
               <img
               
                 src={`${IMAGE_URL}${user.imagePath}`}
@@ -58,7 +76,8 @@ function User({ user }) {
                   borderBottomRightRadius: 4,
                   display: 'block',
                   width: '200px',
-                }}>{user.boardNo}</Label>
+                  
+                }} className="LabelStyle">{user.description}</Label>
             </div>
             </Link>
     </div>
@@ -91,18 +110,56 @@ function SharedBoard(props) {
       .catch((err) => {console.log('앙댐;')})
   }, [page, totalpage]);
   
+  //  반응형
+  const Desktop = ({ children }) => {
+    const isDesktop = useMediaQuery({ minWidth: 992 })
+    return isDesktop ? children : null
+  }
+  const Tablet = ({ children }) => {
+    const isTablet = useMediaQuery({ minWidth: 768, maxWidth: 991 })
+    return isTablet ? children : null
+  }
+  const Mobile = ({ children }) => {
+    const isMobile = useMediaQuery({ maxWidth: 767 })
+    return isMobile ? children : null
+  }
+  const Default = ({ children }) => {
+    const isNotMobile = useMediaQuery({ minWidth: 768 })
+    return isNotMobile ? children : null
+  }
   return(  
     <div className="boxdiv"> 
-      <div className="shardbox"> </div>
-        <div>
-        <ShareBoardTopLike></ShareBoardTopLike>
-        <Masonry columns={4} spacing={2} >
-        {shardList.map((user,index) => (
-          <User user={user} key={index}/>
-        ))}
-        </Masonry>
+          <Desktop>        
+            <div className="boxdiv">
+              <ShareBoardTopLike></ShareBoardTopLike>
+              <Masonry columns={4} spacing={2} >
+              {shardList.map((user,index) => (
+                <User user={user} key={index}/>
+              ))}
+              </Masonry> 
+           </div>
+        </Desktop>
+          <Tablet>
+          <div className="boxdiv">
+              <ShareBoardTopLike></ShareBoardTopLike>
+              <Masonry columns={2} spacing={4} >
+              {shardList.map((user,index) => (
+                <User user={user} key={index}/>
+              ))}
+              </Masonry> 
+           </div>
+          </Tablet>
+          <Mobile>
+          <div className="boxdiv">
+              <ShareBoardTopLike></ShareBoardTopLike>
+              <Masonry columns={1} spacing={8} >
+              {shardList.map((user,index) => (
+                <User user={user} key={index}/>
+              ))}
+              </Masonry> 
+           </div>
+          </Mobile>
 
-        </div>
       <Pagination
           activePage={page}
           itemsCountPerPage={perPage}
