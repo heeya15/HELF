@@ -13,6 +13,7 @@ import {
   setFoodName,
   MY_DIET_DETAIL_REQUEST,
   MY_DIET_UPDATE_REQUEST,
+  FOOD_LIST_REQUEST,
 } from "../../store/modules/myDiet";
 import { MY_DIET_IMAGE_REQUEST } from "../../store/modules/myDiet";
 import { FormGroup, FormControlLabel, Checkbox } from "@mui/material";
@@ -59,6 +60,7 @@ export default function MyDietDetail() {
       type: MY_DIET_DETAIL_REQUEST,
       data: diaryNo,
     });
+    dispatch({ type: FOOD_LIST_REQUEST });
   }, [dispatch, diaryNo]);
 
   const { myDietDetail } = useSelector((state) => state.myDiet);
@@ -229,9 +231,12 @@ export default function MyDietDetail() {
 
   useEffect(() => {
     dispatch(setDietDetailDietRegisterReqList(foodName));
-    for (let i = 0; i < foodName.length; i++) {
-      setCheckedInputs([...checkedInputs, foodName[i].foodName]);
-    }
+    setCheckedInputs([]);
+    const temp = [];
+    foodName.forEach((food) => {
+      temp.push(food.foodName);
+    });
+    setCheckedInputs(temp);
   }, [foodName]);
 
   const FoodCheckBox = foods.map((food, index) => {

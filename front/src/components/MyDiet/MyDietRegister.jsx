@@ -8,6 +8,7 @@ import {
   MY_DIET_IMAGE_REQUEST,
   MY_DIET_REGISTER_REQUEST,
   FOOD_LIST_REQUEST,
+  setFoodName,
 } from "../../store/modules/myDiet";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
@@ -60,6 +61,7 @@ export default function MyDietRegister() {
 
   useEffect(() => {
     dispatch({ type: FOOD_LIST_REQUEST });
+    dispatch(setFoodName([]));
   }, [dispatch]);
 
   const onImageHandler = (e) => {
@@ -223,7 +225,7 @@ export default function MyDietRegister() {
                   style={{
                     fontSize: "15px",
                     color: "grey",
-                    fontFamily: 'KOTRA_GOTHIC',
+                    fontFamily: "KOTRA_GOTHIC",
                   }}
                 >
                   음식별 무게를 선택해주세요.
@@ -282,8 +284,8 @@ export default function MyDietRegister() {
             </Col>
           </Row>
         </TotalStyle>
-          <RegisterButton onClick={registerMyDietButton}>등록</RegisterButton>
-          <BackButton onClick={goBack}>나가기</BackButton>
+        <RegisterButton onClick={registerMyDietButton}>등록</RegisterButton>
+        <BackButton onClick={goBack}>나가기</BackButton>
       </Container>
     </div>
   );
