@@ -12,7 +12,7 @@ import { IMAGE_URL } from "../../utils/https";
 import ShareBoardTopLike from "./ShareBoardTopLike";
 import Pagination from "react-js-pagination";
 import './Pagenation.css'
-import { useMediaQuery } from 'react-responsive'
+import { useMediaQuery } from 'react-responsive';
 // 박스 내부 CSS
 const Label = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
