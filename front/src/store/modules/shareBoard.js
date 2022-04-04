@@ -11,6 +11,9 @@ const initialState = {
   shareBoardDetailSelectDone: false,
   shareBoardDetailSelectError: false,
   shareBoardDetailList: [],
+  detailimagePath: null,
+  detaildescription: null,
+  shareUserId :null, // 공유한 사람의 아이디
   //  해당 공유 게시판 description 수정
   shareBoardUpdateLoading: false,
   shareBoardUpdateDone: false,
@@ -106,8 +109,11 @@ const reducer = (state = initialState, action) =>
         draft.shareBoardDetailSelectLoading = false;
         draft.shareBoardDetailSelectDone = true;
         draft.shareBoardDetailList = action.data.data;
-        console.log("상세 데이터 조회 성공");
-        console.log(draft.shareBoardDetailList);
+        draft.detailimagePath= draft.shareBoardDetailList[0].image_path;
+        draft.detaildescription = draft.shareBoardDetailList[0].description;
+        draft.shareUserId = draft.shareBoardDetailList[0].user_id;    
+        console.log(draft.detailimagePath);
+        console.log(draft.detaildescription);
         break;
       case SHARE_BOARD_DETAIL_SELECT_FAILURE:
         draft.shareBoardDetailSelectLoading = false;
@@ -117,6 +123,9 @@ const reducer = (state = initialState, action) =>
         draft.shareBoardDetailSelectLoading = false;
         draft.shareBoardDetailSelectError = null;
         draft.shareBoardDetailSelectDone = false;
+        draft.detailimagePath = null;
+        draft.detaildescription = null;
+        draft.shareUserId = null;
         break;
 
       case SHARE_BOARD_UPDATE_REQUEST:

@@ -14,6 +14,18 @@ import {
   LikeListStyle,
   Title, 
 } from "./MyPage.style";
+import styled from "styled-components";
+
+
+const StyledSilder = styled(Slider)`
+  .slick-prev::before {
+    // background-color: #000;
+    content: url('https://cdn-icons-png.flaticon.com/16/271/271220.png');
+  }
+  .slick-next::before{
+    content: url('https://cdn-icons-png.flaticon.com/16/271/271228.png');
+  }
+`;
 
 export default function MyPageLike() {
   const dispatch = useDispatch();
@@ -40,7 +52,23 @@ export default function MyPageLike() {
     infinite: false,
     speed: 500,
     slidesToShow: 3,
-    slidesToScroll: 3,
+    slidesToScroll: 1,
+    responsive: [   // 반응형 웹 구현 옵션
+      {     
+        breakpoint: 820, //화면 사이즈 768px일 때
+        settings: {	
+          //위에 옵션이 디폴트 , 여기에 추가하면 그걸로 변경
+          slidesToShow:2 
+        } 
+		},
+      {     
+        breakpoint: 480, //화면 사이즈 480px일 때
+        settings: {	
+          //위에 옵션이 디폴트 , 여기에 추가하면 그걸로 변경
+          slidesToShow:1
+        } 
+		}
+  ]
   };
 
   const likeDelete = (boardNo, e) => {
@@ -56,12 +84,12 @@ export default function MyPageLike() {
   };
 
   return (
-    <div style={{ margin: "5% auto", width: "80%" }}>
+    <div style={{ margin: "7% auto", width: "80%" }}>
       <Title>찜목록</Title>
       {myPageLikeList.length == 0 ? (
         <div>찜한 게시글이 없습니다.</div>
       ) : (
-        <Slider {...settings}>
+        <StyledSilder {...settings}>
           {myPageLikeList.map((likes, index) => (
             <LikeListStyle key={index}>
               <div className="total">
@@ -81,7 +109,7 @@ export default function MyPageLike() {
               ></img>
             </LikeListStyle>
           ))}
-        </Slider>
+        </StyledSilder>
       )}
     </div>
   );

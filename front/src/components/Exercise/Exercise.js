@@ -319,7 +319,7 @@ export default function Exercise() {
             <canvas id="canvas"></canvas>
           </div>
         </Col>
-        <Col md="2">
+        <Col md="3">
           <div class="exerciseInfo fontBold">
             <div class="exerciseName">{ ExerciseTypeList[exercise.type-1] }</div>
             <div>총 세트 : <span class="fontNormal">{ exercise.set }</span></div>

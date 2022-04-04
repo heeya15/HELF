@@ -6,6 +6,9 @@ import {
   TotalStyle, 
   StartButton,
   modalTitle,
+  fontNormal, 
+  fontBold,
+  mainButton,
 } from "./ExerciseSetting.style";
 import {
   setExerciseType,
@@ -14,19 +17,11 @@ import {
 } from "../../store/modules/exerciseHistory";
 import CloseIcon from '@mui/icons-material/Close';
 import Box from '@mui/material/Box';
-// import Button from '@mui/material/Button';
 import Modal from '@mui/material/Modal';
-// import Banner from '../../components/Exercise/Banner';
-import Button from './Button';
-import Typography from './Typography';
+import Button from '../Main/Button';
+import Typography from '../Main/Typography';
 import BannerLayout from './BannerLayout';
 import bannerImg from '../../assets/images/exerciseBanner.jpg';
-import {
-    fontNormal, 
-    fontBold,
-    mainButton,
-} from './Main.style';
-
 
 export default function ExerciseSetting() {
   const dispatch = useDispatch();
@@ -96,8 +91,8 @@ export default function ExerciseSetting() {
     transform: 'translate(-50%, -50%)',
     width: '60%',
     bgcolor: 'background.paper',
+    borderRadius: '30px',
     // border: '2px solid #000',
-    boxShadow: 24,
     p: 4,
   };
 
@@ -122,7 +117,7 @@ export default function ExerciseSetting() {
             src={bannerImg}
             alt="increase priority"/>
           <Typography color="inherit" align="center" variant="h2" marked="center" style={fontBold}>
-            START HEALTHY BODY
+            BUILD HEALTHY BODY
           </Typography>
           <Typography
             color="inherit"
@@ -136,7 +131,7 @@ export default function ExerciseSetting() {
                 sm: 10
               }
             }}>
-            운동 전 5~10분간 준비운동은, 부상을 예방하고 운동효과를 높여줍니다.
+            운동 전 5~10분간 준비운동은<br/>부상을 예방하고 운동효과를 높여줍니다.
           </Typography>
           <Button
             variant="contained"
@@ -149,7 +144,7 @@ export default function ExerciseSetting() {
             // onClick={ handleRegister }
             onClick={ handleOpen }
             >
-            Select Exercise
+            Start Exercise
           </Button>            
         </BannerLayout>
         <Modal
@@ -159,7 +154,7 @@ export default function ExerciseSetting() {
           aria-describedby="modal-modal-description"
         >
           <Box sx={style}>  
-            <Row style={{ height: '50px' }}>
+            <Row style={{ height: '50px', marginTop: '20px' }}>
               <Col md="4"></Col>
               <Col md="4"
                 style={ modalTitle }
@@ -176,7 +171,7 @@ export default function ExerciseSetting() {
             </Row>
             <TotalStyle>
               <Container>
-                <Row style={{ padding: "3% 0" }}>
+                <Row style={{ padding: "6% 0 3% 0" }}>
                   <Col>운동</Col>
                   <Col>
                     <select onChange={typeChange}>{TypeSelect}</select>
@@ -194,7 +189,7 @@ export default function ExerciseSetting() {
                     <input type="number" placeholder="0" onChange={timeChange}></input>
                   </Col>
                 </Row>
-                <Row style={{ padding: "3% 0" }}>
+                <Row style={{ padding: "3% 0 6% 0" }}>
                   <Col>휴식 시간(초)</Col>
                   <Col>
                     <input type="number" placeholder="0" onChange={breakTimeChange}></input>

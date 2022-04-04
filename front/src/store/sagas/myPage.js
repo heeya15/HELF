@@ -1,6 +1,6 @@
 import { all, fork, put, takeLatest, call } from 'redux-saga/effects';
 import {
-  MemberDeleteAPI,
+  UserDeleteAPI,
   UserModifyAPI,
   MypageAPI,
   PasswordConfirmAPI,
@@ -20,9 +20,9 @@ import {
   UPDATE_USER_INFO_REQUEST,
   UPDATE_USER_INFO_FAILURE,
   UPDATE_USER_INFO_SUCCESS,
-  DELETE_MEMBER_SUCCESS,
-  DELETE_MEMBER_REQUEST,
-  DELETE_MEMBER_FAILURE,
+  DELETE_USER_SUCCESS,
+  DELETE_USER_REQUEST,
+  DELETE_USER_FAILURE,
   PASSWORD_CONFIRM_REQUEST,
   PASSWORD_CONFIRM_SUCCESS,
   PASSWORD_CONFIRM_FAILURE,
@@ -113,23 +113,23 @@ function* watchLoadUpdateUser() {
 // 회원탈퇴
 function* loadDeleteUser(action) {
   try {
-    const result = yield call(MemberDeleteAPI, action.data);
+    const result = yield call(UserDeleteAPI, action.data);
     yield put({
-      type: DELETE_MEMBER_SUCCESS,
+      type: DELETE_USER_SUCCESS,
       data: result,
     });
-    alert('정상적으로 탈퇴 되었습니다.');
+    alert('정상적으로 탈퇴 되었습니다. 🖐');
     sessionStorage.clear(); // userToken 세션스토리지 삭제
     document.location.href = '/'; // 로그아웃 처리하면 새로고침 해서 세션 사라진 걸 인식 해줘야함.
   } catch (err) {
     yield put({
-      type: DELETE_MEMBER_FAILURE,
+      type: DELETE_USER_FAILURE,
     });
   }
 }
 
 function* watchLoadDeleteUser() {
-  yield takeLatest(DELETE_MEMBER_REQUEST, loadDeleteUser);
+  yield takeLatest(DELETE_USER_REQUEST, loadDeleteUser);
 }
 
 // 비밀번호 확인

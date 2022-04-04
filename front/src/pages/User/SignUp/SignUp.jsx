@@ -48,10 +48,10 @@ export default function SignUp() {
     const [emailMessage, setEmailMessage] = useState("")
 
     // 유효성 검사
-    const [isId, setIsId] = useState("");
-    const [isPassword, setIsPassword] = useState("");
-    const [isPasswordCheck, setIsPasswordCheck] = useState("");
-    const [isEmail, setIsEmail] = useState("");
+    const [isId, setIsId] = useState(false);
+    const [isPassword, setIsPassword] = useState(false);
+    const [isPasswordCheck, setIsPasswordCheck] = useState(false);
+    const [isEmail, setIsEmail] = useState(false);
 
     const { signUpDone, idCheckDone, emailCheckDone } = useSelector(state => state.user);
     
@@ -98,7 +98,7 @@ export default function SignUp() {
 
     const onPasswordHandler = (event) => {
         setPassword(event.target.value)
-
+        
         const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/
         if(event.target.value.length < 8 || event.target.value.length > 12) {
             setPasswordMessage('8글자 이상 12글자 이하로 입력해주세요.');
@@ -106,11 +106,15 @@ export default function SignUp() {
         } else if(!passwordRegex.test(event.target.value)) {
             setPasswordMessage('숫자, 영문자, 특수문자 조합으로 입력해주세요.');
             setIsPassword(false);
+        } else if(event.target.value !== passwordCheck) {
+            setPasswordMessage('비밀번호가 일치하지 않습니다.');
+            setIsPasswordCheck(false);
         } else {
             setPasswordMessage('');
             setIsPassword(true);
         }
     }
+
     const onPasswordCheckHandler = (event) => {
         setPasswordCheck(event.target.value)
         if(event.target.value !== password) {
@@ -303,7 +307,7 @@ export default function SignUp() {
 
                             { (password.length > 0 && passwordMessage.length > 0 ) && 
                                 <Grid item xs={12}>
-                                    { isPassword ? <Success>{ passwordMessage } </Success> : 
+                                    { isPassword ? <Error>{ passwordMessage } </Error> : 
                                     <Error>{ passwordMessage }</Error>}
                                 </Grid>
                             }

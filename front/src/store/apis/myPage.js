@@ -35,8 +35,8 @@ export async function UserModifyAPI({
 }
 
 // 회원정보 탈퇴
-export async function MemberDeleteAPI({ memberId }) {
-  const result = await axios.delete(`${BASE_URL}members/${memberId}`);
+export async function UserDeleteAPI({ userId }) {
+  const result = await axios.delete(`${BASE_URL}user/remove/${userId}`);
   return result;
 }
 

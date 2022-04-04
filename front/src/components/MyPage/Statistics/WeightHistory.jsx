@@ -210,7 +210,7 @@ export default function WeightHistory() {
             {
                 weightHistoryList.length === 0 && 
                 <>
-                    <EmptyText>지난 체중 통계를 확인하기위해서는 체중을 등록해주세요.</EmptyText>
+                    <EmptyText>지난 체중 통계를 확인하기위해서는<br/>체중을 등록해주세요.</EmptyText>
                 </>
             }
             {

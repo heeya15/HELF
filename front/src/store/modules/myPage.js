@@ -67,9 +67,9 @@ export const UPDATE_USER_INFO_SUCCESS = 'UPDATE_USER_INFO_SUCCESS';
 export const UPDATE_USER_INFO_FAILURE = 'UPDATE_USER_INFO_FAILURE';
 export const UPDATE_USER_INFO_RESET = 'UPDATE_USER_INFO_RESET';
 
-export const DELETE_MEMBER_REQUEST = 'DELETE_MEMBER_REQUEST';
-export const DELETE_MEMBER_SUCCESS = 'DELETE_MEMBER_SUCCESS';
-export const DELETE_MEMBER_FAILURE = 'DELETE_MEMBER_FAILURE';
+export const DELETE_USER_REQUEST = 'DELETE_USER_REQUEST';
+export const DELETE_USER_SUCCESS = 'DELETE_USER_SUCCESS';
+export const DELETE_USER_FAILURE = 'DELETE_USER_FAILURE';
 
 export const PASSWORD_CONFIRM_REQUEST = 'PASSWORD_CONFIRM_REQUEST';
 export const PASSWORD_CONFIRM_SUCCESS = 'PASSWORD_CONFIRM_SUCCESS';
@@ -157,18 +157,18 @@ const reducer = (state = initialState, action) =>
         draft.updateUserInfoLoading = false;
         draft.updateUserInfoError = action.error;
         break;
-      case DELETE_MEMBER_REQUEST:
-        draft.deleteMemberLoading = true;
-        draft.deleteMemberError = null;
-        draft.deleteMemberDone = false;
+      case DELETE_USER_REQUEST:
+        draft.deleteUserLoading = true;
+        draft.deleteUserError = null;
+        draft.deleteUserDone = false;
         break;
-      case DELETE_MEMBER_SUCCESS:
-        draft.deleteMemberLoading = false;
-        draft.deleteMemberDone = true;
+      case DELETE_USER_SUCCESS:
+        draft.deleteUserLoading = false;
+        draft.deleteUserDone = true;
         break;
-      case DELETE_MEMBER_FAILURE:
-        draft.deleteMemberLoading = false;
-        draft.deleteMemberError = action.error;
+      case DELETE_USER_FAILURE:
+        draft.deleteUserLoading = false;
+        draft.deleteUserError = action.error;
         break;
       case PASSWORD_CONFIRM_REQUEST:
         draft.passwordConfirmLoading = true;
