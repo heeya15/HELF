@@ -1,12 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   ExerciseHistoryTotal,
   ReactTooltipStyled,
   Title,
 } from "../MyPage.style";
-import { Container, Row, Col } from "react-bootstrap";
-import ReactTooltip from "react-tooltip";
+import { Row, Col } from "react-bootstrap";
 import { EXERCISE_HISTORY_FINDALL_REQUEST } from "../../../store/modules/exerciseHistory";
 
 export default function ExerciseHistory() {
@@ -29,7 +28,6 @@ export default function ExerciseHistory() {
     "Dec",
   ];
 
-  const { exerciseHistoryList } = useSelector((state) => state.exerciseHistory);
   const { exerciseDateList } = useSelector((state) => state.exerciseHistory);
   const { exerciseTypeList } = useSelector((state) => state.exerciseHistory);
 

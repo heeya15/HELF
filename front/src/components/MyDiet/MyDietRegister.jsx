@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useParams, useHistory } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import { IMAGE_URL } from "../../utils/https";
 import {
   setFoodCheckBox,
@@ -31,7 +31,7 @@ import {
   ImageThumbnail,
   FoodCheckButton,
   foodcheckBox,
-  ButtonGroup,
+  StyledFormGroup,
 } from "./MyDietRegister.style";
 import { ButtonWrapper, ConfirmButton, CancelButton } from "./MyDiet.style";
 
@@ -212,7 +212,15 @@ export default function MyDietRegister() {
                     <Typography id="modal-modal-description" sx={{ mt: 2 }}>
                       해당하는 음식 종류를 선택해주세요.
                     </Typography>
-                    <FormGroup>{FoodCheckBox}</FormGroup>
+                    <StyledFormGroup
+                      style={{
+                        overflowX: "hidden",
+                        overflowY: "auto",
+                        flexWrap: "nowrap",
+                      }}
+                    >
+                      {FoodCheckBox}
+                    </StyledFormGroup>
                     <ButtonWrapper>
                       <ConfirmButton onClick={foodCheckDone}>
                         완료
@@ -253,7 +261,9 @@ export default function MyDietRegister() {
                 <MealTypeButton style={{ display: "flex" }}>
                   {mealType.map((meal, index) => (
                     <button
-                      className={mealTimeIndex == index ? "active" : ""}
+                      className={
+                        parseInt(mealTimeIndex) === index ? "active" : ""
+                      }
                       key={index}
                       value={meal}
                       data-index={index}
