@@ -14,8 +14,19 @@ import {
 } from "../../store/modules/exerciseHistory";
 import CloseIcon from '@mui/icons-material/Close';
 import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
+// import Button from '@mui/material/Button';
 import Modal from '@mui/material/Modal';
+// import Banner from '../../components/Exercise/Banner';
+import Button from './Button';
+import Typography from './Typography';
+import BannerLayout from './BannerLayout';
+import bannerImg from '../../assets/images/exerciseBanner.jpg';
+import {
+    fontNormal, 
+    fontBold,
+    mainButton,
+} from './Main.style';
+
 
 export default function ExerciseSetting() {
   const dispatch = useDispatch();
@@ -96,8 +107,51 @@ export default function ExerciseSetting() {
 
   return (
     <>
-      <div>
-        <Button onClick={handleOpen}>Open modal</Button>
+      <div>        
+        {/* <Banner/> */}
+        <BannerLayout
+          sxBackground={{
+            backgroundImage: `url(${bannerImg})`,
+            backgroundColor: '#7fc7d9', // Average color of the background image.
+            backgroundPosition: 'center'
+          }}>
+          <img
+            style={{
+              display: 'none'
+            }}
+            src={bannerImg}
+            alt="increase priority"/>
+          <Typography color="inherit" align="center" variant="h2" marked="center" style={fontBold}>
+            START HEALTHY BODY
+          </Typography>
+          <Typography
+            color="inherit"
+            align="center"
+            variant="h5"
+            style={ fontNormal }
+            sx={{
+              mb: 4,
+              mt: {
+                sx: 4,
+                sm: 10
+              }
+            }}>
+            운동 전 5~10분간 준비운동은, 부상을 예방하고 운동효과를 높여줍니다.
+          </Typography>
+          <Button
+            variant="contained"
+            size="large"
+            component="a"
+            style={ mainButton }
+            sx={{
+              minWidth: 200
+            }}
+            // onClick={ handleRegister }
+            onClick={ handleOpen }
+            >
+            Select Exercise
+          </Button>            
+        </BannerLayout>
         <Modal
           open={open}
           onClose={handleClose}
