@@ -7,7 +7,6 @@ const Container = styled.div`
   max-width: 900px;
 `;
 
-
 const MyPageProfileBlock = styled.div`
   display: flex;
   justify-content: center;
@@ -67,7 +66,6 @@ const MyPageProfileDeleteButton = styled.button`
   }
 `;
 
-
 const DeleteButton = styled.button`
   margin-top: 80px;
   margin-left: 2px;
@@ -75,14 +73,13 @@ const DeleteButton = styled.button`
   padding: 4px 12px;
   font-size: 15px;
   background-color: #fff;
-  border: 3px solid #1E2F23;
+  border: 3px solid #1e2f23;
   border-radius: 5px;
-  color: #1E2F23;
+  color: #1e2f23;
   :hover {
     transform: scale(1.1);
   }
 `;
-
 
 const MyPageMenuWrapper = styled.div`
   height: 50px;
@@ -118,12 +115,12 @@ const EmptyText = styled.div`
 const Description = styled.div`
   font-size: 13px;
   margin-top: 10px;
-  font-family: 'KOTRA_GOTHIC';
+  font-family: "KOTRA_GOTHIC";
 `;
 
 const fontNormal = {
-fontFamily: 'KOTRA_GOTHIC',
-}
+  fontFamily: "KOTRA_GOTHIC",
+};
 
 /** 마이페이지 상단 프로필 */
 const MyPageProfileWrapper = styled.div`
@@ -142,11 +139,10 @@ const MyPageProfileWrapper = styled.div`
 `;
 
 const center = {
-  display: 'flex', 
-  justifyContent: 'center', 
-  alignItems: 'center',
-}
-
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+};
 
 const ProfileImage = styled.img`
   border-radius: 20px;
@@ -181,7 +177,6 @@ const PhysicalInfo = styled.div`
   margin-top: 10px;
 `;
 
-
 const editBox = {
   position: "absolute",
   top: "50%",
@@ -196,25 +191,23 @@ const editBox = {
 };
 
 const editInput = {
-  backgroundColor: '#fff',
-}
-
+  backgroundColor: "#fff",
+};
 
 /** Modal */
 const modalTitle = {
-  fontFamily: 'KOTRA_BOLD-Bold',
-  fontSize: '36px',
+  fontFamily: "KOTRA_BOLD-Bold",
+  fontSize: "36px",
 };
 
 const modalBody = {
-  fontFamily: 'KOTRA_GOTHIC',
-  fontSize: '16px',
+  fontFamily: "KOTRA_GOTHIC",
+  fontSize: "16px",
 };
 
 const fontBold = {
-  fontFamily: 'KOTRA_BOLD-Bold',
-}
-
+  fontFamily: "KOTRA_BOLD-Bold",
+};
 
 const ModalBodyWrapper = styled.div`
   margin-top: 15px;
@@ -238,9 +231,9 @@ const ConfirmButton = styled.button`
   :hover {
     transform: scale(1.1);
   }
-  `;
-  
-  const CancelButton = styled.button`
+`;
+
+const CancelButton = styled.button`
   width: 70px;
   background-color: #fff;
   color: #2e7d32;
@@ -248,7 +241,6 @@ const ConfirmButton = styled.button`
   border-radius: 10px;
   padding: 5px 10px;
 `;
-
 
 /** 찜 목록 */
 const LikeListStyle = styled.div`
@@ -259,13 +251,19 @@ const LikeListStyle = styled.div`
     position: absolute;
     text-align: center;
     margin: 1% auto;
+
     .icon {
       position: absolute;
       z-index: 2;
       color: red;
-      margin-left: 90px;
-      @media screen and (max-width: 768px) {
-        margin-right: 10px;
+      @media screen and (max-width: 1280px) {
+        margin-left: 20px;
+      }
+      @media screen and (min-width: 1281px) and (max-width: 1800px) {
+        margin-left: 60px;
+      }
+      @media screen and (min-width: 1801px) {
+        margin-left: 90px;
       }
       :hover {
         transform: scale(1.3);
@@ -280,7 +278,6 @@ const LikeListStyle = styled.div`
     margin: 0 auto;
     border-radius: 20px;
     box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.25);
-    
   }
 `;
 
@@ -296,15 +293,14 @@ const WeightButton = styled.button`
   margin-right: 2px;
   padding: 2px 10px;
   font-size: 15px;
-  background-color: #1E2F23;
-  border: 3px solid #1E2F23;
+  background-color: #1e2f23;
+  border: 3px solid #1e2f23;
   border-radius: 5px;
   color: #fff;
   :hover {
     transform: scale(1.1);
   }
 `;
-
 
 /* 영양 성분 통계 */
 const MessageWrapper = styled.div`
@@ -322,7 +318,7 @@ const LackMessage = styled.button`
   padding: 5px 10px;
   cursor: pointer;
 `;
-  
+
 const NormalMessage = styled.button`
   margin: 30px 2px 0px 2px;
   background-color: #43a047;
@@ -333,7 +329,7 @@ const NormalMessage = styled.button`
   border-radius: 5px;
   cursor: pointer;
 `;
-  
+
 const TooMuchMessage = styled.button`
   margin: 30px 2px 0px 2px;
   background-color: #c94c4c;
@@ -443,7 +439,7 @@ export {
   ButtonGroup,
   fontNormal,
   ExerciseHistoryTotal,
-  ShareBoardLikeListStyle ,
+  ShareBoardLikeListStyle,
   ReactTooltipStyled,
   UserInfo,
   NameInfo,

@@ -253,7 +253,12 @@ export default function MyDietDetail() {
             checked={checkedInputs.includes(food) ? true : false}
           />
         }
-        label={food}
+        label={
+          <p style={{ fontFamily: "KOTRA_GOTHIC", paddingTop: "15px" }}>
+            {" "}
+            {food}
+          </p>
+        }
       ></FormControlLabel>
     );
   });
@@ -305,11 +310,16 @@ export default function MyDietDetail() {
                         id="modal-modal-title"
                         variant="h4"
                         component="h2"
+                        style={{ fontFamily: "KOTRA_BOLD-Bold" }}
                       >
                         음식 선택
                       </Typography>
                       <hr />
-                      <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+                      <Typography
+                        id="modal-modal-description"
+                        sx={{ mt: 2 }}
+                        style={{ fontFamily: "KOTRA_BOLD-Bold" }}
+                      >
                         해당하는 음식 종류를 선택해주세요.
                       </Typography>
                       <StyledFormGroup
