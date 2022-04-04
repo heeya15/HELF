@@ -40,7 +40,7 @@ const MyPageIconBlock = styled.div`
   background-color: ${blockColor};
 `;
 
-const MyPageProfileButton = styled.button`
+const MyPageProfileEditButton = styled.button`
   margin-top: 25px;
   padding: 5px 10px;
   font-size: 17px;
@@ -52,6 +52,21 @@ const MyPageProfileButton = styled.button`
     transform: scale(1.1);
   }
 `;
+
+const MyPageProfileDeleteButton = styled.button`
+  margin-top: 25px;
+  margin-left: 10px;
+  padding: 5px 10px;
+  font-size: 17px;
+  background-color: #e02828;
+  border: 3px solid #e02828;
+  border-radius: 5px;
+  color: #fff;
+  :hover {
+    transform: scale(1.1);
+  }
+`;
+
 
 const DeleteButton = styled.button`
   margin-top: 80px;
@@ -242,11 +257,16 @@ const LikeListStyle = styled.div`
     border: transparent;
     z-index: 2;
     position: absolute;
-    text-align: left;
+    text-align: center;
     margin: 1% auto;
     .icon {
+      position: absolute;
+      z-index: 2;
       color: red;
-      margin-left: 300%;
+      margin-left: 90px;
+      @media screen and (max-width: 768px) {
+        margin-right: 10px;
+      }
       :hover {
         transform: scale(1.3);
         cursor: pointer;
@@ -254,11 +274,13 @@ const LikeListStyle = styled.div`
     }
   }
   img {
-    width: 200px;
-    height: 200px;
+    width: 210px;
+    height: 210px;
     display: block;
-    margin: auto;
+    margin: 0 auto;
     border-radius: 20px;
+    box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.25);
+    
   }
 `;
 
@@ -403,7 +425,8 @@ export {
   MyPageProfileWrapper,
   MyPageIconBlock,
   MyPageProfileBlock,
-  MyPageProfileButton,
+  MyPageProfileEditButton,
+  MyPageProfileDeleteButton,
   WeightButton,
   editBox,
   ModalBodyWrapper,
