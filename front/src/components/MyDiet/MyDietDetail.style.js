@@ -17,9 +17,9 @@ const UpdateButton = styled.button`
   border: none;
   border-radius: 30px;
   width: 10%;
-  `;
-  
-  const BackButton = styled.button`
+`;
+
+const BackButton = styled.button`
   margin-top: 2%;
   margin-bottom: 3%;
   padding: 5px 0px;
@@ -43,4 +43,27 @@ const FoodTableTitle = styled.div`
   margin-top: 5%;
 `;
 
-export { DetailReq, UpdateButton, BackButton, MealTimeDetail, FoodTableTitle };
+const FoodListStyle = styled.div`
+  overflow-x: hidden;
+  overflow-y: auto;
+  flew-wrap: nowrap;
+  height: 320px;
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+  ::-webkit-scrollbar-thumb {
+    background-color: #2f3542;
+  }
+  ::-webkit-scrollbar-track {
+    background-color: grey;
+  }
+`;
+
+export {
+  DetailReq,
+  UpdateButton,
+  BackButton,
+  MealTimeDetail,
+  FoodTableTitle,
+  FoodListStyle,
+};

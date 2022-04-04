@@ -46,6 +46,7 @@ import {
   BackButton,
   MealTimeDetail,
   FoodTableTitle,
+  FoodListStyle,
 } from "./MyDietDetail.style";
 import { ButtonWrapper, ConfirmButton, CancelButton } from "./MyDiet.style";
 
@@ -410,7 +411,7 @@ export default function MyDietDetail() {
                   </LocalizationProvider>
                   <Titles>Description</Titles>
                   <Description
-                    rows="8"
+                    rows="7"
                     onChange={onDescriptionHandler}
                     value={description}
                   ></Description>
@@ -420,7 +421,9 @@ export default function MyDietDetail() {
                   <MealTimeDetail>{myDietDetail.mealTime}식단</MealTimeDetail>
                   <p>{myDietDetail.diaryDate.substr(0, 16)}</p>
                   <Titles>Food</Titles>
-                  {myDietDetail.dietFindResList.length !== 0 && FoodList}
+                  <FoodListStyle>
+                    {myDietDetail.dietFindResList.length !== 0 && FoodList}
+                  </FoodListStyle>
                   <Titles>Description</Titles>
                   <Description
                     rows="8"

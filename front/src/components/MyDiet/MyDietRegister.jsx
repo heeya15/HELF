@@ -15,7 +15,7 @@ import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import TimePicker from "@mui/lab/TimePicker";
 import dayjs from "dayjs";
 import TextField from "@mui/material/TextField";
-import { FormGroup, FormControlLabel, Checkbox } from "@mui/material";
+import { FormControlLabel, Checkbox } from "@mui/material";
 import { Container, Row, Col } from "react-bootstrap";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
@@ -181,7 +181,7 @@ export default function MyDietRegister() {
   return (
     <div>
       <Container>
-        <TotalStyle>
+        <TotalStyle style={{ marginTop: "5%" }}>
           <Row>
             <Col>
               <ImageThumbnail src={dietThumbnail} alt="이미지"></ImageThumbnail>
