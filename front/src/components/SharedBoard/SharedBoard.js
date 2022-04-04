@@ -134,7 +134,7 @@ function SharedBoard(props) {
             <div >
               <ShareBoardTopLike></ShareBoardTopLike>
               <Title>최신 공유 식단</Title>
-              <Masonry columns={4} spacing={2}  style={{margin : 0}} className="boxdivcolor">
+              <Masonry columns={4} spacing={2}  style={{margin : 0}} classgName="boxdivcolor">
               {shardList.map((user,index) => (
                 <User user={user} key={index} />
               ))}
