@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { FormGroup } from "@mui/material";
 
 const TotalStyle = styled.div`
-  margin-top: 5%;
+  margin-top: 3%;
   border-radius: 10px;
   box-shadow: 4px 4px 4px 2px rgba(0, 0, 0, 0.25);
   .imageSelect {
