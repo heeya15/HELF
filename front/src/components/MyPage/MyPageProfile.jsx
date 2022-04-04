@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import {
   MyPageProfileWrapper,
-  MyPageProfileButton,
+  MyPageProfileEditButton,
+  MyPageProfileDeleteButton,
   editBox,
   ModalBodyWrapper,
   ButtonWrapper,
@@ -25,8 +26,10 @@ import {
   UPDATE_USER_INFO_REQUEST,
   UPDATE_USER_INFO_RESET,
   MY_PAGE_REQUEST,
+  DELETE_USER_REQUEST,
 } from '../../store/modules/myPage';
 import { useSelector } from 'react-redux';
+import { useHistory } from "react-router-dom";
 import Modal from '@mui/material/Modal';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
@@ -49,6 +52,7 @@ import profile4 from '../../assets/images/profile4.jpg';
 
 export default function MypageProfile() {
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const {
     me,
@@ -154,6 +158,20 @@ export default function MypageProfile() {
       });
     }
   };
+
+  const handleDeleteUser = () => {
+    if(window.confirm("정말 탈퇴하겠습니까? 😥")) {
+      dispatch({
+        type: DELETE_USER_REQUEST,
+        data: {
+          userId: me.userId,
+        }
+      });
+      // history.push('/');
+    } else {
+      alert("취소되었습니다. 😁");
+    }
+  }
 
   const handleEditCancel = () => {
     dispatch({
@@ -279,9 +297,12 @@ export default function MypageProfile() {
             <PhysicalInfo>
               {gender} {me.height}cm {me.weight}kg
             </PhysicalInfo>
-            <MyPageProfileButton onClick={handleOpen}>
+            <MyPageProfileEditButton onClick={ handleOpen }>
               정보 수정
-            </MyPageProfileButton>
+            </MyPageProfileEditButton>
+            <MyPageProfileDeleteButton onClick={ handleDeleteUser }>
+              회원 탈퇴
+            </MyPageProfileDeleteButton>
             <Modal
               open={open}
               onClose={handleClose}
