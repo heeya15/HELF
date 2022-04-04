@@ -46,7 +46,8 @@ export default function Banner() {
                         sm: 10
                     }
                 }}>
-                Keep an eye on what you eat and how you do your workout.
+                {/* Keep an eye on what you eat and how you do your workout. */}
+                식단을 관리, 영양 성분 통계와 운동 기록을 확인하여<br/>HELF와 함께 건강한 삶을 시작하세요!
             </Typography>
             <Button
                 variant="contained"

@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 const TotalStyle = styled.div`
   font-family: 'KOTRA_BOLD-Bold';
-  box-shadow: 5px 5px #e0e0e0;
+  // box-shadow: 4px 4px 4px 2px rgba(0, 0, 0, 0.25);
   padding: 0 20px;
   width: 100%;
   margin: 5% auto;
@@ -20,7 +20,7 @@ const TotalStyle = styled.div`
     }
   }
   select {
-    border-radius: 10px;
+    border-radius: 10px; 
     outline: 0 none;
     cursor: pointer;
     border: none;
@@ -30,7 +30,7 @@ const TotalStyle = styled.div`
 `;
 
 const StartButton = styled.button`
-  box-shadow: 3px 3px #e0e0e0;
+  // box-shadow: 3px 3px #e0e0e0;
   font-size: 25px;
   border: none;
   border-radius: 10px;
@@ -38,17 +38,37 @@ const StartButton = styled.button`
   background-color: #56a75f;
   padding: 5px 20px;
   font-family: 'KOTRA_BOLD-Bold';
+  :hover {
+    transform: scale(1.1);
+  }
 `;
 
 const modalTitle = {
   textAlign: 'center', 
   lineHeight: '55px', 
-  fontSize: '30px',
+  fontSize: '40px',
   fontFamily: 'KOTRA_BOLD-Bold',
+}
+
+const fontBold = {
+  fontFamily: 'KOTRA_BOLD-Bold',
+}
+
+const fontNormal = {
+  fontFamily: 'KOTRA_GOTHIC',
+}
+
+const mainButton = {
+  fontFamily: 'KOTRA_BOLD-Bold',
+  backgroundColor: '#7CCE76',
+  color: '#000',    
 }
 
 export { 
   TotalStyle, 
   StartButton,
   modalTitle,
+  fontBold,
+  fontNormal,
+  mainButton,
 };
