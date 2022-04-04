@@ -5,10 +5,6 @@ import {
   setFoodCheckBox,
   setmyDietWeight,
   setMyDietDetailImagePath,
-  setDietDetailMealTime,
-  setDietDetailDiaryDate,
-  setDietDetailDescription,
-  setDietDetailDietRegisterReqList,
   setDietDetailThumbnail,
   setFoodName,
   MY_DIET_DETAIL_REQUEST,
@@ -42,6 +38,7 @@ import {
   FoodCheckButton,
   foodcheckBox,
   StyledFormGroup,
+  UpdateCancelButton,
 } from "./MyDietRegister.style";
 import {
   DetailReq,
@@ -65,27 +62,43 @@ export default function MyDietDetail() {
   }, [dispatch, diaryNo]);
 
   const { myDietDetail } = useSelector((state) => state.myDiet);
+  const { foodName, foods } = useSelector((state) => state.myDiet);
+  const { dietDetailThumbnail } = useSelector((state) => state.myDiet);
+
+  const [dietUpdate, setDietUpdate] = useState(false);
+  const [description, setDescription] = useState(myDietDetail.description);
+  const [diaryDate, setDiaryDate] = useState(myDietDetail.diaryDate);
+  const [mealTime, setMealTime] = useState(myDietDetail.mealTime);
+  const [thumbnail, setThumbnail] = useState(dietDetailThumbnail);
+
+  useEffect(() => {
+    setDescription(myDietDetail.description);
+    setDiaryDate(dayjs(myDietDetail.diaryDate).format("YYYY-MM-DD HH:mm:ss"));
+    setMealTime(myDietDetail.mealTime);
+  }, [myDietDetail]);
+
+  useEffect(() => {
+    setThumbnail(dietDetailThumbnail);
+  }, [dietDetailThumbnail]);
+
   const myDietUpdate = {
-    description: myDietDetail.description,
-    diaryDate: dayjs(myDietDetail.diaryDate).format("YYYY-MM-DD HH:mm:ss"),
-    dietRegisterReqList: myDietDetail.dietFindResList,
+    description: description,
+    diaryDate: diaryDate,
+    dietRegisterReqList: foodName,
     imagePath: myDietDetail.imagePath,
-    mealTime: myDietDetail.mealTime,
+    mealTime: mealTime,
     diaryNo: myDietDetail.diaryNo,
     isShared: myDietDetail.isShared,
     saveImagePath: myDietDetail.imagePath,
   };
-  const { foodName, foods } = useSelector((state) => state.myDiet);
+
   const mealType = ["아침", "점심", "저녁", "간식"];
-
-  const { dietDetailThumbnail } = useSelector((state) => state.myDiet);
-
-  const [dietUpdate, setDietUpdate] = useState(false);
 
   const onImageHandler = (e) => {
     if (e.target.files && e.target.files.length > 0) {
       const file = e.target.files[0];
-      dispatch(setDietDetailThumbnail(URL.createObjectURL(file)));
+      setThumbnail(URL.createObjectURL(file));
+      // dispatch(setDietDetailThumbnail(URL.createObjectURL(file)));
       dispatch(setMyDietDetailImagePath(file));
       dispatch({
         type: MY_DIET_IMAGE_REQUEST,
@@ -98,15 +111,15 @@ export default function MyDietDetail() {
   const [mealTimeIndex, setMealTimeIndex] = useState(4);
   const onMealTimeHandler = (e) => {
     setMealTimeIndex(e.target.getAttribute("data-index"));
-    dispatch(setDietDetailMealTime(e.target.value));
+    setMealTime(e.target.value);
   };
 
   const onDiaryDateHandler = (e) => {
-    dispatch(setDietDetailDiaryDate(dayjs(e).format("YYYY-MM-DD HH:mm:ss")));
+    setDiaryDate(date + dayjs(e).format(" HH:mm:ss"));
   };
 
   const onDescriptionHandler = (e) => {
-    dispatch(setDietDetailDescription(e.target.value));
+    setDescription(e.target.value);
   };
 
   const dietUpdateStateButton = () => {
@@ -231,7 +244,6 @@ export default function MyDietDetail() {
   };
 
   useEffect(() => {
-    dispatch(setDietDetailDietRegisterReqList(foodName));
     setCheckedInputs([]);
     const temp = [];
     foodName.forEach((food) => {
@@ -263,16 +275,18 @@ export default function MyDietDetail() {
     handleClose();
   };
 
+  const dietNotUpdateButton = () => {
+    setThumbnail(dietDetailThumbnail);
+    setDietUpdate(false);
+  };
+
   return (
     <div>
       <Container>
         <TotalStyle>
           <Row>
             <Col>
-              <ImageThumbnail
-                src={dietDetailThumbnail}
-                alt="이미지"
-              ></ImageThumbnail>
+              <ImageThumbnail src={thumbnail} alt="이미지"></ImageThumbnail>
               {dietUpdate && (
                 <div>
                   <label className="imageSelect" htmlFor="input-file">
@@ -377,7 +391,7 @@ export default function MyDietDetail() {
                   <LocalizationProvider dateAdapter={AdapterDateFns}>
                     <TimePicker
                       label="시간을 선택해주세요"
-                      value={myDietDetail.diaryDate}
+                      value={diaryDate}
                       onChange={(newValue) => {
                         onDiaryDateHandler(newValue);
                       }}
@@ -388,7 +402,7 @@ export default function MyDietDetail() {
                   <Description
                     rows="8"
                     onChange={onDescriptionHandler}
-                    value={myDietDetail.description}
+                    value={description}
                   ></Description>
                 </RegisterReq>
               ) : (
@@ -409,7 +423,12 @@ export default function MyDietDetail() {
           </Row>
         </TotalStyle>
         {dietUpdate ? (
-          <RegisterButton onClick={dietUpdateButton}>등록</RegisterButton>
+          <>
+            <RegisterButton onClick={dietUpdateButton}>등록</RegisterButton>
+            <UpdateCancelButton onClick={dietNotUpdateButton}>
+              취소
+            </UpdateCancelButton>
+          </>
         ) : (
           <UpdateButton onClick={dietUpdateStateButton}>수정</UpdateButton>
         )}

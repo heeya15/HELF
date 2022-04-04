@@ -76,30 +76,6 @@ export const setMyDietDetailImagePath = (state) => ({
   state,
 });
 
-const SET_MY_DIET_DETAIL_MEALTIME = "SET_MY_DIET_DETAIL_MEALTIME";
-export const setDietDetailMealTime = (state) => ({
-  type: SET_MY_DIET_DETAIL_MEALTIME,
-  state,
-});
-
-const SET_MY_DIET_DETAIL_DIARYDATE = "SET_MY_DIET_DETAIL_DIARYDATE";
-export const setDietDetailDiaryDate = (state) => ({
-  type: SET_MY_DIET_DETAIL_DIARYDATE,
-  state,
-});
-
-const SET_MY_DIET_DETAIL_DESCRIPTION = "SET_MY_DIET_DETAIL_DESCRIPTION";
-export const setDietDetailDescription = (state) => ({
-  type: SET_MY_DIET_DETAIL_DESCRIPTION,
-  state,
-});
-
-const SET_MY_DIET_DETAIL_REGISTERREQLIST = "SET_MY_DIET_DETAIL_REGISTERREQLIST";
-export const setDietDetailDietRegisterReqList = (state) => ({
-  type: SET_MY_DIET_DETAIL_REGISTERREQLIST,
-  state,
-});
-
 const SET_MY_DIET_DETAIL_THUMBNAIL = "SET_MY_DIET_DETAIL_THUMBNAIL";
 export const setDietDetailThumbnail = (state) => ({
   type: SET_MY_DIET_DETAIL_THUMBNAIL,
@@ -195,18 +171,6 @@ const reducer = (state = initialState, action) =>
         break;
       case SET_MY_DIET_DETAIL_IMAGEPATH:
         draft.myDietDetail.imagePath = action.state;
-        break;
-      case SET_MY_DIET_DETAIL_MEALTIME:
-        draft.myDietDetail.mealTime = action.state;
-        break;
-      case SET_MY_DIET_DETAIL_DIARYDATE:
-        draft.myDietDetail.diaryDate = action.state;
-        break;
-      case SET_MY_DIET_DETAIL_DESCRIPTION:
-        draft.myDietDetail.description = action.state;
-        break;
-      case SET_MY_DIET_DETAIL_REGISTERREQLIST:
-        draft.myDietDetail.dietFindResList = action.state;
         break;
       case SET_MY_DIET_DETAIL_THUMBNAIL:
         draft.dietDetailThumbnail = action.state;

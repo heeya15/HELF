@@ -80,6 +80,19 @@ const RegisterButton = styled.button`
   width: 10%;
 `;
 
+const UpdateCancelButton = styled.button`
+  margin-top: 2%;
+  margin-bottom: 3%;
+  padding: 5px 0px;
+  color: #fff;
+  background-color: #f0df00;
+  font-size: 18px;
+  border: none;
+  border-radius: 30px;
+  width: 10%;
+  margin-left: 2%;
+`;
+
 const BackButton = styled.button`
   margin-top: 2%;
   margin-bottom: 3%;
@@ -157,4 +170,5 @@ export {
   foodcheckBox,
   ButtonGroup,
   StyledFormGroup,
+  UpdateCancelButton,
 };
