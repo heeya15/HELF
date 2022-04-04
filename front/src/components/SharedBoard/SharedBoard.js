@@ -12,7 +12,8 @@ import { IMAGE_URL } from "../../utils/https";
 import ShareBoardTopLike from "./ShareBoardTopLike";
 import Pagination from "react-js-pagination";
 import './Pagenation.css'
-import { useMediaQuery } from 'react-responsive';
+import { useMediaQuery } from 'react-responsive'
+import { Title } from "../MyPage/MyPage.style";
 // 박스 내부 CSS
 const Label = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -45,7 +46,7 @@ function User({ user }) {
   return (
     <div className="shardboxMargin">
       <Link  to={`/sharedetail/${user.boardNo}`}  state={{ data: user.boardNo}} className='anc ' >
-            <div key={user.boardNo} >
+            <div key={user.boardNo} className="innerboxcolor">
               {/* 이름 적는 곳( 유저 닉네임 적을 것) */}
               <Label style={{
                   borderBottomLeftRadius: 4,
@@ -130,31 +131,34 @@ function SharedBoard(props) {
   return(  
     <div className="boxdiv"> 
           <Desktop>        
-            <div className="boxdiv">
+            <div >
               <ShareBoardTopLike></ShareBoardTopLike>
-              <Masonry columns={4} spacing={2} >
+              <Title>최신 공유 식단</Title>
+              <Masonry columns={4} spacing={2}  style={{margin : 0}} classgName="boxdivcolor">
               {shardList.map((user,index) => (
-                <User user={user} key={index}/>
+                <User user={user} key={index} />
               ))}
               </Masonry> 
            </div>
         </Desktop>
           <Tablet>
-          <div className="boxdiv">
+          <div >
               <ShareBoardTopLike></ShareBoardTopLike>
-              <Masonry columns={2} spacing={4} >
+              <Title>최신 공유 식단</Title>
+              <Masonry columns={2} spacing={4} style={{margin : 0}}>
               {shardList.map((user,index) => (
-                <User user={user} key={index}/>
+                <User user={user} key={index} />
               ))}
               </Masonry> 
            </div>
           </Tablet>
           <Mobile>
-          <div className="boxdiv">
+          <div >
               <ShareBoardTopLike></ShareBoardTopLike>
-              <Masonry columns={1} spacing={8} >
+              <Title>최신 공유 식단</Title>
+              <Masonry columns={1} spacing={8} style={{margin : 0}}>
               {shardList.map((user,index) => (
-                <User user={user} key={index}/>
+                <User user={user} key={index} />
               ))}
               </Masonry> 
            </div>
