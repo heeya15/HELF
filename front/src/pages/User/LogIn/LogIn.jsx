@@ -216,6 +216,7 @@ export default function LogIn() {
               <Grid container justifyContent="flex-end">
                 <Grid item style={horizontalCenter}>
                   <SignUpLink onClick={handleSignUp}>
+                    {/* 계정이 없으신가요? 회원가입하러 가기! */}
                     Don't have an account? Sign up now!
                   </SignUpLink>
                 </Grid>
@@ -228,7 +229,7 @@ export default function LogIn() {
                   style={subFunction}
                   onClick={handleSignUp}
                 >
-                  Sign Up
+                  회원가입
                 </Grid>
                 <Grid
                   item
@@ -237,7 +238,7 @@ export default function LogIn() {
                   style={subFunction}
                   onClick={handleFindPassword}
                 >
-                  Find Password
+                  비밀번호 찾기
                 </Grid>
                 <Grid item xs={12} style={kakaoButton}>
                   <img
