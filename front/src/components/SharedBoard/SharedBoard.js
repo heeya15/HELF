@@ -134,7 +134,7 @@ function SharedBoard(props) {
             <div >
               <ShareBoardTopLike></ShareBoardTopLike>
               <Title>최신 공유 식단</Title>
-              <Masonry columns={4} spacing={2}  className="boxdivcolor">
+              <Masonry columns={4} spacing={2}  style={{margin : 0}} className="boxdivcolor">
               {shardList.map((user,index) => (
                 <User user={user} key={index} />
               ))}
@@ -144,7 +144,8 @@ function SharedBoard(props) {
           <Tablet>
           <div >
               <ShareBoardTopLike></ShareBoardTopLike>
-              <Masonry columns={2} spacing={4} >
+              <Title>최신 공유 식단</Title>
+              <Masonry columns={2} spacing={4} style={{margin : 0}}>
               {shardList.map((user,index) => (
                 <User user={user} key={index} />
               ))}
@@ -154,7 +155,8 @@ function SharedBoard(props) {
           <Mobile>
           <div >
               <ShareBoardTopLike></ShareBoardTopLike>
-              <Masonry columns={1} spacing={8} >
+              <Title>최신 공유 식단</Title>
+              <Masonry columns={1} spacing={8} style={{margin : 0}}>
               {shardList.map((user,index) => (
                 <User user={user} key={index} />
               ))}
