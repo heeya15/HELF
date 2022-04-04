@@ -68,7 +68,8 @@ export default function Banner() {
                 sx={{
                     mt: 2
                 }}>
-                Discover the experience
+                {/* Discover the experience */}
+                건강해지러 가기
             </Typography>
         </BannerLayout>
     );
