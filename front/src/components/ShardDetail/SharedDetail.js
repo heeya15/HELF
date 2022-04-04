@@ -37,7 +37,18 @@ import {
 } from "../../store/modules/shareBoard";
 import { style } from "@mui/system";
 
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableRow from "@mui/material/TableRow";
 
+import {
+  DetailReq,
+  UpdateButton,
+  MealTimeDetail,
+  FoodTableTitle,
+} from "../MyDiet/MyDietDetail.style";
 // match 로 현재 게시물 주소에 대한 정보를 props 로 받아온다
 function Detail({ match }) {
     const [updateForm, setUpdateForm] = useState(false);
@@ -50,7 +61,7 @@ function Detail({ match }) {
     const [commentData, setComment] = useState([]);
     const [userData, setUser] = useState([]);
     const [LikeCount, setTotalLikeCount] = useState(0);
-    const { isLike,totalLikeCount } = useSelector((state) => state.shareBoard);
+    const { isLike, totalLikeCount,shareBoardDetailList } = useSelector((state) => state.shareBoard);
   
     var [inputDiscription, setInputDiscription] = useState('');
     const likeDelete = (boardNo, e) => {
@@ -92,7 +103,9 @@ function Detail({ match }) {
         data: index
       });
     }, []);
-
+    console.log("최초 한번 요청 상세 정보")
+    console.log(shareBoardDetailList);
+    console.log(">>>>>>>>>>>>>>>>>>>>>end")
     useEffect(() => {
     // 좋아요 여부와 좋아요 개수 들고옴.
       dispatch({
@@ -235,7 +248,70 @@ function Detail({ match }) {
           };
       }
   
-
+  // const FoodList = shareBoardDetailList.data.map((food, index) => {
+  //       return (
+  //         <div key={index}>
+  //           <FoodTableTitle>
+  //             {food.food_name} {food.weight}g
+  //           </FoodTableTitle>
+  //           <TableContainer>
+  //             <Table>
+  //               <TableBody>
+  //                 <TableRow>
+  //                   <TableCell
+  //                     sx={{ fontWeight: "bold" }}
+  //                     style={{ width: "25%" }}
+  //                     align="center"
+  //                   >
+  //                     칼로리
+  //                   </TableCell>
+  //                   <TableCell
+  //                     sx={{ fontWeight: "bold" }}
+  //                     style={{ width: "25%" }}
+  //                     align="center"
+  //                   >
+  //                     탄수화물
+  //                   </TableCell>
+  //                   <TableCell
+  //                     sx={{ fontWeight: "bold" }}
+  //                     style={{ width: "25%" }}
+  //                     align="center"
+  //                   >
+  //                     단백질
+  //                   </TableCell>
+  //                   <TableCell
+  //                     sx={{ fontWeight: "bold" }}
+  //                     style={{ width: "25%" }}
+  //                     align="center"
+  //                   >
+  //                     지방
+  //                   </TableCell>
+  //                 </TableRow>
+  //                 <TableRow>
+  //                   <TableCell style={{ width: "25%" }} align="center">
+  //                     {food.kcal &&
+  //                       Math.round((food.weight / 100) * food.kcal * 100) / 100}
+  //                   </TableCell>
+  //                   <TableCell style={{ width: "25%" }} align="center">
+  //                     {food.carbohydrate &&
+  //                       Math.round((food.weight / 100) * food.carbohydrate * 100) /
+  //                         100}
+  //                   </TableCell>
+  //                   <TableCell style={{ width: "25%" }} align="center">
+  //                     {food.protein &&
+  //                       Math.round((food.weight / 100) * food.protein * 100) / 100}
+  //                   </TableCell>
+  //                   <TableCell style={{ width: "25%" }} align="center">
+  //                     {food.fat &&
+  //                       Math.round((food.weight / 100) * food.fat * 100) / 100}
+  //                   </TableCell>
+  //                 </TableRow>
+  //               </TableBody>
+  //             </Table>
+  //           </TableContainer>
+  //         </div>
+  //       );
+  //     });
   return (
       <div className="bigBox">
 
@@ -254,7 +330,9 @@ function Detail({ match }) {
                 ) : (
                   <Description><input type ="text"  value={inputDiscription} onChange={DescriptionhandleChange} size="50"></input></Description>
                 )}
-                  <Titles>{allData.food_name  } 100g</Titles>
+                 {/* {shareBoardDetailList.map((likes, index) => (
+                 
+                   <Titles>{allData.food_name  } 100g</Titles>
                   <div className="nutBox">
                     <p className="line">칼로리 {allData.kcal}Kcal</p>
                     
@@ -265,6 +343,10 @@ function Detail({ match }) {
                     <p className="line">단백질 {allData.protein}g</p>
                   
                   </div>
+                     
+                 
+                  ))} */}
+                  {/* { shareBoardDetailList.data.length !=0 && FoodList} */}
 
                 </RegisterReq>
                 {isLike ? (

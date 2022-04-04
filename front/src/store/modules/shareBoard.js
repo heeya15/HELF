@@ -11,7 +11,7 @@ const initialState = {
     shareBoardDetailSelectLoading: false, 
     shareBoardDetailSelectDone: false,
     shareBoardDetailSelectError: false,
-
+    shareBoardDetailList: [],
     //  해당 공유 게시판 description 수정
     shareBoardUpdateLoading: false, 
     shareBoardUpdateDone: false,
@@ -96,6 +96,9 @@ const reducer = (state = initialState, action) =>
             case SHARE_BOARD_DETAIL_SELECT_SUCCESS :
                 draft.shareBoardDetailSelectLoading = false;
                 draft.shareBoardDetailSelectDone = true;
+                draft.shareBoardDetailList = action.data;
+                console.log("상세 데이터 조회 성공")
+                console.log(draft.shareBoardDetailList);
                 break;
             case SHARE_BOARD_DETAIL_SELECT_FAILURE :
                 draft.shareBoardDetailSelectLoading = false;

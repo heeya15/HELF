@@ -141,7 +141,7 @@ function* loadShareBoardDetailSelect(action) {
   try {   
       const result = yield call(ShareBoardDetailSelectAPI, action.data); 
       console.log("상세 조회 들어옴")
-      console.log(result);
+      console.log(result.data);
       console.log("hi")
       yield put({
         type: SHARE_BOARD_DETAIL_SELECT_SUCCESS ,
