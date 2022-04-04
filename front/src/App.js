@@ -1,6 +1,6 @@
 import "./App.css";
 import React from "react";
-import { Route } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 
 // 컴포넌트 추가
 import NavBar from "./components/NavBar/NavBar";
@@ -23,35 +23,37 @@ import ExerciseHistory from "./components/MyPage/Statistics/ExerciseHistory";
 import AdditionalUserInfo from "./pages/User/LogIn/AdditionalUserInfo";
 import ExerciseSetting from "./components/Exercise/ExerciseSetting";
 
-// import Placeholder from 'react-bootstrap/Placeholder';
-
 function App() {
   return (
     <div className="App">
-      <NavBar />
-      <Route exact path="/" component={Main} />
-      <Route path="/sharedboard" component={SharedBoard} />
-      <Route path="/signup" component={SignUp} />
-      <Route path="/mypage" component={MyPage} />
-      <Route path="/mydietregister/:date" component={MyDietRegister} />
-      <Route path="/login" component={LogIn} />
-      <Route path="/mydiet" component={MyDiet} />
-      <Route path="/find/password" component={FindPassword} />
-      <Route path="/exercise/:breakTime" component={Exercise} />
-      <Route path="/dietdiary/:date" component={MyDietDaily} />
-      <Route path="/mydietdetail/:date/:diaryNo" component={MyDietDetail} />
-      <Route path="/nutrition" component={Nutrition} />
-      <Route exact path="/sharedetail/:index" component={ShareDetail} />
-      <Route path="/exercisehistory" component={ExerciseHistory} />
-      <Route path="/additionalUserInfo" component={AdditionalUserInfo} />
-      <Route
-        path="/privacy-policy"
-        component={() => {
-          window.location.replace("https://example.com/1234");
-          return null;
-        }}
-      />
-      <Route path="/exercisesetting" component={ExerciseSetting} />
+      <Switch>
+        <Route path="/additionalUserInfo" component={AdditionalUserInfo} />
+      <>
+        <NavBar />
+        <Route path="/login" component={LogIn} />
+        <Route path="/signup" component={SignUp} />
+        <Route exact path="/" component={Main} />
+        <Route path="/sharedboard" component={SharedBoard} />
+        <Route path="/mypage" component={MyPage} />
+        <Route path="/mydietregister/:date" component={MyDietRegister} />
+        <Route path="/mydiet" component={MyDiet} />
+        <Route path="/find/password" component={FindPassword} />
+        <Route path="/exercise/:breakTime" component={Exercise} />
+        <Route path="/dietdiary/:date" component={MyDietDaily} />
+        <Route path="/mydietdetail/:date/:diaryNo" component={MyDietDetail} />
+        <Route path="/nutrition" component={Nutrition} />
+        <Route exact path="/sharedetail/:index" component={ShareDetail} />
+        <Route path="/exercisehistory" component={ExerciseHistory} />
+        <Route
+          path="/privacy-policy"
+          component={() => {
+            window.location.replace("https://example.com/1234");
+            return null;
+          }}
+        />
+        <Route path="/exercisesetting" component={ExerciseSetting} />
+      </>
+      </Switch>
     </div>
   );
 }

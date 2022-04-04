@@ -17,14 +17,16 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import { 
     StepperWrapper,
     InputWrapper,
+    Title,
     StepTitle,
-    Message
+    Message,
+    inputBox,
 } from './Login.style';
 import {
     USER_ADDITIONAL_INFO_REQUEST    
 } from '../../../store/modules/user'; 
 
-const steps = ['Set Up Your Personal Information', 'Set Up Your Physical Information', 'Get Started!'];
+const steps = ['개인 정보 입력', '신체 정보 입력', '세팅 완료!!'];
 
 export default function AdditionalUserInfo() {
     const dispatch = useDispatch();
@@ -125,6 +127,7 @@ export default function AdditionalUserInfo() {
 
     return (
         <StepperWrapper>
+            <Title>추가 정보 입력</Title>
             <Box sx={{
                     width: '100%'
                 }}>
@@ -151,7 +154,7 @@ export default function AdditionalUserInfo() {
                     activeStep === steps.length - 1
                         ? (
                             <React.Fragment>
-                                <StepTitle>서비스 이용하러가기!</StepTitle>
+                                <StepTitle>추가 정보 세팅이 완료되었습니다.<br/>FINISH를 눌리고 서비스를 이용해보세요!</StepTitle>
                                 <Box
                                     sx={{
                                         display: 'flex',
@@ -192,7 +195,6 @@ export default function AdditionalUserInfo() {
                                 <InputWrapper>
                                 { activeStep === 0 && 
                                     <div>
-                                    <StepTitle>개인정보 입력</StepTitle>
                                     <Grid container spacing={2}>
                                         <Grid item xs={12}>
                                         <FormControl>
@@ -210,9 +212,9 @@ export default function AdditionalUserInfo() {
                                         </Grid>
                                         <Grid item xs={12}>
                                         <TextField 
-                                            style={{ width: '80%' }}
                                             label="Birthday" 
                                             id="outlined-size-normal"
+                                            style={ inputBox }
                                             onChange={ handleNewBirthday }
                                             />
                                         </Grid>
@@ -224,7 +226,6 @@ export default function AdditionalUserInfo() {
                                 }
                                 { activeStep === 1 && 
                                     <div>
-                                    <StepTitle>신체정보 입력</StepTitle>
                                     <Grid container spacing={2}>
                                         <Grid item xs={12}>
                                         <TextField
@@ -232,7 +233,7 @@ export default function AdditionalUserInfo() {
                                             label="height"
                                             name="height"
                                             placeholder="160"
-                                            style={{ width: '80%' }}
+                                            style={ inputBox }
                                             onChange={ handleNewHeight }/>
                                         </Grid>
                                         <Grid item xs={12}>
@@ -241,7 +242,7 @@ export default function AdditionalUserInfo() {
                                             label="weight"
                                             name="weight"
                                             placeholder="55"
-                                            style={{ width: '80%' }}
+                                            style={ inputBox }
                                             onChange={ handleNewWeight }/>
                                         </Grid>
                                         <Grid item xs={12}>
