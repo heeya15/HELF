@@ -137,7 +137,21 @@ function Detail({ match }) {
         console.log(response);
       });
   }, [totalLikeCount, isLike]);
-
+  //  댓글 가져오기
+  useEffect(() => {
+    axios.get(`${BASE_URL}comment/findAll/${index}`,
+    // `${LOCAL_URL}shareboard/findAll`, 
+    {
+    headers: { 
+      Authorization: `Bearer ${ token }`
+    }})
+        .then(response => {
+          // 나중에 response.data 로 data 가져오기 가능
+          setComment(response.data);
+        }).catch(err => {
+          history.push(`/sharedBoard`);
+        });
+}, [commentData]);
   useEffect(() => {
     axios
       .get(
@@ -326,10 +340,8 @@ function Detail({ match }) {
         <TotalStyle>
           <Row>
             <Col>
-              <ImageThumbnail
-                src={`${IMAGE_URL}${allData.image_path}`}
-                alt="이미지"
-              ></ImageThumbnail>
+            <ImageThumbnail src={`${IMAGE_URL}${allData.image_path}`} alt="이미지" style={{maxHeight:500}}></ImageThumbnail>
+
             </Col>
             <Col>
               <RegisterReq>
@@ -338,12 +350,12 @@ function Detail({ match }) {
                   <Description>{allData.description} </Description>
                 ) : (
                   <Description>
-                    <input
+                    <textarea
                       type="text"
                       value={inputDiscription}
                       onChange={DescriptionhandleChange}
                       size="50"
-                    ></input>
+                    ></textarea>
                   </Description>
                 )}
 
@@ -434,7 +446,7 @@ function Detail({ match }) {
                       </div>
                     ) : (
                       <div className="commentDelete">
-                        <CommentTitles>
+                        <CommentTitles className="newText">
                           {user.user_id} : {user.comment}
                         </CommentTitles>
                       </div>
