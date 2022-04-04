@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useParams, useHistory } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import {
   setFoodCheckBox,
   setmyDietWeight,
@@ -16,7 +16,7 @@ import {
   FOOD_LIST_REQUEST,
 } from "../../store/modules/myDiet";
 import { MY_DIET_IMAGE_REQUEST } from "../../store/modules/myDiet";
-import { FormGroup, FormControlLabel, Checkbox } from "@mui/material";
+import { FormControlLabel, Checkbox } from "@mui/material";
 import { Container, Row, Col } from "react-bootstrap";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
@@ -41,6 +41,7 @@ import {
   ImageThumbnail,
   FoodCheckButton,
   foodcheckBox,
+  StyledFormGroup,
 } from "./MyDietRegister.style";
 import {
   DetailReq,
@@ -311,7 +312,15 @@ export default function MyDietDetail() {
                       <Typography id="modal-modal-description" sx={{ mt: 2 }}>
                         해당하는 음식 종류를 선택해주세요.
                       </Typography>
-                      <FormGroup>{FoodCheckBox}</FormGroup>
+                      <StyledFormGroup
+                        style={{
+                          overflowX: "hidden",
+                          overflowY: "auto",
+                          flexWrap: "nowrap",
+                        }}
+                      >
+                        {FoodCheckBox}
+                      </StyledFormGroup>
                       <ButtonWrapper>
                         <ConfirmButton onClick={foodCheckDone}>
                           완료
@@ -352,7 +361,9 @@ export default function MyDietDetail() {
                   <MealTypeButton style={{ display: "flex" }}>
                     {mealType.map((meal, index) => (
                       <button
-                        className={mealTimeIndex == index ? "active" : ""}
+                        className={
+                          parseInt(mealTimeIndex) === index ? "active" : ""
+                        }
                         key={index}
                         value={meal}
                         data-index={index}
@@ -385,7 +396,7 @@ export default function MyDietDetail() {
                   <MealTimeDetail>{myDietDetail.mealTime}식단</MealTimeDetail>
                   <p>{myDietDetail.diaryDate.substr(0, 16)}</p>
                   <Titles>Food</Titles>
-                  {myDietDetail.dietFindResList.length != 0 && FoodList}
+                  {myDietDetail.dietFindResList.length !== 0 && FoodList}
                   <Titles>Description</Titles>
                   <Description
                     rows="8"

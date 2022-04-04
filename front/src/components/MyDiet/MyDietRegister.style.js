@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { FormGroup } from "@mui/material";
 
 const TotalStyle = styled.div`
   margin-top: 5%;
@@ -61,7 +62,7 @@ const Description = styled.textarea`
   overflow: visible;
   text-overflow: ellipsis;
   padding: 10px;
-  font-family: 'KOTRA_GOTHIC';
+  font-family: "KOTRA_GOTHIC";
   :focus {
     outline: none;
   }
@@ -77,9 +78,9 @@ const RegisterButton = styled.button`
   border: none;
   border-radius: 30px;
   width: 10%;
-  `;
-  
-  const BackButton = styled.button`
+`;
+
+const BackButton = styled.button`
   margin-top: 2%;
   margin-bottom: 3%;
   padding: 5px 0px;
@@ -127,8 +128,21 @@ const foodcheckBox = {
 };
 
 const ButtonGroup = {
-  marginBottom: '30px',
-}
+  marginBottom: "30px",
+};
+
+const StyledFormGroup = styled(FormGroup)`
+  height: 500px;
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+  ::-webkit-scrollbar-thumb {
+    background-color: #2f3542;
+  }
+  ::-webkit-scrollbar-track {
+    background-color: grey;
+  }
+`;
 
 export {
   TotalStyle,
@@ -142,4 +156,5 @@ export {
   FoodCheckButton,
   foodcheckBox,
   ButtonGroup,
+  StyledFormGroup,
 };
