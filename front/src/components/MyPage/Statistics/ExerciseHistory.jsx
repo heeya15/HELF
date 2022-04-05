@@ -11,7 +11,8 @@ import { EXERCISE_HISTORY_FINDALL_REQUEST } from "../../../store/modules/exercis
 export default function ExerciseHistory() {
   const dispatch = useDispatch();
 
-  const year = 2022;
+  const now = new Date(); // 현재 날짜 및 시간
+  const year = now.getFullYear(); // 연도
   const monthDay = [0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
   const months = [
     "Jan",

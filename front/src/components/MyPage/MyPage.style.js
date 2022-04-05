@@ -357,8 +357,18 @@ const ExerciseHistoryTotal = styled.div`
     font-size: 0;
   }
   .cell {
-    height: 15px;
-    width: 15px;
+    @media screen and (max-width: 768px) {
+      height: 5px;
+      width: 5px;
+    }
+    @media screen and (min-width: 769px) and (max-width: 1308px) {
+      height: 10px;
+      width: 10px;
+    }
+    @media screen and (min-width: 1309px) {
+      height: 15px;
+      width: 15px;
+    }
     border-radius: 2px;
     margin: 1px;
     font-size: 10px;
@@ -366,8 +376,14 @@ const ExerciseHistoryTotal = styled.div`
   }
   .months {
     font-size: 10px;
-    width: 900px;
+
     margin-right: 4%;
+    @media screen and (max-width: 1308px) {
+      width: 650px;
+    }
+    @media screen and (min-width: 1309px) {
+      width: 900px;
+    }
   }
   .fill-0 {
     background-color: #ebedf0;
@@ -388,8 +404,6 @@ const ExerciseHistoryTotal = styled.div`
     background-color: rgb(7, 63, 29);
   }
 `;
-
-
 
 export {
   Container,
