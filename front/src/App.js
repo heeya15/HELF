@@ -6,7 +6,7 @@ import { Route, Switch } from "react-router-dom";
 import NavBar from "./components/NavBar/NavBar";
 // import Footer from "./components/Footer/Footer";
 import ShareBoard from "./pages/ShareBoard/ShareBoard";
-import ShareDetail from "./components/ShardDetail/SharedDetail";
+import ShareDetail from "./components/ShareBoard/ShareDetail";
 import Main from "./pages/Main/Main";
 import SignUp from "./pages/User/SignUp/SignUp";
 import LogIn from "./pages/User/LogIn/LogIn";

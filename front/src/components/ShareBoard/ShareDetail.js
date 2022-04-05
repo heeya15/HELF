@@ -3,28 +3,31 @@ import axios from "axios";
 import { Link, useParams, useHistory } from "react-router-dom";
 import { BASE_URL, IMAGE_URL, LOCAL_URL } from "../../utils/https";
 import { Button } from "react-bootstrap";
-import "./SharedDetail.css";
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
+import "./ShareDetail.css";
 import { Container, Row, Col } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import deleteBtn from "./deletebutton_87299.png";
 import {
   TotalStyle,
   RegisterReq,
   MealTypeButton,
   ListButton,
-  UpdatdButton,
-  BackButton,
+  UpdateButton,
+  DeleteButton,
   Titles,
   Description,
   ImageThumbnail,
   CommentBox,
+  CommentHeader,
   CommentBoxBig,
   SendButton,
   CommentDeleteBtn,
   CommentTitles,
-  CommentUpdatdButton,
-} from "./SharedDetail.style";
-import { LikeListStyle } from "../MyPage/MyPage.style";
+  CommentWrapper,
+  FoodListStyle,
+  LikeListStyle,
+} from "./ShareDetail.style";
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 
 import {
@@ -32,9 +35,8 @@ import {
   SHARE_BOARD_LIKE_REGISTER_REQUEST,
   SHARE_BOARD_UPDATE_REQUEST,
   SHARE_BOARD_DETAIL_SELECT_REQUEST,
+  SHARE_BOARD_DETAIL_HIT_INCREASE_REQUEST,
 } from "../../store/modules/shareBoard";
-import { style } from "@mui/system";
-
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -44,7 +46,6 @@ import TableRow from "@mui/material/TableRow";
 import {
   FoodTableTitle,
 } from "../MyDiet/MyDietDetail.style";
-import { set } from 'date-fns';
 // match 로 현재 게시물 주소에 대한 정보를 props 로 받아온다
 function Detail({ match }) {
   const [updateForm, setUpdateForm] = useState(false);
@@ -61,31 +62,29 @@ function Detail({ match }) {
   const { isLike, totalLikeCount, shareBoardDetailList,detailimagePath, detaildescription, shareUserId } = useSelector((state) => state.shareBoard);
   const {me} = useSelector((state) => state.mypage);
 
-  var [inputDiscription, setInputDescription] = useState("");
+  var [inputDescription, setInputDescription] = useState("");
   const likeDelete = (boardNo, e) => {
     dispatch({
       type: SHARE_BOARD_LIKE_REGISTER_REQUEST,
       data: boardNo,
     });
   };
-  const likeRegister = (boardNo, e) => {
+  const likeRegister = (boardNo) => {
     dispatch({
       type: SHARE_BOARD_LIKE_REGISTER_REQUEST,
       data: boardNo,
     });
   };
-  const updateDescriptionHandler = (e) => {
+  const updateDescriptionHandler = () => {
     setUpdateForm(true);
-    console.log(updateForm);
   };
-  // 해당 공유 게시글 discription  수정
-  const updateDescription = (discription, e) => {
-    console.log(discription);
+  // 해당 공유 게시글 Description  수정
+  const updateDescription = (description) => {
     dispatch({
       type: SHARE_BOARD_UPDATE_REQUEST,
       data: {
         boardNo: index,
-        description: discription,
+        description: description,
       },
     });
     setUpdateForm(false);
@@ -99,6 +98,7 @@ function Detail({ match }) {
     setInputDescription(e.target.value);
   };
   
+  // 최초 1회 실행
   useEffect(() => {
     dispatch({
       type: SHARE_BOARD_DETAIL_SELECT_REQUEST,
@@ -106,6 +106,11 @@ function Detail({ match }) {
     });
     dispatch({
       type: SHARE_BOARD_ISLIKECHECK_TOTALLIKECOUNT_REQUEST,
+      data: index,
+    });
+    // 조회수 1증가 요청
+    dispatch({
+      type: SHARE_BOARD_DETAIL_HIT_INCREASE_REQUEST,
       data: index,
     });
   }, []);
@@ -117,7 +122,6 @@ function Detail({ match }) {
       data: index,
     });
     setTotalLikeCount(totalLikeCount);
-
     dispatch({
       type: SHARE_BOARD_DETAIL_SELECT_REQUEST,
       data: index,
@@ -161,29 +165,38 @@ function Detail({ match }) {
   };
 
   const boardDelete = () => {
-    axios
-      .delete(
-        `${BASE_URL}shareboard/remove?boardNo=${allData.board_no}&diaryNo=${allData.diary_no}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      )
-      .then((res) => {
-        console.log(res);
-        history.push(`/sharedBoard`);
-      });
+    if(window.confirm("정말 삭제하시겠습니까?")) {
+      axios
+        .delete(
+          `${BASE_URL}shareboard/remove?boardNo=${allData.board_no}&diaryNo=${allData.diary_no}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        )
+        .then((res) => {
+          console.log(res);
+          history.push(`/sharedBoard`);
+        });
+    } else {
+      alert("취소되었습니다.");
+    }
   };
 
   //  댓글 관련
 
   const [Comment, SetComment] = useState("");
 
-  const resetInputField = () => {};
 
   const commentHandler = ({ target: { value } }) => {
     SetComment(value);
+  };
+
+  const handleCommentRegisterKeyPress = (e) => {
+    if (e.key === "Enter") {
+      submitHandler(e);
+    }
   };
 
   const submitHandler = (e) => {
@@ -204,16 +217,19 @@ function Detail({ match }) {
       });
   };
   const commentDeleteHandler = (commentNo, e) => {
-    console.log(commentNo); // 뭐임?
-    axios
-      .delete(`${BASE_URL}comment/remove/${commentNo}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then((res) => {
-        console.log(res);
-      });
+    if(window.confirm("정말 삭제하시겠습니까?")) {
+      axios
+        .delete(`${BASE_URL}comment/remove/${commentNo}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then((res) => {
+          console.log(res);
+        });
+    } else {
+      alert("취소되었습니다.");
+    }
   };
   //  댓글 수정
   let [input, setInput] = useState("");
@@ -234,9 +250,7 @@ function Detail({ match }) {
   };
   const handleKeydown = (e) => {
     if (e.key === "Enter") {
-      console.log(`엔터키 눌러짐`);
       setInput(e.target.value);
-      console.log(e.value);
       axios
         .put(
           `${BASE_URL}comment/update`,
@@ -326,27 +340,52 @@ function Detail({ match }) {
         <TotalStyle>
           <Row>
             <Col>
-            <ImageThumbnail src={`${IMAGE_URL}${detailimagePath}`} alt="이미지" style={{maxHeight:500}}></ImageThumbnail>
+            <ImageThumbnail src={`${IMAGE_URL}${detailimagePath}`} alt="diet diary image"></ImageThumbnail>
 
             </Col>
             <Col>
               <RegisterReq>
-                <Titles>{shareUserId}님의 식단.</Titles>
-                {updateForm === false ? (
-                  <Description>{detaildescription} </Description>
-                ) : (
-                  <Description>
-                    <textarea
-                      type="text"
-                      value={inputDiscription}
-                      onChange={DescriptionhandleChange}
-                      size="50"
-                    ></textarea>
-                  </Description>
-                )}
+                <Titles>
+                  {shareUserId}님의 식단
+                  {/* 작성자 == 조회자 이면 수정 버튼 활성화 */}
+                  {me.userId === shareUserId && updateForm === false ? (
+                    <EditIcon
+                      style={{ cursor: 'pointer'}}
+                      onClick={(e) => {
+                        updateDescriptionHandler(e);
+                      }}
+                    >
+                      {" "}
+                      수정
+                    </EditIcon>
+                  ) : null}
 
-                {shareBoardDetailList.length !== 0 && FoodList}
-              </RegisterReq>
+                  {updateForm === true ? (
+                    <UpdateButton
+                      onClick={() => {
+                        updateDescription(inputDescription);
+                      }}
+                    >
+                      완료
+                    </UpdateButton>
+                  ) : null}
+                </Titles>
+                
+                {updateForm === false ? (
+                  <Description
+                    readOnly
+                    value={ detaildescription }
+                  />
+                ) : (
+                  <Description
+                    type="text"
+                    defaultValue={detaildescription}
+                    onChange={DescriptionhandleChange}/>
+                )}
+                <FoodListStyle>
+                    {shareBoardDetailList.length !== 0 && FoodList}
+                </FoodListStyle>
+                </RegisterReq>
               {isLike ? (
                 <LikeListStyle>
                   <div className="total">
@@ -366,8 +405,8 @@ function Detail({ match }) {
                     <AiOutlineHeart
                       size="20"
                       className="iconMargin"
-                      onClick={(e) => {
-                        likeRegister(index, e);
+                      onClick={() => {
+                        likeRegister(index);
                       }}
                     />
                     <Titles>{LikeCount}명이 좋아합니다.</Titles>
@@ -377,97 +416,83 @@ function Detail({ match }) {
             </Col>
             <div className="newCommentBox">
               <Titles className="newText"> 댓글</Titles>
-              <CommentBoxBig>
-                <form className="commentBox" onSubmit={submitHandler}>
-                  <CommentBox
-                    placeholder="댓글을 입력하세요."
-                    value={Comment}
-                    onChange={commentHandler}
-                  ></CommentBox>
-                  <SendButton type="submit" onClick={resetInputField}>
+              <CommentHeader>
+                <CommentWrapper>
+                <CommentBox
+                  onKeyPress={handleCommentRegisterKeyPress}
+                  placeholder="댓글을 입력하세요."
+                  value={Comment}
+                  onChange={commentHandler}
+                />
+                  <SendButton onClick={submitHandler}>
                     등록
                   </SendButton>
-                </form>
+                </CommentWrapper>
+              </CommentHeader>
+              <CommentBoxBig>
                 {/*  댓글 보이기 */}
-                {commentData.map((user) => (
-                  <div key={user.comment_no}>
-                    {userData == user.user_id ? (
-                      <div className="commentDelete">
-                        <CommentTitles className="newText">
-                          {user.user_id} : {user.comment}{" "}
-                        </CommentTitles>
-
-                        {/* 삭제파트 */}
-                        <CommentDeleteBtn
-                          className="newText2"
-                          onClick={(e) => {
-                            commentDeleteHandler(user.comment_no);
-                          }}
-                        >
-                          삭제
-                        </CommentDeleteBtn>
-
-                        {/*  수정파트 */}
-                        <CommentUpdatdButton
-                          className="newText2"
-                          onClick={(e) => {
-                            handleClick(user.comment_no, user.comment);
-                          }}
-                        >
-                          {input ? (
-                            user.comment_no === CommentNoinput ? (
-                              <input
-                                type="text"
-                                value={input}
-                                onChange={handleChange}
-                                onKeyDown={handleKeydown}
-                              />
+                  <div>
+                  {commentData.map((user) => (
+                    <div key={user.comment_no}>
+                      {userData == user.user_id ? (
+                        <CommentWrapper>
+                          <CommentTitles className="newText">
+                            {user.user_id} : 
+                            {input ? (
+                              user.comment_no === CommentNoinput ? (
+                                <input
+                                  type="text"
+                                  value={input}
+                                  style={{ fontFamily: 'KOTRA_GOTHIC' }}
+                                  onChange={handleChange}
+                                  onKeyDown={handleKeydown}
+                                />
+                              ) : (
+                                <span style={{ fontFamily: 'KOTRA_GOTHIC' }}> {user.comment}</span>
+                              )
                             ) : (
-                              `수정`
-                            )
-                          ) : (
-                            `수정`
-                          )}
-                        </CommentUpdatdButton>
-                      </div>
-                    ) : (
-                      <div className="commentDelete">
-                        <CommentTitles className="newText">
-                          {user.user_id} : {user.comment}
-                        </CommentTitles>
-                      </div>
-                    )}
-                  </div>
-                ))}
+                              <span style={{ fontFamily: 'KOTRA_GOTHIC' }}> {user.comment}</span>
+                            )}
+                          </CommentTitles>
+                          <div>
+                          
+
+                          {/*  수정파트 */}
+                          <EditIcon
+                            style={{ cursor: 'pointer' }}
+                            onClick={(e) => {
+                              handleClick(user.comment_no, user.comment);
+                            }}
+                          />
+      
+                            {/* 삭제파트 */}
+                            <DeleteIcon
+                              style={{ cursor: 'pointer', marginLeft: '5px' }}
+                              onClick={(e) => {
+                                commentDeleteHandler(user.comment_no);
+                              }}
+                            />
+                          </div>
+                        </CommentWrapper>
+                      ) : (
+                        <div className="commentDelete">
+                          <CommentTitles className="newText">
+                            {user.user_id} : {user.comment}
+                          </CommentTitles>
+                        </div>
+                      )}
+                    </div>
+                  ))}
+                </div>
               </CommentBoxBig>
             </div>
           </Row>
         </TotalStyle>
         <ListButton onClick={goBack}>목록</ListButton>
-        {/* 작성자 == 조회자 이면 수정 버튼 활성화 */}
-        {me.userId === shareUserId && updateForm === false ? (
-          <UpdatdButton
-            onClick={(e) => {
-              updateDescriptionHandler(e);
-            }}
-          >
-            {" "}
-            수정
-          </UpdatdButton>
-        ) : null}
-
-        {updateForm === true ? (
-          <UpdatdButton
-            onClick={(discription, e) => {
-              updateDescription(inputDiscription, e);
-            }}
-          >
-            수정하기
-          </UpdatdButton>
-        ) : null}
+        
 
         {me.userId === shareUserId && updateForm === false ? (
-          <BackButton onClick={boardDelete}>삭제</BackButton>
+          <DeleteButton onClick={boardDelete}>삭제</DeleteButton>
         ) : null}
       </Container>
     </div>
