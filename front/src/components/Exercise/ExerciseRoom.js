@@ -62,9 +62,9 @@ export default function ExerciseRoom() {
     switch (exercise.type) {
       case 1: // BentOverRow
         // test : 왼 손 들기
-        setURL("https://teachablemachine.withgoogle.com/models/tNxgspb7K/");
+        // setURL("https://teachablemachine.withgoogle.com/models/tNxgspb7K/");
 
-        // setURL("https://teachablemachine.withgoogle.com/models/eqCo1kx3a/");
+        setURL("https://teachablemachine.withgoogle.com/models/eqCo1kx3a/");
         break;
       case 2: // DumbbellCurl
         setURL("https://teachablemachine.withgoogle.com/models/qvMroKavg/");
