@@ -55,7 +55,6 @@ function User({ user }) {
                   width: '200px',
                 }}>{UserIDCH}</Label>
               <img
-              
                 src={`${IMAGE_URL}${user.imagePath}`}
                 // srcSet={`${item.img}?w=162&auto=format&dpr=2 2x`}
                 alt={user.boardNo}
@@ -88,8 +87,9 @@ function User({ user }) {
 function SharedBoard(props) {
   const token = sessionStorage.getItem("jwt");
   const [shardList, setShardlist] = useState([]);
+  console.log('>>>>>>>>>>>>>>>>>>>', shardList);
   const [page, setPage] = useState(1); 
-  const perPage = 8; // 한 페이지에 보여줄 공유 게시글 수
+  const perPage = 4; // 한 페이지에 보여줄 공유 게시글 수
   const [totalpage, setTotalPage] = useState(1);
   const handlePageChange = (page) => {
     setPage(page);
@@ -130,40 +130,39 @@ function SharedBoard(props) {
   }
   return(  
     <div className="boxdiv"> 
-          <Desktop>        
-            <div >
-              <ShareBoardTopLike></ShareBoardTopLike>
-              <Title>최신 공유 식단</Title>
-              <Masonry columns={4} spacing={2}  style={{margin : 0}} classgName="boxdivcolor">
-              {shardList.map((user,index) => (
-                <User user={user} key={index} />
-              ))}
-              </Masonry> 
-           </div>
-        </Desktop>
-          <Tablet>
-          <div >
-              <ShareBoardTopLike></ShareBoardTopLike>
-              <Title>최신 공유 식단</Title>
-              <Masonry columns={2} spacing={4} style={{margin : 0}}>
-              {shardList.map((user,index) => (
-                <User user={user} key={index} />
-              ))}
-              </Masonry> 
-           </div>
-          </Tablet>
-          <Mobile>
-          <div >
-              <ShareBoardTopLike></ShareBoardTopLike>
-              <Title>최신 공유 식단</Title>
-              <Masonry columns={1} spacing={8} style={{margin : 0}}>
-              {shardList.map((user,index) => (
-                <User user={user} key={index} />
-              ))}
-              </Masonry> 
-           </div>
-          </Mobile>
-
+      <Desktop>        
+        <div >
+          <ShareBoardTopLike></ShareBoardTopLike>
+          <Title>최신 공유 식단</Title>
+          <Masonry columns={4} spacing={2}  style={{margin : 0}} classgName="boxdivcolor">
+          {shardList.map((user,index) => (
+            <User user={user} key={index} />
+          ))}
+          </Masonry> 
+        </div>
+      </Desktop>
+      <Tablet>
+      <div >
+          <ShareBoardTopLike></ShareBoardTopLike>
+          <Title>최신 공유 식단</Title>
+          <Masonry columns={2} spacing={4} style={{margin : 0}}>
+          {shardList.map((user,index) => (
+            <User user={user} key={index} />
+          ))}
+          </Masonry> 
+      </div>
+      </Tablet>
+      <Mobile>
+      <div >
+          <ShareBoardTopLike></ShareBoardTopLike>
+          <Title>최신 공유 식단</Title>
+          <Masonry columns={1} spacing={8} style={{margin : 0}}>
+          {shardList.map((user,index) => (
+            <User user={user} key={index} />
+          ))}
+          </Masonry> 
+        </div>
+      </Mobile>
       <Pagination
           activePage={page}
           itemsCountPerPage={perPage}

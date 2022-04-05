@@ -1,11 +1,11 @@
 import React from "react";
-import Exercise from "../../components/Exercise/Exercise"
+import ExerciseRoom from "../../components/Exercise/ExerciseRoom"
 
-export default function Main() {
+export default function Exercise() {
   return (
     <div>
       {/* <h1>자세교정 페이지 입니다</h1> */}
-      <Exercise></Exercise>
+      <ExerciseRoom></ExerciseRoom>
     </div>
   );
 }

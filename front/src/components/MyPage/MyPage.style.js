@@ -389,31 +389,7 @@ const ExerciseHistoryTotal = styled.div`
   }
 `;
 
-const ShareBoardLikeListStyle = styled.div`
-  .total {
-    background-color: transparent;
-    border: transparent;
-    z-index: 2;
-    position: absolute;
-    text-align: left;
-    margin: 1% auto;
-    .icon {
-      color: red;
-      margin-left: 50%;
-      :hover {
-        transform: scale(1.3);
-        cursor: pointer;
-      }
-    }
-  }
-  img {
-    width: 200px;
-    height: 200px;
-    display: block;
-    margin: auto;
-    border-radius: 20px;
-  }
-`;
+
 
 export {
   Container,
@@ -439,7 +415,6 @@ export {
   ButtonGroup,
   fontNormal,
   ExerciseHistoryTotal,
-  ShareBoardLikeListStyle,
   ReactTooltipStyled,
   UserInfo,
   NameInfo,

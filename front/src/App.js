@@ -5,7 +5,7 @@ import { Route, Switch } from "react-router-dom";
 // 컴포넌트 추가
 import NavBar from "./components/NavBar/NavBar";
 // import Footer from "./components/Footer/Footer";
-import SharedBoard from "./components/SharedBoard/SharedBoard";
+import ShareBoard from "./pages/ShareBoard/ShareBoard";
 import ShareDetail from "./components/ShardDetail/SharedDetail";
 import Main from "./pages/Main/Main";
 import SignUp from "./pages/User/SignUp/SignUp";
@@ -33,7 +33,7 @@ function App() {
         <Route path="/login" component={LogIn} />
         <Route path="/signup" component={SignUp} />
         <Route exact path="/" component={Main} />
-        <Route path="/sharedboard" component={SharedBoard} />
+        <Route path="/sharedboard" component={ShareBoard} />
         <Route path="/mypage" component={MyPage} />
         <Route path="/mydietregister/:date" component={MyDietRegister} />
         <Route path="/mydiet" component={MyDiet} />
