@@ -69,4 +69,11 @@ public interface ShareBoardRepository extends JpaRepository<ShareBoard, Long> { 
 					"\t\t\t\t  group by board_no"
 			,nativeQuery = true)
 	String findSelectLikeTotal(@Param("boardNo") Long boardNo);
+
+	// diaryNo로 게시글 삭제
+	@Transactional
+	@Modifying
+	@Query(value="delete from share_board \n" +
+			"where diary_no = :diaryNo ", nativeQuery = true)
+	void deleteByDiaryNo(@Param("diaryNo") int diaryNo);
 }
