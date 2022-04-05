@@ -1,6 +1,6 @@
-import React, { Component, useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Link, useParams, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { BASE_URL, IMAGE_URL } from "../../utils/https";
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
@@ -33,6 +33,7 @@ import {
   SHARE_BOARD_UPDATE_REQUEST,
   SHARE_BOARD_DETAIL_SELECT_REQUEST,
   SHARE_BOARD_DETAIL_HIT_INCREASE_REQUEST,
+  SHARE_BOARD_DELETE_REQUEST,
 } from "../../store/modules/shareBoard";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -51,12 +52,10 @@ function Detail({ match }) {
   const index = match.params.index.substring(0);
   const token = sessionStorage.getItem("jwt");
 
-  const [allData, setAlldata] = useState([]);
   const [commentData, setComment] = useState([]);
-  const [userData, setUser] = useState([]);
+  // const [userData, setUser] = useState([]);
   const [LikeCount, setTotalLikeCount] = useState(0);
-  const [imagePath, setImagePath] = useState('');
-  const { isLike, totalLikeCount, shareBoardDetailList,detailimagePath, detaildescription, shareUserId } = useSelector((state) => state.shareBoard);
+  const { isLike, totalLikeCount, shareBoardDetailList, detailimagePath, detaildescription, shareUserId, shareDiaryNo } = useSelector((state) => state.shareBoard);
   const {me} = useSelector((state) => state.mypage);
 
   var [inputDescription, setInputDescription] = useState("");
@@ -111,7 +110,7 @@ function Detail({ match }) {
       data: index,
     });
   }, []);
- 
+
   useEffect(() => {
     // 좋아요 여부와 좋아요 개수 들고옴.
     dispatch({
@@ -142,49 +141,29 @@ function Detail({ match }) {
         });
   }, [commentData]);
 
-  useEffect(() => {
-    axios.get(`${BASE_URL}user/find/me`,
-    // `${LOCAL_URL}shareboard/findAll`, 
-    {
-    headers: { 
-      Authorization: `Bearer ${ token }`
-    }})
-        .then(response => {
-          // 나중에 response.data 로 data 가져오기 가능
-          setUser(response.data.userId) 
-          ;
-        }).catch(err => {
-        });
-}, []);
-
+  // 게시판으로 돌아가기
   const goBack = () => {
     history.push(`/sharedBoard`);
   };
 
+  // 공유 게시글 삭제 (공유 해제)
   const boardDelete = () => {
     if(window.confirm("정말 삭제하시겠습니까?")) {
-      axios
-        .delete(
-          `${BASE_URL}shareboard/remove?boardNo=${allData.board_no}&diaryNo=${allData.diary_no}`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        )
-        .then((res) => {
-          console.log(res);
-          history.push(`/sharedBoard`);
-        });
+      dispatch({
+        type: SHARE_BOARD_DELETE_REQUEST,
+        data: {
+          boardNo: index,
+          diaryNo: shareDiaryNo,
+        }
+      });
+      history.push(`/sharedBoard`);
     } else {
       alert("취소되었습니다.");
     }
   };
 
   //  댓글 관련
-
   const [Comment, SetComment] = useState("");
-
 
   const commentHandler = ({ target: { value } }) => {
     SetComment(value);
@@ -238,7 +217,6 @@ function Detail({ match }) {
   };
 
   const handleChange = (e) => {
-    console.log(`진입함`);
     if (e.target.value === "") {
       setInput(" ");
     } else {
@@ -372,12 +350,13 @@ function Detail({ match }) {
                   <Description
                     readOnly
                     value={ detaildescription }
-                  />
-                ) : (
-                  <Description
-                    type="text"
-                    defaultValue={detaildescription}
-                    onChange={DescriptionhandleChange}/>
+                    />
+                    ) : (
+                    <Description
+                      value={ detaildescription }
+                      type="text"
+                      defaultValue={detaildescription}
+                      onChange={DescriptionhandleChange}/>
                 )}
                 <FoodListStyle>
                     {shareBoardDetailList.length !== 0 && FoodList}
@@ -431,7 +410,7 @@ function Detail({ match }) {
                   <div>
                   {commentData.map((user) => (
                     <div key={user.comment_no}>
-                      {userData == user.user_id ? (
+                      {me.userId == user.user_id ? (
                         <Row>
                           <Col md="11">
                           <CommentTitles className="newText">

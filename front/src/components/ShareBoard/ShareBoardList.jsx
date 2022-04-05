@@ -41,7 +41,6 @@ function SharedBoard() {
         // 나중에 response.data 로 data 가져오기 가능
         setShareBoardlist(response.data.content);
         setTotalPage(response.data.totalElements);   
-        console.log(response.data);
       })
       .catch((err) => {console.log('앙댐;')})
   }, [page, totalpage]);

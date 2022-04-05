@@ -77,3 +77,11 @@ export async function ShareBoardUpdateDiscriptionAPI({boardNo,description}) {
     );
     return result;
 }
+
+// 게시글 삭제 (공유 해제)
+export async function ShareBoardDeleteAPI({boardNo, diaryNo}) {
+    const token = sessionStorage.getItem("jwt");
+    const header = { headers: { Authorization: `Bearer ${token}` } };
+    const result = await axios.delete(`${BASE_URL}shareboard/remove?boardNo=${boardNo}&diaryNo=${diaryNo}`, null, header);
+    return result;
+}
