@@ -94,7 +94,7 @@ const CommentBoxBig = styled.div`
   border: none;
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
-  // resize: vertical;
+  resize: vertical;
   width: 100%;
   height : 20rem;
   overflow-x: hidden;
@@ -115,8 +115,8 @@ const CommentBoxBig = styled.div`
 // 댓글 입력 줄 Wrapper
 const CommentWrapper = styled.div`
   width: 100%;
-  padding: 1% 1%;
   display: flex;
+  padding: 15px;
   justify-content: space-between;
 `;
   
