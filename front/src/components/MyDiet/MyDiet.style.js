@@ -5,13 +5,10 @@ const DietDiaryItemWrapper = styled.div`
     width: 70%;
 `;
 
-const AddButton = styled.button`
-    color: #fff;
-    background-color: #56A75F;
-    border: none;
-    border-radius: 30px;
-    padding: 8px;
-`;
+const addButton = {
+    backgroundColor: '#56A75F', 
+    color: '#fff',
+};
 
 const ShareButton = styled.button`
     color: #fff;
@@ -45,7 +42,7 @@ const DietDiaryItem = styled.div`
     padding: 30px 30px;
     background-color: #F8F8F8;
     border-radius: 20px;
-    box-shadow: 7px 7px #E0E0E0;
+    box-shadow: 4px 4px 4px 2px rgba(0, 0, 0, 0.25);
 `;
 
 const TotalKcal = styled.div`
@@ -158,10 +155,10 @@ const fontBold = {
 }
 
 const MenuTitle = styled.div`
-    fontSize: '50px',
-    margin: '10px 0',
-    fontFamily: 'KOTRA_BOLD-Bold',
-    `;
+    font-size: 40px;
+    margin: 40px 0;
+    font-family: 'KOTRA_BOLD-Bold';
+`;
     
 const modalTitle = {
     fontSize: '40px',
@@ -170,7 +167,7 @@ const modalTitle = {
 
 export { 
     DietDiaryItemWrapper,
-    AddButton,
+    addButton,
     ShareButton,
     SharedButton,
     DiaryList,

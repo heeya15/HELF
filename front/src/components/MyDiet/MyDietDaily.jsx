@@ -1,29 +1,27 @@
-import React, { useEffect, useState } from "react";
-import Button from "@mui/material/Button";
-import Box from "@mui/material/Box";
+import React, { useEffect, useState } from 'react';
+import Button from '@mui/material/Button';
+import Box from '@mui/material/Box';
+import Fab from '@mui/material/Fab';
 import Grid from '@mui/material/Grid';
-import AddIcon from "@mui/icons-material/Add";
-import Typography from "@mui/material/Typography";
-import Modal from "@mui/material/Modal";
-import DeleteIcon from "@mui/icons-material/Delete";
-import IconButton from "@mui/material/IconButton";
-// import Switch from '@mui/material/Switch';
+import AddIcon from '@mui/icons-material/Add';
+import Typography from '@mui/material/Typography';
+import Modal from '@mui/material/Modal';
+import DeleteIcon from '@mui/icons-material/Delete';
+import IconButton from '@mui/material/IconButton';
 import ArrowBackIosOutlinedIcon from '@mui/icons-material/ArrowBackIosOutlined';
-// import ShareIcon from '@mui/icons-material/Share';
-// import ShareOutlinedIcon from '@mui/icons-material/ShareOutlined';
-// import IosShareIcon from '@mui/icons-material/IosShare';
-import { TextareaAutosize } from "@mui/material";
-import { IMAGE_URL } from "../../utils/https";
+import { TextareaAutosize } from '@mui/material';
+import { IMAGE_URL } from '../../utils/https';
 import {
   MY_DIET_DIARY_DAILY_INFO_REQUEST,
   MY_DIET_DIARY_DELETE_REQUEST,
-} from "../../store/modules/myDiet";
-import { SHARE_BOARD_REGISTER_REQUEST } from "../../store/modules/shareBoard";
-
-// import styled from "styled-components";
+} from '../../store/modules/myDiet';
+import { 
+  SHARE_BOARD_REGISTER_REQUEST,
+  SHARE_BOARD_DELETE_REQUEST,
+} from '../../store/modules/shareBoard';
 import {
   DietDiaryItemWrapper,
-  AddButton,
+  addButton,
   ShareButton,
   DietDiaryItem,
   TotalKcal,
@@ -42,14 +40,43 @@ import {
   DiaryKcal,
   DiaryDesc,
   fontNormal,
-  fontBold,
   MenuTitle,
   SharedButton,
   modalTitle,
-} from "./MyDiet.style";
-import { useHistory, useParams } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-// import { MY_DIET_DIARY_LIST_REQUEST, DIARY_DATE_SAVE } from '../../store/modules/myDiet'
+} from './MyDiet.style';
+import { useHistory, useParams } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { useSelect } from '@mui/base';
+
+
+function convertMonth(month) {
+  switch(month) {
+    case '01': 
+      return 'Jan';
+    case '02': 
+      return 'Feb';
+    case '03': 
+      return 'Mar';
+    case '04': 
+      return 'Apr';
+    case '05':
+      return 'May';
+    case '06': 
+      return 'Jun';
+    case '07':
+      return 'Jul';
+    case '08':
+      return 'Aug';
+    case '09': 
+      return 'Sep';
+    case '10':
+      return 'Oct';
+    case '11': 
+      return 'Nov';
+    case '12':
+      return 'Dec';
+  }
+}
 
 export default function MyDietDaily() {
   const dispatch = useDispatch();
@@ -58,22 +85,33 @@ export default function MyDietDaily() {
     (state) => state.myDiet
   );
   const { me } = useSelector(state => state.mypage);
+  const { shareBoardDeleteDone } = useSelector(state => state.shareBoard);
 
   const [open, setOpen] = useState(false);
-  const [shareDiaryNo, setShareDiaryNo] = useState("");
-  const [shareDescription, setShareDescription] = useState("");
+  const [shareDiaryNo, setShareDiaryNo] = useState('');
+  const [shareDescription, setShareDescription] = useState('');
 
   const handleOpen = (info) => {
-    // 공유 여부 체크
-    if(info.isShared) {    // 이미 공유 된 게시글이라면
-      alert('이미 공유한 식단 일지 입니다.');
-    } else {  // 공유되지 않은 게시글이라면
-      setShareDiaryNo(info.diaryNo);
-      setOpen(true);
-    }
+    setShareDiaryNo(info.diaryNo);
+    setOpen(true);
   };
   const handleClose = () => setOpen(false);
 
+  const handleCancelShare = (info) => {
+    if(window.confirm('식단 공유를 중지하시겠습니까?')) {
+      dispatch({
+        type: SHARE_BOARD_DELETE_REQUEST,
+        data: {
+          diaryNo: info.diaryNo,
+        }
+      });
+      // history.push(`/sharedBoard`);
+    } else {
+      alert('취소되었습니다.');
+    }
+  }
+
+  var dailyDate = convertMonth(date.substring(5,7)) + ' ' + date.substring(8,10) + ', ' + date.substring(0,4);
 
   var kcals = 0;
   const kcalList = [];
@@ -86,7 +124,7 @@ export default function MyDietDaily() {
     var AmPm = hour >= 12 ? 'pm' : 'am';
     hour = (hour % 12) || 12;
 
-    const diaryTime = hour + ":" + minute + " " + AmPm;
+    const diaryTime = hour + ':' + minute + ' ' + AmPm;
     const foodList = [...myDietDiaryDailyInfo[i].dietFindResList];
     for (let j = 0; j < foodList.length; j++) {
       kcals += (foodList[j].kcal * (foodList[j].weight/100)) ;
@@ -98,7 +136,7 @@ export default function MyDietDaily() {
       diaryDate: diaryDate,
       diaryTime: diaryTime,
       kcal: kcals,
-      printKcal: kcals.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","),
+      printKcal: kcals.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','),
       description: myDietDiaryDailyInfo[i].description,
       imagePath: myDietDiaryDailyInfo[i].imagePath,
       imageFullPath: `${IMAGE_URL}${myDietDiaryDailyInfo[i].imagePath}`,
@@ -113,7 +151,7 @@ export default function MyDietDaily() {
     totalKcal = kcalList.reduce((total, currentValue) => {
       return total + currentValue;
     });
-    totalKcal = totalKcal.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    totalKcal = totalKcal.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
   }
 
   const now = new Date();   // 현재 날짜 및 시간
@@ -147,11 +185,11 @@ export default function MyDietDaily() {
   // 2. 적당한 활동이 있는 경우 1.35 (v)
   // 3. 운동 선수나 하루종일 몸을 사용하는 일을 하는 경우 1.5
   bmr = Math.round(bmr * 1.35);
-  var suggestTotalKcal = bmr.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  var suggestTotalKcal = bmr.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 
   const history = useHistory();
   const goBack = () => {
-    history.push("/mydiet");
+    history.push('/mydiet');
   };
 
   const clickAddBtn = () => {
@@ -166,7 +204,7 @@ export default function MyDietDaily() {
         diaryNo: shareDiaryNo,
         shareDescription: shareDescription,
         hit: 0,
-        createdAt: "",
+        createdAt: '',
       },
     });
     setOpen(false); // 모달 창 닫기
@@ -175,14 +213,14 @@ export default function MyDietDaily() {
   };
 
   const clickDeleteBtn = (info) => {
-    if(window.confirm("정말 삭제하시겠습니까?")) {
+    if(window.confirm('정말 삭제하시겠습니까?')) {
       dispatch({
         type: MY_DIET_DIARY_DELETE_REQUEST,
         data: { date: info },
       });
-      alert("삭제되었습니다");
+      alert('삭제되었습니다');
     } else {
-      alert("취소되었습니다.");
+      alert('취소되었습니다.');
     }
   };
 
@@ -195,31 +233,30 @@ export default function MyDietDaily() {
       type: MY_DIET_DIARY_DAILY_INFO_REQUEST,
       data: { date: date },
     });
-  }, [myDietDiaryDeleteDone]); // 삭제 event가 발생하면 새로 일별 식단 일지 리스트 가져오기
+  }, [ myDietDiaryDeleteDone, shareBoardDeleteDone ]); // 삭제 event가 발생하면 새로 일별 식단 일지 리스트 가져오기
 
   return (
     <DietDiaryItemWrapper>
-      <MenuTitle>{date}</MenuTitle>
+      <MenuTitle>{dailyDate} 식단</MenuTitle>
       <Grid container spacing={3}>
         <Grid item xs={12} sm={6} style={{ textAlign: 'left' }}>
-          <Button
+          <ArrowBackIosOutlinedIcon
+            style={{ cursor: 'pointer' }}
             onClick={() => {
               goBack();
             }}
-          >
-          <ArrowBackIosOutlinedIcon/>
-          </Button>
+          />
         </Grid>
         <Grid item xs={12} sm={6} style={{ textAlign: 'right' }}>
-          <AddButton onClick={clickAddBtn}>
-            <AddIcon/>
-          </AddButton>
+          <Fab style={ addButton } aria-label="add">
+            <AddIcon onClick={clickAddBtn} />
+          </Fab>
         </Grid>
       </Grid>
       <div>
         {diaryInfoList.map((info) => (
           <DietDiaryItem key={info.diaryNo}>
-            <Box 
+            <Box
               sx={{
                 marginTop: 1,
                 display: 'flex',
@@ -230,7 +267,7 @@ export default function MyDietDaily() {
                 <Grid item xs={12} sm={5} style={{ textAlign: 'left' }}>
                   <DiaryImg
                     src={info.imageFullPath}
-                    alt="식단 이미지"
+                    alt='식단 이미지'
                     onClick={() => clickDietDiaryItem(info.diaryNo)}
                   ></DiaryImg>
                 </Grid>
@@ -242,11 +279,13 @@ export default function MyDietDaily() {
                           <DiaryTitle style={{ marginTop: '10px' }}>{info.mealTime}</DiaryTitle>
                         </Grid>
                         <Grid item xs={12} sm={6} style={{ textAlign: 'right', marginTop: '0' }}>
-                        <IconButton aria-label="delete" size="large">
-                          <DeleteIcon
-                            fontSize="inherit"
-                            onClick={() => clickDeleteBtn(info)}
-                          />
+                        <IconButton 
+                          aria-label='delete' 
+                          size='large'
+                          fontSize='inherit'
+                          onClick={() => clickDeleteBtn(info)}
+                          >
+                          <DeleteIcon/>
                         </IconButton>
                         </Grid>
                       </Grid> 
@@ -257,38 +296,37 @@ export default function MyDietDaily() {
                   <DiaryItemRightWrapper>
                     { info.isShared ? 
                       (
-                        <SharedButton>Shared</SharedButton>
+                        <SharedButton onClick={() => handleCancelShare(info)}>Shared</SharedButton>
                       ) : (
                       <ShareButton onClick={() => handleOpen(info)}>
                         Share
-                        {/* <span style={{ marginTop: '10px' }}>Share </span><ShareOutlinedIcon/> */}
                       </ShareButton>
                       )
                     }
                     <Modal
                       open={open}
                       onClose={handleClose}
-                      aria-labelledby="modal-modal-title"
-                      aria-describedby="modal-modal-description"
+                      aria-labelledby='modal-modal-title'
+                      aria-describedby='modal-modal-description'
                     >
                       <Box sx={shareBox}>
                         <Typography 
-                          id="modal-modal-title" 
-                          component="h2"
+                          id='modal-modal-title' 
+                          component='h2'
                           style={ modalTitle }>
                           식단 공유
                         </Typography>
                         <hr />
                         <Typography 
-                          id="modal-modal-description" 
+                          id='modal-modal-description' 
                           sx={{ mt: 2 }}
                           style={fontNormal}>
                           식단 공유와 함께 추가 설명을 적어주세요.
                         </Typography>
                         <TextareaAutosize
                           maxRows={4}
-                          aria-label="maximum height"
-                          placeholder="this is description..."
+                          aria-label='maximum height'
+                          placeholder='this is description...'
                           style={ descriptionArea }
                           onChange={(event) => {
                             setShareDescription(event.target.value);

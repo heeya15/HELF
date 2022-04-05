@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { FormGroup } from "@mui/material";
 
 const TotalStyle = styled.div`
-  margin-top: 3%;
+  margin-top: 2%;
   border-radius: 10px;
   box-shadow: 4px 4px 4px 2px rgba(0, 0, 0, 0.25);
   .imageSelect {
@@ -15,6 +15,12 @@ const TotalStyle = styled.div`
       cursor: pointer;
     }
   }
+`;
+
+const MenuTitle = styled.div`
+    font-size: 50px;
+    margin: 40px 0px 0px 0px;
+    font-family: 'KOTRA_BOLD-Bold';
 `;
 
 const ImageThumbnail = styled.img`
@@ -168,6 +174,7 @@ const StyledFormGroup = styled(FormGroup)`
 
 export {
   TotalStyle,
+  MenuTitle,
   RegisterReq,
   MealTypeButton,
   RegisterButton,
