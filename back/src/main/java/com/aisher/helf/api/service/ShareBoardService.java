@@ -25,7 +25,7 @@ public interface ShareBoardService {
 
 	/** 공유 게시글 하나의 정보를 가져오는(상세보기) findByBoardId 입니다. **/
 	List<ShareBoardFindRes> findByShareBoardId(Long boardNo);
-
+	void updateShareBoardHit(Long boardNo);
 	/** 공유 게시글중 좋아요가 가장 많은 순서대로 5개 레코드 가져져오는 함수 입니다. **/
 	List<ShareBoardFindTopLikeRes> findShareBoardByTopLike();
 

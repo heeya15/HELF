@@ -100,6 +100,18 @@ public class ShareBoardController {
         return new ResponseEntity<List<ShareBoardFindRes>>(shareboardInfo, HttpStatus.OK);
     }
 
+
+    @PutMapping("/hit/{boardNo}")
+    @ApiOperation(value="공유 게시글 상세 조회시 해당 게시글 조회수 증가(token)", notes="해당 공유 게시글 조회수를 1 증가 시킨다.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "성공", response = BaseResponseBody.class),
+    })
+    public ResponseEntity<? extends BaseResponseBody> shareBoardHitUp(@PathVariable Long boardNo, @ApiIgnore Authentication authentication) {
+        UserDetails userDetails = (UserDetails) authentication.getDetails();
+        String userId = userDetails.getUsername();
+        shareBoardService.updateShareBoardHit(boardNo);
+        return ResponseEntity.status(200).body(BaseResponseBody.of(200, "SUCCESS"));
+    }
     @GetMapping("/find/isLike/{boardNo}")
     @ApiOperation(value ="해당 게시글 좋아요 여부 조회 및 총 좋아요 개수 조회(token)", notes ="해당 boardNo 공유 게시판 좋아요 여부 출력 <strong>찜 했을 경우 : true, 찜 안 했을 경우 false <strong>")
     @ApiResponses({ @ApiResponse(code = 200, message = "성공"),
