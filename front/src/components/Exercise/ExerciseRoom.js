@@ -27,7 +27,7 @@ const style = {
   p: 4,
 };
 
-export default function Exercise() {
+export default function ExerciseRoom() {
   const dispatch = useDispatch();
   const { breakTime } = useParams();
   const { exercise } = useSelector((state) => state.exerciseHistory);
