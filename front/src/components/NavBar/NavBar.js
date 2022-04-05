@@ -8,11 +8,7 @@ import {
   LOG_OUT_REQUEST,
   SET_MENU,
 } from "../../store/modules/user";
-import {
-  SiteLogo,
-  NavigationBar,
-  NavMenu,
-} from './NavBar.style';
+import { SiteLogo, NavigationBar, NavMenu } from "./NavBar.style";
 import { useSelector, useDispatch } from "react-redux";
 import { MY_PAGE_REQUEST } from "../../store/modules/myPage";
 
@@ -70,10 +66,7 @@ export default function NavBar2() {
   };
 
   return (
-    <NavigationBar
-      collapseOnSelect="collapseOnSelect"
-      variant="dark"
-    >
+    <NavigationBar collapseOnSelect expand="lg" variant="dark">
       <Container fluid>
         <Link to="/">
           <SiteLogo src={logo} alt="logo image" />
@@ -81,40 +74,28 @@ export default function NavBar2() {
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="me-auto">
-          {(logInDone || kakaologInDone) && (
-            <>
-            <NavMenu onClick={handleMyDiet} >
-              MY식단
-            </NavMenu>
-            <NavMenu onClick={handleMyExercise} >
-              MY운동
-            </NavMenu>
-            <NavMenu onClick={handleShareBoard} >
-              게시판
-            </NavMenu>
-            </>
-          )}
+            {(logInDone || kakaologInDone) && (
+              <>
+                <NavMenu onClick={handleMyDiet}>MY식단</NavMenu>
+                <NavMenu onClick={handleMyExercise}>MY운동</NavMenu>
+                <NavMenu onClick={handleShareBoard}>게시판</NavMenu>
+              </>
+            )}
           </Nav>
           <Nav>
             {logInDone === false && kakaologInDone === false && (
-              <NavMenu onClick={handleSignUp} >
+              <NavMenu onClick={handleSignUp}>
                 <span>회원가입</span>
               </NavMenu>
             )}
             {logInDone === false && kakaologInDone === false && (
-              <NavMenu onClick={handleLogIn} >
-                로그인
-              </NavMenu>
+              <NavMenu onClick={handleLogIn}>로그인</NavMenu>
             )}
             {(logInDone === true || kakaologInDone === true) && (
-              <NavMenu onClick={handleMyPage} >
-                {" "}
-                MY페이지{" "}
-              </NavMenu>
+              <NavMenu onClick={handleMyPage}> MY페이지 </NavMenu>
             )}
             {(logInDone === true || kakaologInDone === true) && (
               <NavMenu
-                
                 style={{ cursor: "pointer" }}
                 onClick={() => {
                   changeMenu("main");
