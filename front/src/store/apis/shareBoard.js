@@ -29,7 +29,7 @@ export async function ShareBoardIsLikeAndTotalLikeCountAPI(boardNo) {
     const token = sessionStorage.getItem("jwt");
     const result = await axios.get(`${BASE_URL}shareboard/find/isLike/${boardNo}`, {
             headers: { 
-              Authorization: `Bearer ${ token }`
+                Authorization: `Bearer ${ token }`
             }
     });
     return result.data;
@@ -58,7 +58,15 @@ export async function ShareBoardDetailSelectAPI(boardNo) {
     return result;
 }
 
-// 해당 공유 게시글을 discription 수정
+// 해당 공유 게시글 조회수 증가
+export async function ShareBoardDetailHitIncreaseAPI(boardNo) {
+    const token = sessionStorage.getItem("jwt");
+    const header = { headers: { Authorization: `Bearer ${token}` } };
+    const result = await axios.put(`${BASE_URL}shareboard/hit/${boardNo}`, null, header);
+    return result;
+}
+
+// 해당 공유 게시글을 description 수정
 export async function ShareBoardUpdateDiscriptionAPI({boardNo,description}) {
     const result = await axios.put(
         `${BASE_URL}shareboard/update/description`,

@@ -78,6 +78,9 @@ const RegisterButton = styled.button`
   border: none;
   border-radius: 30px;
   width: 10%;
+  :hover {
+    transform: scale(1.1);
+  }
 `;
 
 const UpdateCancelButton = styled.button`
@@ -91,6 +94,9 @@ const UpdateCancelButton = styled.button`
   border-radius: 30px;
   width: 10%;
   margin-left: 2%;
+  :hover {
+    transform: scale(1.1);
+  }
 `;
 
 const BackButton = styled.button`
@@ -104,6 +110,9 @@ const BackButton = styled.button`
   border-radius: 30px;
   width: 10%;
   margin-left: 2%;
+  :hover {
+    transform: scale(1.1);
+  }
 `;
 
 const Titles = styled.div`

@@ -175,14 +175,14 @@ export default function MyDietDaily() {
   };
 
   const clickDeleteBtn = (info) => {
-    if(window.confirm("정말 삭제합니까?")) {
+    if(window.confirm("정말 삭제하시겠습니까?")) {
       dispatch({
         type: MY_DIET_DIARY_DELETE_REQUEST,
         data: { date: info },
       });
       alert("삭제되었습니다");
     } else {
-      alert("취소합니다.");
+      alert("취소되었습니다.");
     }
   };
 
