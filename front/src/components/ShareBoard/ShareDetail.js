@@ -8,6 +8,7 @@ import "./ShareDetail.css";
 import { Container, Row, Col } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  Title,
   TotalStyle,
   RegisterReq,
   ListButton,
@@ -152,7 +153,6 @@ function Detail({ match }) {
       dispatch({
         type: SHARE_BOARD_DELETE_REQUEST,
         data: {
-          boardNo: index,
           diaryNo: shareDiaryNo,
         }
       });
@@ -312,6 +312,7 @@ function Detail({ match }) {
   return (
     <div className="bigBox">
       <Container>
+        <Title>식단 상세정보</Title>
         <TotalStyle>
           <Row>
             <Col>
@@ -353,7 +354,6 @@ function Detail({ match }) {
                     />
                     ) : (
                     <Description
-                      value={ detaildescription }
                       type="text"
                       defaultValue={detaildescription}
                       onChange={DescriptionhandleChange}/>
@@ -390,7 +390,7 @@ function Detail({ match }) {
                 </LikeListStyle>
               )}
             </Col>
-            <div className="newCommentBox">
+            <div style={{ marginTop: '3%' }}>
               <Titles className="newText"> 댓글</Titles>
               <CommentHeader>
                 <CommentWrapper>

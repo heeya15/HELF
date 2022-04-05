@@ -41,6 +41,7 @@ import {
   UpdateCancelButton,
 } from "./MyDietRegister.style";
 import {
+  MenuTitle,
   DetailReq,
   UpdateButton,
   BackButton,
@@ -289,6 +290,11 @@ export default function MyDietDetail() {
   return (
     <div>
       <Container>
+        { dietUpdate ? 
+          <MenuTitle>MY식단 수정</MenuTitle>
+        :
+          <MenuTitle>MY식단 상세정보</MenuTitle>
+        }
         <TotalStyle>
           <Row>
             <Col>

@@ -1,5 +1,11 @@
 import styled from "styled-components";
 
+const MenuTitle = styled.div`
+    font-size: 50px;
+    margin: 40px 0px 0px 0px;
+    font-family: 'KOTRA_BOLD-Bold';
+`;
+
 const DetailReq = styled.div`
   margin-top: 5%;
   margin-right: 5%;
@@ -66,6 +72,7 @@ const FoodListStyle = styled.div`
 `;
 
 export {
+  MenuTitle,
   DetailReq,
   UpdateButton,
   BackButton,

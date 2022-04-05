@@ -60,7 +60,7 @@ export default function MyPageLike() {
   }
 
   return (
-    <div style={{ margin: "5% auto", width: "90%" }}>
+    <div style={{ margin: "3% auto", width: "90%" }}>
       <Title>🏆 BEST 식단 🏆</Title>
       {shareBoardTopLikeList.length == 0 ? (
         <div>BEST 식단 게시글이 없습니다.</div>

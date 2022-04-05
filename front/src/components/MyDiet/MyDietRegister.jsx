@@ -21,6 +21,7 @@ import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
 import {
+  MenuTitle,
   TotalStyle,
   RegisterReq,
   MealTypeButton,
@@ -181,7 +182,8 @@ export default function MyDietRegister() {
   return (
     <div>
       <Container>
-        <TotalStyle style={{ marginTop: "5%" }}>
+        <MenuTitle>MY식단 등록</MenuTitle>
+        <TotalStyle style={{ marginTop: "2%" }}>
           <Row>
             <Col>
               <ImageThumbnail src={dietThumbnail} alt="이미지"></ImageThumbnail>

@@ -1,7 +1,12 @@
 import styled from "styled-components";
 
+const Title = styled.div`
+    font-size: 45px;
+    margin-top: 50px;
+`;
+
 const TotalStyle = styled.div`
-  margin-top: 5%;
+  margin-top: 3%;
   padding: 20px;
   border-radius: 10px;
   box-shadow: 4px 4px 4px 2px rgba(0, 0, 0, 0.25);
@@ -83,6 +88,7 @@ const CommentHeader = styled.div`
   color: #272727;
   border: none;
   background-color: #f2f7f4;
+  box-shadow: 4px 4px 4px 0px rgba(0, 0, 0, 0.25);
 `;
 const CommentBoxBig = styled.div`
   padding-top : 0.5rem;
@@ -279,6 +285,7 @@ const LikeListStyle = styled.div`
 `;
 
 export {
+  Title,
   TotalStyle,
   RegisterReq,
   MealTypeButton,
