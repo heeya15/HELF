@@ -1,8 +1,7 @@
 import React, { Component, useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { Link, useParams, useHistory } from "react-router-dom";
-import { BASE_URL, IMAGE_URL, LOCAL_URL } from "../../utils/https";
-import { Button } from "react-bootstrap";
+import { BASE_URL, IMAGE_URL } from "../../utils/https";
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import "./ShareDetail.css";
@@ -11,7 +10,6 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   TotalStyle,
   RegisterReq,
-  MealTypeButton,
   ListButton,
   UpdateButton,
   DeleteButton,
@@ -22,7 +20,6 @@ import {
   CommentHeader,
   CommentBoxBig,
   SendButton,
-  CommentDeleteBtn,
   CommentTitles,
   CommentWrapper,
   FoodListStyle,
@@ -435,7 +432,8 @@ function Detail({ match }) {
                   {commentData.map((user) => (
                     <div key={user.comment_no}>
                       {userData == user.user_id ? (
-                        <CommentWrapper>
+                        <Row>
+                          <Col md="11">
                           <CommentTitles className="newText">
                             {user.user_id} : 
                             {input ? (
@@ -454,17 +452,15 @@ function Detail({ match }) {
                               <span style={{ fontFamily: 'KOTRA_GOTHIC' }}> {user.comment}</span>
                             )}
                           </CommentTitles>
-                          <div>
-                          
-
-                          {/*  수정파트 */}
-                          <EditIcon
-                            style={{ cursor: 'pointer' }}
-                            onClick={(e) => {
-                              handleClick(user.comment_no, user.comment);
-                            }}
-                          />
-      
+                          </Col>
+                          <Col md="1" >
+                            {/*  수정파트 */}
+                            <EditIcon
+                              style={{ cursor: 'pointer' }}
+                              onClick={(e) => {
+                                handleClick(user.comment_no, user.comment);
+                              }}
+                            />
                             {/* 삭제파트 */}
                             <DeleteIcon
                               style={{ cursor: 'pointer', marginLeft: '5px' }}
@@ -472,14 +468,17 @@ function Detail({ match }) {
                                 commentDeleteHandler(user.comment_no);
                               }}
                             />
-                          </div>
-                        </CommentWrapper>
+                          </Col>
+                        </Row>
                       ) : (
-                        <div className="commentDelete">
-                          <CommentTitles className="newText">
-                            {user.user_id} : {user.comment}
-                          </CommentTitles>
-                        </div>
+                        <Row>
+                          <Col md="11">
+                            <CommentTitles 
+                              className="newText">
+                              {user.user_id} : <span style={{ fontFamily: 'KOTRA_GOTHIC' }}> {user.comment}</span>
+                            </CommentTitles>
+                          </Col>
+                        </Row>
                       )}
                     </div>
                   ))}
