@@ -1,4 +1,4 @@
-FROM openjdk:8-jdk-slim
+FROM openjdk:8-jdk-alpine
 EXPOSE 8443
 ARG JAR_FILE=build/libs/*.jar
 COPY ${JAR_FILE} app.jar
