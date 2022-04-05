@@ -357,8 +357,19 @@ const ExerciseHistoryTotal = styled.div`
     font-size: 0;
   }
   .cell {
-    height: 15px;
-    width: 15px;
+    @media screen and (max-width: 768px) {
+      height: 5px;
+      width: 5px;
+    }
+    @media screen and (min-width: 769px) and (max-width: 1208px) {
+      height: 10px;
+      width: 10px;
+    }
+    @media screen and (min-width: 1209px) {
+      height: 15px;
+      width: 15px;
+    }
+
     border-radius: 2px;
     margin: 1px;
     font-size: 10px;
@@ -388,8 +399,6 @@ const ExerciseHistoryTotal = styled.div`
     background-color: rgb(7, 63, 29);
   }
 `;
-
-
 
 export {
   Container,
