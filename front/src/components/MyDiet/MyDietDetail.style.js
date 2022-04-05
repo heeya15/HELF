@@ -53,7 +53,7 @@ const FoodListStyle = styled.div`
   overflow-x: hidden;
   overflow-y: auto;
   flew-wrap: nowrap;
-  height: 320px;
+  max-height: 320px;
   ::-webkit-scrollbar {
     width: 10px;
   }
