@@ -13,6 +13,7 @@ import {
   ShareBoardUpdateDiscriptionAPI,
   ShareBoardDetailSelectAPI,
   ShareBoardDetailHitIncreaseAPI,
+  ShareBoardDeleteAPI,
 } from '../apis/shareBoard'
 import {
   SHARE_BOARD_REGISTER_REQUEST,
@@ -36,6 +37,9 @@ import {
   SHARE_BOARD_DETAIL_HIT_INCREASE_REQUEST,
   SHARE_BOARD_DETAIL_HIT_INCREASE_SUCCESS,
   SHARE_BOARD_DETAIL_HIT_INCREASE_FAILURE,
+  SHARE_BOARD_DELETE_REQUEST,   // 게시글 삭제 (공유 해제)
+  SHARE_BOARD_DELETE_SUCCESS,
+  SHARE_BOARD_DELETE_FAILURE,
 } from '../modules/shareBoard';
 import swal from 'sweetalert'; // 예쁜 alert 창을 위해 사용
 
@@ -174,6 +178,20 @@ function* watchLoadShareBoardDetailHitIncrease() {
   yield takeLatest(SHARE_BOARD_DETAIL_HIT_INCREASE_REQUEST, loadShareBoardDetailHitIncrease);
 }
 
+// 해당 공유 게시글 해제 (공유 해제)
+function* loadShareBoardDelete(action) {
+  try {
+    const result = yield call(ShareBoardDeleteAPI, action.data);
+    yield put({ type: SHARE_BOARD_DELETE_SUCCESS, data: result });
+  } catch (error) {
+    yield put({ type: SHARE_BOARD_DELETE_FAILURE });
+  }
+}
+
+function* watchLoadShareBoardDelete(){
+  yield takeLatest(SHARE_BOARD_DELETE_REQUEST, loadShareBoardDelete);
+}
+
 export default function* ShareBoardSaga() {
   yield all([
       fork(watchLoadShareBoardDetailSelect),
@@ -183,5 +201,6 @@ export default function* ShareBoardSaga() {
       fork(watchLoadShareBoardRegister),
       fork(watchLoadShareBoardTopLike),
       fork(watchLoadShareBoardDetailHitIncrease),
+      fork(watchLoadShareBoardDelete),
   ]);
 }
