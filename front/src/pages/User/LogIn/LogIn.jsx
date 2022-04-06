@@ -94,13 +94,12 @@ export default function LogIn() {
   const { Kakao } = window;
   const [ac, setAc] = useState("");
   const onSocialLogin = () => {
-    alert('서비스를 이용하기 위하여 모든 항목을 꼭 동의해 주세요!');
     Kakao.Auth.login({
       // 카카오 로그인 화면 팝업으로 띄우고
       success: function(authObj) {
         setAc(authObj.access_token);
         let socialAC = `Bearer ${ac}`;
-     
+
         Kakao.Auth.setAccessToken(authObj.access_token);
         dispatch({
           type: KAKAO_LOG_IN_REQUEST,

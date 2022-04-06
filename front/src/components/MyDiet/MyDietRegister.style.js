@@ -16,11 +16,17 @@ const TotalStyle = styled.div`
     :hover {
       cursor: pointer;
     }
+    @media (max-width: 1200px) {
+      font-size: 10px;
+    }
   }
 `;
 
 const MenuTitle = styled.div`
   font-size: 50px;
+  @media (max-width: 1200px) {
+    font-size: 30px;
+  }
   margin: 40px 0px 0px 0px;
   font-family: "KOTRA_BOLD-Bold";
 `;
@@ -34,6 +40,7 @@ const ImageThumbnail = styled.img`
   margin-left: auto;
   margin-right: auto;
   opacity: 0.8;
+  min-width: 340px;
 `;
 
 const RegisterReq = styled.div`
@@ -52,6 +59,9 @@ const MealTypeButton = styled.div`
     border-radius: 30px;
     width: 60%;
     max-width: 120px;
+    @media (max-width: 1200px) {
+      font-size: 10px;
+    }
   }
   .active {
     background-color: #56a75f;
@@ -90,6 +100,9 @@ const RegisterButton = styled.button`
   :hover {
     transform: scale(1.1);
   }
+  @media (max-width: 1200px) {
+    font-size: 10px;
+  }
 `;
 
 const UpdateCancelButton = styled.button`
@@ -106,6 +119,9 @@ const UpdateCancelButton = styled.button`
   :hover {
     transform: scale(1.1);
   }
+  @media (max-width: 1200px) {
+    font-size: 10px;
+  }
 `;
 
 const BackButton = styled.button`
@@ -121,6 +137,9 @@ const BackButton = styled.button`
   margin-left: 2%;
   :hover {
     transform: scale(1.1);
+  }
+  @media (max-width: 1200px) {
+    font-size: 10px;
   }
 `;
 

@@ -159,6 +159,9 @@ const MenuTitle = styled.div`
   font-size: 40px;
   margin: 40px 0;
   font-family: "KOTRA_BOLD-Bold";
+  @media (max-width: 1200px) {
+    font-size: 30px;
+  }
 `;
 
 const modalTitle = {

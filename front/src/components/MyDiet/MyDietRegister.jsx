@@ -220,7 +220,7 @@ export default function MyDietRegister() {
         <MenuTitle>MY식단 등록</MenuTitle>
         <TotalStyle style={{ marginTop: "2%" }}>
           <Row>
-            <Col>
+            <Col style={{ minWidth: "340px" }}>
               {cameraState ? (
                 <>
                   <Camera
@@ -230,6 +230,15 @@ export default function MyDietRegister() {
                   />
                   <button className="imageSelect" onClick={cameraTakePhoto}>
                     촬영
+                  </button>
+                  <button
+                    className="imageSelect"
+                    hidden={numberOfCameras <= 1}
+                    onClick={() => {
+                      camera.current.switchCamera();
+                    }}
+                  >
+                    전환
                   </button>
                   <button
                     className="imageSelect"
@@ -259,12 +268,6 @@ export default function MyDietRegister() {
                   >
                     이미지 촬영
                   </button>
-                  {/* <button
-                    hidden={numberOfCameras <= 1}
-                    onClick={() => {
-                      camera.current.switchCamera();
-                    }}
-                  /> */}
                 </>
               )}
             </Col>
@@ -322,7 +325,7 @@ export default function MyDietRegister() {
                   음식별 무게를 선택해주세요.
                 </div>
                 {imageDetectionLoading && (
-                  <TailSpin height={40} width={40}></TailSpin>
+                  <TailSpin color="#2E7D32" height={40} width={40}></TailSpin>
                 )}
                 {imageDetectionListEmpty && foodName.length === 0 && (
                   <div
