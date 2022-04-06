@@ -18,9 +18,9 @@ const TotalStyle = styled.div`
 `;
 
 const MenuTitle = styled.div`
-    font-size: 50px;
-    margin: 40px 0px 0px 0px;
-    font-family: 'KOTRA_BOLD-Bold';
+  font-size: 50px;
+  margin: 40px 0px 0px 0px;
+  font-family: "KOTRA_BOLD-Bold";
 `;
 
 const ImageThumbnail = styled.img`
@@ -31,6 +31,7 @@ const ImageThumbnail = styled.img`
   margin-top: 5%;
   margin-left: auto;
   margin-right: auto;
+  opacity: 0.8;
 `;
 
 const RegisterReq = styled.div`

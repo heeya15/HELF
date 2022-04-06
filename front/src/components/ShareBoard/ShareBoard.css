@@ -1,7 +1,7 @@
 .menuTitle {
   font-size: 50px;
   margin-top: 40px;
-  font-family: 'KOTRA_BOLD-Bold';
+  font-family: "KOTRA_BOLD-Bold";
 }
 
 .boxdiv {
@@ -19,8 +19,6 @@
   border-radius: 10px;
   /* border: 2px solid #2E7D32; */
   /* background-color: #2E7D32; */
-
-
 }
 .innerboxcolor {
   display: flex;
@@ -43,11 +41,11 @@
 }
 
 .shardboxMargin {
-margin: 0;
-display: flex;
-align-items: center;
-justify-content: center;
-flex-direction: column;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
 }
 .LabelStyle {
   white-space: nowrap;
@@ -56,9 +54,21 @@ flex-direction: column;
 }
 
 .fontNormal {
-  font-family: 'KOTRA_GOTHIC';
+  font-family: "KOTRA_GOTHIC";
 }
 
 .fontBold {
-  font-family: 'KOTRA_BOLD-Bold';
+  font-family: "KOTRA_BOLD-Bold";
+}
+
+.orderButton {
+  width: 80%;
+  display: flex;
+  justify-content: flex-end;
+}
+.orderButton button {
+  border: none;
+  border-radius: 5px;
+  margin-right: 1%;
+  width: 5%;
 }
