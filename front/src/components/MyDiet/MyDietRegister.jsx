@@ -395,8 +395,8 @@ export default function MyDietRegister() {
             </Col>
           </Row>
         </TotalStyle>
-        <RegisterButton onClick={registerMyDietButton}>등록</RegisterButton>
         <BackButton onClick={goBack}>나가기</BackButton>
+        <RegisterButton onClick={registerMyDietButton}>등록</RegisterButton>
       </Container>
     </div>
   );

@@ -44,7 +44,7 @@ const BackButton = styled.button`
   border: none;
   border-radius: 30px;
   width: 10%;
-  margin-left: 2%;
+  margin-right: 2%;
   :hover {
     transform: scale(1.1);
   }

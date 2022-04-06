@@ -264,6 +264,9 @@ const Titles = styled.div`
   margin-top: 4%;
   display: flex;
   justify-content: space-between;
+  @media (max-width: 1200px) {
+    margin-top: 15%;
+  }
 `;
 const CommentTitles = styled.div`
   font-size: 17px;
@@ -281,7 +284,11 @@ const LikeListStyle = styled.div`
     position: absolute;
     text-align: center;
     margin: 0 auto;
-
+    .iconMargin {
+      @media screen and (max-width: 1280px) {
+        margin-top: 15%;
+      }
+    }
     .icon {
       position: absolute;
       z-index: 2;
