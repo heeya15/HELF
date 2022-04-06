@@ -37,10 +37,10 @@ export default function ExerciseSetting() {
     "덤벨컬",
     "프론트 레이즈",
     "런지",
-    // "오버 헤드 프레스",
-    // "푸시업",
     "사이드 레터럴 레이즈",
     "스쿼트",
+    // "오버 헤드 프레스",
+    // "푸시업",
     // "스탠딩 사이드 크런치",
   ];
   const { exercise } = useSelector((state) => state.exerciseHistory);

@@ -40,8 +40,8 @@ export default function ExerciseRoom() {
     '덤벨컬',
     '프론트 레이즈',
     '런지',
-    '오버 헤드 프레스',
-    '푸시업',
+    // '오버 헤드 프레스',
+    // '푸시업',
     '사이드 레터럴 레이즈',
     '스쿼트',
     // '스탠딩 사이드 크런치',
@@ -84,16 +84,16 @@ export default function ExerciseRoom() {
       case 4: // Lunge
         setURL('https://teachablemachine.withgoogle.com/models/7zoTQArlc/');
         break;
-      case 5: // OverheadPress
-        setURL('https://teachablemachine.withgoogle.com/models/QoQ4ty5qS/');
-        break;
-      case 6: // PushUp
-        setURL('https://teachablemachine.withgoogle.com/models/R6Q1RWNar/');
-        break;
-      case 7: // SideLateralRaise
+      // case 5: // OverheadPress
+      //   setURL('https://teachablemachine.withgoogle.com/models/QoQ4ty5qS/');
+      //   break;
+      // case 6: // PushUp
+      //   setURL('https://teachablemachine.withgoogle.com/models/R6Q1RWNar/');
+      //   break;
+      case 5: // SideLateralRaise
         setURL('https://teachablemachine.withgoogle.com/models/2GMC5JVkX/');
         break;
-      case 8: // Squat
+      case 6: // Squat
         setURL('https://teachablemachine.withgoogle.com/models/050JkD2Z0/');
         break;
       // case 9: // StandingSideCrunch
