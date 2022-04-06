@@ -51,7 +51,7 @@ import {
 } from "./MyDietDetail.style";
 import { ButtonWrapper, ConfirmButton, CancelButton } from "./MyDiet.style";
 import { FcCancel } from "react-icons/fc";
-import { Oval } from "react-loader-spinner";
+import { TailSpin } from "react-loader-spinner";
 
 export default function MyDietDetail() {
   const dispatch = useDispatch();
@@ -376,7 +376,7 @@ export default function MyDietDetail() {
                     음식별 무게를 선택해주세요.
                   </div>
                   {imageDetectionLoading && (
-                    <Oval height={40} width={40}></Oval>
+                    <TailSpin height={40} width={40}></TailSpin>
                   )}
                   {imageDetectionListEmpty && foodName.length === 0 && (
                     <div
@@ -391,24 +391,25 @@ export default function MyDietDetail() {
                     </div>
                   )}
                   <div>
-                    {foodName.map((food, index) => (
-                      <div key={index}>
-                        {food.foodName}{" "}
-                        <select
-                          data-index={index}
-                          style={{
-                            marginTop: "1%",
-                            borderRadius: "4px",
-                            outline: "0 none",
-                            overBackgroundColor: "black",
-                            cursor: "pointer",
-                          }}
-                          onChange={onWeightHandler}
-                        >
-                          {WeightSelect}
-                        </select>
-                      </div>
-                    ))}
+                    {!imageDetectionLoading &&
+                      foodName.map((food, index) => (
+                        <div key={index}>
+                          {food.foodName}{" "}
+                          <select
+                            data-index={index}
+                            style={{
+                              marginTop: "1%",
+                              borderRadius: "4px",
+                              outline: "0 none",
+                              overBackgroundColor: "black",
+                              cursor: "pointer",
+                            }}
+                            onChange={onWeightHandler}
+                          >
+                            {WeightSelect}
+                          </select>
+                        </div>
+                      ))}
                   </div>
                   <Titles>Meal Type</Titles>
                   <MealTypeButton style={{ display: "flex" }}>

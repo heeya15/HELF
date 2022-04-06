@@ -36,7 +36,7 @@ import {
 } from "./MyDietRegister.style";
 import { ButtonWrapper, ConfirmButton, CancelButton } from "./MyDiet.style";
 import { FcCancel } from "react-icons/fc";
-import { Oval } from "react-loader-spinner";
+import { TailSpin } from "react-loader-spinner";
 
 export default function MyDietRegister() {
   const dispatch = useDispatch();
@@ -257,7 +257,9 @@ export default function MyDietRegister() {
                 >
                   음식별 무게를 선택해주세요.
                 </div>
-                {imageDetectionLoading && <Oval height={40} width={40}></Oval>}
+                {imageDetectionLoading && (
+                  <TailSpin height={40} width={40}></TailSpin>
+                )}
                 {imageDetectionListEmpty && foodName.length === 0 && (
                   <div
                     style={{
