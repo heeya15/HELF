@@ -160,7 +160,7 @@ export default function NutritionHistory() {
         <div style={{ height: '100%', width: '100%'}}>
             <Title>영양 성분 통계</Title>
             <DatePicker 
-                style={{ width: '80%'}}
+                style={{ width: '10%'}}
                 locale='ko'
                 selected={startDate} 
                 onChange={

@@ -43,6 +43,7 @@ import {
 import {
   MenuTitle,
   DetailReq,
+  ButtonGroup,
   UpdateButton,
   BackButton,
   MealTimeDetail,
@@ -433,6 +434,7 @@ export default function MyDietDetail() {
                     style={{
                       fontSize: "12px",
                       color: "grey",
+                      fontFamily: 'KOTRA_GOTHIC',
                     }}
                   >
                     음식별 무게를 선택해주세요.
@@ -533,17 +535,19 @@ export default function MyDietDetail() {
             </Col>
           </Row>
         </TotalStyle>
-        <BackButton onClick={goBack}>나가기</BackButton>
-        {dietUpdate ? (
-          <>
-            <RegisterButton onClick={dietUpdateButton}>등록</RegisterButton>
-            <UpdateCancelButton onClick={dietNotUpdateButton}>
-              취소
-            </UpdateCancelButton>
-          </>
-        ) : (
-          <UpdateButton onClick={dietUpdateStateButton}>수정</UpdateButton>
-        )}
+        <ButtonGroup>
+          {dietUpdate ? (
+            <>
+              <BackButton onClick={dietNotUpdateButton}>나가기</BackButton>
+              <RegisterButton onClick={dietUpdateButton}>등록</RegisterButton>
+            </>
+          ) : (
+            <>
+              <BackButton onClick={goBack}>나가기</BackButton>
+              <UpdateButton onClick={dietUpdateStateButton}>수정</UpdateButton>
+            </>
+          )}
+        </ButtonGroup>
       </Container>
     </div>
   );

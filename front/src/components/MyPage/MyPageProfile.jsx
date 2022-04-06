@@ -312,12 +312,12 @@ export default function MypageProfile() {
               <PhysicalInfo>
                 {gender} {me.height}cm {me.weight}kg
               </PhysicalInfo>
-              <MyPageProfileEditButton onClick={handleOpen}>
-                정보 수정
-              </MyPageProfileEditButton>
               <MyPageProfileDeleteButton onClick={handleDeleteUser}>
                 회원 탈퇴
               </MyPageProfileDeleteButton>
+              <MyPageProfileEditButton onClick={handleOpen}>
+                정보 수정
+              </MyPageProfileEditButton>
               <Modal
                 open={open}
                 onClose={handleClose}
@@ -347,10 +347,10 @@ export default function MypageProfile() {
                     </ModalBodyWrapper>
                     <hr />
                     <ButtonWrapper>
+                      <CancelButton onClick={handleClose}>닫기</CancelButton>
                       <ConfirmButton onClick={handlePasswordConfirm}>
                         확인
                       </ConfirmButton>
-                      <CancelButton onClick={handleClose}>닫기</CancelButton>
                     </ButtonWrapper>
                   </Box>
                 ) : (
@@ -381,10 +381,10 @@ export default function MypageProfile() {
                     </ModalBodyWrapper>
                     <hr />
                     <ButtonWrapper>
+                      <CancelButton onClick={handleClose}>닫기</CancelButton>
                       <ConfirmButton onClick={handlePasswordConfirm}>
                         확인
                       </ConfirmButton>
-                      <CancelButton onClick={handleClose}>닫기</CancelButton>
                     </ButtonWrapper>
                   </Box>
                 )}
@@ -492,8 +492,8 @@ export default function MypageProfile() {
               className="justify-content-center"
               style={{ marginTop: "10px" }}
             >
-              <ConfirmButton onClick={handleEdit}>수정</ConfirmButton>
               <CancelButton onClick={handleEditCancel}>취소</CancelButton>
+              <ConfirmButton onClick={handleEdit}>수정</ConfirmButton>
             </Row>
           </Col>
           // </Box>

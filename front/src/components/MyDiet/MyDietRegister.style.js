@@ -39,7 +39,7 @@ const ImageThumbnail = styled.img`
   margin-top: 5%;
   margin-left: auto;
   margin-right: auto;
-  opacity: 0.8;
+  // opacity: 0.8;
   min-width: 340px;
 `;
 
@@ -88,20 +88,27 @@ const Description = styled.textarea`
 `;
 
 const RegisterButton = styled.button`
-  margin-top: 2%;
-  margin-bottom: 3%;
-  padding: 5px 0px;
+  margin-top: 3%;
+  margin-bottom: 5%;
+  padding: 6px 20px;
   color: #fff;
-  background-color: #56a75f;
+  background-color: #2E7D32;
   font-size: 18px;
-  border: none;
-  border-radius: 30px;
-  width: 10%;
+  border: 3px solid #2E7D32;
+  border-radius: 20px;
+  // width: 10%;
   :hover {
     transform: scale(1.1);
   }
   @media (max-width: 1200px) {
-    font-size: 10px;
+    font-size: 15px;
+  }
+`;
+
+const ButtonGroup = styled.div`
+  margin: 0 auto;
+  @media (max-width: 1200px) {
+    text-align: right;
   }
 `;
 
@@ -110,36 +117,37 @@ const UpdateCancelButton = styled.button`
   margin-bottom: 3%;
   padding: 5px 0px;
   color: #fff;
-  background-color: #f0df00;
+  // background-color: #f0df00;
+  background-color: #2E7D32;
   font-size: 18px;
   border: none;
-  border-radius: 30px;
-  width: 10%;
-  margin-left: 2%;
+  border-radius: 20px;
+  width: 80px;
+  margin-left: 1%;
   :hover {
     transform: scale(1.1);
   }
   @media (max-width: 1200px) {
-    font-size: 10px;
+    font-size: 15px;
   }
 `;
 
 const BackButton = styled.button`
-  margin-top: 2%;
-  margin-bottom: 3%;
-  padding: 5px 0px;
-  color: #fff;
-  background-color: #db2525;
+  margin-top: 3%;
+  margin-bottom: 5%;
+  padding: 6px 10px;
+  color: #2E7D32;
+  background-color: #fff;
   font-size: 18px;
-  border: none;
-  border-radius: 30px;
-  width: 10%;
-  margin-right: 2%;
+  border: 3px solid #2E7D32;
+  border-radius: 20px;
+  // width: 10%;
+  margin-right: 1%;
   :hover {
     transform: scale(1.1);
   }
   @media (max-width: 1200px) {
-    font-size: 10px;
+    font-size: 15px;
   }
 `;
 
@@ -154,7 +162,7 @@ const Titles = styled.div`
 const FoodCheckButton = styled.button`
   font-size: 12px;
   float: right;
-  border: 1px solid grey;
+  // border: 1px solid grey;
   border-radius: 3px;
   padding: 3px 5px;
   background-color: #9eb0a2;
@@ -175,10 +183,6 @@ const foodcheckBox = {
   boxShadow: 24,
   p: 4,
   borderRadius: "20px",
-};
-
-const ButtonGroup = {
-  marginBottom: "30px",
 };
 
 const StyledFormGroup = styled(FormGroup)`

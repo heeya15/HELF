@@ -73,7 +73,7 @@ export default function MyDiet() {
           start: "title",
           end: "today,prev,next",
         }}
-        height="80vh"
+        height="100vh"
         plugins={[dayGridPlugin, interactionPlugin]}
         initialView="dayGridMonth"
         eventOrder="time"

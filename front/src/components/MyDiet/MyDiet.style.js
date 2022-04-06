@@ -71,16 +71,28 @@ const shareBox = {
   borderRadius: "20px",
 };
 
-const descriptionArea = {
-  width: "100%",
-  height: "150px",
-  marginTop: "20px",
-  padding: "10px",
-  border: "1px solid #ccc",
-  borderRadius: "10px",
-  boxShadow: "3px 3px #bdbdbd",
-  fontFamily: "KOTRA_GOTHIC",
-};
+const DescriptionArea = styled.textarea`
+  width: 100%;
+  height: 150px;
+  margin-top: 20px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  box-shadow: 3px 3px #bdbdbd;
+  font-family: KOTRA_GOTHIC;
+  overflow: visible;
+  text-overflow: ellipsis;
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+  ::-webkit-scrollbar-thumb {
+    background-color: #2f3542;
+  }
+  ::-webkit-scrollbar-track {
+    background-color: grey;
+  }
+`;
+
 
 const ButtonWrapper = styled.div`
   margin-top: 20px;
@@ -93,15 +105,17 @@ const ConfirmButton = styled.button`
   border: 2px solid #2e7d32;
   border-radius: 10px;
   padding: 5px 10px;
-  margin-right: 5px;
+  font-family: 'KOTRA_BOLD-Bold';
 `;
-
+  
 const CancelButton = styled.button`
   background-color: #fff;
   color: #2e7d32;
   border: 2px solid #2e7d32;
   border-radius: 10px;
   padding: 5px 10px;
+  margin-right: 5px;
+  font-family: 'KOTRA_BOLD-Bold';
 `;
 
 const Bold = styled.span`
@@ -181,7 +195,7 @@ export {
   TotalKcal,
   DeleteButton,
   shareBox,
-  descriptionArea,
+  DescriptionArea,
   ButtonWrapper,
   ConfirmButton,
   CancelButton,

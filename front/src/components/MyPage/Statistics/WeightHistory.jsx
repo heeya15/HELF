@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
     Title,
     MyPageProfileButton,
+    weightEditInput,
     editBox,
     ModalBodyWrapper,
     ButtonWrapper,
@@ -246,6 +247,7 @@ export default function WeightHistory() {
                                 <div style={{ marginBottom : '10px' }}>
                                     <span style={fontBold}>날짜 : </span>
                                     <input
+                                        style={ weightEditInput }
                                         type='input'
                                         id='createdAt'
                                         onChange={ handleDate }
@@ -255,6 +257,7 @@ export default function WeightHistory() {
                                 <div>
                                     <span style={fontBold}>몸무게 : </span>
                                     <input
+                                        style={ weightEditInput }
                                         type='number'
                                         id='weight'
                                         onChange={e => {
@@ -266,12 +269,12 @@ export default function WeightHistory() {
                             </ModalBodyWrapper>
                             <hr/>
                             <ButtonWrapper>
-                                <ConfirmButton onClick={ handleWeightHistoryRegisterConfirm }>
-                                등록
-                                </ConfirmButton>
                                 <CancelButton onClick={ RegisterhandleClose }>
-                                닫기
+                                    닫기
                                 </CancelButton>
+                                <ConfirmButton onClick={ handleWeightHistoryRegisterConfirm }>
+                                    등록
+                                </ConfirmButton>
                             </ButtonWrapper>
                         </Box>  
                     </Modal>
@@ -304,6 +307,7 @@ export default function WeightHistory() {
                                 <div style={{ marginBottom : '10px' }}> 
                                     <span style={fontBold}>날짜 : </span>
                                     <input
+                                        style={ weightEditInput }
                                         type='input'
                                         id='createdAt'
                                         onChange={ handleDate }
@@ -313,6 +317,7 @@ export default function WeightHistory() {
                                 <div>
                                     <span style={fontBold}>몸무게 : </span>
                                     <input
+                                        style={ weightEditInput }
                                         type='number'
                                         id='weight'
                                         onChange={e => {
@@ -324,12 +329,12 @@ export default function WeightHistory() {
                             </ModalBodyWrapper>
                             <hr/>
                             <ButtonWrapper>
-                                <ConfirmButton onClick={ handleWeightHistoryUpdateConfirm }>
-                                수정
-                                </ConfirmButton>
                                 <CancelButton onClick={ handleClose }>
-                                닫기
+                                    닫기
                                 </CancelButton>
+                                <ConfirmButton onClick={ handleWeightHistoryUpdateConfirm }>
+                                    수정
+                                </ConfirmButton>
                             </ButtonWrapper>
                         </Box>  
                     </Modal>
@@ -356,8 +361,9 @@ export default function WeightHistory() {
                             <ModalBodyWrapper 
                                 style={modalBody}
                                 onKeyPress={ handleWeightHistoryDeleteConfirmKeyPress }>
-                                <span>날짜 : </span>
+                                <span style={fontBold}>날짜 : </span>
                                 <input
+                                    style={ weightEditInput }
                                     type='input'
                                     id='birthday'
                                     onChange={ handleDate }
@@ -366,12 +372,12 @@ export default function WeightHistory() {
                             </ModalBodyWrapper>
                             <hr/>
                             <ButtonWrapper>
-                                <ConfirmButton onClick={ handleWeightHistoryDeleteConfirm }>
-                                삭제
-                                </ConfirmButton>
                                 <CancelButton onClick={ DeletehandleClose }>
-                                닫기
+                                    닫기
                                 </CancelButton>
+                                <ConfirmButton onClick={ handleWeightHistoryDeleteConfirm }>
+                                    삭제
+                                </ConfirmButton>
                             </ButtonWrapper>
                         </Box>  
                     </Modal> 

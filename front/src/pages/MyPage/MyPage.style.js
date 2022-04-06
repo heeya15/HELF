@@ -150,6 +150,9 @@ const BlockWrapper = styled.div`
 const Title = styled.div`
   font-size: 50px;
   margin: 10px 0;
+  @media (max-width: 480px) {
+    font-size: 40px;
+  }
 `;
 
 export { 
