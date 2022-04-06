@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import ReactTooltip from "react-tooltip";
+import Slider from "react-slick";
 import { blockColor, device, pointColor } from "../../style/variables";
 
 const Container = styled.div`
@@ -57,8 +58,8 @@ const MyPageProfileDeleteButton = styled.button`
   margin-left: 10px;
   padding: 5px 10px;
   font-size: 17px;
-  background-color: #e02828;
-  border: 3px solid #e02828;
+  background-color: #c94c4c;
+  border: 3px solid #c94c4c;
   border-radius: 5px;
   color: #fff;
   :hover {
@@ -243,6 +244,16 @@ const CancelButton = styled.button`
 `;
 
 /** 찜 목록 */
+const StyledSilder = styled(Slider)`
+  .slick-prev::before {
+    // background-color: #000;
+    content: url('https://cdn-icons-png.flaticon.com/16/271/271220.png');
+  }
+  .slick-next::before{
+    content: url('https://cdn-icons-png.flaticon.com/16/271/271228.png');
+  }
+`;
+
 const LikeListStyle = styled.div`
   .total {
     background-color: transparent;
@@ -443,4 +454,5 @@ export {
   modalBody,
   editInput,
   fontBold,
+  StyledSilder,
 };
