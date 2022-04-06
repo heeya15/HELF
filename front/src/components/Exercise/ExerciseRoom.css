@@ -4,6 +4,32 @@
 
 .myExercise {
 	padding: 30px;
+	/* background-color: #f2f7f4; */
+}
+
+/* 페이지 로딩 */
+.loadingWrapper {
+	margin: 20% auto;
+}
+
+@import url(https://fonts.googleapis.com/css?family=Roboto:100);
+
+#loading {
+	display: inline-block;
+	width: 50px;
+	height: 50px;
+	border: 3px solid #2E7D32;
+	border-radius: 50%;
+	border-top-color: #fff;
+	animation: spin 1s ease-in-out infinite;
+	-webkit-animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+	to { -webkit-transform: rotate(360deg); }
+}
+@-webkit-keyframes spin {
+	to { -webkit-transform: rotate(360deg); }	
 }
 
 .menuTitle {
@@ -26,13 +52,45 @@
 }
 
 .leftBox {
-	text-align: right;
+	text-align: center;
 }
 
 #canvas {
 	border-radius: 20px;
 	width: 80%;
 	height: 80%;
+}
+
+/** 운동 설명 이미지 **/
+.imageWrapper {
+	text-align: center;
+	flex-direction: column;
+	justify-content: center;
+	padding: 20px;
+	background-color: #f2f7f4;
+	border-radius: 20px;
+	box-shadow: 4px 4px 4px 2px rgba(0, 0, 0, 0.25);
+}
+
+.exerciseTitle {
+	font-size: 30px;
+	margin-bottom: 5px;
+	/* font-family: 'KOTRA_GOTHIC'; */
+}
+
+.exerciseImage {
+	width: 80%;
+	height: 80%;
+	padding: 10px;
+	border-radius: 10px;
+	background-color: #fff;
+	box-shadow: 4px 4px 4px 2px rgba(0, 0, 0, 0.25);
+}
+
+.arrowImage {
+	margin: 15px 0px;
+	width: 50%;
+	height: 50%;
 }
 
 /** 운동 정보 **/
