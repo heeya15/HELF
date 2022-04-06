@@ -17,7 +17,7 @@ import Exercise from "./pages/Exercise/Exercise";
 import FindPassword from "./components/User/FindPassword/FindPassword";
 import MyDietDaily from "./components/MyDiet/MyDietDaily";
 import MyDietDetail from "./components/MyDiet/MyDietDetail";
-import Nutrition from "./components/MyPage/Statistics/Nutrition";
+import NutritionHistory from "./components/MyPage/Statistics/NutritionHistory";
 import withRoot from "./withRoot";
 import ExerciseHistory from "./components/MyPage/Statistics/ExerciseHistory";
 import AdditionalUserInfo from "./pages/User/LogIn/AdditionalUserInfo";
@@ -41,7 +41,7 @@ function App() {
         <Route path="/exercise/:breakTime" component={Exercise} />
         <Route path="/dietdiary/:date" component={MyDietDaily} />
         <Route path="/mydietdetail/:date/:diaryNo" component={MyDietDetail} />
-        <Route path="/nutrition" component={Nutrition} />
+        <Route path="/nutritionhistory" component={NutritionHistory} />
         <Route exact path="/sharedetail/:index" component={ShareDetail} />
         <Route path="/exercisehistory" component={ExerciseHistory} />
         <Route
