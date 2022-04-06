@@ -2,13 +2,18 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { Container, Row, Col } from "react-bootstrap";
+import Radium, { StyleRoot } from 'radium';
 import { 
   TotalStyle, 
   StartButton,
+  modalStyle,
   modalTitle,
   fontNormal, 
   fontBold,
   mainButton,
+  modalBody,
+  ExerciseInput,
+  ExerciseSelect,
 } from "./ExerciseSetting.style";
 import {
   setExerciseType,
@@ -17,6 +22,7 @@ import {
 } from "../../store/modules/exerciseHistory";
 import CloseIcon from '@mui/icons-material/Close';
 import Box from '@mui/material/Box';
+import Grid from '@mui/material/Grid';
 import Modal from '@mui/material/Modal';
 import Button from '../Main/Button';
 import Typography from '../Main/Typography';
@@ -84,26 +90,13 @@ export default function ExerciseSetting() {
     setBreakTime(e.target.value);
   }
 
-  const style = {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: '60%',
-    bgcolor: 'background.paper',
-    borderRadius: '30px',
-    // border: '2px solid #000',
-    p: 4,
-  };
-
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
   return (
     <>
-      <div>        
-        {/* <Banner/> */}
+      <StyleRoot>        
         <BannerLayout
           sxBackground={{
             backgroundImage: `url(${bannerImg})`,
@@ -153,8 +146,59 @@ export default function ExerciseSetting() {
           aria-labelledby="modal-modal-title"
           aria-describedby="modal-modal-description"
         >
-          <Box sx={style}>  
-            <Row style={{ height: '50px', marginTop: '20px' }}>
+          <Box sx={modalStyle}>
+            <Box sx={{ flexGrow: 1 }}>
+              <Grid container spacing={3}>
+                <Grid item xs={3}>
+                  <div></div>
+                </Grid>
+                <Grid item xs={6}>
+                  <div style={ modalTitle }>MY운동 세팅</div>
+                </Grid>
+                <Grid item xs={3} sx={{ textAlign: 'right' }}>
+                  <CloseIcon
+                    style={{ width: '30%', height: '100%', cursor: 'pointer' }}
+                    onClick={handleClose}
+                  />
+                </Grid>
+              </Grid>
+            </Box>
+            {/* <Row style={{ marginTop: '20px' }}>
+              <Col md="3"></Col>
+              <Col md="4"
+                style={ modalTitle }
+              >
+                MY운동 세팅
+              </Col>
+              <Col md="4"
+                style={{ textAlign: 'right' }}>
+                <CloseIcon
+                  style={{ width: '20%', height: '100%', cursor: 'pointer' }}
+                  onClick={handleClose}
+                />
+              </Col>
+            </Row> */}
+            
+            <Grid container spacing={2}
+              style={ modalBody }>
+              <Grid item xs={12} sm={6}>운동</Grid>
+              <Grid item xs={12} sm={6}>
+                <ExerciseSelect onChange={typeChange}>{TypeSelect}</ExerciseSelect>
+              </Grid>
+              <Grid item xs={12} sm={6}>목표 세트</Grid>
+              <Grid item xs={12} sm={6}>
+                <ExerciseInput type="number" placeholder="0" onChange={setChange}></ExerciseInput>
+              </Grid>
+              <Grid item xs={12} sm={6}>세트별 횟수</Grid>
+              <Grid item xs={12} sm={6}>
+                <ExerciseInput type="number" placeholder="0" onChange={timeChange}></ExerciseInput>
+              </Grid>
+              <Grid item xs={12} sm={6}>휴식 시간(초)</Grid>
+              <Grid item xs={12} sm={6}>
+                <ExerciseInput type="number" placeholder="0" onChange={breakTimeChange}></ExerciseInput>
+              </Grid>
+            </Grid>
+            {/* <Row style={{ height: '50px', marginTop: '20px' }}>
               <Col md="4"></Col>
               <Col md="4"
                 style={ modalTitle }
@@ -194,17 +238,15 @@ export default function ExerciseSetting() {
                   <Col>
                     <input type="number" placeholder="0" onChange={breakTimeChange}></input>
                   </Col>
-                </Row>
+                </Row> 
               </Container>
-            </TotalStyle>
+            </TotalStyle> */}
             <div style={{ textAlign: 'center' }}>
               <StartButton onClick={exerciseSetting}>START</StartButton>
             </div>
           </Box>
         </Modal>
-      </div>
-
-      
+      </StyleRoot>
     </>
   );
 }

@@ -46,9 +46,27 @@ const StartButton = styled.button`
 const modalTitle = {
   textAlign: 'center', 
   lineHeight: '55px', 
-  fontSize: '40px',
+  fontSize: '30px',
   fontFamily: 'KOTRA_BOLD-Bold',
+  '@media (max-width: 480px)': {
+    fontSize: '20px',
+  },
 }
+
+const modalStyle = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: '50%',
+  bgcolor: 'background.paper',
+  borderRadius: '30px',
+  // border: '2px solid #000',
+  p: 4,
+  '@media (max-width: 480px)': {
+    width: '100%',
+  },
+};
 
 const fontBold = {
   fontFamily: 'KOTRA_BOLD-Bold',
@@ -64,11 +82,48 @@ const mainButton = {
   color: '#000',    
 }
 
+const modalBody = {
+  fontFamily: 'KOTRA_BOLD-Bold',
+  padding: '20px 30px',
+  width: '100%',
+  margin: '5% auto',
+  textAlign: 'center',
+  backgroundColor: '#a3cca3',
+  fontSize: '20px',
+  borderRadius: '30px',
+};
+
+const ExerciseInput = styled.input`
+  border-radius: 10px;
+  border: none;
+  text-align: center;
+  width: 100%;
+  :focus {
+    outline: none;
+  }
+`;
+
+const ExerciseSelect = styled.select`
+  border-radius: 10px; 
+  outline: 0 none;
+  cursor: pointer;
+  border: none;
+  width: 100%;
+  text-align: center;
+`;
+
+
+
+
 export { 
   TotalStyle, 
   StartButton,
+  modalStyle,
   modalTitle,
   fontBold,
   fontNormal,
   mainButton,
+  modalBody,
+  ExerciseInput,
+  ExerciseSelect,
 };
