@@ -1,9 +1,9 @@
 import styled from "styled-components";
 
 const MenuTitle = styled.div`
-    font-size: 50px;
-    margin: 40px 0px 0px 0px;
-    font-family: 'KOTRA_BOLD-Bold';
+  font-size: 50px;
+  margin: 40px 0px 0px 0px;
+  font-family: "KOTRA_BOLD-Bold";
 `;
 
 const DetailReq = styled.div`
@@ -59,7 +59,7 @@ const FoodListStyle = styled.div`
   overflow-x: hidden;
   overflow-y: auto;
   flew-wrap: nowrap;
-  max-height: 320px;
+  max-height: 300px;
   ::-webkit-scrollbar {
     width: 10px;
   }

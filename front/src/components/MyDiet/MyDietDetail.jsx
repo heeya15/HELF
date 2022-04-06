@@ -50,6 +50,8 @@ import {
   FoodListStyle,
 } from "./MyDietDetail.style";
 import { ButtonWrapper, ConfirmButton, CancelButton } from "./MyDiet.style";
+import { FcCancel } from "react-icons/fc";
+import { Oval } from "react-loader-spinner";
 
 export default function MyDietDetail() {
   const dispatch = useDispatch();
@@ -64,7 +66,12 @@ export default function MyDietDetail() {
   }, [dispatch, diaryNo]);
 
   const { myDietDetail } = useSelector((state) => state.myDiet);
-  const { foodName, foods } = useSelector((state) => state.myDiet);
+  const {
+    foodName,
+    foods,
+    imageDetectionLoading,
+    imageDetectionListEmpty,
+  } = useSelector((state) => state.myDiet);
   const { dietDetailThumbnail } = useSelector((state) => state.myDiet);
 
   const [dietUpdate, setDietUpdate] = useState(false);
@@ -290,11 +297,11 @@ export default function MyDietDetail() {
   return (
     <div>
       <Container>
-        { dietUpdate ? 
+        {dietUpdate ? (
           <MenuTitle>MY식단 수정</MenuTitle>
-        :
+        ) : (
           <MenuTitle>MY식단 상세정보</MenuTitle>
-        }
+        )}
         <TotalStyle>
           <Row>
             <Col>
@@ -368,6 +375,21 @@ export default function MyDietDetail() {
                   >
                     음식별 무게를 선택해주세요.
                   </div>
+                  {imageDetectionLoading && (
+                    <Oval height={40} width={40}></Oval>
+                  )}
+                  {imageDetectionListEmpty && foodName.length === 0 && (
+                    <div
+                      style={{
+                        fontSize: "13px",
+                        color: "rgb(56 55 55)",
+                        fontFamily: "KOTRA_GOTHIC",
+                      }}
+                    >
+                      <FcCancel size="17"></FcCancel> 인식된 음식이 없습니다.
+                      이미지를 변경하거나 직접선택을 통해 음식을 선택해주세요.
+                    </div>
+                  )}
                   <div>
                     {foodName.map((food, index) => (
                       <div key={index}>
@@ -432,7 +454,7 @@ export default function MyDietDetail() {
                   </FoodListStyle>
                   <Titles>Description</Titles>
                   <Description
-                    rows="8"
+                    rows="5"
                     readOnly
                     value={myDietDetail.description}
                   ></Description>
