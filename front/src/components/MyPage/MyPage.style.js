@@ -5,30 +5,18 @@ import { blockColor, device, pointColor } from "../../style/variables";
 
 const Container = styled.div`
   width: 90vw;
-  max-width: 900px;
+  // max-width: 900px;
+  @media screen and (max-width: 768px) {
+    width: 95vw;
+  }
+  @media screen and (max-width: 481px) {
+    width: 95vw;
+  }
 `;
 
 const MyPageProfileBlock = styled.div`
   display: flex;
   justify-content: center;
-  @media ${device.TabletPortrait} {
-    flex-direction: column;
-  }
-  #profileIcon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0 10px;
-  }
-  #profileNickname {
-    font-weight: bold;
-    font-size: 30px;
-    margin: 5px;
-  }
-  #profileEmail {
-    font-size: 20px;
-    margin: 5px;
-  }
 `;
 
 const MyPageIconBlock = styled.div`
@@ -51,11 +39,17 @@ const MyPageProfileEditButton = styled.button`
   :hover {
     transform: scale(1.1);
   }
+  @media screen and (max-width: 768px) {
+    font-size: 14px;
+  }
+  @media screen and (max-width: 481px) {
+    font-size: 14px;
+  }
 `;
 
 const MyPageProfileDeleteButton = styled.button`
   margin-top: 25px;
-  margin-left: 10px;
+  margin-right: 10px;
   padding: 5px 10px;
   font-size: 17px;
   background-color: #c94c4c;
@@ -64,6 +58,12 @@ const MyPageProfileDeleteButton = styled.button`
   color: #fff;
   :hover {
     transform: scale(1.1);
+  }
+  @media screen and (max-width: 768px) {
+    font-size: 14px;
+  }
+  @media screen and (max-width: 481px) {
+    font-size: 14px;
   }
 `;
 
@@ -171,10 +171,12 @@ const NameInfo = styled.div`
 const BirthdayInfo = styled.div`
   font-size: 25px;
   margin-top: 20px;
+  word-break: break-word;
 `;
 
 const EmailInfo = styled.div`
   font-size: 25px;
+  word-break: break-word;
 `;
 
 const PhysicalInfo = styled.div`
@@ -193,6 +195,9 @@ const editBox = {
   borderRadius: "10px",
   boxShadow: 24,
   p: 4,
+  '@media (max-width: 480px)': {
+    width: '95%',
+  },
 };
 
 const editInput = {
@@ -232,7 +237,7 @@ const ConfirmButton = styled.button`
   border: 2px solid #2e7d32;
   border-radius: 10px;
   padding: 5px 10px;
-  margin-right: 5px;
+  margin-left: 5px;
   :hover {
     transform: scale(1.1);
   }
@@ -301,6 +306,10 @@ const ButtonGroup = styled.div`
   margin-top: 40px;
   margin-bottom: 80px;
 `;
+
+const weightEditInput = {
+  width: '130px',
+};
 
 const WeightButton = styled.button`
   margin-top: 20px;
@@ -459,4 +468,5 @@ export {
   editInput,
   fontBold,
   StyledSilder,
+  weightEditInput,
 };

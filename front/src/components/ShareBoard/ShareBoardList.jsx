@@ -49,7 +49,6 @@ function SharedBoard() {
         setTotalPage(response.data.totalElements);
       })
       .catch((err) => {
-        console.log("앙댐;");
       });
   }, [page, totalpage, order]);
 

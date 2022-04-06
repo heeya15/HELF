@@ -82,6 +82,7 @@ const mainButton = {
   color: '#000',    
 }
 
+
 const modalBody = {
   fontFamily: 'KOTRA_BOLD-Bold',
   padding: '20px 30px',
@@ -91,6 +92,9 @@ const modalBody = {
   backgroundColor: '#a3cca3',
   fontSize: '20px',
   borderRadius: '30px',
+  '@media (max-width: 480px)': {
+    fontSize: '15px',
+  },
 };
 
 const ExerciseInput = styled.input`

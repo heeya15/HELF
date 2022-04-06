@@ -34,6 +34,7 @@ import {
   FoodCheckButton,
   foodcheckBox,
   StyledFormGroup,
+  ButtonGroup,
 } from "./MyDietRegister.style";
 import { ButtonWrapper, ConfirmButton, CancelButton } from "./MyDiet.style";
 import { FcCancel } from "react-icons/fc";
@@ -395,8 +396,10 @@ export default function MyDietRegister() {
             </Col>
           </Row>
         </TotalStyle>
-        <BackButton onClick={goBack}>나가기</BackButton>
-        <RegisterButton onClick={registerMyDietButton}>등록</RegisterButton>
+        <ButtonGroup>
+          <BackButton onClick={goBack}>나가기</BackButton>
+          <RegisterButton onClick={registerMyDietButton}>등록</RegisterButton>
+        </ButtonGroup>
       </Container>
     </div>
   );

@@ -16,40 +16,49 @@ const DetailReq = styled.div`
   margin-bottom: 5%;
 `;
 
+const ButtonGroup = styled.div`
+  margin: 0 auto;
+  @media (max-width: 1200px) {
+    text-align: right;
+  }
+`;
+
 const UpdateButton = styled.button`
-  margin-top: 2%;
-  margin-bottom: 3%;
-  padding: 5px 0px;
+  margin-top: 3%;
+  margin-bottom: 5%;
+  padding: 6px 20px;
   color: #fff;
-  background-color: #dbc925;
+  background-color: #2E7D32;
+  // background-color: #dbc925;
   font-size: 18px;
-  border: none;
-  border-radius: 30px;
-  width: 10%;
+  border: 3px solid #2E7D32;
+  border-radius: 20px;
+  // width: 80px;
   :hover {
     transform: scale(1.1);
   }
   @media (max-width: 1200px) {
-    font-size: 10px;
+    font-size: 15px;
   }
 `;
 
 const BackButton = styled.button`
-  margin-top: 2%;
-  margin-bottom: 3%;
-  padding: 5px 0px;
-  color: #fff;
-  background-color: #db2525;
+  margin-top: 3%;
+  margin-bottom: 5%;
+  padding: 6px 10px;
+  color: #2E7D32;
+  background-color: #fff;
+  // background-color: #db2525;
   font-size: 18px;
-  border: none;
-  border-radius: 30px;
-  width: 10%;
-  margin-right: 2%;
+  border: 3px solid #2E7D32;
+  border-radius: 20px;
+  // width: 80px;
+  margin-right: 1%;
   :hover {
     transform: scale(1.1);
   }
   @media (max-width: 1200px) {
-    font-size: 10px;
+    font-size: 15px;
   }
 `;
 
@@ -83,6 +92,7 @@ const FoodListStyle = styled.div`
 export {
   MenuTitle,
   DetailReq,
+  ButtonGroup,
   UpdateButton,
   BackButton,
   MealTimeDetail,

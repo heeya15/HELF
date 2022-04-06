@@ -235,7 +235,6 @@ export default function ExerciseRoom() {
         countTime++;
         countTotalTime++;
         setCurrentCount(countTotalTime);
-        console.log("🎅🎅🎅🎅🎅🎅🎅 ", countTotalTime, currentCount);
 
         // 카운팅 소리 재생
         soundURL = require('../../assets/soundEffects/countSound/ddiring2.mp3');

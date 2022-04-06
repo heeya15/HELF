@@ -9,7 +9,6 @@ import Modal from '@mui/material/Modal';
 import DeleteIcon from '@mui/icons-material/Delete';
 import IconButton from '@mui/material/IconButton';
 import ArrowBackIosOutlinedIcon from '@mui/icons-material/ArrowBackIosOutlined';
-import { TextareaAutosize } from '@mui/material';
 import { IMAGE_URL } from '../../utils/https';
 import {
   MY_DIET_DIARY_DAILY_INFO_REQUEST,
@@ -26,7 +25,7 @@ import {
   DietDiaryItem,
   TotalKcal,
   shareBox,
-  descriptionArea,
+  DescriptionArea,
   ButtonWrapper,
   ConfirmButton,
   CancelButton,
@@ -248,8 +247,8 @@ export default function MyDietDaily() {
           />
         </Grid>
         <Grid item xs={12} sm={6} style={{ textAlign: 'right' }}>
-          <Fab style={ addButton } aria-label="add">
-            <AddIcon onClick={clickAddBtn} />
+          <Fab style={ addButton } aria-label="add" onClick={clickAddBtn} >
+            <AddIcon />
           </Fab>
         </Grid>
       </Grid>
@@ -323,22 +322,21 @@ export default function MyDietDaily() {
                           style={fontNormal}>
                           식단 공유와 함께 추가 설명을 적어주세요.
                         </Typography>
-                        <TextareaAutosize
+                        <DescriptionArea
                           maxRows={4}
                           aria-label='maximum height'
                           placeholder='this is description...'
-                          style={ descriptionArea }
                           onChange={(event) => {
                             setShareDescription(event.target.value);
                           }}
                         />
                         <ButtonWrapper>
+                          <CancelButton onClick={ handleClose }>닫기</CancelButton>
                           <ConfirmButton
                             onClick={ handleShareDietDiary}
                           >
                             확인
                           </ConfirmButton>
-                          <CancelButton onClick={ handleClose }>닫기</CancelButton>
                         </ButtonWrapper>
                       </Box>
                     </Modal>
