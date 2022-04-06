@@ -4,4 +4,5 @@ EXPOSE 8443
 ARG JAR_FILE=build/libs/*.jar
 COPY ${JAR_FILE} app.jar
 ENV TZ=Asia/Seoul
+ENV LD_LIBRARY_PATH=/lib64
 ENTRYPOINT ["java","-jar","/app.jar"]
