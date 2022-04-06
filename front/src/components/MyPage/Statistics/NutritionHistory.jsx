@@ -28,7 +28,7 @@ function customizeText(arg) {
     return `${arg.valueText} (${arg.percentText})`;
 }
 
-export default function Nutrition() {
+export default function NutritionHistory() {
     const dispatch = useDispatch();
     const { nutritionHistoryList } = useSelector(state => state.mypage);
     const { me } = useSelector(state => state.mypage);
@@ -157,9 +157,10 @@ export default function Nutrition() {
     }, [ startDate ]);
 
     return (
-        <div style={{ height: '100%'}}>
+        <div style={{ height: '100%', width: '100%'}}>
             <Title>영양 성분 통계</Title>
             <DatePicker 
+                style={{ width: '80%'}}
                 locale='ko'
                 selected={startDate} 
                 onChange={
