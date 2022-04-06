@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, useHistory } from "react-router-dom";
 import { IMAGE_URL } from "../../utils/https";
 import {
   setFoodCheckBox,
   setmyDietWeight,
+  setImageDetectionListEmpty,
   MY_DIET_IMAGE_REQUEST,
   MY_DIET_REGISTER_REQUEST,
   FOOD_LIST_REQUEST,
@@ -37,6 +38,7 @@ import {
 import { ButtonWrapper, ConfirmButton, CancelButton } from "./MyDiet.style";
 import { FcCancel } from "react-icons/fc";
 import { TailSpin } from "react-loader-spinner";
+import { Camera } from "react-camera-pro";
 
 export default function MyDietRegister() {
   const dispatch = useDispatch();
@@ -70,6 +72,7 @@ export default function MyDietRegister() {
   useEffect(() => {
     dispatch({ type: FOOD_LIST_REQUEST });
     dispatch(setFoodName([]));
+    dispatch(setImageDetectionListEmpty(false));
   }, [dispatch]);
 
   const onImageHandler = (e) => {
@@ -186,6 +189,31 @@ export default function MyDietRegister() {
     setCheckedInputs(temp);
   }, [foodName]);
 
+  const camera = useRef(null);
+  const [cameraState, setCameraState] = useState(false);
+  const [numberOfCameras, setNumberOfCameras] = useState(0);
+
+  const cameraTakePhoto = (e) => {
+    const dataurl = camera.current.takePhoto();
+    setCameraState(false);
+    setDietThumbnail(dataurl);
+    var arr = dataurl.split(","),
+      mime = arr[0].match(/:(.*?);/)[1],
+      bstr = atob(arr[1]),
+      n = bstr.length,
+      u8arr = new Uint8Array(n);
+
+    while (n--) {
+      u8arr[n] = bstr.charCodeAt(n);
+    }
+    const file = new File([u8arr], "camera.jpg", { type: mime });
+    setImagePath(file);
+    dispatch({
+      type: MY_DIET_IMAGE_REQUEST,
+      data: { imagePath: file },
+    });
+  };
+
   return (
     <div>
       <Container>
@@ -193,16 +221,52 @@ export default function MyDietRegister() {
         <TotalStyle style={{ marginTop: "2%" }}>
           <Row>
             <Col>
-              <ImageThumbnail src={dietThumbnail} alt="이미지"></ImageThumbnail>
-              <label className="imageSelect" htmlFor="input-file">
-                이미지 선택
-              </label>
-              <input
-                onChange={onImageHandler}
-                type="file"
-                id="input-file"
-                style={{ display: "none" }}
-              ></input>
+              {cameraState ? (
+                <>
+                  <Camera
+                    ref={camera}
+                    aspectRatio={4 / 3}
+                    numberOfCamerasCallback={setNumberOfCameras}
+                  />
+                  <button className="imageSelect" onClick={cameraTakePhoto}>
+                    촬영
+                  </button>
+                  <button
+                    className="imageSelect"
+                    onClick={() => setCameraState(false)}
+                  >
+                    취소
+                  </button>
+                </>
+              ) : (
+                <>
+                  <ImageThumbnail
+                    src={dietThumbnail}
+                    alt="이미지"
+                  ></ImageThumbnail>
+                  <label className="imageSelect" htmlFor="input-file">
+                    이미지 선택
+                  </label>
+                  <input
+                    onChange={onImageHandler}
+                    type="file"
+                    id="input-file"
+                    style={{ display: "none" }}
+                  ></input>
+                  <button
+                    className="imageSelect"
+                    onClick={() => setCameraState(true)}
+                  >
+                    이미지 촬영
+                  </button>
+                  {/* <button
+                    hidden={numberOfCameras <= 1}
+                    onClick={() => {
+                      camera.current.switchCamera();
+                    }}
+                  /> */}
+                </>
+              )}
             </Col>
             <Col>
               <RegisterReq>

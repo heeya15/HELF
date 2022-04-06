@@ -7,10 +7,12 @@ const TotalStyle = styled.div`
   box-shadow: 4px 4px 4px 2px rgba(0, 0, 0, 0.25);
   .imageSelect {
     margin-top: 2%;
+    margin-left: 1%;
     background-color: #e0e0e0;
     padding: 3px;
     border-radius: 7px;
     width: 18%;
+    border: none;
     :hover {
       cursor: pointer;
     }
