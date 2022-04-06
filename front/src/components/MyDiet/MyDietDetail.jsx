@@ -533,6 +533,7 @@ export default function MyDietDetail() {
             </Col>
           </Row>
         </TotalStyle>
+        <BackButton onClick={goBack}>나가기</BackButton>
         {dietUpdate ? (
           <>
             <RegisterButton onClick={dietUpdateButton}>등록</RegisterButton>
@@ -543,7 +544,6 @@ export default function MyDietDetail() {
         ) : (
           <UpdateButton onClick={dietUpdateStateButton}>수정</UpdateButton>
         )}
-        <BackButton onClick={goBack}>나가기</BackButton>
       </Container>
     </div>
   );
