@@ -91,7 +91,7 @@ export default function ExerciseRoom() {
         setURL('https://teachablemachine.withgoogle.com/models/R6Q1RWNar/');
         break;
       case 7: // SideLateralRaise
-        setURL('https://teachablemachine.withgoogle.com/models/UuDtip_te/');
+        setURL('https://teachablemachine.withgoogle.com/models/2GMC5JVkX/');
         break;
       case 8: // Squat
         setURL('https://teachablemachine.withgoogle.com/models/050JkD2Z0/');
@@ -230,7 +230,7 @@ export default function ExerciseRoom() {
     // Prediction 2: run input through teachable machine classification model
     const prediction = await model.predict(posenetOutput);
 
-    if (prediction[0].probability.toFixed(2) > 0.8) {
+    if (prediction[0].probability.toFixed(2) > 0.9) {
       if (status == 'action') {
         countTime++;
         countTotalTime++;
@@ -285,7 +285,7 @@ export default function ExerciseRoom() {
         
       }
       status = 'wait';
-    } else if (prediction[1].probability.toFixed(2) > 0.8) {
+    } else if (prediction[1].probability.toFixed(2) > 0.9) {
       status = 'action';
     }
 
