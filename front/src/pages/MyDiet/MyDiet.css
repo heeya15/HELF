@@ -1,47 +1,47 @@
 .MyDiet {
-    padding: 30px;
+  padding: 30px;
 }
 
 .MenuTitle {
-    font-size: 50px;
-    margin: 10px 0;
-    font-family: 'KOTRA_BOLD-Bold';
+  font-size: 50px;
+  margin: 10px 0;
+  font-family: "KOTRA_BOLD-Bold";
 }
 
 .MenuTitleLight {
-    /* background: linear-gradient(to top, 40%, transparent 40%); */
+  /* background: linear-gradient(to top, 40%, transparent 40%); */
 }
 
 /** 캘린더 header **/
 th {
-    background-color: #F6EDD9;
-    height: 40px;
-    line-height: 40px;
+  background-color: #f6edd9;
+  height: 40px;
+  line-height: 40px;
 }
 
 tbody::-webkit-scrollbar {
-    display: none; /* Chrome, Safari, Opera*/
+  display: none; /* Chrome, Safari, Opera*/
 }
 
 .fc {
-    width: 70%;
-    margin: 0 auto;
+  width: 70%;
+  margin: 0 auto;
 }
 
 /*요일*/
 .fc-col-header-cell-cushion {
-    color: #100C0D;
-    text-decoration: none;
+  color: #100c0d;
+  text-decoration: none;
 }
 .fc-col-header-cell-cushion:hover {
-    text-decoration: none;
-    color: #000;
+  text-decoration: none;
+  color: #000;
 }
 /*일자*/
 .fc-daygrid-day-number {
-    color: #000;
-    font-size: 1em;
-    cursor: pointer;
+  color: #000;
+  font-size: 1em;
+  cursor: pointer;
 }
 
 /*종일제목*/
@@ -50,17 +50,17 @@ tbody::-webkit-scrollbar {
 
 /*more버튼*/
 .fc-daygrid-more-link.fc-more-link {
-    color: #000;
+  color: #000;
 }
 
 /*일정시간*/
 .fc-daygrid-event > .fc-event-time {
-    color: #000;
+  color: #000;
 }
 
 /*시간제목*/
 .fc-daygrid-dot-event > .fc-event-title {
-    color: #000 !important;
+  color: #000 !important;
 }
 
 /*가로 줄 - 월달력 종일 or 복수일자*/
@@ -77,58 +77,62 @@ tbody::-webkit-scrollbar {
 
 /*month/week/day*/
 .fc-button-active {
-    border-color: #ffc107 !important;
-    background-color: #ffc107 !important;
-    color: #000 !important;
-    font-weight: bold !important;
+  border-color: #ffc107 !important;
+  background-color: #ffc107 !important;
+  color: #000 !important;
+  font-weight: bold !important;
 }
 
 /* 월 좌우 이동 버튼 */
 .fc .fc-button-group > .fc-button {
-    background-color: #9EB0A2;
-    border: 1px solid white;
+  background-color: #9eb0a2;
+  border: 1px solid white;
 }
 
 /* 월 좌우 이동 버튼에 마우스 올리면 살짝 커지기*/
 .fc .fc-button-group > .fc-button:hover {
-    transform: scale(1.1);
+  transform: scale(1.1);
 }
 
 /* today 버튼 */
 .fc-today-button {
-    background-color: #2D4E37 !important;
-    border: 1px solid white !important;
-    opacity: 1.0 !important;
-    cursor: pointer;
+  background-color: #2d4e37 !important;
+  border: 1px solid white !important;
+  opacity: 1 !important;
+  cursor: pointer;
 }
 
 /* today 버튼에 마우스 올리면 살짝 커지기*/
 .fc-today-button:hover {
-    transform: scale(1.1);
+  transform: scale(1.1);
 }
 
 /* 캘린더 날짜 칸에 마우스 올리면 마우스 포인터 변경*/
 .fc-daygrid-day-frame {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 /* 토요일 날짜 파란색으로 표시 */
-.fc-day-sat .fc-daygrid-day-number{
-    color: #064789;
+.fc-day-sat .fc-daygrid-day-number {
+  color: #064789;
 }
 
 /* 일요일 날짜 빨간색으로 표시 */
-.fc-day-sun .fc-daygrid-day-number{
-    color: #e02828;
+.fc-day-sun .fc-daygrid-day-number {
+  color: #e02828;
 }
 
 .fc-daygrid-day-number {
-    text-decoration: none;
+  text-decoration: none;
 }
 
 @media all and (max-width: 767px) {
-    .fc .fc-button-group > .fc-button {
-        width: 80%;
-        height: 80%;
-    }
+  .fc .fc-button-group > .fc-button {
+    width: 80%;
+    height: 80%;
+  }
+}
+
+.fc-event-title-container {
+  padding: 2px;
 }

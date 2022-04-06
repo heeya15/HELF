@@ -1,195 +1,196 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 const DietDiaryItemWrapper = styled.div`
-    margin: 20px auto;
-    width: 70%;
+  margin: 20px auto;
+  width: 70%;
 `;
 
 const addButton = {
-    backgroundColor: '#56A75F', 
-    color: '#fff',
+  backgroundColor: "#56A75F",
+  color: "#fff",
 };
 
 const ShareButton = styled.button`
-    color: #fff;
-    background-color: #3C86DD;
-    border: none;
-    padding: 5px 15px;
-    border-radius: 20px;
-    :hover {
-        transform: scale(1.1);   
-    }
+  color: #fff;
+  background-color: #3c86dd;
+  border: none;
+  padding: 5px 15px;
+  border-radius: 20px;
+  :hover {
+    transform: scale(1.1);
+  }
 `;
 
 const SharedButton = styled.button`
-    color: #fff;
-    background-color: #808080;
-    border: none;
-    padding: 5px 15px;
-    border-radius: 20px;
+  color: #fff;
+  background-color: #808080;
+  border: none;
+  padding: 5px 15px;
+  border-radius: 20px;
 `;
 
 const DeleteButton = styled.button`
-    color: #fff;
-    background-color: #B22222;
-    :hover {
-        transform: scale(1.1);   
-    }
+  color: #fff;
+  background-color: #b22222;
+  :hover {
+    transform: scale(1.1);
+  }
 `;
 
 const DietDiaryItem = styled.div`
-    margin: 20px auto;
-    padding: 30px 30px;
-    background-color: #F8F8F8;
-    border-radius: 20px;
-    box-shadow: 4px 4px 4px 2px rgba(0, 0, 0, 0.25);
+  margin: 20px auto;
+  padding: 30px 30px;
+  background-color: #f8f8f8;
+  border-radius: 20px;
+  box-shadow: 4px 4px 4px 2px rgba(0, 0, 0, 0.25);
 `;
 
 const TotalKcal = styled.div`
-    font-size: 30px;
-    margin-top: 40px;
+  font-size: 30px;
+  margin-top: 40px;
 `;
 
 const DiaryList = styled.div`
-    @media (max-width:425px){
-        width: 80%;
-        textAlign: 'center'
-    }
-`
+  @media (max-width: 425px) {
+    width: 80%;
+    textalign: "center";
+  }
+`;
 const shareBox = {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: 600,
-    bgcolor: 'background.paper',
-    border: '1px solid #000',
-    boxShadow: 24,
-    p: 4,
-    borderRadius: '20px',
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 600,
+  bgcolor: "background.paper",
+  border: "1px solid #000",
+  boxShadow: 24,
+  p: 4,
+  borderRadius: "20px",
 };
 
 const descriptionArea = {
-    width: '100%',
-    height: '150px',
-    marginTop: '20px',
-    padding: '10px',
-    border: '1px solid #ccc',
-    borderRadius: '10px',
-    boxShadow: '3px 3px #bdbdbd',
-    fontFamily: 'KOTRA_GOTHIC',
+  width: "100%",
+  height: "150px",
+  marginTop: "20px",
+  padding: "10px",
+  border: "1px solid #ccc",
+  borderRadius: "10px",
+  boxShadow: "3px 3px #bdbdbd",
+  fontFamily: "KOTRA_GOTHIC",
 };
 
 const ButtonWrapper = styled.div`
-    margin-top: 20px;
-    text-align: right;
+  margin-top: 20px;
+  text-align: right;
 `;
 
 const ConfirmButton = styled.button`
-    background-color: #2E7D32;
-    color: #fff;
-    border: 2px solid #2E7D32;
-    border-radius: 10px;
-    padding: 5px 10px;
-    margin-right: 5px;
+  background-color: #2e7d32;
+  color: #fff;
+  border: 2px solid #2e7d32;
+  border-radius: 10px;
+  padding: 5px 10px;
+  margin-right: 5px;
 `;
 
 const CancelButton = styled.button`
-    background-color: #fff;
-    color: #2E7D32;
-    border: 2px solid #2E7D32;
-    border-radius: 10px;
-    padding: 5px 10px;
+  background-color: #fff;
+  color: #2e7d32;
+  border: 2px solid #2e7d32;
+  border-radius: 10px;
+  padding: 5px 10px;
 `;
-
 
 const Bold = styled.span`
-    font-weight: 900;
+  font-weight: 900;
 `;
 
-const DiaryItemWrapper = styled.div`
-`;
+const DiaryItemWrapper = styled.div``;
 
 const DiaryItemLeftWrapper = styled.div`
-    text-align: left; 
-    `;
-    
+  text-align: left;
+`;
+
 const DiaryItemRightWrapper = styled.div`
-    text-align: right; 
+  text-align: right;
 `;
 
 const DiaryImg = styled.img`
-    width: 300px;
-    height: 200px;
-    curosr: pointer;
-    border-radius: 20px;
-    @media (max-width: 767px) {
-        width: 200px;
-        height: 150px;
-        margin: 0 auto;
-    }
+  width: 300px;
+  height: 200px;
+  cursor: pointer;
+  border-radius: 20px;
+  @media (max-width: 767px) {
+    width: 160px;
+    height: 130px;
+    margin: 0 auto;
+  }
+  @media (min-width: 768px) and (max-width: 1200px) {
+    width: 200px;
+    height: 160px;
+    margin: 0 auto;
+  }
 `;
 
 const DiaryTitle = styled.p`
-    font-size: 30px;
-    font-weight: 700;
-    margin: 0;
+  font-size: 30px;
+  font-weight: 700;
+  margin: 0;
 `;
-    
+
 const DiaryTime = styled.p`
-    margin: 0;
+  margin: 0;
 `;
 
-const DiaryKcal = styled.p`
-`;
+const DiaryKcal = styled.p``;
 
-const DiaryDesc = styled.p`
-`;
+const DiaryDesc = styled.p``;
 
 const fontNormal = {
-    fontFamily: 'KOTRA_GOTHIC',
+  fontFamily: "KOTRA_GOTHIC",
 };
 
 const fontBold = {
-    fontFamily: 'KOTRA_BOLD-Bold',
-}
+  fontFamily: "KOTRA_BOLD-Bold",
+};
 
 const MenuTitle = styled.div`
-    font-size: 40px;
-    margin: 40px 0;
-    font-family: 'KOTRA_BOLD-Bold';
+  font-size: 40px;
+  margin: 40px 0;
+  font-family: "KOTRA_BOLD-Bold";
 `;
-    
-const modalTitle = {
-    fontSize: '40px',
-    fontFamily: 'KOTRA_BOLD-Bold',
-}
 
-export { 
-    DietDiaryItemWrapper,
-    addButton,
-    ShareButton,
-    SharedButton,
-    DiaryList,
-    DietDiaryItem,
-    TotalKcal,
-    DeleteButton,
-    shareBox,
-    descriptionArea,
-    ButtonWrapper,
-    ConfirmButton,
-    CancelButton,
-    Bold,
-    DiaryItemWrapper,
-    DiaryItemLeftWrapper,
-    DiaryItemRightWrapper,
-    DiaryImg,
-    DiaryTitle,
-    DiaryTime,
-    DiaryKcal,
-    DiaryDesc,
-    fontNormal,
-    fontBold,
-    MenuTitle,
-    modalTitle,
+const modalTitle = {
+  fontSize: "40px",
+  fontFamily: "KOTRA_BOLD-Bold",
+};
+
+export {
+  DietDiaryItemWrapper,
+  addButton,
+  ShareButton,
+  SharedButton,
+  DiaryList,
+  DietDiaryItem,
+  TotalKcal,
+  DeleteButton,
+  shareBox,
+  descriptionArea,
+  ButtonWrapper,
+  ConfirmButton,
+  CancelButton,
+  Bold,
+  DiaryItemWrapper,
+  DiaryItemLeftWrapper,
+  DiaryItemRightWrapper,
+  DiaryImg,
+  DiaryTitle,
+  DiaryTime,
+  DiaryKcal,
+  DiaryDesc,
+  fontNormal,
+  fontBold,
+  MenuTitle,
+  modalTitle,
 };

@@ -44,7 +44,7 @@ export default function MyDietRegister() {
   const [dietThumbnail, setDietThumbnail] = useState(
     `${IMAGE_URL}default-image.png`
   );
-  const [diaryDate, setDiaryDate] = useState("2022-03-22 00:00:00");
+  const [diaryDate, setDiaryDate] = useState(date + " 00:00:00");
   const [imagePath, setImagePath] = useState(null);
   const [mealTime, setMealTime] = useState("");
   const [description, setDescription] = useState("");
