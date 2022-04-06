@@ -25,6 +25,7 @@ import {
   CommentWrapper,
   FoodListStyle,
   LikeListStyle,
+  CommentUpdateBox,
 } from "./ShareDetail.style";
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 
@@ -360,9 +361,10 @@ function Detail({ match }) {
                 </Titles>
 
                 {updateForm === false ? (
-                  <Description readOnly value={detaildescription} />
+                  <Description rows="5" readOnly value={detaildescription} />
                 ) : (
                   <Description
+                    rows="5"
                     type="text"
                     defaultValue={detaildescription}
                     onChange={DescriptionhandleChange}
@@ -425,10 +427,9 @@ function Detail({ match }) {
                               {user.user_id} :
                               {input ? (
                                 user.comment_no === CommentNoinput ? (
-                                  <input
+                                  <CommentUpdateBox
                                     type="text"
                                     value={input}
-                                    style={{ fontFamily: "KOTRA_GOTHIC" }}
                                     onChange={handleChange}
                                     onKeyDown={handleKeydown}
                                   />
@@ -447,13 +448,6 @@ function Detail({ match }) {
                             </CommentTitles>
                           </Col>
                           <Col md="1">
-                            {/*  수정파트 */}
-                            <EditIcon
-                              style={{ cursor: "pointer", float: "right" }}
-                              onClick={(e) => {
-                                handleClick(user.comment_no, user.comment);
-                              }}
-                            />
                             {/* 삭제파트 */}
                             <DeleteIcon
                               style={{
@@ -463,6 +457,13 @@ function Detail({ match }) {
                               }}
                               onClick={(e) => {
                                 commentDeleteHandler(user.comment_no);
+                              }}
+                            />
+                            {/*  수정파트 */}
+                            <EditIcon
+                              style={{ cursor: "pointer", float: "right" }}
+                              onClick={(e) => {
+                                handleClick(user.comment_no, user.comment);
                               }}
                             />
                           </Col>

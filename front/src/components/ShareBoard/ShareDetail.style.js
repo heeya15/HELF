@@ -68,6 +68,15 @@ const Description = styled.textarea`
   :focus {
     outline: none;
   }
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+  ::-webkit-scrollbar-thumb {
+    background-color: #2f3542;
+  }
+  ::-webkit-scrollbar-track {
+    background-color: grey;
+  }
 `;
 
 // 음식 리스트 스크롤
@@ -153,6 +162,21 @@ const CommentBox = styled.input`
   @media (max-width: 1200px) {
     width: 80%;
   }
+`;
+
+// 댓글 수정 창
+const CommentUpdateBox = styled.input`
+  font-family: "KOTRA_GOTHIC";
+  border: none;
+  border-radius: 10px;
+  color: #272727;
+  height: 2rem;
+  background-color: #d2e4d9;
+  margin-left: 1%;
+  :focus {
+    outline: none;
+  }
+  width: 85%;
 `;
 
 // 댓글 등록 버튼
@@ -274,6 +298,9 @@ const CommentTitles = styled.div`
   text-align: left;
   margin-bottom: 1%;
   margin-top: 1%;
+  @media (max-width: 1200px) {
+    font-size: 13px;
+  }
 `;
 
 const LikeListStyle = styled.div`
@@ -339,4 +366,5 @@ export {
   CommentWrapper,
   FoodListStyle,
   LikeListStyle,
+  CommentUpdateBox,
 };

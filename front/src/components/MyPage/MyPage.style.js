@@ -107,6 +107,9 @@ const Title = styled.div`
   font-weighit: bold;
   font-size: 28px;
   margin-bottom: 25px;
+  @media (max-width: 1200px) {
+    font-size: 20px;
+  }
 `;
 
 const EmptyText = styled.div`
@@ -248,10 +251,10 @@ const CancelButton = styled.button`
 const StyledSilder = styled(Slider)`
   .slick-prev::before {
     // background-color: #000;
-    content: url('https://cdn-icons-png.flaticon.com/16/271/271220.png');
+    content: url("https://cdn-icons-png.flaticon.com/16/271/271220.png");
   }
-  .slick-next::before{
-    content: url('https://cdn-icons-png.flaticon.com/16/271/271228.png');
+  .slick-next::before {
+    content: url("https://cdn-icons-png.flaticon.com/16/271/271228.png");
   }
 `;
 

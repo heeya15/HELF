@@ -85,6 +85,10 @@ export default function MyDietDetail() {
     setDescription(myDietDetail.description);
     setDiaryDate(dayjs(myDietDetail.diaryDate).format("YYYY-MM-DD HH:mm:ss"));
     setMealTime(myDietDetail.mealTime);
+    if (myDietDetail.mealTime === "아침") setMealTimeIndex(0);
+    else if (myDietDetail.mealTime === "점심") setMealTimeIndex(1);
+    else if (myDietDetail.mealTime === "저녁") setMealTimeIndex(2);
+    else if (myDietDetail.mealTime === "간식") setMealTimeIndex(3);
   }, [myDietDetail]);
 
   useEffect(() => {
