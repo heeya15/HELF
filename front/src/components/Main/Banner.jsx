@@ -1,5 +1,6 @@
-import * as React from 'react';
+import React from 'react';
 import { useHistory } from 'react-router-dom';
+import { useSelector } from "react-redux";
 import Button from './Button';
 import Typography from './Typography';
 import BannerLayout from './BannerLayout';
@@ -13,9 +14,14 @@ import {
 
 export default function Banner() {
     const history = useHistory();
+    const { logInDone, kakaologInDone } = useSelector((state) => state.user);
 
     const handleRegister = () => {
-        history.push('/signup');
+        if(logInDone || kakaologInDone) {
+            history.push('/mydiet')
+        } else {
+            history.push('/signup');
+        }
     }
 
     return (

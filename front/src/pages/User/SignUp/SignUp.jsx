@@ -102,7 +102,7 @@ export default function SignUp() {
     }
 
     const onPasswordHandler = (event) => {
-        setPassword(event.target.value)
+        setPassword(event.target.value);
         
         const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,12}$/
         if(event.target.value.length < 8 || event.target.value.length > 12) {
@@ -118,8 +118,13 @@ export default function SignUp() {
     }
 
     const onPasswordCheckHandler = (event) => {
-        setPasswordCheck(event.target.value)
-        if(event.target.value !== password) {
+        setPasswordCheck(event.target.value);
+
+        const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,12}$/
+        if(!passwordRegex.test(event.target.value)) {
+            setPasswordMessage('숫자, 영문자, 특수문자 조합으로 입력해주세요.');
+            setIsPasswordCheck(false);
+        } else if(event.target.value !== password) {
             setPasswordMessage('비밀번호가 일치하지 않습니다.');
             setIsPasswordCheck(false);
         } else {

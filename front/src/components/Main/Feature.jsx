@@ -24,7 +24,7 @@ export default function Feature() {
 
     const handleGetStarted = () => {
         if(logInDone || kakaologInDone) {
-            history.push('/mydiet');
+            history.push('/exercisesetting');
         } else {
             history.push('/login');
         }
