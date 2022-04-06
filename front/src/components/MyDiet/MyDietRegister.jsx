@@ -35,6 +35,8 @@ import {
   StyledFormGroup,
 } from "./MyDietRegister.style";
 import { ButtonWrapper, ConfirmButton, CancelButton } from "./MyDiet.style";
+import { FcCancel } from "react-icons/fc";
+import { Oval } from "react-loader-spinner";
 
 export default function MyDietRegister() {
   const dispatch = useDispatch();
@@ -49,7 +51,12 @@ export default function MyDietRegister() {
   const [mealTime, setMealTime] = useState("");
   const [description, setDescription] = useState("");
 
-  const { foodName, foods } = useSelector((state) => state.myDiet);
+  const {
+    foodName,
+    foods,
+    imageDetectionLoading,
+    imageDetectionListEmpty,
+  } = useSelector((state) => state.myDiet);
   const mealType = ["아침", "점심", "저녁", "간식"];
 
   const myDietRegister = {
@@ -250,6 +257,19 @@ export default function MyDietRegister() {
                 >
                   음식별 무게를 선택해주세요.
                 </div>
+                {imageDetectionLoading && <Oval height={40} width={40}></Oval>}
+                {imageDetectionListEmpty && foodName.length === 0 && (
+                  <div
+                    style={{
+                      fontSize: "13px",
+                      color: "rgb(56 55 55)",
+                      fontFamily: "KOTRA_GOTHIC",
+                    }}
+                  >
+                    <FcCancel size="17"></FcCancel> 인식된 음식이 없습니다.
+                    이미지를 변경하거나 직접선택을 통해 음식을 선택해주세요.
+                  </div>
+                )}
                 <div>
                   {foodName.map((food, index) => (
                     <div key={index}>

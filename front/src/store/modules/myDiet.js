@@ -20,6 +20,8 @@ const initialState = {
   diaryDate: "",
   description: "",
   foodName: [],
+  imageDetectionLoading: false,
+  imageDetectionListEmpty: false,
   myDietDiaryList: [],
   myDietDiaryDailyInfo: [],
   myDietDiaryDailyInfoCopy: [],
@@ -98,8 +100,13 @@ const reducer = (state = initialState, action) =>
   produce(state, (draft) => {
     switch (action.type) {
       case MY_DIET_IMAGE_REQUEST:
+        draft.imageDetectionLoading = true;
+        draft.imageDetectionListEmpty = false;
         break;
       case MY_DIET_IMAGE_SUCCESS:
+        draft.imageDetectionLoading = false;
+        if (action.data.data.resultList.length === 0)
+          draft.imageDetectionListEmpty = true;
         draft.foodName = [];
         action.data.data.resultList.forEach((foods) => {
           draft.foodName.push({ foodName: foods, weight: 100 });
