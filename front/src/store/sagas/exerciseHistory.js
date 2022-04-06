@@ -43,6 +43,7 @@ function* loadExerciseHistoryRegister(action) {
       timer: 1800,
     });
     document.location.href = "/exercisesetting";
+    // }
   } catch (error) {
     yield put({ type: EXERCISE_HISTORY_REGISTER_FAILURE });
   }
