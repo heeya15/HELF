@@ -8,6 +8,12 @@
   font-family: "KOTRA_BOLD-Bold";
 }
 
+@media (max-width: 1200px) {
+  .MenuTitle {
+    font-size: 40px;
+  }
+}
+
 .MenuTitleLight {
   /* background: linear-gradient(to top, 40%, transparent 40%); */
 }

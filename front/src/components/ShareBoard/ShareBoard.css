@@ -4,6 +4,12 @@
   font-family: "KOTRA_BOLD-Bold";
 }
 
+@media (max-width: 1200px) {
+  .menuTitle {
+    font-size: 30px;
+  }
+}
+
 .boxdiv {
   display: flex;
   align-items: center;

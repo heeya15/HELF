@@ -4,6 +4,9 @@ const MenuTitle = styled.div`
   font-size: 50px;
   margin: 40px 0px 0px 0px;
   font-family: "KOTRA_BOLD-Bold";
+  @media (max-width: 1200px) {
+    font-size: 30px;
+  }
 `;
 
 const DetailReq = styled.div`
@@ -26,6 +29,9 @@ const UpdateButton = styled.button`
   :hover {
     transform: scale(1.1);
   }
+  @media (max-width: 1200px) {
+    font-size: 10px;
+  }
 `;
 
 const BackButton = styled.button`
@@ -41,6 +47,9 @@ const BackButton = styled.button`
   margin-left: 2%;
   :hover {
     transform: scale(1.1);
+  }
+  @media (max-width: 1200px) {
+    font-size: 10px;
   }
 `;
 

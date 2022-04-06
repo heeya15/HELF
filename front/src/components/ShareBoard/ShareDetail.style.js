@@ -1,8 +1,11 @@
 import styled from "styled-components";
 
 const Title = styled.div`
-    font-size: 45px;
-    margin-top: 50px;
+  font-size: 45px;
+  margin-top: 50px;
+  @media (max-width: 1200px) {
+    font-size: 30px;
+  }
 `;
 
 const TotalStyle = styled.div`
@@ -10,9 +13,9 @@ const TotalStyle = styled.div`
   padding: 20px;
   border-radius: 10px;
   box-shadow: 4px 4px 4px 2px rgba(0, 0, 0, 0.25);
-  `;
-  
-  const ImageThumbnail = styled.img`
+`;
+
+const ImageThumbnail = styled.img`
   width: 80%;
   height: 100%;
   display: block;
@@ -21,6 +24,7 @@ const TotalStyle = styled.div`
   margin-right: auto;
   border-radius: 20px;
   box-shadow: 4px 4px 4px 2px rgba(0, 0, 0, 0.25);
+  min-width: 320px;
 `;
 
 const RegisterReq = styled.div`
@@ -39,6 +43,9 @@ const MealTypeButton = styled.div`
     border-radius: 30px;
     width: 60%;
     max-width: 120px;
+    @media (max-width: 1200px) {
+      font-size: 10px;
+    }
   }
   .active {
     background-color: #56a75f;
@@ -47,10 +54,10 @@ const MealTypeButton = styled.div`
 `;
 
 const Description = styled.textarea`
-  padding : 1rem;
+  padding: 1rem;
   color: #272727;
   background-color: #f2f7f4;
-  font-family: 'KOTRA_GOTHIC';
+  font-family: "KOTRA_GOTHIC";
   box-shadow: 4px 4px 4px 2px rgba(0, 0, 0, 0.25);
   border: none;
   border-radius: 10px;
@@ -91,9 +98,9 @@ const CommentHeader = styled.div`
   box-shadow: 4px 4px 4px 0px rgba(0, 0, 0, 0.25);
 `;
 const CommentBoxBig = styled.div`
-  padding-top : 0.5rem;
-  padding-right : 0.5rem;
-  padding-left : 0.5rem;
+  padding-top: 0.5rem;
+  padding-right: 0.5rem;
+  padding-left: 0.5rem;
   box-shadow: 4px 4px 4px 0px rgba(0, 0, 0, 0.25);
   color: #272727;
   background-color: #f2f7f4;
@@ -102,7 +109,7 @@ const CommentBoxBig = styled.div`
   border-bottom-right-radius: 10px;
   resize: vertical;
   width: 100%;
-  height : 20rem;
+  height: 20rem;
   overflow-x: hidden;
   overflow-y: auto;
   flew-wrap: nowrap;
@@ -125,14 +132,14 @@ const CommentWrapper = styled.div`
   padding: 15px;
   justify-content: space-between;
 `;
-  
+
 // 댓글 입력 창
 const CommentBox = styled.input`
-  padding : 1rem;
+  padding: 1rem;
   color: #272727;
-  height : 2.5rem;
-  background-color: #d2e4d9 ;
-  font-family: 'KOTRA_GOTHIC';
+  height: 2.5rem;
+  background-color: #d2e4d9;
+  font-family: "KOTRA_GOTHIC";
   border: none;
   border-radius: 10px;
   resize: vertical;
@@ -142,7 +149,10 @@ const CommentBox = styled.input`
 
   :focus {
     outline: none;
-}
+  }
+  @media (max-width: 1200px) {
+    width: 80%;
+  }
 `;
 
 // 댓글 등록 버튼
@@ -153,10 +163,13 @@ const SendButton = styled.button`
   font-size: 1rem;
   border: none;
   border-radius: 10px;
+  @media (max-width: 1200px) {
+    font-size: 10px;
+  }
 `;
 
 // 입력된 댓글 영역
-  
+
 // 댓글 목록 돌아가기 버튼
 const ListButton = styled.button`
   margin-top: 2%;
@@ -171,14 +184,17 @@ const ListButton = styled.button`
   :hover {
     transform: scale(1.1);
   }
+  @media (max-width: 1200px) {
+    font-size: 10px;
+  }
 `;
-  
+
 // 댓글 수정 버튼
 const UpdateButton = styled.button`
   // margin: 2% auto;
   padding: 3px 15px;
   color: #fff;
-  background-color: #DBC925;
+  background-color: #dbc925;
   font-size: 15px;
   border: none;
   border-radius: 10px;
@@ -186,8 +202,11 @@ const UpdateButton = styled.button`
   :hover {
     transform: scale(1.1);
   }
+  @media (max-width: 1200px) {
+    font-size: 10px;
+  }
 `;
-  
+
 // 댓글 삭제 버튼
 const DeleteButton = styled.button`
   margin-top: 2%;
@@ -203,6 +222,9 @@ const DeleteButton = styled.button`
   :hover {
     transform: scale(1.1);
   }
+  @media (max-width: 1200px) {
+    font-size: 10px;
+  }
 `;
 
 const CommentDeleteBtn = styled.span`
@@ -215,19 +237,24 @@ const CommentDeleteBtn = styled.span`
   border-radius: 30px;
   height: 10%;
   width: 5%;
+  @media (max-width: 1200px) {
+    font-size: 10px;
+  }
 `;
 
 const CommentUpdateButton = styled.span`
   margin-top: 1%;
   margin-left: 0.2rem;
   color: #fff;
-  background-color: #DBC925;
+  background-color: #dbc925;
   font-size: 17px;
   border: none;
   border-radius: 30px;
   height: 10%;
   width: 5%;
-
+  @media (max-width: 1200px) {
+    font-size: 10px;
+  }
 `;
 const Titles = styled.div`
   font-size: 17px;
