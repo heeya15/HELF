@@ -26,7 +26,7 @@ public class Comment{
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	int commentNo;  // 댓글 번호
 	
-	@Column(name = "comment")
+	@Column(length = 2000, name = "comment")
 	String comment; // 댓글 내용
 
 	@Column(columnDefinition = "TIMESTAMP")
