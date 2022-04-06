@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, useHistory } from "react-router-dom";
 import {
@@ -52,6 +52,7 @@ import {
 import { ButtonWrapper, ConfirmButton, CancelButton } from "./MyDiet.style";
 import { FcCancel } from "react-icons/fc";
 import { TailSpin } from "react-loader-spinner";
+import { Camera } from "react-camera-pro";
 
 export default function MyDietDetail() {
   const dispatch = useDispatch();
@@ -294,6 +295,31 @@ export default function MyDietDetail() {
     setDietUpdate(false);
   };
 
+  const camera = useRef(null);
+  const [cameraState, setCameraState] = useState(false);
+  const [numberOfCameras, setNumberOfCameras] = useState(0);
+
+  const cameraTakePhoto = (e) => {
+    const dataurl = camera.current.takePhoto();
+    setCameraState(false);
+    setThumbnail(dataurl);
+    var arr = dataurl.split(","),
+      mime = arr[0].match(/:(.*?);/)[1],
+      bstr = atob(arr[1]),
+      n = bstr.length,
+      u8arr = new Uint8Array(n);
+
+    while (n--) {
+      u8arr[n] = bstr.charCodeAt(n);
+    }
+    const file = new File([u8arr], "camera.jpg", { type: mime });
+    dispatch(setMyDietDetailImagePath(file));
+    dispatch({
+      type: MY_DIET_IMAGE_REQUEST,
+      data: { imagePath: file },
+    });
+  };
+
   return (
     <div>
       <Container>
@@ -305,19 +331,52 @@ export default function MyDietDetail() {
         <TotalStyle>
           <Row>
             <Col>
-              <ImageThumbnail src={thumbnail} alt="이미지"></ImageThumbnail>
-              {dietUpdate && (
-                <div>
-                  <label className="imageSelect" htmlFor="input-file">
-                    이미지 선택
-                  </label>
-                  <input
-                    onChange={onImageHandler}
-                    type="file"
-                    id="input-file"
-                    style={{ display: "none" }}
-                  ></input>
-                </div>
+              {cameraState ? (
+                <>
+                  <Camera
+                    ref={camera}
+                    aspectRatio={4 / 3}
+                    numberOfCamerasCallback={setNumberOfCameras}
+                  />
+                  <button className="imageSelect" onClick={cameraTakePhoto}>
+                    촬영
+                  </button>
+                  <button
+                    className="imageSelect"
+                    onClick={() => setCameraState(false)}
+                  >
+                    취소
+                  </button>
+                </>
+              ) : (
+                <>
+                  <ImageThumbnail src={thumbnail} alt="이미지"></ImageThumbnail>
+                  {dietUpdate && (
+                    <div>
+                      <label className="imageSelect" htmlFor="input-file">
+                        이미지 선택
+                      </label>
+                      <input
+                        onChange={onImageHandler}
+                        type="file"
+                        id="input-file"
+                        style={{ display: "none" }}
+                      ></input>
+                      <button
+                        className="imageSelect"
+                        onClick={() => setCameraState(true)}
+                      >
+                        이미지 촬영
+                      </button>
+                      {/* <button
+                    hidden={numberOfCameras <= 1}
+                    onClick={() => {
+                      camera.current.switchCamera();
+                    }}
+                  /> */}
+                    </div>
+                  )}
+                </>
               )}
             </Col>
             <Col>
@@ -405,8 +464,15 @@ export default function MyDietDetail() {
                               cursor: "pointer",
                             }}
                             onChange={onWeightHandler}
+                            value={food.weight}
                           >
-                            {WeightSelect}
+                            {weights.map((weight, index) => {
+                              return (
+                                <option key={index} value={weight}>
+                                  {weight}g
+                                </option>
+                              );
+                            })}
                           </select>
                         </div>
                       ))}

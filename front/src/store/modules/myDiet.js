@@ -96,6 +96,12 @@ export const setFoodCheckBox = (state) => ({
   state,
 });
 
+const SET_IMAGE_DETECTION_LIST_EMPTY = "SET_IMAGE_DETECTION_LIST_EMPTY";
+export const setImageDetectionListEmpty = (state) => ({
+  type: SET_IMAGE_DETECTION_LIST_EMPTY,
+  state,
+});
+
 const reducer = (state = initialState, action) =>
   produce(state, (draft) => {
     switch (action.type) {
@@ -186,7 +192,7 @@ const reducer = (state = initialState, action) =>
       case SET_FOOD_NAME:
         draft.foodName = [];
         action.state.forEach((food) => {
-          draft.foodName.push({ foodName: food.foodName, weight: 100 });
+          draft.foodName.push({ foodName: food.foodName, weight: food.weight });
         });
         break;
       case SET_FOOD_CHECK_BOX:
@@ -194,6 +200,9 @@ const reducer = (state = initialState, action) =>
         action.state.forEach((food) => {
           draft.foodName.push({ foodName: food, weight: 100 });
         });
+        break;
+      case SET_IMAGE_DETECTION_LIST_EMPTY:
+        draft.imageDetectionListEmpty = action.state;
         break;
       case MY_DIET_DIARY_SHARE_REQUEST:
         draft.diaryShareLoading = true;
