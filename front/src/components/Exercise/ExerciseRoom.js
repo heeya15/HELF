@@ -235,6 +235,7 @@ export default function ExerciseRoom() {
         countTime++;
         countTotalTime++;
         setCurrentCount(countTotalTime);
+        console.log("🎅🎅🎅🎅🎅🎅🎅 ", countTotalTime, currentCount);
 
         // 카운팅 소리 재생
         soundURL = require('../../assets/soundEffects/countSound/ddiring2.mp3');
@@ -251,12 +252,8 @@ export default function ExerciseRoom() {
         $('#counter').html(countTime);
         console.log(progress, angle);
 
-        if (countTotalTime == exercise.set * exercise.time) {
-          // setTimeout(() => {
-          //   alert('운동이 끝났습니다!');w
-          // }, 500);
-          // alert('운동이 끝났습니다!', 3000)
-          handleExercise();
+        if (countTotalTime === exercise.set * exercise.time) {
+          handleExercise(countTotalTime);
         }
 
         // 1세트가 끝난 경우
@@ -314,11 +311,12 @@ export default function ExerciseRoom() {
     }
   }
 
-  const handleExercise = () => {
+  const handleExercise = (cnt) => {
+    console.log("🤞🤞🤞🤞🤞🤞🤞 ", cnt);
     dispatch({
       type: EXERCISE_HISTORY_REGISTER_REQUEST,
       data: {
-        count: currentCount,
+        count: cnt,
         date: dayjs(now).format('YYYY-MM-DD HH:mm:ss'),
         exerciseNo: exercise.type,
       },
@@ -382,7 +380,7 @@ export default function ExerciseRoom() {
           <Col md='1'></Col>
         </Row> 
         <div class='buttonWrapper'>
-          <Button class='exitButton' onClick={ handleExercise }>종료</Button>
+          <Button class='exitButton' onClick={ () => handleExercise(currentCount) }>종료</Button>
         </div>
 
         {/* <div id='label-container'></div> */}
