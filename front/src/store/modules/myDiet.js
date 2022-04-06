@@ -11,7 +11,7 @@ const initialState = {
     isShared: false,
     dietFindResList: [],
   },
-  weights: [100, 150, 200, 250, 300],
+  weights: [100, 150, 200, 250, 300, 350, 400, 450, 500, 550, 600],
   foods: [],
   dietDetailThumbnail: null,
   dietThumbnail: null,

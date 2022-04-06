@@ -126,8 +126,8 @@ function SharedBoard() {
                 <img
                   src={`${IMAGE_URL}${user.imagePath}`}
                   style={{
-                    width: "250px",
-                    height: "250px",
+                    width: "200px",
+                    height: "200px",
                     cursor: "pointer",
                     borderRadius: "20px",
                   }}
@@ -150,17 +150,17 @@ function SharedBoard() {
         </Tablet>
         <Mobile>
           <ImageList sx={{ position: "static", width: "100", height: "30%" }}>
-            <ImageListItem key="Subheader" cols={1}></ImageListItem>
+            <ImageListItem key="Subheader" cols={2}></ImageListItem>
             {ShareBoardList.map((user) => (
               <ImageListItem
                 key={user.imagePath}
-                style={{ marginLeft: "10px", marginRight: "10px" }}
+                style={{ marginLeft: "3px", marginRight: "3px" }}
               >
                 <img
                   src={`${IMAGE_URL}${user.imagePath}`}
                   style={{
-                    width: "250px",
-                    height: "250px",
+                    width: "150px",
+                    height: "150px",
                     cursor: "pointer",
                     borderRadius: "20px",
                   }}

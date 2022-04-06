@@ -2,6 +2,8 @@
   display: flex;
   justify-content: center;
   margin-top: 5%;
+  width: 50%;
+  max-width: 500px;
 }
 
 ul {
@@ -30,7 +32,7 @@ ul.pagination li:last-child {
 
 ul.pagination li a {
   text-decoration: none;
-  color: #2E7D32;
+  color: #2e7d32;
   font-size: 1rem;
 }
 
@@ -39,7 +41,7 @@ ul.pagination li.active a {
 }
 
 ul.pagination li.active {
-  background-color: #2E7D32;
+  background-color: #2e7d32;
 }
 
 ul.pagination li a:hover,
@@ -50,5 +52,5 @@ ul.pagination li a.active {
 .page-selection {
   width: 48px;
   height: 30px;
-  color: #2E7D32;
+  color: #2e7d32;
 }
