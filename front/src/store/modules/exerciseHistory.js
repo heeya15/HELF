@@ -74,6 +74,7 @@ const reducer = (state = initialState, action) =>
       case EXERCISE_HISTORY_FINDALL_REQUEST:
         break;
       case EXERCISE_HISTORY_FINDALL_SUCCESS:
+        draft.exerciseHistoryList = [];
         action.data.data.forEach((exercise) => {
           draft.exerciseHistoryList.push({
             name: exercise.exerciseName,
