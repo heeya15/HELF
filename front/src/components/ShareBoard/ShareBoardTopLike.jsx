@@ -82,7 +82,7 @@ export default function MyPageLike() {
             <BestDietWrapper>
               <ImageBox>
                 <ImageList sx={{ height: "40%" }}>
-                  <ImageListItem key="Subheader" cols={5}></ImageListItem>
+                  <ImageListItem key="Subheader" cols={4}></ImageListItem>
                   {shareBoardTopLikeList.map((likes) => (
                     <ImageListItem
                       key={likes.imagePath}
@@ -109,7 +109,7 @@ export default function MyPageLike() {
             <BestDietWrapper>
               <ImageBox>
                 <ImageList sx={{ height: "50%" }}>
-                  <ImageListItem key="Subheader" cols={3}></ImageListItem>
+                  <ImageListItem key="Subheader" cols={4}></ImageListItem>
                   {shareBoardTopLikeList.map((likes) => (
                     <ImageListItem
                       key={likes.imagePath}

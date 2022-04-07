@@ -18,7 +18,8 @@ const initialState = {
   shareBoardDetailList: [],
   detailimagePath: null,
   detaildescription: null,
-  shareUserId :null, // 공유한 사람의 아이디
+  shareUserName : '',
+  shareUserId : null, // 공유한 사람의 아이디
   shareDiaryNo: 0,
 
   //  해당 공유 게시판 description 수정
@@ -136,6 +137,7 @@ const reducer = (state = initialState, action) =>
         draft.shareBoardDetailList = action.data.data;
         draft.detailimagePath= draft.shareBoardDetailList[0].image_path;
         draft.detaildescription = draft.shareBoardDetailList[0].description;
+        draft.shareUserName = draft.shareBoardDetailList[0].user_name;    
         draft.shareUserId = draft.shareBoardDetailList[0].user_id;    
         draft.shareDiaryNo = draft.shareBoardDetailList[0].diary_no;    
         console.log(draft.detailimagePath);

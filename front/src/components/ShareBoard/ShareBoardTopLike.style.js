@@ -8,6 +8,8 @@ const BestDietWrapper = styled.div`
   padding: 20px 0;
   margin: 0 auto;
   box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.25);
+  @media screen and (min-width: 1025px) {
+    width: 80%;
 `;
 
 const ImageBox = styled.div`
