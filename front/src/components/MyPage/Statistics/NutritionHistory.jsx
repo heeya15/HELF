@@ -16,11 +16,17 @@ import {
     TooMuchMessage,
     Title,
     DatePickerWrapper,
-    fontNormal,
-    NutritionStatus,
     EmptyText,
     Description,
+    editBox,
+    modalTitle,
+    modalBody,
+    CancelButton,
+    ButtonWrapper,
 } from '../MyPage.style';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import Modal from '@mui/material/Modal';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
@@ -61,9 +67,10 @@ export default function NutritionHistory() {
         totalFat = FatList.reduce((sum, currValue) => {
             return sum + currValue;
         });
-        dataSource.push({ nutrition: '탄수화물', amount: totalCarbohydrate },)
-        dataSource.push({ nutrition: '단백질', amount: totalProtein },)
-        dataSource.push({ nutrition: '지방', amount: totalFat },)
+
+        dataSource.push({ nutrition: '탄수화물', amount: totalCarbohydrate.toFixed(2) },)
+        dataSource.push({ nutrition: '단백질', amount: totalProtein.toFixed(2) },)
+        dataSource.push({ nutrition: '지방', amount: totalFat.toFixed(2) },)
     }
 
     const now = new Date();   // 현재 날짜 및 시간
@@ -127,17 +134,32 @@ export default function NutritionHistory() {
         fatCheck = 2;
     }
 
-    const handleLackMessage = () => {
-        alert('권장량 미달입니다. 권장량을 채우기위해서 더 섭취해주세요!');
+    // 모달 처리
+    const [ open, setOpen ] = useState(false);
+    const [ title, setTitle ] = useState("");
+    const [ message, setMessage ] = useState("");
+    const handleOpen = (status, type) => {
+        if(status === 'lack') {
+            if(type === 'carbohydrate') {
+                setTitle("권장량 미달");
+                setMessage("탄수화물 섭취가 권장량 미달입니다. 권장량을 채우기 위해서는 고구마, 바나나 또는 현미밥 등을 섭취해주세요. 😋");
+            } else if(type === 'protein') {
+                setTitle("권장량 미달");
+                setMessage("단백질 섭취가 권장량 미달입니다. 권장량을 채우기 위해서는 닭가슴살, 계란 또는 연어 등을 섭취해주세요. 😋");
+            } else {
+                setTitle("권장량 미달");
+                setMessage("탄수화물 섭취가 권장량 미달입니다. 권장량을 채우기 위해서는 아보카도, 안심스테이크 또는 견과류 등을 섭취해주세요. 😋");
+            }
+        } else if(status === 'normal') {
+            setTitle("권장량 적정");
+            setMessage('권장량 적정입니다. 이대로 내일도 영양소를 골고루 섭취해주세요! 👍');
+        } else {
+            setTitle("권장량 초과");
+            setMessage('권장량 초과입니다. 오늘 추가 섭취는 자제해주세요! 😭');
+        }
+        setOpen(true);
     }
-
-    const handleNormalMessage = () => {
-        alert('권장량 적정입니다. 이대로 내일도 영양소를 골고루 섭취해주세요!');
-    }
-
-    const handleTooMuchMessage = () => {
-        alert('권장량 초과입니다. 오늘 추가 섭취는 자제해주세요!');
-    }
+    const handleClose = () => setOpen(false);
 
     function dateFormat(date) {
         let month = date.getMonth() + 1;
@@ -182,15 +204,15 @@ export default function NutritionHistory() {
                 nutritionHistoryList.length !==0 &&
                 <>
                 <MessageWrapper>
-                    { carbohydrateCheck === 0 && <LackMessage onClick={ handleLackMessage }>탄수화물</LackMessage> }
-                    { carbohydrateCheck === 1 && <NormalMessage onClick={ handleNormalMessage }>탄수화물</NormalMessage> }
-                    { carbohydrateCheck === 2 && <TooMuchMessage onClick={ handleTooMuchMessage }>탄수화물</TooMuchMessage> }
-                    { proteinCheck === 0 && <LackMessage onClick={ handleLackMessage }>단백질</LackMessage> }
-                    { proteinCheck === 1 && <NormalMessage onClick={ handleNormalMessage }>단백질</NormalMessage> }
-                    { proteinCheck === 2 && <TooMuchMessage onClick={ handleTooMuchMessage }>단백질</TooMuchMessage> }
-                    { fatCheck === 0 && <LackMessage onClick={ handleLackMessage }>지방</LackMessage> }
-                    { fatCheck === 1 && <NormalMessage onClick={ handleNormalMessage }>지방</NormalMessage> }
-                    { fatCheck === 2 && <TooMuchMessage onClick={ handleTooMuchMessage }>지방</TooMuchMessage> }
+                    { carbohydrateCheck === 0 && <LackMessage onClick={ () => handleOpen('lack', 'carbohydrate') }>탄수화물</LackMessage> }
+                    { carbohydrateCheck === 1 && <NormalMessage onClick={ () => handleOpen('normal', 'carbohydrate') }>탄수화물</NormalMessage> }
+                    { carbohydrateCheck === 2 && <TooMuchMessage onClick={ () => handleOpen('toomuch', 'carbohydrate') }>탄수화물</TooMuchMessage> }
+                    { proteinCheck === 0 && <LackMessage onClick={ () => handleOpen('lack', 'protein') }>단백질</LackMessage> }
+                    { proteinCheck === 1 && <NormalMessage onClick={ () => handleOpen('normal', 'protein') }>단백질</NormalMessage> }
+                    { proteinCheck === 2 && <TooMuchMessage onClick={ () => handleOpen('toomuch', 'protein') }>단백질</TooMuchMessage> }
+                    { fatCheck === 0 && <LackMessage onClick={ () => handleOpen('lack', 'fat') }>지방</LackMessage> }
+                    { fatCheck === 1 && <NormalMessage onClick={ () => handleOpen('normal', 'fat') }>지방</NormalMessage> }
+                    { fatCheck === 2 && <TooMuchMessage onClick={ () => handleOpen('toomuch', 'fat') }>지방</TooMuchMessage> }
                 </MessageWrapper>
                 <Description>
                     *오늘 영양소 섭취량을 표시하는 것으로,<br/>
@@ -217,6 +239,28 @@ export default function NutritionHistory() {
                 </PieChart>
                 </>
             }
-    </div>
+        <Modal
+            open={ open }
+            onClose={ handleClose }
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
+        >
+            <Box sx={ editBox }>
+            <Typography id="modal-modal-title" style={ modalTitle }>
+                { title }
+            </Typography>
+            <hr/>
+            <Typography id="modal-modal-description" stlye={ modalBody }>
+                { message }
+            </Typography>
+            {/* <hr/> */}
+            <ButtonWrapper>
+                <CancelButton onClick={ handleClose }>
+                    닫기
+                </CancelButton>
+            </ButtonWrapper>
+            </Box>
+        </Modal>
+        </div>
     );
 }

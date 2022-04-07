@@ -53,14 +53,13 @@ function* watchLoadMyDietImage() {
 
 function* loadMyDietRegister(action) {
   try {
-    console.log(action.data);
     const result = yield call(myDietRegisterAPI, action.data);
     yield put({ type: MY_DIET_REGISTER_SUCCESS, data: result });
     swal("식단 등록 완료", "  ", "success", {
       buttons: false,
       timer: 1800,
     });
-    document.location.href = "/mydiet";
+    document.location.href = "/dietdiary/" + action.data.diaryDate.substring(0,10);
   } catch (error) {
     yield put({ type: MY_DIET_REGISTER_FAILURE });
   }
@@ -87,7 +86,6 @@ function* watchMyDietDiaryList() {
 // 해당 날짜에 해당하는 식단 일지 정보 가져오기
 function* loadMyDietDiaryDailyInfo(action) {
   try {
-    console.log(">>>>>>>>>>>>> 목록 찾으러 왔어요", action.data);
     const result = yield call(myDietDiaryDailyInfoAPI, action.data);
     yield put({ type: MY_DIET_DIARY_DAILY_INFO_SUCCESS, data: result });
   } catch (error) {
