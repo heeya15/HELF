@@ -1,7 +1,8 @@
 package com.aisher.helf.api.service;
 
-
+import ai.djl.aws.s3.S3RepositoryFactory;
 import ai.djl.MalformedModelException;
+import ai.djl.repository.Repository;
 import ai.djl.repository.zoo.ModelNotFoundException;
 import ai.djl.translate.TranslateException;
 import com.aisher.helf.api.request.DietDiaryRegisterReq;
@@ -25,6 +26,7 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -52,6 +54,10 @@ import lombok.extern.slf4j.Slf4j;
 import com.google.gson.annotations.SerializedName;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import software.amazon.awssdk.auth.credentials.AwsBasicCredentials;
+import software.amazon.awssdk.auth.credentials.StaticCredentialsProvider;
+import software.amazon.awssdk.regions.Region;
+import software.amazon.awssdk.services.s3.S3Client;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -110,6 +116,8 @@ public class DietDiaryServiceImpl implements DietDiaryService{
         double totalProtein = 0.0;
         double totalFat = 0.0;
 
+        DecimalFormat form = new DecimalFormat("#.##");
+
         // 식단 table 에 등록
         List<DietRegisterReq> dietRegisterReqList = dietDiaryRegisterReq.getDietRegisterReqList();
         for(int i=0; i<dietRegisterReqList.size(); i++) {
@@ -120,9 +128,9 @@ public class DietDiaryServiceImpl implements DietDiaryService{
             // 식단 영양 성분 정보 찾기
             int weight = dietRegisterReqList.get(i).getWeight();
             NutritionRes nutritionRes = foodRepository.findNutrition(foodNo);
-            totalCarbohydrate += nutritionRes.getCarbohydrate() * weight;
-            totalProtein += nutritionRes.getProtein() * weight;
-            totalFat += nutritionRes.getFat() * weight;
+            totalCarbohydrate += Double.parseDouble(form.format(nutritionRes.getCarbohydrate() * (weight / 100)));
+            totalProtein += Double.parseDouble(form.format(nutritionRes.getProtein() * (weight / 100)));
+            totalFat += Double.parseDouble(form.format(nutritionRes.getFat() * (weight / 100)));
         }
 
         // 영양 성분 히스토리에 등록
@@ -213,6 +221,8 @@ public class DietDiaryServiceImpl implements DietDiaryService{
         double totalProtein = 0.0;
         double totalFat = 0.0;
 
+        DecimalFormat form = new DecimalFormat("#.##");
+
         // 식단 테이블 기존의 데이터 삭제 후, 새로운 데이터로 생성
         dietRepository.deleteByDietDiary(dietDiary.getDiaryNo());
         List<DietRegisterReq> dietRegisterReqList = dietDiaryRegisterReq.getDietRegisterReqList();
@@ -224,9 +234,9 @@ public class DietDiaryServiceImpl implements DietDiaryService{
             // 식단 영양 성분 정보 찾기
             int weight = dietRegisterReqList.get(i).getWeight();
             NutritionRes nutritionRes = foodRepository.findNutrition(foodNo);
-            totalCarbohydrate += nutritionRes.getCarbohydrate() * weight;
-            totalProtein += nutritionRes.getProtein() * weight;
-            totalFat += nutritionRes.getFat() * weight;
+            totalCarbohydrate += Double.parseDouble(form.format(nutritionRes.getCarbohydrate() * (weight / 100)));
+            totalProtein += Double.parseDouble(form.format(nutritionRes.getProtein() * (weight / 100)));
+            totalFat += Double.parseDouble(form.format(nutritionRes.getFat() * (weight / 100)));
         }
 
         // 영양 성분 히스토리도 수정
@@ -266,10 +276,18 @@ public class DietDiaryServiceImpl implements DietDiaryService{
                 .optThreshold(0.5f)
                 .build();
 
+        AwsBasicCredentials awsCreds = AwsBasicCredentials.create(
+                "AKIA4ICHGPGZ2BKCVYJM",
+                "r+s/VKC+yYd/xVMob0QcvtExeHfg9chrtSD+okwJ");
 
+        S3Client client = S3Client.builder()
+                .credentialsProvider(StaticCredentialsProvider.create(awsCreds))
+                .region(Region.AP_NORTHEAST_2)
+                .build();
+        Repository.registerRepositoryFactory(new S3RepositoryFactory(client));
         Criteria<Image, DetectedObjects> criteria = Criteria.builder()
                 .setTypes(Image.class, DetectedObjects.class)
-                .optModelUrls("src/main/resources/dist/model")
+                .optModelUrls("s3://helf-bucket/imageDetection")
                 .optModelName("best.torchscript")
                 .optTranslator(translator)
                 .optProgress(new ProgressBar())

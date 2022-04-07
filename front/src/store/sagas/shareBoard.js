@@ -11,7 +11,9 @@ import {
   ShareBoardIsLikeAndTotalLikeCountAPI,
   ShareBoardLikeAPI,
   ShareBoardUpdateDiscriptionAPI,
-  ShareBoardDetailSelectAPI
+  ShareBoardDetailSelectAPI,
+  ShareBoardDetailHitIncreaseAPI,
+  ShareBoardDeleteAPI,
 } from '../apis/shareBoard'
 import {
   SHARE_BOARD_REGISTER_REQUEST,
@@ -31,7 +33,13 @@ import {
   SHARE_BOARD_UPDATE_FAILURE,
   SHARE_BOARD_DETAIL_SELECT_REQUEST,
   SHARE_BOARD_DETAIL_SELECT_SUCCESS,
-  SHARE_BOARD_DETAIL_SELECT_FAILURE 
+  SHARE_BOARD_DETAIL_SELECT_FAILURE,
+  SHARE_BOARD_DETAIL_HIT_INCREASE_REQUEST,
+  SHARE_BOARD_DETAIL_HIT_INCREASE_SUCCESS,
+  SHARE_BOARD_DETAIL_HIT_INCREASE_FAILURE,
+  SHARE_BOARD_DELETE_REQUEST,   // 게시글 삭제 (공유 해제)
+  SHARE_BOARD_DELETE_SUCCESS,
+  SHARE_BOARD_DELETE_FAILURE,
 } from '../modules/shareBoard';
 import swal from 'sweetalert'; // 예쁜 alert 창을 위해 사용
 
@@ -140,10 +148,7 @@ function* watchLoadShareBoardUpdateDiscription() {
 // 해당 공유 게시글 상세 조회
 function* loadShareBoardDetailSelect(action) {
   try {   
-      console.log(action);
-    const result = yield call(ShareBoardDetailSelectAPI, action.data); 
-    console.log(result);
-      console.log("hi")
+      const result = yield call(ShareBoardDetailSelectAPI, action.data); 
       yield put({
         type: SHARE_BOARD_DETAIL_SELECT_SUCCESS ,
         data: result,
@@ -158,6 +163,35 @@ function* loadShareBoardDetailSelect(action) {
 function* watchLoadShareBoardDetailSelect() {
     yield takeLatest(SHARE_BOARD_DETAIL_SELECT_REQUEST , loadShareBoardDetailSelect);
 }
+
+// 해당 공유 게시글 조회수 증가
+function* loadShareBoardDetailHitIncrease(action) {
+  try {
+    const result = yield call(ShareBoardDetailHitIncreaseAPI, action.data);
+    yield put({ type: SHARE_BOARD_DETAIL_HIT_INCREASE_SUCCESS, data: result });
+  } catch (error) {
+    yield put({ type: SHARE_BOARD_DETAIL_HIT_INCREASE_FAILURE });
+  }
+}
+
+function* watchLoadShareBoardDetailHitIncrease() {
+  yield takeLatest(SHARE_BOARD_DETAIL_HIT_INCREASE_REQUEST, loadShareBoardDetailHitIncrease);
+}
+
+// 해당 공유 게시글 해제 (공유 해제)
+function* loadShareBoardDelete(action) {
+  try {
+    const result = yield call(ShareBoardDeleteAPI, action.data);
+    yield put({ type: SHARE_BOARD_DELETE_SUCCESS, data: result });
+  } catch (error) {
+    yield put({ type: SHARE_BOARD_DELETE_FAILURE });
+  }
+}
+
+function* watchLoadShareBoardDelete(){
+  yield takeLatest(SHARE_BOARD_DELETE_REQUEST, loadShareBoardDelete);
+}
+
 export default function* ShareBoardSaga() {
   yield all([
       fork(watchLoadShareBoardDetailSelect),
@@ -165,6 +199,8 @@ export default function* ShareBoardSaga() {
       fork(watchLoadShareBoardLike),
       fork(watchLoadShareBoardIsLikeAndTotalLikeCount),
       fork(watchLoadShareBoardRegister),
-      fork(watchLoadShareBoardTopLike)
+      fork(watchLoadShareBoardTopLike),
+      fork(watchLoadShareBoardDetailHitIncrease),
+      fork(watchLoadShareBoardDelete),
   ]);
 }

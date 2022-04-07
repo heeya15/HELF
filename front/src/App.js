@@ -6,7 +6,7 @@ import { Route, Switch } from "react-router-dom";
 import NavBar from "./components/NavBar/NavBar";
 // import Footer from "./components/Footer/Footer";
 import ShareBoard from "./pages/ShareBoard/ShareBoard";
-import ShareDetail from "./components/ShardDetail/SharedDetail";
+import ShareDetail from "./components/ShareBoard/ShareDetail";
 import Main from "./pages/Main/Main";
 import SignUp from "./pages/User/SignUp/SignUp";
 import LogIn from "./pages/User/LogIn/LogIn";
@@ -17,7 +17,7 @@ import Exercise from "./pages/Exercise/Exercise";
 import FindPassword from "./components/User/FindPassword/FindPassword";
 import MyDietDaily from "./components/MyDiet/MyDietDaily";
 import MyDietDetail from "./components/MyDiet/MyDietDetail";
-import Nutrition from "./components/MyPage/Statistics/Nutrition";
+import NutritionHistory from "./components/MyPage/Statistics/NutritionHistory";
 import withRoot from "./withRoot";
 import ExerciseHistory from "./components/MyPage/Statistics/ExerciseHistory";
 import AdditionalUserInfo from "./pages/User/LogIn/AdditionalUserInfo";
@@ -41,7 +41,7 @@ function App() {
         <Route path="/exercise/:breakTime" component={Exercise} />
         <Route path="/dietdiary/:date" component={MyDietDaily} />
         <Route path="/mydietdetail/:date/:diaryNo" component={MyDietDetail} />
-        <Route path="/nutrition" component={Nutrition} />
+        <Route path="/nutritionhistory" component={NutritionHistory} />
         <Route exact path="/sharedetail/:index" component={ShareDetail} />
         <Route path="/exercisehistory" component={ExerciseHistory} />
         <Route

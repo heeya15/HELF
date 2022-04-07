@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, useHistory } from "react-router-dom";
 import {
@@ -41,7 +41,9 @@ import {
   UpdateCancelButton,
 } from "./MyDietRegister.style";
 import {
+  MenuTitle,
   DetailReq,
+  ButtonGroup,
   UpdateButton,
   BackButton,
   MealTimeDetail,
@@ -49,6 +51,9 @@ import {
   FoodListStyle,
 } from "./MyDietDetail.style";
 import { ButtonWrapper, ConfirmButton, CancelButton } from "./MyDiet.style";
+import { FcCancel } from "react-icons/fc";
+import { TailSpin } from "react-loader-spinner";
+import { Camera } from "react-camera-pro";
 
 export default function MyDietDetail() {
   const dispatch = useDispatch();
@@ -63,7 +68,12 @@ export default function MyDietDetail() {
   }, [dispatch, diaryNo]);
 
   const { myDietDetail } = useSelector((state) => state.myDiet);
-  const { foodName, foods } = useSelector((state) => state.myDiet);
+  const {
+    foodName,
+    foods,
+    imageDetectionLoading,
+    imageDetectionListEmpty,
+  } = useSelector((state) => state.myDiet);
   const { dietDetailThumbnail } = useSelector((state) => state.myDiet);
 
   const [dietUpdate, setDietUpdate] = useState(false);
@@ -76,6 +86,10 @@ export default function MyDietDetail() {
     setDescription(myDietDetail.description);
     setDiaryDate(dayjs(myDietDetail.diaryDate).format("YYYY-MM-DD HH:mm:ss"));
     setMealTime(myDietDetail.mealTime);
+    if (myDietDetail.mealTime === "아침") setMealTimeIndex(0);
+    else if (myDietDetail.mealTime === "점심") setMealTimeIndex(1);
+    else if (myDietDetail.mealTime === "저녁") setMealTimeIndex(2);
+    else if (myDietDetail.mealTime === "간식") setMealTimeIndex(3);
   }, [myDietDetail]);
 
   useEffect(() => {
@@ -286,25 +300,91 @@ export default function MyDietDetail() {
     setDietUpdate(false);
   };
 
+  const camera = useRef(null);
+  const [cameraState, setCameraState] = useState(false);
+  const [numberOfCameras, setNumberOfCameras] = useState(0);
+
+  const cameraTakePhoto = (e) => {
+    const dataurl = camera.current.takePhoto();
+    setCameraState(false);
+    setThumbnail(dataurl);
+    var arr = dataurl.split(","),
+      mime = arr[0].match(/:(.*?);/)[1],
+      bstr = atob(arr[1]),
+      n = bstr.length,
+      u8arr = new Uint8Array(n);
+
+    while (n--) {
+      u8arr[n] = bstr.charCodeAt(n);
+    }
+    const file = new File([u8arr], "camera.jpg", { type: mime });
+    dispatch(setMyDietDetailImagePath(file));
+    dispatch({
+      type: MY_DIET_IMAGE_REQUEST,
+      data: { imagePath: file },
+    });
+  };
+
   return (
     <div>
       <Container>
+        {dietUpdate ? (
+          <MenuTitle>MY식단 수정</MenuTitle>
+        ) : (
+          <MenuTitle>MY식단 상세정보</MenuTitle>
+        )}
         <TotalStyle>
           <Row>
-            <Col>
-              <ImageThumbnail src={thumbnail} alt="이미지"></ImageThumbnail>
-              {dietUpdate && (
-                <div>
-                  <label className="imageSelect" htmlFor="input-file">
-                    이미지 선택
-                  </label>
-                  <input
-                    onChange={onImageHandler}
-                    type="file"
-                    id="input-file"
-                    style={{ display: "none" }}
-                  ></input>
-                </div>
+            <Col style={{ minWidth: "340px" }}>
+              {cameraState ? (
+                <>
+                  <Camera
+                    ref={camera}
+                    aspectRatio={4 / 3}
+                    numberOfCamerasCallback={setNumberOfCameras}
+                  />
+                  <button className="imageSelect" onClick={cameraTakePhoto}>
+                    촬영
+                  </button>
+                  <button
+                    className="imageSelect"
+                    hidden={numberOfCameras <= 1}
+                    onClick={() => {
+                      camera.current.switchCamera();
+                    }}
+                  >
+                    전환
+                  </button>
+                  <button
+                    className="imageSelect"
+                    onClick={() => setCameraState(false)}
+                  >
+                    취소
+                  </button>
+                </>
+              ) : (
+                <>
+                  <ImageThumbnail src={thumbnail} alt="이미지"></ImageThumbnail>
+                  {dietUpdate && (
+                    <div>
+                      <label className="imageSelect" htmlFor="input-file">
+                        이미지 선택
+                      </label>
+                      <input
+                        onChange={onImageHandler}
+                        type="file"
+                        id="input-file"
+                        style={{ display: "none" }}
+                      ></input>
+                      <button
+                        className="imageSelect"
+                        onClick={() => setCameraState(true)}
+                      >
+                        이미지 촬영
+                      </button>
+                    </div>
+                  )}
+                </>
               )}
             </Col>
             <Col>
@@ -358,29 +438,53 @@ export default function MyDietDetail() {
                     style={{
                       fontSize: "12px",
                       color: "grey",
+                      fontFamily: 'KOTRA_GOTHIC',
                     }}
                   >
                     음식별 무게를 선택해주세요.
                   </div>
+                  {imageDetectionLoading && (
+                    <TailSpin color="#2E7D32" height={40} width={40}></TailSpin>
+                  )}
+                  {imageDetectionListEmpty && foodName.length === 0 && (
+                    <div
+                      style={{
+                        fontSize: "13px",
+                        color: "rgb(56 55 55)",
+                        fontFamily: "KOTRA_GOTHIC",
+                      }}
+                    >
+                      <FcCancel size="17"></FcCancel> 인식된 음식이 없습니다.
+                      이미지를 변경하거나 직접선택을 통해 음식을 선택해주세요.
+                    </div>
+                  )}
                   <div>
-                    {foodName.map((food, index) => (
-                      <div key={index}>
-                        {food.foodName}{" "}
-                        <select
-                          data-index={index}
-                          style={{
-                            marginTop: "1%",
-                            borderRadius: "4px",
-                            outline: "0 none",
-                            overBackgroundColor: "black",
-                            cursor: "pointer",
-                          }}
-                          onChange={onWeightHandler}
-                        >
-                          {WeightSelect}
-                        </select>
-                      </div>
-                    ))}
+                    {!imageDetectionLoading &&
+                      foodName.map((food, index) => (
+                        <div key={index}>
+                          {food.foodName}{" "}
+                          <select
+                            data-index={index}
+                            style={{
+                              marginTop: "1%",
+                              borderRadius: "4px",
+                              outline: "0 none",
+                              overBackgroundColor: "black",
+                              cursor: "pointer",
+                            }}
+                            onChange={onWeightHandler}
+                            value={food.weight}
+                          >
+                            {weights.map((weight, index) => {
+                              return (
+                                <option key={index} value={weight}>
+                                  {weight}g
+                                </option>
+                              );
+                            })}
+                          </select>
+                        </div>
+                      ))}
                   </div>
                   <Titles>Meal Type</Titles>
                   <MealTypeButton style={{ display: "flex" }}>
@@ -426,7 +530,7 @@ export default function MyDietDetail() {
                   </FoodListStyle>
                   <Titles>Description</Titles>
                   <Description
-                    rows="8"
+                    rows="5"
                     readOnly
                     value={myDietDetail.description}
                   ></Description>
@@ -435,17 +539,19 @@ export default function MyDietDetail() {
             </Col>
           </Row>
         </TotalStyle>
-        {dietUpdate ? (
-          <>
-            <RegisterButton onClick={dietUpdateButton}>등록</RegisterButton>
-            <UpdateCancelButton onClick={dietNotUpdateButton}>
-              취소
-            </UpdateCancelButton>
-          </>
-        ) : (
-          <UpdateButton onClick={dietUpdateStateButton}>수정</UpdateButton>
-        )}
-        <BackButton onClick={goBack}>나가기</BackButton>
+        <ButtonGroup>
+          {dietUpdate ? (
+            <>
+              <BackButton onClick={dietNotUpdateButton}>나가기</BackButton>
+              <RegisterButton onClick={dietUpdateButton}>등록</RegisterButton>
+            </>
+          ) : (
+            <>
+              <BackButton onClick={goBack}>나가기</BackButton>
+              <UpdateButton onClick={dietUpdateStateButton}>수정</UpdateButton>
+            </>
+          )}
+        </ButtonGroup>
       </Container>
     </div>
   );

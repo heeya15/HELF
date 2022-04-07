@@ -20,10 +20,14 @@ export default function MyDiet() {
   console.log(myDietDiaryList);
   for (let i = 0; i < myDietDiaryList.length; i++) {
     var eventColor = "";
-    if (myDietDiaryList[i].meal_time === "아침") eventColor = "#c94c4c";
-    else if (myDietDiaryList[i].meal_time === "점심") eventColor = "#2B67FF";
-    else if (myDietDiaryList[i].meal_time === "저녁") eventColor = "#35C04D";
-    else eventColor = "#F2E944";
+    if (myDietDiaryList[i].meal_time === "아침") eventColor = "#FF7043";
+    else if (myDietDiaryList[i].meal_time === "점심") eventColor = "#FFB74D";
+    else if (myDietDiaryList[i].meal_time === "저녁") eventColor = "#FFAB91";
+    else eventColor = "#D7CCC8";
+    // if (myDietDiaryList[i].meal_time === "아침") eventColor = "#c94c4c";
+    // else if (myDietDiaryList[i].meal_time === "점심") eventColor = "#2B67FF";
+    // else if (myDietDiaryList[i].meal_time === "저녁") eventColor = "#35C04D";
+    // else eventColor = "#F2E944";
 
     diaryList.push({
       id: myDietDiaryList[i].diary_no,
@@ -69,7 +73,7 @@ export default function MyDiet() {
           start: "title",
           end: "today,prev,next",
         }}
-        height="80vh"
+        height="100vh"
         plugins={[dayGridPlugin, interactionPlugin]}
         initialView="dayGridMonth"
         eventOrder="time"

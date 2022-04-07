@@ -7,7 +7,7 @@ import {
   Title,
 } from './MyPage.style';
 import MyPageProfile from '../../components/MyPage/MyPageProfile';
-import Nutrition from '../../components/MyPage/Statistics/Nutrition';
+import NutritionHistory from '../../components/MyPage/Statistics/NutritionHistory';
 import WeightHistory from '../../components/MyPage/Statistics/WeightHistory';
 import ExerciseHistory from '../../components/MyPage/Statistics/ExerciseHistory';
 import { Row, Col } from 'react-bootstrap';
@@ -30,7 +30,7 @@ export default function MyPage() {
             </Col>
             <Col md='6' style={{ marginBottom: '20px' }}>
               <BlockWrapper>
-                <Nutrition/>
+                <NutritionHistory/>
               </BlockWrapper>
             </Col>
           </Row>

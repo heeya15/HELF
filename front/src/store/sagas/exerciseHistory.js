@@ -34,13 +34,16 @@ function* watchLoadExerciseHistoryFindAll() {
 // 운동 통계 등록
 function* loadExerciseHistoryRegister(action) {
   try {
-    const result = yield call(exerciseHistoryRegisterAPI, action.data);
-    yield put({ type: EXERCISE_HISTORY_REGISTER_SUCCESS, data: result });
+    if(action.data.count > 0) {
+      const result = yield call(exerciseHistoryRegisterAPI, action.data);
+      yield put({ type: EXERCISE_HISTORY_REGISTER_SUCCESS, data: result });
+    }
     swal("운동 완료", "  ", "success", {
       buttons: false,
       timer: 1800,
     });
     document.location.href = "/exercisesetting";
+    // }
   } catch (error) {
     yield put({ type: EXERCISE_HISTORY_REGISTER_FAILURE });
   }

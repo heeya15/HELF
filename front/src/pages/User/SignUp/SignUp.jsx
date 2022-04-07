@@ -20,10 +20,15 @@ import {
     SignUpButton,
     Success,
     Error,
-    SignInLink, } from "./SignUp.style"
-import AppForm from "../../../components/User/SignUp/AppForm";
-import Typography from "../../../components/Main/Typography";
-import { SIGN_UP_REQUEST, ID_CHECK_REQUEST, EMAIL_CHECK_REQUEST } from "../../../store/modules/user";
+    SignInLink, } from './SignUp.style'
+import AppForm from '../../../components/User/SignUp/AppForm';
+import Typography from '../../../components/Main/Typography';
+import { 
+    SIGN_UP_REQUEST,
+    ID_CHECK_REQUEST, 
+    EMAIL_CHECK_REQUEST,
+    SIGN_UP_RESET,
+} from '../../../store/modules/user';
 
 
 
@@ -34,18 +39,18 @@ export default function SignUp() {
     const history = useHistory();
 
     // 아이디, 비밀번호, 비밀번호 확인, 이름, 이메일 정보
-    const [id, setId] = useState("")
-    const [password, setPassword] = useState("")
-    const [passwordCheck, setPasswordCheck] = useState("")
-    const [name, setName] = useState("")
-    const [email, setEmail] = useState("")
+    const [id, setId] = useState('')
+    const [password, setPassword] = useState('')
+    const [passwordCheck, setPasswordCheck] = useState('')
+    const [name, setName] = useState('')
+    const [email, setEmail] = useState('')
     const [showPassword, setShowPassword] = useState(true);
     const [showPasswordCheck, setShowPasswordCheck] = useState(true);
 
     // 오류메시지 상태 저장
-    const [idMessage, setIdMessage] = useState("");
-    const [passwordMessage, setPasswordMessage] = useState("");
-    const [emailMessage, setEmailMessage] = useState("")
+    const [idMessage, setIdMessage] = useState('');
+    const [passwordMessage, setPasswordMessage] = useState('');
+    const [emailMessage, setEmailMessage] = useState('')
 
     // 유효성 검사
     const [isId, setIsId] = useState(false);
@@ -93,22 +98,19 @@ export default function SignUp() {
     }
 
     const handleSignIn = () => {
-        history.push("/login");
+        history.push('/login');
     }
 
     const onPasswordHandler = (event) => {
-        setPassword(event.target.value)
+        setPassword(event.target.value);
         
-        const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/
+        const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,12}$/
         if(event.target.value.length < 8 || event.target.value.length > 12) {
             setPasswordMessage('8글자 이상 12글자 이하로 입력해주세요.');
             setIsPassword(false);
         } else if(!passwordRegex.test(event.target.value)) {
             setPasswordMessage('숫자, 영문자, 특수문자 조합으로 입력해주세요.');
             setIsPassword(false);
-        } else if(event.target.value !== passwordCheck) {
-            setPasswordMessage('비밀번호가 일치하지 않습니다.');
-            setIsPasswordCheck(false);
         } else {
             setPasswordMessage('');
             setIsPassword(true);
@@ -116,8 +118,13 @@ export default function SignUp() {
     }
 
     const onPasswordCheckHandler = (event) => {
-        setPasswordCheck(event.target.value)
-        if(event.target.value !== password) {
+        setPasswordCheck(event.target.value);
+
+        const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,12}$/
+        if(!passwordRegex.test(event.target.value)) {
+            setPasswordMessage('숫자, 영문자, 특수문자 조합으로 입력해주세요.');
+            setIsPasswordCheck(false);
+        } else if(event.target.value !== password) {
             setPasswordMessage('비밀번호가 일치하지 않습니다.');
             setIsPasswordCheck(false);
         } else {
@@ -170,6 +177,7 @@ export default function SignUp() {
             alert('모든 정보를 입력해주세요.');
             event.preventDefault();
         } else if(!isId || !isPassword || !isPasswordCheck || !isEmail) {
+            console.log("🚬🚬🚬🚬🚬🚬🚬 ", isId, isPassword, isPasswordCheck, isEmail)
             alert('유효성 규칙을 확인해주세요.')
         } else if(password !== passwordCheck) {
             alert('비밀번호가 일치하지 않습니다.');
@@ -197,6 +205,9 @@ export default function SignUp() {
     
     useEffect(() => {
         if(signUpDone) {
+            dispatch({
+                type: SIGN_UP_RESET,
+            });
             history.push('/LogIn');
         }
     });
@@ -204,7 +215,7 @@ export default function SignUp() {
     return (
         <AppForm>
         <ThemeProvider theme={theme}>
-            <Container component="main" maxWidth="xs">
+            <Container component='main' maxWidth='xs'>
                 <CssBaseline/>
                 <Box
                     onKeyPress={ handleKeyPress }
@@ -214,13 +225,13 @@ export default function SignUp() {
                         flexDirection: 'column',
                         alignItems: 'center'
                     }}>
-                    <Typography variant="h3" gutterBottom marked="center" align="center" style={{ fontFamily: 'KOTRA_BOLD-Bold' }}>
+                    <Typography variant='h3' gutterBottom marked='center' align='center' style={{ fontFamily: 'KOTRA_BOLD-Bold' }}>
                         SIGN UP
                     </Typography>
-                    <Typography variant="body2" align="center"></Typography>
+                    <Typography variant='body2' align='center'></Typography>
                     <Box
-                        component="form"
-                        noValidate="noValidate"
+                        component='form'
+                        noValidate='noValidate'
                         onSubmit={e => {
                             handleSignUp(e);
                         }}
@@ -230,18 +241,18 @@ export default function SignUp() {
                         <Grid container spacing={2}>
                             <Grid item xs={12} sm={9}>
                                 <TextField
-                                    requried
+                                    requried='true'
                                     fullWidth
-                                    id="id"
-                                    label="Id"
-                                    name="id"
-                                    autoComplete="id"
+                                    id='id'
+                                    label='Id'
+                                    name='id'
+                                    autoComplete='id'
                                     style={{ backgroundColor: 'white' }}
                                     onChange={onIdHandler}/>
                             </Grid>
                             <Grid item xs={12} sm={3}>
                                 <AuthButton
-                                    type="button"
+                                    type='button'
                                     onClick={ idCheck }>
                                     인증
                                 </AuthButton>
@@ -253,54 +264,54 @@ export default function SignUp() {
                                 </Grid>
                             }
                             <Grid item xs={12} sm={6}>
-                                <FormControl variant="outlined" fullWidth>
-                                    <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
+                                <FormControl variant='outlined' fullWidth>
+                                    <InputLabel htmlFor='outlined-adornment-password'>Password</InputLabel>
                                     <OutlinedInput
-                                    required
-                                    id="password"
-                                    name="password"
+                                    requried='true'
+                                    id='password'
+                                    name='password'
                                     type={ showPassword ? 'password' : 'text'}
                                     style={{ backgroundColor: 'white' }}
                                     onChange={ onPasswordHandler }
                                     endAdornment={
-                                        <InputAdornment position="end">
+                                        <InputAdornment position='end'>
                                         <IconButton
-                                            aria-label="toggle password visibility"
+                                            aria-label='toggle password visibility'
                                             onClick={handleClickShowPassword}
                                             onMouseDown={handleMouseDownPassword}
-                                            edge="end"
+                                            edge='end'
                                         >
                                             { showPassword ? <VisibilityOff /> : <Visibility /> }
                                         </IconButton>
                                         </InputAdornment>
                                     }
-                                    label="Password"
+                                    label='Password'
                                     />
                                 </FormControl>
                             </Grid>
                             <Grid item xs={12} sm={6}>
-                                <FormControl variant="outlined" fullWidth>
-                                    <InputLabel htmlFor="outlined-adornment-password">Password Check</InputLabel>
+                                <FormControl variant='outlined' fullWidth>
+                                    <InputLabel htmlFor='outlined-adornment-password'>Password Check</InputLabel>
                                     <OutlinedInput
-                                    required
-                                    id="passwordCheck"
-                                    name="passwordCheck"
+                                    requried='true'
+                                    id='passwordCheck'
+                                    name='passwordCheck'
                                     type={ showPasswordCheck ? 'password' : 'text'}
                                     style={{ backgroundColor: 'white' }}
                                     onChange={ onPasswordCheckHandler }
                                     endAdornment={
-                                        <InputAdornment position="end">
+                                        <InputAdornment position='end'>
                                         <IconButton
-                                            aria-label="toggle password visibility"
+                                            aria-label='toggle password visibility'
                                             onClick={handleClickShowPasswordCheck}
                                             onMouseDown={handleMouseDownPasswordCheck}
-                                            edge="end"
+                                            edge='end'
                                         >
                                             { showPasswordCheck ? <VisibilityOff /> : <Visibility /> }
                                         </IconButton>
                                         </InputAdornment>
                                     }
-                                    label="Password Check"
+                                    label='Password Check'
                                     />
                                 </FormControl>
                             </Grid>
@@ -313,28 +324,28 @@ export default function SignUp() {
                             }
                             <Grid item xs={12}>
                                 <TextField
-                                    requried
+                                    requried='true'
                                     fullWidth
-                                    id="name"
-                                    label="Name"
-                                    name="name"
+                                    id='name'
+                                    label='Name'
+                                    name='name'
                                     style={{ backgroundColor: 'white' }}
                                     onChange={onNameHandler}/>
                             </Grid>
                             <Grid item xs={12} sm={9}>
                                 <TextField
-                                    requried
+                                    requried='true'
                                     fullWidth
-                                    id="email"
-                                    label="Email Address"
-                                    name="email"
-                                    autoComplete="email"
+                                    id='email'
+                                    label='Email Address'
+                                    name='email'
+                                    autoComplete='email'
                                     style={{ backgroundColor: 'white' }}
                                     onChange={onEmailHandler}/>
                             </Grid>
                             <Grid item xs={12} sm={3}>
                                 <AuthButton
-                                    type="button"
+                                    type='button'
                                     onClick={() => {
                                         emailCheck();
                                     }}>
@@ -350,14 +361,14 @@ export default function SignUp() {
                             }         
                         </Grid>
                         <SignUpButton
-                            type="submit"
+                            type='submit'
                             sx={{
                                 mt: 3,
                                 mb: 2
                             }}>
                             SIGN UP
                         </SignUpButton>
-                        <Grid container justifyContent="flex-end">
+                        <Grid container justifyContent='flex-end'>
                             <Grid item>
                                 <SignInLink 
                                     style={{ fontFamily: 'KOTRA_GOTHIC' }}

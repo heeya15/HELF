@@ -11,7 +11,7 @@ const initialState = {
     isShared: false,
     dietFindResList: [],
   },
-  weights: [100, 150, 200, 250, 300],
+  weights: [100, 150, 200, 250, 300, 350, 400, 450, 500, 550, 600],
   foods: [],
   dietDetailThumbnail: null,
   dietThumbnail: null,
@@ -20,6 +20,8 @@ const initialState = {
   diaryDate: "",
   description: "",
   foodName: [],
+  imageDetectionLoading: false,
+  imageDetectionListEmpty: false,
   myDietDiaryList: [],
   myDietDiaryDailyInfo: [],
   myDietDiaryDailyInfoCopy: [],
@@ -94,16 +96,28 @@ export const setFoodCheckBox = (state) => ({
   state,
 });
 
+const SET_IMAGE_DETECTION_LIST_EMPTY = "SET_IMAGE_DETECTION_LIST_EMPTY";
+export const setImageDetectionListEmpty = (state) => ({
+  type: SET_IMAGE_DETECTION_LIST_EMPTY,
+  state,
+});
+
 const reducer = (state = initialState, action) =>
   produce(state, (draft) => {
     switch (action.type) {
       case MY_DIET_IMAGE_REQUEST:
+        draft.imageDetectionLoading = true;
+        draft.imageDetectionListEmpty = false;
         break;
       case MY_DIET_IMAGE_SUCCESS:
+        draft.imageDetectionLoading = false;
+        if (action.data.data.resultList.length === 0)
+          draft.imageDetectionListEmpty = true;
         draft.foodName = [];
         action.data.data.resultList.forEach((foods) => {
           draft.foodName.push({ foodName: foods, weight: 100 });
         });
+        console.log(action.data.data);
         break;
       case MY_DIET_IMAGE_FAILURE:
         break;
@@ -178,7 +192,7 @@ const reducer = (state = initialState, action) =>
       case SET_FOOD_NAME:
         draft.foodName = [];
         action.state.forEach((food) => {
-          draft.foodName.push({ foodName: food.foodName, weight: 100 });
+          draft.foodName.push({ foodName: food.foodName, weight: food.weight });
         });
         break;
       case SET_FOOD_CHECK_BOX:
@@ -186,6 +200,9 @@ const reducer = (state = initialState, action) =>
         action.state.forEach((food) => {
           draft.foodName.push({ foodName: food, weight: 100 });
         });
+        break;
+      case SET_IMAGE_DETECTION_LIST_EMPTY:
+        draft.imageDetectionListEmpty = action.state;
         break;
       case MY_DIET_DIARY_SHARE_REQUEST:
         draft.diaryShareLoading = true;

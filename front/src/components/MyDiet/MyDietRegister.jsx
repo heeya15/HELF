@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, useHistory } from "react-router-dom";
 import { IMAGE_URL } from "../../utils/https";
 import {
   setFoodCheckBox,
   setmyDietWeight,
+  setImageDetectionListEmpty,
   MY_DIET_IMAGE_REQUEST,
   MY_DIET_REGISTER_REQUEST,
   FOOD_LIST_REQUEST,
@@ -21,6 +22,7 @@ import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
 import {
+  MenuTitle,
   TotalStyle,
   RegisterReq,
   MealTypeButton,
@@ -32,8 +34,12 @@ import {
   FoodCheckButton,
   foodcheckBox,
   StyledFormGroup,
+  ButtonGroup,
 } from "./MyDietRegister.style";
 import { ButtonWrapper, ConfirmButton, CancelButton } from "./MyDiet.style";
+import { FcCancel } from "react-icons/fc";
+import { TailSpin } from "react-loader-spinner";
+import { Camera } from "react-camera-pro";
 
 export default function MyDietRegister() {
   const dispatch = useDispatch();
@@ -43,12 +49,17 @@ export default function MyDietRegister() {
   const [dietThumbnail, setDietThumbnail] = useState(
     `${IMAGE_URL}default-image.png`
   );
-  const [diaryDate, setDiaryDate] = useState("2022-03-22 00:00:00");
+  const [diaryDate, setDiaryDate] = useState(date + " 00:00:00");
   const [imagePath, setImagePath] = useState(null);
   const [mealTime, setMealTime] = useState("");
   const [description, setDescription] = useState("");
 
-  const { foodName, foods } = useSelector((state) => state.myDiet);
+  const {
+    foodName,
+    foods,
+    imageDetectionLoading,
+    imageDetectionListEmpty,
+  } = useSelector((state) => state.myDiet);
   const mealType = ["아침", "점심", "저녁", "간식"];
 
   const myDietRegister = {
@@ -62,6 +73,7 @@ export default function MyDietRegister() {
   useEffect(() => {
     dispatch({ type: FOOD_LIST_REQUEST });
     dispatch(setFoodName([]));
+    dispatch(setImageDetectionListEmpty(false));
   }, [dispatch]);
 
   const onImageHandler = (e) => {
@@ -178,22 +190,87 @@ export default function MyDietRegister() {
     setCheckedInputs(temp);
   }, [foodName]);
 
+  const camera = useRef(null);
+  const [cameraState, setCameraState] = useState(false);
+  const [numberOfCameras, setNumberOfCameras] = useState(0);
+
+  const cameraTakePhoto = (e) => {
+    const dataurl = camera.current.takePhoto();
+    setCameraState(false);
+    setDietThumbnail(dataurl);
+    var arr = dataurl.split(","),
+      mime = arr[0].match(/:(.*?);/)[1],
+      bstr = atob(arr[1]),
+      n = bstr.length,
+      u8arr = new Uint8Array(n);
+
+    while (n--) {
+      u8arr[n] = bstr.charCodeAt(n);
+    }
+    const file = new File([u8arr], "camera.jpg", { type: mime });
+    setImagePath(file);
+    dispatch({
+      type: MY_DIET_IMAGE_REQUEST,
+      data: { imagePath: file },
+    });
+  };
+
   return (
     <div>
       <Container>
-        <TotalStyle style={{ marginTop: "5%" }}>
+        <MenuTitle>MY식단 등록</MenuTitle>
+        <TotalStyle style={{ marginTop: "2%" }}>
           <Row>
-            <Col>
-              <ImageThumbnail src={dietThumbnail} alt="이미지"></ImageThumbnail>
-              <label className="imageSelect" htmlFor="input-file">
-                이미지 선택
-              </label>
-              <input
-                onChange={onImageHandler}
-                type="file"
-                id="input-file"
-                style={{ display: "none" }}
-              ></input>
+            <Col style={{ minWidth: "340px" }}>
+              {cameraState ? (
+                <>
+                  <Camera
+                    ref={camera}
+                    aspectRatio={4 / 3}
+                    numberOfCamerasCallback={setNumberOfCameras}
+                  />
+                  <button className="imageSelect" onClick={cameraTakePhoto}>
+                    촬영
+                  </button>
+                  <button
+                    className="imageSelect"
+                    hidden={numberOfCameras <= 1}
+                    onClick={() => {
+                      camera.current.switchCamera();
+                    }}
+                  >
+                    전환
+                  </button>
+                  <button
+                    className="imageSelect"
+                    onClick={() => setCameraState(false)}
+                  >
+                    취소
+                  </button>
+                </>
+              ) : (
+                <>
+                  <ImageThumbnail
+                    src={dietThumbnail}
+                    alt="이미지"
+                  ></ImageThumbnail>
+                  <label className="imageSelect" htmlFor="input-file">
+                    이미지 선택
+                  </label>
+                  <input
+                    onChange={onImageHandler}
+                    type="file"
+                    id="input-file"
+                    style={{ display: "none" }}
+                  ></input>
+                  <button
+                    className="imageSelect"
+                    onClick={() => setCameraState(true)}
+                  >
+                    이미지 촬영
+                  </button>
+                </>
+              )}
             </Col>
             <Col>
               <RegisterReq>
@@ -248,6 +325,21 @@ export default function MyDietRegister() {
                 >
                   음식별 무게를 선택해주세요.
                 </div>
+                {imageDetectionLoading && (
+                  <TailSpin color="#2E7D32" height={40} width={40}></TailSpin>
+                )}
+                {imageDetectionListEmpty && foodName.length === 0 && (
+                  <div
+                    style={{
+                      fontSize: "13px",
+                      color: "rgb(56 55 55)",
+                      fontFamily: "KOTRA_GOTHIC",
+                    }}
+                  >
+                    <FcCancel size="17"></FcCancel> 인식된 음식이 없습니다.
+                    이미지를 변경하거나 직접선택을 통해 음식을 선택해주세요.
+                  </div>
+                )}
                 <div>
                   {foodName.map((food, index) => (
                     <div key={index}>
@@ -304,8 +396,10 @@ export default function MyDietRegister() {
             </Col>
           </Row>
         </TotalStyle>
-        <RegisterButton onClick={registerMyDietButton}>등록</RegisterButton>
-        <BackButton onClick={goBack}>나가기</BackButton>
+        <ButtonGroup>
+          <BackButton onClick={goBack}>나가기</BackButton>
+          <RegisterButton onClick={registerMyDietButton}>등록</RegisterButton>
+        </ButtonGroup>
       </Container>
     </div>
   );

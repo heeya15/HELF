@@ -76,8 +76,8 @@ public class ShareBoardServiceImpl implements ShareBoardService {
     }
 
     @Override
-    public void deleteShareBoard(Long boardNo) {
-        shareboardRepository.deleteById(boardNo);
+    public void deleteShareBoard(int diaryNo) {
+        shareboardRepository.deleteByDiaryNo(diaryNo);
     }
 
     @Override

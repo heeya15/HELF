@@ -5,7 +5,6 @@ import {
   MY_PAGE_LIKE_REQUEST,
   MY_PAGE_LIKE_DELETE_REQUEST,
 } from "../../store/modules/myPage";
-import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { IMAGE_URL } from "../../utils/https";
@@ -13,19 +12,9 @@ import { AiFillHeart } from "react-icons/ai";
 import { 
   LikeListStyle,
   Title, 
+  StyledSilder,
 } from "./MyPage.style";
-import styled from "styled-components";
 
-
-const StyledSilder = styled(Slider)`
-  .slick-prev::before {
-    // background-color: #000;
-    content: url('https://cdn-icons-png.flaticon.com/16/271/271220.png');
-  }
-  .slick-next::before{
-    content: url('https://cdn-icons-png.flaticon.com/16/271/271228.png');
-  }
-`;
 
 export default function MyPageLike() {
   const dispatch = useDispatch();

@@ -24,6 +24,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
+import retrofit2.http.Path;
 import springfox.documentation.annotations.ApiIgnore;
 
 import java.util.List;
@@ -165,19 +166,19 @@ public class ShareBoardController {
     }
 
     // 게시글 삭제
-    @DeleteMapping("/remove")
+    @DeleteMapping("/remove/{diaryNo}")
     @ApiOperation(value = "게시글 삭제(param)", notes = "<strong>게시글 번호</strong>를 통해 공유 게시판에서 해당 식단 일지 정보를 삭제한다." +
-            "param으로 boardNo와 diaryNo을 넘겨받는다.")
+            "param으로 diaryNo을 넘겨받는다.")
     @ApiResponses({
             @ApiResponse(code = 200, message = "성공"),
             @ApiResponse(code = 401, message = "인증 실패"),
             @ApiResponse(code = 404, message = "사용자 없음"),
             @ApiResponse(code = 500, message = "서버 오류")
     })
-    public ResponseEntity<String> deleteDietDiary(@RequestParam("boardNo") Long boardNo, @RequestParam("diaryNo") int diaryNo) {
+    public ResponseEntity<String> deleteDietDiary(@PathVariable("diaryNo") int diaryNo) {
         try {
             // 해당 게시글을 공유 게시판에서 삭제
-            shareBoardService.deleteShareBoard(boardNo);
+            shareBoardService.deleteShareBoard(diaryNo);
             // 해당 식단 일지 공유 여부 상태 변경
             dietDiaryService.updateDiaryShareStatus(diaryNo);
         } catch(Exception e) {

@@ -1,5 +1,14 @@
 import styled from "styled-components";
 
+const MenuTitle = styled.div`
+  font-size: 50px;
+  margin: 40px 0px 0px 0px;
+  font-family: "KOTRA_BOLD-Bold";
+  @media (max-width: 1200px) {
+    font-size: 30px;
+  }
+`;
+
 const DetailReq = styled.div`
   margin-top: 5%;
   margin-right: 5%;
@@ -7,29 +16,50 @@ const DetailReq = styled.div`
   margin-bottom: 5%;
 `;
 
+const ButtonGroup = styled.div`
+  margin: 0 auto;
+  @media (max-width: 1200px) {
+    text-align: right;
+  }
+`;
+
 const UpdateButton = styled.button`
-  margin-top: 2%;
-  margin-bottom: 3%;
-  padding: 5px 0px;
+  margin-top: 3%;
+  margin-bottom: 5%;
+  padding: 6px 20px;
   color: #fff;
-  background-color: #dbc925;
+  background-color: #2E7D32;
+  // background-color: #dbc925;
   font-size: 18px;
-  border: none;
-  border-radius: 30px;
-  width: 10%;
+  border: 3px solid #2E7D32;
+  border-radius: 20px;
+  // width: 80px;
+  :hover {
+    transform: scale(1.1);
+  }
+  @media (max-width: 1200px) {
+    font-size: 15px;
+  }
 `;
 
 const BackButton = styled.button`
-  margin-top: 2%;
-  margin-bottom: 3%;
-  padding: 5px 0px;
-  color: #fff;
-  background-color: #db2525;
+  margin-top: 3%;
+  margin-bottom: 5%;
+  padding: 6px 10px;
+  color: #2E7D32;
+  background-color: #fff;
+  // background-color: #db2525;
   font-size: 18px;
-  border: none;
-  border-radius: 30px;
-  width: 10%;
-  margin-left: 2%;
+  border: 3px solid #2E7D32;
+  border-radius: 20px;
+  // width: 80px;
+  margin-right: 1%;
+  :hover {
+    transform: scale(1.1);
+  }
+  @media (max-width: 1200px) {
+    font-size: 15px;
+  }
 `;
 
 const MealTimeDetail = styled.div`
@@ -47,7 +77,7 @@ const FoodListStyle = styled.div`
   overflow-x: hidden;
   overflow-y: auto;
   flew-wrap: nowrap;
-  height: 320px;
+  max-height: 300px;
   ::-webkit-scrollbar {
     width: 10px;
   }
@@ -60,7 +90,9 @@ const FoodListStyle = styled.div`
 `;
 
 export {
+  MenuTitle,
   DetailReq,
+  ButtonGroup,
   UpdateButton,
   BackButton,
   MealTimeDetail,

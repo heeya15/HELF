@@ -39,14 +39,11 @@ import kakaoimage from "../../../assets/images/kakao_login_medium_narrow.png";
 const theme = createTheme();
 
 export default function LogIn() {
-  const CLIENT_ID = "596cd5eb9b29a6f68439ecb9a70599cf";
-  const REDIRECT_URI = "http://localhost:3000/login";
   const dispatch = useDispatch(); // 해당 store에 함수에 해당하는 인자로 요청 가능.
   const { logInDone, kakaologInDone } = useSelector((state) => state.user);
   const { me, meStateDone } = useSelector((state) => state.mypage);
 
   const history = useHistory();
-  const [kakaoAT, setkakaoAT] = useState("");
   const [id, setId] = useState("");
   const [pw, setPw] = useState("");
   const [showPassword, setShowPassword] = useState(true);
@@ -102,8 +99,7 @@ export default function LogIn() {
       success: function(authObj) {
         setAc(authObj.access_token);
         let socialAC = `Bearer ${ac}`;
-        // console.log("hi");
-        // console.log(socialAC);
+
         Kakao.Auth.setAccessToken(authObj.access_token);
         dispatch({
           type: KAKAO_LOG_IN_REQUEST,

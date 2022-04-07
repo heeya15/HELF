@@ -24,7 +24,7 @@ export default function Feature() {
 
     const handleGetStarted = () => {
         if(logInDone || kakaologInDone) {
-            history.push('/mydiet');
+            history.push('/exercisesetting');
         } else {
             history.push('/login');
         }
@@ -76,7 +76,7 @@ export default function Feature() {
                                     alt="suitcase"
                                     sx={image}/>
                                 <Typography variant="h5" align="center" style={ fontNormal }>
-                                    인공지능을 이용한<br/> 간편한 식단 일지 작성
+                                    AI 음식 사진 인식을 통한<br/> 간편한 식단 일지 작성
                                 </Typography>
                             </Box>
                         </Grid>
@@ -89,7 +89,7 @@ export default function Feature() {
                                     alt="graph"
                                     sx={image}/>
                                 <Typography variant="h5" align="center" style={ fontNormal }>
-                                    화상 기능을 통한 운동과<br/> 간편한 운동 기록 작성
+                                    AI 운동 개수 카운팅과 <br/> 자동 운동 기록 작성
                                 </Typography>
                             </Box>
                         </Grid>
@@ -102,7 +102,7 @@ export default function Feature() {
                                     alt="clock"
                                     sx={image}/>
                                 <Typography variant="h5" align="center" style={ fontNormal }>
-                                    식단을 공유하여 나의 식단을 자랑하고 다른 사람의 식단으로부터 지루한 식단 해결
+                                    식단을 공유를 통한 지루한 식단 루틴 탈출
                                 </Typography>
                             </Box>
                         </Grid>

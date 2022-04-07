@@ -73,7 +73,7 @@ export default function Effect() {
                                 안전<br/>(Virus-Free)
                             </Typography>
                             <Typography variant="h5" style={ fontNormal }>
-                                팬데믹 시대에 집에서도 코로나19로부터 안전하게 운동을 할 수 있습니다.
+                                팬데믹 시대에 집에서도 코로나 19로부터 안전하게 운동을 할 수 있습니다.
                             </Typography>
                         </Box>
                     </Grid>
@@ -95,7 +95,7 @@ export default function Effect() {
                                 운동 보조<br/>(Exercise Assistant)
                             </Typography>
                             <Typography variant="h5" style={ fontNormal }>
-                                운동 자세를 인식하여 개수를 자동으로 세어주어 운동에만 집중할 수 있습니다.
+                                자신만의 운동 환경을 세팅하고 AI가 운동 자세를 인식하여 자동으로 개수를 세어주어 운동에만 집중할 수 있습니다.
                             </Typography>
                         </Box>
                     </Grid>

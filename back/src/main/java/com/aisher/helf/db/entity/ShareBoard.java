@@ -29,7 +29,7 @@ public class ShareBoard {
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     Long boardNo;
 
-    @Column(length = 1500, name = "description")
+    @Column(length = 2000, name = "description")
     String description;  // 식단 공유시 쓴 내용
 
     @Column(name = "hit", nullable = false)

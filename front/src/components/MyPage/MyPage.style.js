@@ -1,33 +1,22 @@
 import styled from "styled-components";
 import ReactTooltip from "react-tooltip";
+import Slider from "react-slick";
 import { blockColor, device, pointColor } from "../../style/variables";
 
 const Container = styled.div`
   width: 90vw;
-  max-width: 900px;
+  // max-width: 900px;
+  @media screen and (max-width: 768px) {
+    width: 95vw;
+  }
+  @media screen and (max-width: 481px) {
+    width: 95vw;
+  }
 `;
 
 const MyPageProfileBlock = styled.div`
   display: flex;
   justify-content: center;
-  @media ${device.TabletPortrait} {
-    flex-direction: column;
-  }
-  #profileIcon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0 10px;
-  }
-  #profileNickname {
-    font-weight: bold;
-    font-size: 30px;
-    margin: 5px;
-  }
-  #profileEmail {
-    font-size: 20px;
-    margin: 5px;
-  }
 `;
 
 const MyPageIconBlock = styled.div`
@@ -50,19 +39,31 @@ const MyPageProfileEditButton = styled.button`
   :hover {
     transform: scale(1.1);
   }
+  @media screen and (max-width: 768px) {
+    font-size: 14px;
+  }
+  @media screen and (max-width: 481px) {
+    font-size: 14px;
+  }
 `;
 
 const MyPageProfileDeleteButton = styled.button`
   margin-top: 25px;
-  margin-left: 10px;
+  margin-right: 10px;
   padding: 5px 10px;
   font-size: 17px;
-  background-color: #e02828;
-  border: 3px solid #e02828;
+  background-color: #c94c4c;
+  border: 3px solid #c94c4c;
   border-radius: 5px;
   color: #fff;
   :hover {
     transform: scale(1.1);
+  }
+  @media screen and (max-width: 768px) {
+    font-size: 14px;
+  }
+  @media screen and (max-width: 481px) {
+    font-size: 14px;
   }
 `;
 
@@ -106,10 +107,16 @@ const Title = styled.div`
   font-weighit: bold;
   font-size: 28px;
   margin-bottom: 25px;
+  @media (max-width: 1200px) {
+    font-size: 20px;
+  }
 `;
 
 const EmptyText = styled.div`
   padding: 100px 0px;
+  @media screen and (max-width: 480px) {
+    padding: 60px 0px;
+  }
 `;
 
 const Description = styled.div`
@@ -148,6 +155,7 @@ const ProfileImage = styled.img`
   border-radius: 20px;
   width: 60%;
   height: 60%;
+  object-fit: cover;
   @media screen and (max-width: 768px) {
     width: 90%;
     height: 90%;
@@ -166,10 +174,12 @@ const NameInfo = styled.div`
 const BirthdayInfo = styled.div`
   font-size: 25px;
   margin-top: 20px;
+  word-break: break-word;
 `;
 
 const EmailInfo = styled.div`
   font-size: 25px;
+  word-break: break-word;
 `;
 
 const PhysicalInfo = styled.div`
@@ -188,6 +198,9 @@ const editBox = {
   borderRadius: "10px",
   boxShadow: 24,
   p: 4,
+  '@media (max-width: 480px)': {
+    width: '95%',
+  },
 };
 
 const editInput = {
@@ -227,7 +240,7 @@ const ConfirmButton = styled.button`
   border: 2px solid #2e7d32;
   border-radius: 10px;
   padding: 5px 10px;
-  margin-right: 5px;
+  margin-left: 10px;
   :hover {
     transform: scale(1.1);
   }
@@ -240,9 +253,22 @@ const CancelButton = styled.button`
   border: 2px solid #2e7d32;
   border-radius: 10px;
   padding: 5px 10px;
+  :hover {
+    transform: scale(1.1);
+  }
 `;
 
 /** 찜 목록 */
+const StyledSilder = styled(Slider)`
+  .slick-prev::before {
+    // background-color: #000;
+    content: url("https://cdn-icons-png.flaticon.com/16/271/271220.png");
+  }
+  .slick-next::before {
+    content: url("https://cdn-icons-png.flaticon.com/16/271/271228.png");
+  }
+`;
+
 const LikeListStyle = styled.div`
   .total {
     background-color: transparent;
@@ -287,6 +313,11 @@ const ButtonGroup = styled.div`
   margin-bottom: 80px;
 `;
 
+const weightEditInput = {
+  width: '130px',
+  marginLeft: '10px',
+};
+
 const WeightButton = styled.button`
   margin-top: 20px;
   margin-left: 2px;
@@ -306,6 +337,15 @@ const WeightButton = styled.button`
 const MessageWrapper = styled.div`
   // margin: 0 auto;
   padding: 5px 0px;
+`;
+
+const DatePickerWrapper = styled.div`
+  @media screen and (max-width: 481px) {
+    .react-datepicker-wrapper>.react-datepicker__input-container input {
+    /* all: unset !important; */
+        width: 100% !important;
+    }
+  }
 `;
 
 const LackMessage = styled.button`
@@ -357,8 +397,18 @@ const ExerciseHistoryTotal = styled.div`
     font-size: 0;
   }
   .cell {
-    height: 15px;
-    width: 15px;
+    @media screen and (max-width: 768px) {
+      height: 5px;
+      width: 5px;
+    }
+    @media screen and (min-width: 769px) and (max-width: 1308px) {
+      height: 10px;
+      width: 10px;
+    }
+    @media screen and (min-width: 1309px) {
+      height: 15px;
+      width: 15px;
+    }
     border-radius: 2px;
     margin: 1px;
     font-size: 10px;
@@ -366,8 +416,14 @@ const ExerciseHistoryTotal = styled.div`
   }
   .months {
     font-size: 10px;
-    width: 900px;
+
     margin-right: 4%;
+    @media screen and (max-width: 1308px) {
+      width: 650px;
+    }
+    @media screen and (min-width: 1309px) {
+      width: 900px;
+    }
   }
   .fill-0 {
     background-color: #ebedf0;
@@ -388,8 +444,6 @@ const ExerciseHistoryTotal = styled.div`
     background-color: rgb(7, 63, 29);
   }
 `;
-
-
 
 export {
   Container,
@@ -429,4 +483,7 @@ export {
   modalBody,
   editInput,
   fontBold,
+  StyledSilder,
+  weightEditInput,
+  DatePickerWrapper,
 };

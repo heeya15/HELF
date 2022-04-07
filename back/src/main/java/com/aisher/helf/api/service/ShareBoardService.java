@@ -36,7 +36,7 @@ public interface ShareBoardService {
 	ShareBoard updateShareBoardDescription(ShareBoard shareBoard,ShareBoardUpdateReq shareBoardUpdateReq);
 
 	/** 공유 게시글을 삭제하는 deleteShareBoard 입니다. **/
-	void deleteShareBoard(Long boardNo);
+	void deleteShareBoard(int diaryNo);
 
 	/** 좋아요 부문 확인하고 세팅하는 메소드 */
 	ShareBoard getShareBoard(Long boardNo);
