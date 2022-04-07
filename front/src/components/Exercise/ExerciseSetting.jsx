@@ -156,7 +156,7 @@ export default function ExerciseSetting() {
         >
           <Box sx={modalStyle}>
             <Box sx={{ flexGrow: 1 }}>
-              <Grid container spacing={3}>
+              <Grid container spacing={2}>
                 <Grid item xs={3}>
                   <div></div>
                 </Grid>
@@ -165,7 +165,15 @@ export default function ExerciseSetting() {
                 </Grid>
                 <Grid item xs={3} sx={{ textAlign: "right" }}>
                   <CloseIcon
-                    style={{ width: "30%", height: "100%", cursor: "pointer" }}
+                    style={{ 
+                      width: "30%", 
+                      height: "100%", 
+                      cursor: "pointer", 
+                      '@media (max-width: 480px)': {
+                        margin: '30px',
+                        width: "50%", 
+                      }, 
+                    }}
                     onClick={handleClose}
                   />
                 </Grid>
@@ -187,7 +195,7 @@ export default function ExerciseSetting() {
               </Col>
             </Row> */}
 
-            <Grid container spacing={2} style={modalBody}>
+            <Grid container spacing={1} style={modalBody}>
               <Grid item xs={12} sm={6}>
                 운동
               </Grid>

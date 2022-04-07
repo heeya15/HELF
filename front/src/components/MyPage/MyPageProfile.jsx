@@ -250,11 +250,11 @@ export default function MypageProfile() {
     setNewBirthday(event.target.value);
   };
 
-  const handleEditKeyPress = (event) => {
-    if (event.key === "Enter") {
-      handleEdit();
-    }
-  };
+  // const handleEditKeyPress = (event) => {
+  //   if (event.key === "Enter") {
+  //     handleEdit();
+  //   }
+  // };
 
   // 유저 정보를 받아왓을때
   useEffect(() => {

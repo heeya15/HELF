@@ -110,6 +110,12 @@ export default function MyDietDaily() {
     }
   }
 
+  const handleConfirmKeyPress = (event) => {
+    if(event.key === 'Enter') {
+      handleShareDietDiary();
+    }
+  }
+
   var dailyDate = convertMonth(date.substring(5,7)) + ' ' + date.substring(8,10) + ', ' + date.substring(0,4);
 
   var kcals = 0;
@@ -308,7 +314,7 @@ export default function MyDietDaily() {
                       aria-labelledby='modal-modal-title'
                       aria-describedby='modal-modal-description'
                     >
-                      <Box sx={shareBox}>
+                      <Box sx={shareBox} onKeyPress={ handleConfirmKeyPress }>
                         <Typography 
                           id='modal-modal-title' 
                           component='h2'
@@ -333,7 +339,7 @@ export default function MyDietDaily() {
                         <ButtonWrapper>
                           <CancelButton onClick={ handleClose }>닫기</CancelButton>
                           <ConfirmButton
-                            onClick={ handleShareDietDiary}
+                            onClick={ handleShareDietDiary }
                           >
                             확인
                           </ConfirmButton>

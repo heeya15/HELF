@@ -90,13 +90,17 @@ export default function WeightHistory() {
 
     //몸무게 히스토리 원하는 날짜 몸무게 등록 요청.
     const handleWeightHistoryRegisterConfirm = () => {
-        dispatch({
-            type: SELECT_REGISTER_WEIGHT_HISTORY_REQUEST,
-            data: {
-                createdAt: createdAt,
-                weight : weight
-            }
-        });
+        if(createdAt === '' || weight === '') {
+            alert('정보를 모두 입력해주세요.')
+        } else {
+            dispatch({
+                type: SELECT_REGISTER_WEIGHT_HISTORY_REQUEST,
+                data: {
+                    createdAt: createdAt,
+                    weight : weight
+                }
+            });
+        }
     };
     const handleWeightHistoryRegisterConfirmKeyPress = (e) => {
         if(e.key === 'Enter') {
@@ -105,13 +109,17 @@ export default function WeightHistory() {
     };
     // 몸무게 히스토리 원하는 날짜 몸무게 수정 요청.
     const handleWeightHistoryUpdateConfirm = () => {
-        dispatch({
-        type: UPDATE_WEIGHT_HISTORY_REQUEST,
-            data: {
-                createdAt: createdAt,
-                weight : weight
-            }
-        });
+        if(createdAt === '' || weight === '') {
+            alert('정보를 모두 입력해주세요.')
+        } else {
+            dispatch({
+            type: UPDATE_WEIGHT_HISTORY_REQUEST,
+                data: {
+                    createdAt: createdAt,
+                    weight : weight
+                }
+            });
+        }
     };
     const handleWeightHistoryUpdateConfirmKeyPress = (e) => {
         if(e.key === 'Enter') {
@@ -247,16 +255,18 @@ export default function WeightHistory() {
                                 <div style={{ marginBottom : '10px' }}>
                                     <span style={fontBold}>날짜 : </span>
                                     <input
+                                        required='true'
                                         style={ weightEditInput }
                                         type='input'
                                         id='createdAt'
                                         onChange={ handleDate }
                                     ></input>
-                                    <span> ex. 2022-03-30</span>
+                                    <span> ex. 2022-03-30 (숫자만 입력)</span>
                                 </div>
                                 <div>
                                     <span style={fontBold}>몸무게 : </span>
                                     <input
+                                        required='true'
                                         style={ weightEditInput }
                                         type='number'
                                         id='weight'
@@ -312,7 +322,7 @@ export default function WeightHistory() {
                                         id='createdAt'
                                         onChange={ handleDate }
                                     ></input>
-                                    <span> ex. 2022-03-30</span>
+                                    <span> ex. 2022-03-30 (숫자만 입력)</span>
                                 </div>
                                 <div>
                                     <span style={fontBold}>몸무게 : </span>
@@ -368,7 +378,7 @@ export default function WeightHistory() {
                                     id='birthday'
                                     onChange={ handleDate }
                                     ></input>
-                                <span> ex. 2022-03-30</span>
+                                <span> ex. 2022-03-30 (숫자만 입력)</span>
                             </ModalBodyWrapper>
                             <hr/>
                             <ButtonWrapper>
