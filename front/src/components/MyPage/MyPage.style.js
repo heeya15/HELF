@@ -114,6 +114,9 @@ const Title = styled.div`
 
 const EmptyText = styled.div`
   padding: 100px 0px;
+  @media screen and (max-width: 480px) {
+    padding: 60px 0px;
+  }
 `;
 
 const Description = styled.div`
@@ -237,7 +240,7 @@ const ConfirmButton = styled.button`
   border: 2px solid #2e7d32;
   border-radius: 10px;
   padding: 5px 10px;
-  margin-left: 5px;
+  margin-left: 10px;
   :hover {
     transform: scale(1.1);
   }
@@ -250,6 +253,9 @@ const CancelButton = styled.button`
   border: 2px solid #2e7d32;
   border-radius: 10px;
   padding: 5px 10px;
+  :hover {
+    transform: scale(1.1);
+  }
 `;
 
 /** 찜 목록 */
@@ -309,6 +315,7 @@ const ButtonGroup = styled.div`
 
 const weightEditInput = {
   width: '130px',
+  marginLeft: '10px',
 };
 
 const WeightButton = styled.button`
@@ -330,6 +337,15 @@ const WeightButton = styled.button`
 const MessageWrapper = styled.div`
   // margin: 0 auto;
   padding: 5px 0px;
+`;
+
+const DatePickerWrapper = styled.div`
+  @media screen and (max-width: 481px) {
+    .react-datepicker-wrapper>.react-datepicker__input-container input {
+    /* all: unset !important; */
+        width: 100% !important;
+    }
+  }
 `;
 
 const LackMessage = styled.button`
@@ -469,4 +485,5 @@ export {
   fontBold,
   StyledSilder,
   weightEditInput,
+  DatePickerWrapper,
 };

@@ -85,7 +85,7 @@ const mainButton = {
 
 const modalBody = {
   fontFamily: 'KOTRA_BOLD-Bold',
-  padding: '20px 30px',
+  padding: '15px 30px',
   width: '100%',
   margin: '5% auto',
   textAlign: 'center',
@@ -115,9 +115,6 @@ const ExerciseSelect = styled.select`
   width: 100%;
   text-align: center;
 `;
-
-
-
 
 export { 
   TotalStyle, 

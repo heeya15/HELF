@@ -15,6 +15,7 @@ import {
     NormalMessage,
     TooMuchMessage,
     Title,
+    DatePickerWrapper,
     fontNormal,
     NutritionStatus,
     EmptyText,
@@ -27,6 +28,8 @@ function customizeText(arg) {
     // return `${arg.argument} ${arg.valueText} (${arg.percentText})`;
     return `${arg.valueText} (${arg.percentText})`;
 }
+
+
 
 export default function NutritionHistory() {
     const dispatch = useDispatch();
@@ -159,13 +162,15 @@ export default function NutritionHistory() {
     return (
         <div style={{ height: '100%', width: '100%'}}>
             <Title>영양 성분 통계</Title>
-            <DatePicker 
-                style={{ width: '10%'}}
-                locale='ko'
-                selected={startDate} 
-                onChange={
-                    (date) => setStartDate(date)
-                } />
+            <DatePickerWrapper>
+                <DatePicker 
+                    dateFormat="yyyy-MM-dd"    // 날짜 형식 설정
+                    wrapperClassName='w-full'
+                    selected={startDate} 
+                    onChange={
+                        (date) => setStartDate(date)
+                    } />
+            </DatePickerWrapper>
             <Description>* 확인하려는 날짜를 선택해주세요.</Description>
             {
                 nutritionHistoryList.length === 0 && 
@@ -215,4 +220,3 @@ export default function NutritionHistory() {
     </div>
     );
 }
-
