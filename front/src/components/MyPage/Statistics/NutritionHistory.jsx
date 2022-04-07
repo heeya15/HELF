@@ -104,31 +104,37 @@ export default function NutritionHistory() {
         bmr = (me.weight * 10 + me.height * 6.25 - 5 * age - 161);
     }
 
+    // 이상적인 탄단지 비율은 4:4:2 또는 5:2:3 이다. 
+    // 여기서 섭취량을 계산하면,
+    // 탄수화물 : bmr * 0.5 / 4
+    // 단백질 : bmr * 0.2 / 4
+    // 지방 : bmr * 0.3 / 9
+
     var carbohydrateCheck = 0;
     var proteinCheck = 0;
     var fatCheck = 0;
     // 탄수화물 (적정 : 45% ~ 65%)
-    if(totalCarbohydrate < bmr * 0.45) {    // 부족
+    if(totalCarbohydrate < (bmr * 0.45) / 4) {    // 부족
         carbohydrateCheck = 0;
-    } else if(totalCarbohydrate >= bmr * 0.45 && totalCarbohydrate <= bmr * 0.65) {     // 적정
+    } else if(totalCarbohydrate >= ((bmr * 0.45) / 4) && totalCarbohydrate <= ((bmr * 0.65) / 4)) {     // 적정
         carbohydrateCheck = 1;
     } else {
         carbohydrateCheck = 2;
     }
 
     // 단백질 (적정 : 10% ~ 35%)
-    if(totalProtein < bmr * 0.1) {
+    if(totalProtein < (bmr * 0.1) / 4) {
         proteinCheck = 0;
-    } else if(totalProtein >= bmr * 0.1 && totalProtein <= bmr * 0.35) {
+    } else if(totalProtein >= ((bmr * 0.1) / 4) && totalProtein <= ((bmr * 0.35) / 4)) {
         proteinCheck = 1;
     } else {
         proteinCheck = 2;
     }
 
     // 지방 (적정 : 20% ~ 35%)
-    if(totalFat < bmr * 0.2) {
+    if(totalFat < (bmr * 0.2) / 9) {
         fatCheck = 0;
-    } else if(totalFat >= bmr * 0.2 && totalFat <= bmr * 0.35) {
+    } else if(totalFat >= ((bmr * 0.2) / 9) && totalFat <= ((bmr * 0.35) / 9)) {
         fatCheck = 1;
     } else {
         fatCheck = 2;
