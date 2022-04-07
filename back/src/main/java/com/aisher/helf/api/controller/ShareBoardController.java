@@ -126,7 +126,7 @@ public class ShareBoardController {
         return new ResponseEntity<ShareBoardSelectLikeCountRes>(isLike, HttpStatus.OK);
     }
     @GetMapping("/findAll/like")
-    @ApiOperation(value ="공유 게시글중 좋아요 개수가 많은 5개 레코드 조회", notes ="공유 게시글중 좋아요 개수가 많은 5개 레코드 조회")
+    @ApiOperation(value ="공유 게시글중 좋아요 개수가 많은 4개 레코드 조회", notes ="공유 게시글중 좋아요 개수가 많은 4개 레코드 조회")
     @ApiResponses({ @ApiResponse(code = 200, message = "성공"),
             @ApiResponse(code = 401, message = "인증 실패"),
             @ApiResponse(code = 404, message = "사용자 없음"),
