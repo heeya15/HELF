@@ -1,5 +1,6 @@
-import styled from 'styled-components';
-import { blockColor, device, pointColor } from '../../../style/variables';
+import styled from "styled-components";
+import { blockColor, device, pointColor } from "../../../style/variables";
+import TextField from "@mui/material/TextField";
 
 const LoginSignupBlock = styled.div`
   //border: 1px solid red;
@@ -9,8 +10,8 @@ const LoginSignupBlock = styled.div`
   margin-right: 60vh;
   background-color: white;
   height: 90vh;
-  max-height: 100%;s
-  border-radius: 30px;
+  max-height: 100%;
+  sborder-radius: 30px;
   text-align: center;
   /* width: 100vw; */
   @media ${device.TabletPortrait} {
@@ -94,12 +95,20 @@ const StepperWrapper = styled.div`
   border-radius: 20px;
   background-color: #f2f7f4;
   box-shadow: 4px 4px 4px 2px rgba(0, 0, 0, 0.25);
+  @media (max-width: 768px) {
+    width: 90%;
+    margin: 30px auto;
+    padding: 20px 10px;
+  }
 `;
 
 const Title = styled.div`
   font-size: 40px;
   margin-bottom: 50px;
   color: #225424;
+  @media (max-width: 480px) {
+    font-size: 20px;
+  }
 `;
 
 const StepTitle = styled.div`
@@ -107,17 +116,20 @@ const StepTitle = styled.div`
   margin: 70px 0px 90px 0px;
   color: #000;
   font-family: KOTRA_GOTHIC;
+  @media (max-width: 768px) {
+    font-size: 15px;
+  }
 `;
 
 const InputWrapper = styled.div`
-  width: 40%; 
+  width: 40%;
   margin: 50px auto;
 `;
 
 const inputBox = {
-  width: '80%',
-  backgroundColor: '#fff', 
-}
+  width: "80%",
+  backgroundColor: "#fff",
+};
 
 const Message = styled.span`
   color: #e02828;
@@ -130,33 +142,46 @@ const LogInButton = styled.button`
   border: none;
   border-radius: 5px;
   color: #fff;
-  background-color: #2E7D32;
+  background-color: #2e7d32;
 `;
 
 const SignUpLink = styled.div`
   margin-top: 10px;
   cursor: pointer;
-  color: 	#414a4c;
+  color: #414a4c;
   font-family: KOTRA_GOTHIC;
 `;
 
 const subFunction = {
-  cursor: 'pointer',
-  textDecoration: 'underline',
-}
+  cursor: "pointer",
+  textDecoration: "underline",
+};
 
 const kakaoButton = {
-  marginTop: '40px',
-  cursor: 'pointer',
-}
+  marginTop: "40px",
+  cursor: "pointer",
+};
 
 const inputTextField = {
-  backgroundColor: '#fff',
-}
+  backgroundColor: "#fff",
+};
 
 const horizontalCenter = {
-  margin: '0 auto',
-}
+  margin: "0 auto",
+};
+
+const StyledTextField = styled(TextField)`
+  background-color: #fff;
+  @media (max-width: 480px) {
+    width: 100%;
+  }
+  @media (min-width: 481px) and (max-width: 991px) {
+    width: 100%;
+  }
+  @media (min-width: 992px) {
+    width: 80%;
+  }
+`;
 
 export {
   LoginContentRow,
@@ -176,4 +201,5 @@ export {
   inputTextField,
   horizontalCenter,
   inputBox,
+  StyledTextField,
 };
