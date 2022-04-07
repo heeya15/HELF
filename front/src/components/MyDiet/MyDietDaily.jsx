@@ -117,10 +117,10 @@ export default function MyDietDaily() {
 
   var dailyDate = convertMonth(date.substring(5,7)) + ' ' + date.substring(8,10) + ', ' + date.substring(0,4);
 
-  var kcals = 0;
   const kcalList = [];
   const diaryInfoList = [];
   for (let i = 0; i < myDietDiaryDailyInfo.length; i++) {
+    var kcals = 0;
     var hour = myDietDiaryDailyInfo[i].diaryDate.substring(11, 13);
     var minute = myDietDiaryDailyInfo[i].diaryDate.substring(14, 16);
     const diaryDate = myDietDiaryDailyInfo[i].diaryDate.substring(0, 10);
