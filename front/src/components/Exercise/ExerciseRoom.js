@@ -11,7 +11,7 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import { Row, Col } from 'react-bootstrap';
-import { useHistory, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import arrowImage from '../../assets/images/exerciseTutorial/arrow_down.png';
 
 const style = {
@@ -30,7 +30,6 @@ const style = {
 
 export default function ExerciseRoom() {
   const dispatch = useDispatch();
-  const history = useHistory();
   const { breakTime } = useParams();
   const { exercise } = useSelector((state) => state.exerciseHistory);
   const now = new Date(); // 현재 날짜 및 시간
@@ -111,64 +110,6 @@ export default function ExerciseRoom() {
     }
   }, [URL]);
 
-  // squat
-  // const URL = 'https://teachablemachine.withgoogle.com/models/Pqg6_FBhK/';
-
-  // test : 왼 손 들기
-  // const URL = 'https://teachablemachine.withgoogle.com/models/tNxgspb7K/';
-
-  // test : 왼 손 어깨 위
-  // const URL = 'https://teachablemachine.withgoogle.com/models/imAExih7D/';
-
-  // async function setModel() {
-  //   switch (exercise.type) {
-  //     case 1: //BentOverRow
-  //       this.setState({
-  //         URL: 'https://teachablemachine.withgoogle.com/models/eqCo1kx3a/',
-  //       });
-  //       break;
-  //     case 2: // DumbbellCurl
-  //       this.setState({
-  //         URL: 'https://teachablemachine.withgoogle.com/models/qvMroKavg/',
-  //       });
-  //       break;
-  //     case 3: // FrontRaise
-  //       this.setState({
-  //         URL: 'https://teachablemachine.withgoogle.com/models/aKluCaORU/',
-  //       });
-  //       break;
-  //     case 4: // Lunge
-  //       this.setState({
-  //         URL: 'https://teachablemachine.withgoogle.com/models/7zoTQArlc/',
-  //       });
-  //       break;
-  //     case 5: // OverheadPress
-  //       this.setState({
-  //         URL: 'https://teachablemachine.withgoogle.com/models/QoQ4ty5qS/',
-  //       });
-  //       break;
-  //     case 6: // PushUp
-  //       this.setState({
-  //         URL: 'https://teachablemachine.withgoogle.com/models/R6Q1RWNar/',
-  //       });
-  //       break;
-  //     case 7: // SideLateralRaise
-  //       this.setState({
-  //         URL: 'https://teachablemachine.withgoogle.com/models/UuDtip_te/',
-  //       });
-  //       break;
-  //     case 8: // Squat
-  //       this.setState({
-  //         URL: 'https://teachablemachine.withgoogle.com/models/050JkD2Z0/',
-  //       });
-  //       break;
-  //     case 9: // StandingSideCrunch
-  //       this.setState({
-  //         URL: 'https://teachablemachine.withgoogle.com/models/S9Mpp7iGf/',
-  //       });
-  //       break;
-  //   }
-  // };
 
   async function init() {
     // const modelURL = URL + 'model.json';

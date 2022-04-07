@@ -4,7 +4,6 @@ import { Chart } from 'react-chartjs-2'
 import { useDispatch, useSelector } from 'react-redux';
 import {
     Title,
-    MyPageProfileButton,
     weightEditInput,
     editBox,
     ModalBodyWrapper,
@@ -18,7 +17,6 @@ import {
     modalTitle,
     modalBody,
     fontBold,
-    Description,
 } from '../MyPage.style';
 import {
     WEIGHT_HISTORY_REQUEST,

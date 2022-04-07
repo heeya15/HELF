@@ -79,7 +79,7 @@ function* loadUpdateUser(action) {
     const result = yield call(UserModifyAPI, action.data);
     const nowTime = moment().format('YYYY-MM-DD'); // 현재 날짜 및 시간
 
-    console.log(nowTime);
+    // console.log(nowTime);
     const data1 = {
       createdAt: nowTime,
       weight: action.data.weight,
@@ -202,7 +202,7 @@ function* watchLoadWeightHistory() {
 // 마이페이지 회원정보 수정시 수정한 몸무게 값을 WeightHistory에 수정
 function* loadUpdateWeightHistory(action) {
   try {
-    console.log(action);
+    // console.log(action);
     const result = yield call(WeightHistoryUpdateAPI, action.data);
     yield put({
       type: REGISTER_WEIGHT_HISTORY_SUCCESS,
@@ -221,7 +221,7 @@ function* watchLoadUpdateWeightHistory() {
 // 선택 날짜에 몸무게 등록시 수정한 몸무게 값을 WeightHistory에 수정
 function* loadSelectWeightHistoryRegister(action) {
   try {
-    console.log(action);
+    // console.log(action);
     const result = yield call(SelectWeightHistoryRegisterAPI, action.data);
     yield put({
       type: SELECT_REGISTER_WEIGHT_HISTORY_SUCCESS,
@@ -257,7 +257,7 @@ function* watchLoadSelectWeightHistoryRegister() {
 // 선택 날짜에 몸무게 수정시 수정한 몸무게 값을 WeightHistory에 수정
 function* loadSelectWeightHistoryUpdate(action) {
   try {
-    console.log(action);
+    // console.log(action);
     const result = yield call(SelectWeightHistoryUpdateAPI, action.data);
     yield put({
       type: UPDATE_WEIGHT_HISTORY_SUCCESS,
@@ -292,7 +292,7 @@ function* watchLoadSelectWeightHistoryUpdate() {
 //  입력한 날짜 back에 삭제 요청시 WeightHistory에 해당 데이터 삭제
 function* loadSelectWeightHistoryDelete(action) {
   try {
-    console.log(action);
+    // console.log(action);
     const result = yield call(SelectWeightHistoryDeleteAPI, action.data);
     yield put({
       type: DELETE_WEIGHT_HISTORY_SUCCESS,

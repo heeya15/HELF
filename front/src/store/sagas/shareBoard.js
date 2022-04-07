@@ -68,8 +68,8 @@ function* watchLoadShareBoardRegister() {
 function* loadShareBoardTopLikeList() {
   try {
       const result = yield call(ShareBoardTopLikeAPI);
-      console.log("요청들어옴?");
-      console.log(result);
+      // console.log("요청들어옴?");
+      // console.log(result);
       yield put({
         type: SHARE_BOARD_LIKE_SUCCESS ,
         data: result,
@@ -106,7 +106,7 @@ function* watchLoadShareBoardIsLikeAndTotalLikeCount() {
 // 좋아요 등록
 function* loadShareBoardLike(action) {
   try {   
-      console.log(action.data);
+      // console.log(action.data);
       const result = yield call(ShareBoardLikeAPI, action.data); 
       yield put({
         type: SHARE_BOARD_LIKE_REGISTER_SUCCESS  ,
@@ -127,7 +127,7 @@ function* watchLoadShareBoardLike() {
 // 해당 공유 게시글 discription 수정
 function* loadShareBoardUpdateDiscription(action) {
 try {   
-    console.log(action.data);
+    // console.log(action.data);
     const result = yield call(ShareBoardUpdateDiscriptionAPI, action.data); 
     yield put({
       type: SHARE_BOARD_UPDATE_SUCCESS,

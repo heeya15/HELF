@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { useMediaQuery } from "react-responsive";
@@ -10,7 +10,6 @@ import { IMAGE_URL } from "../../utils/https";
 import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
 import ImageListItemBar from "@mui/material/ImageListItemBar";
-import { Row, Col } from "react-bootstrap";
 import { Title } from "../MyPage/MyPage.style";
 import {
   BestDietWrapper,
@@ -23,8 +22,6 @@ export default function MyPageLike() {
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const { myPageLikeList } = useSelector((state) => state.mypage);
-  const { likeDeleteState } = useSelector((state) => state.mypage);
   const { shareBoardTopLikeList } = useSelector((state) => state.shareBoard);
 
   useEffect(() => {
