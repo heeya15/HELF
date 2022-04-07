@@ -68,14 +68,18 @@
 }
 
 .orderButton {
-  width: 80%;
   display: flex;
   justify-content: flex-end;
+  margin-bottom: 2%;
+  width: 80%;
 }
 .orderButton button {
-  border: none;
+  border: 3px solid #353535;
   border-radius: 5px;
-  margin-right: 1%;
+  margin-right: 2%;
+  background-color: white;
+  color: #353535;
+  font-size: 13px;
 }
 @media (max-width: 1200px) {
   .orderButton button {
