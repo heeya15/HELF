@@ -57,7 +57,7 @@ public interface ShareBoardRepository extends JpaRepository<ShareBoard, Long> { 
 			"\t  from like_list\n" +
 			"\t  group by board_no\n" +
 			"\t  order by count desc, board_no asc \n" +
-			"\t  limit 0,5) l join share_board s  on (l.board_no = s.board_no)\n" +
+			"\t  limit 0,4) l join share_board s  on (l.board_no = s.board_no)\n" +
 			"    join diet_diary d on (s.diary_no = d.diary_no)"
 			,nativeQuery = true)
 	List<ShareBoardFindTopLikeRes>findShareBoardByTopLike();
