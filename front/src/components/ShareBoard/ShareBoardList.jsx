@@ -73,10 +73,10 @@ function SharedBoard() {
     <>
       <Title>{order === "boardNo" ? "최신" : "조회"}순 공유 식단</Title>
       <div className="orderButton">
-        <button onClick={handleOrder} value="boardNo">
+        <button onClick={handleOrder} value="boardNo" className={order === 'boardNo' ? 'selectedButton' : 'unSelectedButton'}>
           최신순
         </button>
-        <button onClick={handleOrder} value="hit">
+        <button onClick={handleOrder} value="hit" className={order === 'boardNo' ? 'unSelectedButton' : 'selectedButton'}>
           조회순
         </button>
       </div>

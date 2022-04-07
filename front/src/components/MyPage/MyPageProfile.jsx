@@ -408,7 +408,7 @@ export default function MypageProfile() {
               <Col md="6">
                 <TextField
                   style={editInput}
-                  label="Birthday"
+                  label="Birthdate(YYYY-MM-DD)"
                   id="outlined-size-normal"
                   defaultValue={me.birthday}
                   onChange={handleNewBirthday}

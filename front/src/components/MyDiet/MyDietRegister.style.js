@@ -73,7 +73,7 @@ const Description = styled.textarea`
   color: #272727;
   // background-color: #b3dfa8;
   background-color: #f2f7f4;
-  box-shadow: 4px 4px 4px 2px rgba(0, 0, 0, 0.25);
+  // box-shadow: 4px 4px 4px 2px rgba(0, 0, 0, 0.25);
   border: none;
   border-radius: 10px;
   resize: vertical;
