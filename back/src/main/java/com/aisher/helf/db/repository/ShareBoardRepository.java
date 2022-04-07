@@ -32,9 +32,10 @@ public interface ShareBoardRepository extends JpaRepository<ShareBoard, Long> { 
 	void updateView(@Param("boardNo") Long boardNo);
 
 	// 상세 조회
-	@Query(value="select fd.user_id,s.board_no, s.description,s.created_at, fd.diary_no, fd.image_path, d.weight, f.food_name, f.kcal, f.carbohydrate, f.protein, f.fat\n" +
+	@Query(value="select u.user_name, fd.user_id,s.board_no, s.description,s.created_at, fd.diary_no, fd.image_path, d.weight, f.food_name, f.kcal, f.carbohydrate, f.protein, f.fat\n" +
 			"\t\t\tfrom share_board s\n" +
 			"\t\t\tjoin diet_diary fd on (s.diary_no = fd.diary_no)\n" +
+			"\t\t\tjoin user u on (u.user_id = fd.user_id)\n" +
 			"\t\t\tjoin diet d on (fd.diary_no = d.diary_no)\n" +
 			"\t\t\tjoin food f on (f.food_no = d.food_no)\n" +
 			"\t\t\twhere s.board_no =:boardNo"

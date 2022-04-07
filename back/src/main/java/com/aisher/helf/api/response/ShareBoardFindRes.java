@@ -9,6 +9,7 @@ import java.time.LocalDateTime;
 
 @ApiModel("ShareBoardFindGetRes")
 public interface ShareBoardFindRes {
+	String getUser_name();
 	String getUser_id();
 	int getBoard_no();
 	String getDescription();

@@ -13,7 +13,7 @@ import java.util.List;
 public interface CommentRepository extends JpaRepository<Comment, Integer>{
 	
 //	 해당 공유 게시글의 모든 댓글 조회
-	@Query(value = "select c.comment_no, c.comment, c.created_at, c.user_id, c.board_no\n" +
+	@Query(value = "select u.user_name, c.comment_no, c.comment, c.created_at, c.user_id, c.board_no\n" +
             "from user u \n" +
             "join comment c on (u.user_id = c.user_id)\n" +
             "join share_board sb on (sb.board_no = c.board_no)\n" +
