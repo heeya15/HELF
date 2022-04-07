@@ -189,6 +189,7 @@ const SendButton = styled.button`
   border-radius: 10px;
   @media (max-width: 1200px) {
     font-size: 10px;
+    padding: 5px 15px;
   }
 `;
 

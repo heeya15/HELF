@@ -4,6 +4,8 @@ import { useHistory } from "react-router-dom";
 import { BASE_URL, IMAGE_URL } from "../../utils/https";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
+import CheckIcon from "@mui/icons-material/Check";
+import CloseIcon from "@mui/icons-material/Close";
 import "./ShareDetail.css";
 import { Container, Row, Col } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
@@ -44,6 +46,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TableRow from "@mui/material/TableRow";
 
 import { FoodTableTitle } from "../MyDiet/MyDietDetail.style";
+import { fontWeight } from "@mui/system";
 // match 로 현재 게시물 주소에 대한 정보를 props 로 받아온다
 function Detail({ match }) {
   const [updateForm, setUpdateForm] = useState(false);
@@ -222,8 +225,10 @@ function Detail({ match }) {
   //  댓글 수정
   let [input, setInput] = useState("");
   let [CommentNoinput, setCommentNoinput] = useState("");
+  const [commentUpdateState, setCommentUpdateState] = useState(false);
 
   const handleClick = async (commentNo, commentText, e) => {
+    setCommentUpdateState(true);
     setInput(commentText);
     await setCommentNoinput(commentNo);
   };
@@ -254,6 +259,29 @@ function Detail({ match }) {
           setCommentNoinput("");
         });
     }
+  };
+
+  const handleCommentUpdateClose = (e) => {
+    setCommentUpdateState(false);
+    setInput("");
+    setCommentNoinput("");
+  };
+
+  const handleCommentUpdate = () => {
+    axios
+      .put(
+        `${BASE_URL}comment/update`,
+        { commentNo: CommentNoinput, comment: input },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
+      .then((res) => {
+        setInput("");
+        setCommentNoinput("");
+      });
   };
 
   const FoodList = shareBoardDetailList.map((food, index) => {
@@ -448,24 +476,49 @@ function Detail({ match }) {
                             </CommentTitles>
                           </Col>
                           <Col md="1">
-                            {/* 삭제파트 */}
-                            <DeleteIcon
-                              style={{
-                                cursor: "pointer",
-                                marginLeft: "5px",
-                                float: "right",
-                              }}
-                              onClick={(e) => {
-                                commentDeleteHandler(user.comment_no);
-                              }}
-                            />
-                            {/*  수정파트 */}
-                            <EditIcon
-                              style={{ cursor: "pointer", float: "right" }}
-                              onClick={(e) => {
-                                handleClick(user.comment_no, user.comment);
-                              }}
-                            />
+                            {commentUpdateState &&
+                            user.comment_no === CommentNoinput ? (
+                              <>
+                                <CloseIcon
+                                  style={{
+                                    cursor: "pointer",
+                                    float: "right",
+                                    marginTop: "10%",
+                                  }}
+                                  onClick={handleCommentUpdateClose}
+                                ></CloseIcon>
+                                <CheckIcon
+                                  style={{
+                                    cursor: "pointer",
+                                    marginRight: "5px",
+                                    float: "right",
+                                    marginTop: "10%",
+                                  }}
+                                  onClick={handleCommentUpdate}
+                                ></CheckIcon>
+                              </>
+                            ) : (
+                              <>
+                                {/* 삭제파트 */}
+                                <DeleteIcon
+                                  style={{
+                                    cursor: "pointer",
+                                    marginLeft: "5px",
+                                    float: "right",
+                                  }}
+                                  onClick={(e) => {
+                                    commentDeleteHandler(user.comment_no);
+                                  }}
+                                />
+                                {/*  수정파트 */}
+                                <EditIcon
+                                  style={{ cursor: "pointer", float: "right" }}
+                                  onClick={(e) => {
+                                    handleClick(user.comment_no, user.comment);
+                                  }}
+                                />
+                              </>
+                            )}
                           </Col>
                         </Row>
                       ) : (
