@@ -126,7 +126,7 @@ export async function myDietUpdateAPI({
     })
   );
   if (typeof imagePath !== "string") {
-    console.log(imagePath);
+    // console.log(imagePath);
     formData.append("file", imagePath);
   }
   const result = await axios.put(

@@ -8,7 +8,7 @@ export async function MypageAPI() {
       Authorization: 'Bearer ' + sessionStorage.getItem('jwt'),
     },
   });
-  console.log(result);
+  // console.log(result);
   return result.data;
 }
 
@@ -79,9 +79,9 @@ export async function WeightHistoryAPI() {
 
 // 회원 정보 수정시 몸무게 정보 히스토리 테이블에 추가
 export async function WeightHistoryUpdateAPI({ createdAt, weight }) {
-  console.log('몸무게 히스토리 등록 시 뭐가 찍히는지 확인하자');
-  console.log(createdAt);
-  console.log(weight);
+  // console.log('몸무게 히스토리 등록 시 뭐가 찍히는지 확인하자');
+  // console.log(createdAt);
+  // console.log(weight);
   const result = await axios.post(
     `${BASE_URL}weight/history/register/weight`,
     {
@@ -94,15 +94,15 @@ export async function WeightHistoryUpdateAPI({ createdAt, weight }) {
       },
     }
   );
-  console.log(result);
+  // console.log(result);
   return result;
 }
 
 // 선택 날짜 몸무게 정보 등록시 몸무게 정보 히스토리 테이블에 수정된 내용 반영
 export async function SelectWeightHistoryRegisterAPI({ createdAt, weight }) {
-  console.log('몸무게 히스토리 등록 시 뭐가 찍히는지 확인하자');
-  console.log(createdAt);
-  console.log(weight);
+  // console.log('몸무게 히스토리 등록 시 뭐가 찍히는지 확인하자');
+  // console.log(createdAt);
+  // console.log(weight);
   const result = await axios.post(
     `${BASE_URL}weight/history/select/register/weight`,
     {
@@ -115,15 +115,15 @@ export async function SelectWeightHistoryRegisterAPI({ createdAt, weight }) {
       },
     }
   );
-  console.log(result);
+  // console.log(result);
   return result;
 }
 
 // 선택 날짜 몸무게 정보 수정시 몸무게 정보 히스토리 테이블에 수정된 내용 반영
 export async function SelectWeightHistoryUpdateAPI({ createdAt, weight }) {
-  console.log('몸무게 히스토리 수정 시 뭐가 찍히는지 확인하자');
-  console.log(createdAt);
-  console.log(weight);
+  // console.log('몸무게 히스토리 수정 시 뭐가 찍히는지 확인하자');
+  // console.log(createdAt);
+  // console.log(weight);
   const result = await axios.put(
     `${BASE_URL}weight/history/update`,
     {
@@ -136,14 +136,14 @@ export async function SelectWeightHistoryUpdateAPI({ createdAt, weight }) {
       },
     }
   );
-  console.log(result);
+  // console.log(result);
   return result;
 }
 
 // 입력한 날짜 정보 Weight 히스토리 테이블에 삭제
 export async function SelectWeightHistoryDeleteAPI({ createdAt }) {
-  console.log('몸무게 히스토리 삭제 시 뭐가 찍히는지 확인하자');
-  console.log(createdAt);
+  // console.log('몸무게 히스토리 삭제 시 뭐가 찍히는지 확인하자');
+  // console.log(createdAt);
   const result = await axios.delete(`${BASE_URL}weight/history/remove/weight`, {
     headers: {
       Authorization: 'Bearer ' + sessionStorage.getItem('jwt'),
@@ -152,7 +152,7 @@ export async function SelectWeightHistoryDeleteAPI({ createdAt }) {
       createAt: createdAt,
     },
   });
-  console.log(result);
+  // console.log(result);
   return result;
 }
 

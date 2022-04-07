@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import {
@@ -75,7 +75,7 @@ export default function MyPageLike() {
   return (
     <div style={{ margin: "7% auto", width: "80%" }}>
       <Title>찜목록</Title>
-      {myPageLikeList.length == 0 ? (
+      {myPageLikeList.length === 0 ? (
         <div>찜한 게시글이 없습니다.</div>
       ) : (
         <StyledSilder {...settings}>

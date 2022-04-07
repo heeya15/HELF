@@ -45,19 +45,6 @@ import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import { Row, Col } from "react-bootstrap";
-// import profile1 from "../../assets/images/profile1.jpg";
-// import profile2 from "../../assets/images/profile2.jpg";
-// import profile3 from "../../assets/images/profile3.jpg";
-// import profile4 from "../../assets/images/profile4.jpg";
-// import profile5 from "../../assets/images/profile5.jpg";
-// import profile6 from "../../assets/images/profile6.jpg";
-// import profile7 from "../../assets/images/profile7.jpg";
-// import profile8 from "../../assets/images/profile8.jpg";
-// import profile9 from "../../assets/images/profile9.jpg";
-// import profile10 from "../../assets/images/profile10.jpg";
-// import profile11 from "../../assets/images/profile11.jpg";
-// import profile12 from "../../assets/images/profile12.jpg";
-// import profile13 from "../../assets/images/profile13.jpg";
 
 export default function MypageProfile() {
   const dispatch = useDispatch();
@@ -90,23 +77,6 @@ export default function MypageProfile() {
   const [isHeight, setIsHeight] = useState(true);
   const [isWeight, setIsWeight] = useState(true);
 
-  // // 프로필 이미지
-  // var profileImages = [
-  //   profile1,
-  //   profile2,
-  //   profile3,
-  //   profile4,
-  //   profile5,
-  //   profile6,
-  //   profile7,
-  //   profile8,
-  //   profile9,
-  //   profile10,
-  //   profile11,
-  //   profile12,
-  //   profile13,
-  // ];
-  // const [profileImg, setProfileImg] = useState("");
   const [num, setNum] = useState(1);
   const profile = require("../../assets/images/profile" + num + ".jpg");
 
@@ -250,12 +220,6 @@ export default function MypageProfile() {
     setNewBirthday(event.target.value);
   };
 
-  // const handleEditKeyPress = (event) => {
-  //   if (event.key === "Enter") {
-  //     handleEdit();
-  //   }
-  // };
-
   // 유저 정보를 받아왓을때
   useEffect(() => {
     if (me.gender) {
@@ -276,7 +240,7 @@ export default function MypageProfile() {
         type: MY_PAGE_REQUEST,
       });
     }
-    console.log(updateUserInfoDone);
+    // console.log(updateUserInfoDone);
     setNewName(me.userName);
     setNewPassword(password);
     setNewGender(me.gender);
@@ -292,7 +256,7 @@ export default function MypageProfile() {
     });
     const number = Math.floor(Math.random() * 13); // 1 ~ 13 사이의 숫자 랜덤 생성
     setNum(number + 1);
-    console.log(number);
+    // console.log(number);
     // setProfileImg(profileImages[number]);
   }, []);
 

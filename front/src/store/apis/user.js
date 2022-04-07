@@ -40,13 +40,13 @@ export async function KaKaoIdCheckAPI({ id }) {
 // 아이디 중복체크
 export async function IdCheckAPI({ id }) {
   const result = await axios.get(`${BASE_URL}user/idCheck/${id}`);
-  console.log(result.data);
+  // console.log(result.data);
   return result.data;
 }
 
 // 비밀번호 초기화
 export async function ResetPasswordAPI({ email, name, id }) {
-  console.log(email, id, name);
+  // console.log(email, id, name);
   const result = await axios.post(`${BASE_URL}email/send`, {
     userEmail: email,
     userId : id,

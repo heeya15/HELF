@@ -17,7 +17,7 @@ export default function MyDiet() {
 
   const diaryList = [];
 
-  console.log(myDietDiaryList);
+  // console.log(myDietDiaryList);
   for (let i = 0; i < myDietDiaryList.length; i++) {
     var eventColor = "";
     if (myDietDiaryList[i].meal_time === "아침") eventColor = "#FF7043";

@@ -140,8 +140,8 @@ const reducer = (state = initialState, action) =>
         draft.shareUserName = draft.shareBoardDetailList[0].user_name;    
         draft.shareUserId = draft.shareBoardDetailList[0].user_id;    
         draft.shareDiaryNo = draft.shareBoardDetailList[0].diary_no;    
-        console.log(draft.detailimagePath);
-        console.log(draft.detaildescription);
+        // console.log(draft.detailimagePath);
+        // console.log(draft.detaildescription);
         break;
       case SHARE_BOARD_DETAIL_SELECT_FAILURE:
         draft.shareBoardDetailSelectLoading = false;

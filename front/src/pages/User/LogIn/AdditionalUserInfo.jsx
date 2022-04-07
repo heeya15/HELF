@@ -31,8 +31,6 @@ export default function AdditionalUserInfo() {
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const { me } = useSelector((state) => state.mypage);
-
   const [activeStep, setActiveStep] = useState(0);
   const [skipped, setSkipped] = useState(new Set());
   const [newBirthday, setNewBirthday] = useState("");
@@ -100,9 +98,6 @@ export default function AdditionalUserInfo() {
     });
   };
 
-  const handleReset = () => {
-    setActiveStep(0);
-  };
 
   const handleNewBirthday = (event) => {
     setMessage("");
