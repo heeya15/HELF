@@ -53,7 +53,7 @@ export default function Footer() {
                                 <Link href="https://github.com/heeya15" style={contributor}>김광희</Link>
                             </Grid>
                             <Grid item xs={4}>
-                                <Link href="https://github.com/" style={contributor}>반형동</Link>
+                                <Link href="https://github.com/bandong92" style={contributor}>반형동</Link>
                                 </Grid>
                             <Grid item xs={4}>
                                 <Link href="https://github.com/onegi95" style={contributor}>손한기</Link>

@@ -357,7 +357,7 @@ export default function MyDietDaily() {
         ))}
       </div>
       <TotalKcal>Total Kcal : {totalKcal} kcal</TotalKcal>
-      <div>({me.userId}님의 하루 권장 섭취 칼로리는 <Bold>{suggestTotalKcal} Kcal</Bold> 입니다.)</div>
+      <div>({me.userName}님의 하루 권장 섭취 칼로리는 <Bold>{suggestTotalKcal} Kcal</Bold> 입니다.)</div>
     </DietDiaryItemWrapper>
   );
 }

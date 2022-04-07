@@ -65,6 +65,7 @@ function Detail({ match }) {
     detailimagePath,
     detaildescription,
     shareUserId,
+    shareUserName,
     shareDiaryNo,
   } = useSelector((state) => state.shareBoard);
   const { me } = useSelector((state) => state.mypage);
