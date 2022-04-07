@@ -11,54 +11,57 @@
 
 <br/>
 
-### 타겟 🎯
+<br/>
+
+# 2. 기획 배경
+
+### 🖼 배경
+
+우리는 **코로나19가 장기화**되면서 사회적 거리두기로 인한 **외출 자제로 무기력 및 우울감과 살이 찌는 등 건강이 안좋아 졌다**는 기사들을 보았습니다. `헬프`는 '이러한 문제점들을 **어떠한 서비스를 이용 하면 도움이 될까?' 에 집중**하였습니다. 
+
+따라서 `헬프` 는 **인공지능을 이용**하여 간편한 **식단 관리및 기록**과 **간단한 맨몸 운동을 도와**주며, 식단 **공유 게시판을 통하여 다양한 사람들의 식단 정보**를 얻을 수 있는 서비스를 만들게 되었습니다.
+
+
+
+### 🎯 타겟 
 
 - 헬린이라 어떻게 운동을 시작할지 모르는 사람들
 - 식단을 일일이 기록하기 귀찮은 사람들
 - COVID-19로 인한 외출 자제로 살이 찌는 등 건강이 안 좋아져 홈트에 관심 있는 사람들
 
 <br/>
-<br/>
 
-# 2. 기획 배경
-
-### 배경
-
-우리는 **코로나19가 장기화**되면서 사회적 거리두기로 인한 **외출 자제로 무기력 및 우울감과 살이 찌는 등 건강이 안좋아 졌다**는 기사들을 보았습니다. `헬프`는 '이러한 문제점들을 **어떠한 서비스를 이용 하면 도움이 될까?' 에 집중**하였습니다. 
-
-따라서 `헬프` 는 **인공지능을 이용**하여 간편한 **식단 관리및 기록**과 **간단한 맨몸 운동을 도와**주며, 식단 **공유 게시판을 통하여 다양한 사람들의 식단 정보**를 얻을 수 있는 서비스를 만들게 되었습니다.
-
-<br/>
-
-### 목적 🥅
-
-****
-
-<br/>
-
-### 의의
-
-- 
-- 
-
-<br/>
 <br/>
 
 
 # 3. 서비스 화면
 
-[ 웹 에서 핵심 기능 gif 여기 넣기]
+### 📺 시연영상
+
+[![시연영상](./exec/assets/youtube_thumbnail.png)](https://www.youtube.com/watch?v=JmRPuGKEBKg)
 
 
 
-👇 시연영상 youtube 👇
+### 🛠 주요기능
+
+* 식단 기록
+
+  
+
+* 식단 공유
+
+  
+
+* 운동
+
+  
+
+* 통계
 
 
 
 <br/>
 <br/>
-
-
 
 # 4. 기술스택
 
@@ -80,13 +83,13 @@
 
 먼저 아래 그림처럼 준비자세와 운동자세를 각각 학습시킵니다. 
 
-![image-20220405113330197](README.assets/image-20220405113330197.png)
+![image-20220405113330197](./exec/assets/image-20220405113330197.png)
 
-학습시킨 모델은 티처블머신 사이트 상에서 아래와 같이 나타납니다
+<br/>
 
-<img src="README.assets/rerendering.gif" alt="rerendering" style="zoom: 33%;" /> 
+<img src="./exec/assets/rerendering.gif" alt="rerendering" style="zoom: 33%;" /> 
 
-학습된 모델은, `자세를 인식`합니다. 
+학습시킨 모델은 티처블머신 사이트 상에서 위와 같이 나타나며, `자세를 인식`합니다. 
 
 앞을 바라보고 서있는 자세(맨 위)일 때 스쿼트 자세(위에서 세번째)로 인식 상태가 바뀌면 `운동중`으로 인식합니다. 
 
@@ -106,9 +109,19 @@ git flow 사용을 위해 `우아한 형제들`의 [git flow 사용](https://tec
 
 또한 `commit message` 는 `[feature/역할/기능] git 컨벤션` 와 같이 통일하여 작성했습니다.
 
-[ 사진 넣을려면 넣기]
+``` update : 기존의 기능 수정
+- add : 새로운 기능 추가
+- update : 기존의 기능 수정
+- delete: 기존의 파일 삭제
+- fix : 버그를 고친 경우
+- rename : 이름 변경이 있을 때
+- chore : 빌드 태스트 업데이트, 패키지 매니저를 설정하는 경우
+- test : 테스트 코드 추가, 테스트 리팩토링
+- build : 시스템 또는 외부 종속성에 영향을 미치는 변경사항 (npm, gulp, yarn 레벨)
+- ci : CI관련 설정 style : 코드 의미에 영향을 주지 않는 변경사항 (포맷, 세미콜론 누락, 공백 등)
+- refactor : 성능 개선
+```
 
-<br/>
 <br/>
 
 ## (2). Jira
@@ -123,9 +136,6 @@ git flow 사용을 위해 `우아한 형제들`의 [git flow 사용](https://tec
 - 에픽링크 태그를 사용하여 이슈를 구별하기 쉽게 했습니다.
 - 무엇보다 담당자와 스토리 포인트 설정, 현재 작업중인 내용 지라에 실시간으로 반영하는 것을 가장 중요하게 생각했습니다.
 
-[ 사진 넣을려면 넣기]
-
-<br/>
 <br/>
 
 
@@ -135,19 +145,19 @@ git flow 사용을 위해 `우아한 형제들`의 [git flow 사용](https://tec
 
 프로젝트 컨벤션, 문서, 참고자료, 산출물, 데일리 스크럼 등을 설정했습니다.
 
-[ 사진 넣을려면 넣기]
+![notion1](./exec/assets/notion1.png)
 
+![notion2](./exec/assets/notion2.PNG)<br/>
 
 <br/>
-<br/>
-<br/>
 
+<br/>
 
 # 6. 배포
 
 서버는 AWS EC2 ubuntu를 사용했습니다
 
-
+<br/>
 
 ## (1). ⚙ 시스템 환경 및 구성
 
@@ -161,7 +171,7 @@ git flow 사용을 위해 `우아한 형제들`의 [git flow 사용](https://tec
 - Docker: 20.10.12
 - WEB: Nginx (1.18.0)
 
-
+<br/>
 
 ## (2). Docker
 
@@ -170,9 +180,6 @@ git flow 사용을 위해 `우아한 형제들`의 [git flow 사용](https://tec
 필요한 이미지들의 설정은 docker-compose.yml 파일에 작성합니다.
 
 docker 내부는 같은 네트워크로 묶어주기 위해 docker-compose로 실행합니다. 
-
-
-<br/>
 <br/>
 
 ## (2). DevOps
@@ -182,13 +189,6 @@ docker 내부는 같은 네트워크로 묶어주기 위해 docker-compose로 �
 build 후 docker-compose를 실행하도록 했습니다.
 
 <br/>
-<br/>
-
-
-
-<br/>
-<br/>
-<br/>
 
 # 7. UI / UX
 
@@ -196,15 +196,17 @@ build 후 docker-compose를 실행하도록 했습니다.
 
 figma를 사용해 홈페이지의 초안을 작성합니다. 관련 레퍼런스를 참고하고, 서비스 특성에 맞게 제작했습니다.
 
-[ figma 사진 넣기]
+![figma](./exec/assets/figma.png)
 
+<br/>
 
+<br/>
 
 # 8. DB
 
 ## (1). ERD
 
-![image-20220405113330197](README.assets/ERD.png)
+![image-20220405113330197](./exec/assets/ERD.png)
 
 <br/>
 <br/>
@@ -212,11 +214,25 @@ figma를 사용해 홈페이지의 초안을 작성합니다. 관련 레퍼런�
 
 
 
-# 9. 소감 및 배운점
+# 9. 팀원 소개 및 소감
 
-## 1. 🐄
+## 👩‍💻 팀원 소개
+<table>
+  <tr>
+    <td align="center"><a href="https://github.com/heeya15"><img src="https://avatars.githubusercontent.com/u/57131143?v=4?s=100" width="100px;" alt=""/><br /><sub><b>김광희</b></sub></a></td>
+    <td align="center"><a href="https://github.com/bandong92"><img src="https://avatars.githubusercontent.com/u/38877090?v=4?s=100" width="100px;" alt=""/><br /><sub><b>반형동</b></sub></a></td>
+      <td align="center"><a href="https://github.com/onegi95"><img src="https://avatars.githubusercontent.com/u/87519180?v=4?s=100" width="100px;" alt=""/><br /><sub><b>손한기</b></sub></a></td>
+      <td align="center"><a href="https://github.com/sorrow4468"><img src="https://avatars.githubusercontent.com/u/82122491?v=4?s=100" width="100px;" alt=""/><br /><sub><b>이정원</b></sub></a></td>
+      <td align="center"><a href="https://github.com/youngjin98"><img src="https://avatars.githubusercontent.com/u/92037407?v=4?s=100" width="100px;" alt=""/><br /><sub><b>최영진</b></sub></a></td>
+      <td align="center"><a href="https://github.com/ehhclaire"><img src="https://avatars.githubusercontent.com/u/22373060?v=4?s=100" width="100px;" alt=""/><br /><sub><b>한성희</b></sub></a></td>
+  </tr>
+</table>
 
-![image-20220405113330197](README.assets/팀원소개.PNG)
+<br/>
+
+
+
+### 🐮🍅 소감
 
 - 김광희 : 
 - 반형동 : 
@@ -224,15 +240,4 @@ figma를 사용해 홈페이지의 초안을 작성합니다. 관련 레퍼런�
 - 이정원 : 
 - 최영진 : 
 - 한성희 : 
-
-<br/>
-<br/>
-
-
-## 2. 배운점
-
-
-
-<br/>
-<br/>
-<br/>
+  <br/>
