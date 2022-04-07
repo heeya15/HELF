@@ -38,8 +38,7 @@
 
 ### 📺 시연영상
 
-[![시연영상](./exec/assets/youtube_thumbnail.png)](https://www.youtube.com/watch?v=JmRPuGKEBKg)
-
+[![시연영상](./exec/assets/youtube_thumbnail.PNG)](https://www.youtube.com/watch?v=JmRPuGKEBKg)
 
 
 ### 🛠 주요기능
@@ -196,7 +195,7 @@ build 후 docker-compose를 실행하도록 했습니다.
 
 figma를 사용해 홈페이지의 초안을 작성합니다. 관련 레퍼런스를 참고하고, 서비스 특성에 맞게 제작했습니다.
 
-![figma](./exec/assets/figma.png)
+![figma](./exec/assets/figma.PNG)
 
 <br/>
 
