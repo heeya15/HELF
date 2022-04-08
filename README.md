@@ -37,7 +37,13 @@
 
 [![시연영상](./exec/assets/youtube_thumbnail.PNG)](https://www.youtube.com/watch?v=JmRPuGKEBKg)
 
+<br/>
+
+<br/>
+
 ### 🛠 주요기능
+
+<br/>
 
 - 식단 기록
 
@@ -45,17 +51,29 @@
 
 - 식단 공유
 
+  <br/>
+
   ![식단공유](./exec/assets/shareBoard.gif)
 
 - 운동
 
+  
+
 - 통계
+  
+  <br/>
+  
   - 영상 성분 통계
-    ![영상성분통계](./exec/assets/nutri.gif)
+  
+  ![영상성분통계](./exec/assets/nutri.gif)
+  
   - 체중 기록
-    ![체중 기록](./exec/assets/weight.gif)
+  
+  ![체중 기록](./exec/assets/weight.gif)
+  
   - 운동 기록
-    ![운동 기록](./exec/assets/exercise.gif)
+  
+  ![운동 기록](./exec/assets/exercise.gif)
 
 <br/>
 <br/>
@@ -95,6 +113,8 @@
 # 5. 프로젝트 진행
 
 프로젝트 진행 기간동안 전면 비대면으로, 온라인으로 진행되었기에 특히나 진행 방식과 소통 방법이 중요했습니다. 그래서 우리는 `Agile` 방법으로 프로젝트를 진행했고, Jira를 사용한 스프린트 관리, Discord를 활용하여 커뮤니케이션 소통을 하였습니다.
+
+<br/>
 
 ## (1). Git Flow
 
@@ -143,8 +163,6 @@ git flow 사용을 위해 `우아한 형제들`의 [git flow 사용](https://tec
 
 <br/>
 
-<br/>
-
 # 6. 배포
 
 서버는 AWS EC2 ubuntu를 사용했습니다
@@ -160,7 +178,7 @@ git flow 사용을 위해 `우아한 형제들`의 [git flow 사용](https://tec
 - WAS: Gradle
 - JVM: openJDK (1.8.0_192)
 - Node.js: 16.14
-- Docker: 20.10.12
+- Docker: 20.10.13
 - WEB: Nginx (1.18.0)
 
 <br/>
@@ -207,6 +225,8 @@ figma를 사용해 홈페이지의 초안을 작성합니다. 관련 레퍼런�
 
 ## 👩‍💻 팀원 소개
 
+<br/>
+
 <table>
   <tr>
     <td align="center"><a href="https://github.com/heeya15"><img src="https://avatars.githubusercontent.com/u/57131143?v=4?s=100" width="100px;" alt=""/><br /><sub><b>김광희</b></sub></a></td>
@@ -217,15 +237,20 @@ figma를 사용해 홈페이지의 초안을 작성합니다. 관련 레퍼런�
       <td align="center"><a href="https://github.com/ehhclaire"><img src="https://avatars.githubusercontent.com/u/22373060?v=4?s=100" width="100px;" alt=""/><br /><sub><b>한성희</b></sub></a></td>
   </tr>
 </table>
-
 <br/>
 
 ### 🐮🍅 소감
 
-- 김광희 :
+- 김광희 : 이번 프로젝트로 처음 사용하는 IDE툴인  React 와 IntelliJ를 이용해 보자고 제가 의견을 내며 주제도 제가 생각한 주제가 선정되어 부담이 어느 정도 되었습니다. 그런데 팀원들 각자 맡은 역할에 책임감을 가져 프로젝트에 임해 주며 팀원들의 장점이 모여 서로의 부족한 점을 보완할 수 있었고, 팀원들과 함께라면 어떠한 것도 해낼 수 있을거 같다는 자신감이 있었습니다. 이번 `특화` 프로젝트를 통해 처음하는 Jenkins와 React, IntelliJ 등 많이 배우며 성장했고, Git Flow, Jira를 사용하여 비대면 상황이더라도 효율적으로 소통하고 협업하는 법을 익힐 수 있었습니다. 체력적(잠을 못 잠)으로 정신적으로(Local 에선 되는대 Server 배포한 곳에선 왜 안되지?) 많이 힘들었지만, 팀원들과 소통하며 문제를 잘 해결해 나아갔고, 저 스스로 정말 열정적으로 프로젝트에 임했다고 자부할 수 있습니다. 마지막으로 우리 팀원들 모두 수고했고 AI셔(아이셔)팀 화이팅!!😀
+
 - 반형동 :
+
 - 손한기 :
+
 - 이정원 :
+
 - 최영진 :
+
 - 한성희 :
+
   <br/>
