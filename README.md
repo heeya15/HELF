@@ -1,4 +1,4 @@
-# Helth Friend(HELF)
+# Health Friend(HELF)
 
 # 1. 서비스 설명
 
