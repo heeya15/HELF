@@ -192,7 +192,7 @@ git flow 사용을 위해 `우아한 형제들`의 [git flow 사용](https://tec
 docker 내부는 같은 네트워크로 묶어주기 위해 docker-compose로 실행합니다.
 <br/>
 
-## (2). DevOps
+## (3). DevOps
 
 `Jenkins`로 CI/CD를 구축하여 develop 브랜치에 `merge` 이벤트 발생시 build하도록 구성했습니다.
 
