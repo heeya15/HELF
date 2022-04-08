@@ -1,0 +1,79 @@
+.detailBox {
+  
+  border-color: black;
+  border: solid;
+  margin: 5rem;
+  display: flex;
+  flex-direction: row;
+}
+.bigBox {
+  justify-content: center;
+  display: flex;
+  flex-direction: row;
+}
+
+.nutBox {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  border: 1px solid #444444;
+  border-collapse: collapse;
+
+}
+.commentBox {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+}
+.total {
+  display: flex;
+  flex-direction: row;
+  margin: auto;
+}
+.iconMargin {
+  color: red;
+  margin-top: 4%;
+  margin-bottom: 1%;
+  margin-right: 1rem;
+  
+}
+.iconMargin:hover {
+  color: red;
+  transform: scale(1.3);
+  cursor: pointer;
+}
+
+
+.commentDelete {
+  display: flex;
+  flex-direction: row;
+  justify-content: left;
+  width: 100%;
+  margin: auto;
+  padding: auto;
+}
+.commentButton {
+  display: flex;
+  align-items: center;
+}
+.newCommentBox {
+  padding: 0% 2rem;
+  margin-top: 5%;
+}
+.newText {
+  margin-left: 0.8rem;
+  margin-top: 0%;
+  font-family: 'KOTRA_BOLD-Bold';
+}
+.newText2 {
+  margin-left: 0.8rem;
+  margin-top: 1%;
+  
+}
+.newText2:hover {
+  margin-top: 1%;
+  cursor: pointer;
+}
+.line {
+  margin: 0.5rem 0rem;}

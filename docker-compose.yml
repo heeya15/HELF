@@ -1,0 +1,34 @@
+version: '3.2'
+
+services:
+  frontend:
+    image: frontend
+    build:
+      context: ./front
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+      - "443:443"
+    # [인증서 파일 저장 경로]:/var/www/html
+    volumes:
+      - /home/ubuntu/docker-volume/ssl:/var/www/html
+    container_name: "frontend"
+    networks:
+      - helf
+
+  backend:
+    image: backend-spring
+    build:
+      context: ./back
+      dockerfile: Dockerfile
+    ports:
+      - "8443:8443"
+      # [인증서 파일 저장 경로]:/root
+    volumes:
+      - /home/ubuntu/docker-volume:/root
+    container_name: "backend"
+    networks:
+      - helf
+
+networks:
+  helf:
