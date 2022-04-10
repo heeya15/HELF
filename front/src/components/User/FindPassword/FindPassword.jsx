@@ -50,15 +50,15 @@ export default function FindPassword() {
     history.push('/login');
   }
 
-  useEffect(() => {
-    if (findPwDone) {
-      dispatch({ 
-        type: SET_MENU,
-        data: 'login'
-      });
-      history.push('/login');
-    }
-  }, [ findPwDone ]);
+  // useEffect(() => {
+  //   if (findPwDone) {
+  //     dispatch({ 
+  //       type: SET_MENU,
+  //       data: 'login'
+  //     });
+  //     history.push('/login');
+  //   }
+  // }, [ findPwDone ]);
   
   return (
     <AppForm>
