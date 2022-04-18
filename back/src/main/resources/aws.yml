@@ -1,11 +1,10 @@
 # AWS 관련 키
-# accessKey랑 secretKey는 올리기 전에 삭제하기
 ---
 cloud:
   aws:
     credentials:
-      accessKey: AKIA4ICHGPGZ2BKCVYJM #IAM 사용자 엑세스 키
-      secretKey: r+s/VKC+yYd/xVMob0QcvtExeHfg9chrtSD+okwJ #IAM 사용자 비밀 엑세스 키
+      accessKey: #IAM 사용자 엑세스 키
+      secretKey: #IAM 사용자 비밀 엑세스 키
     s3:
       bucket: helf-bucket
     region:
