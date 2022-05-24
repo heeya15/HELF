@@ -277,8 +277,8 @@ public class DietDiaryServiceImpl implements DietDiaryService{
                 .build();
 
         AwsBasicCredentials awsCreds = AwsBasicCredentials.create(
-                "AKIA4ICHGPGZ2BKCVYJM",
-                "r+s/VKC+yYd/xVMob0QcvtExeHfg9chrtSD+okwJ");
+                "accessKey",
+                "secretAccessKey");
 
         S3Client client = S3Client.builder()
                 .credentialsProvider(StaticCredentialsProvider.create(awsCreds))
