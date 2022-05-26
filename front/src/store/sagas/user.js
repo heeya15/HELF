@@ -249,6 +249,7 @@ function* loadFindPw(action) {
         timer: 1500,
       }
     );
+    document.location.href = "/login";
   } catch (err) {
     swal(
       "비밀번호 찾기 실패",
